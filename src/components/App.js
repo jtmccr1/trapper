@@ -76,7 +76,7 @@ class App extends Component {
 					childProps={{
 						tree: this.state.PhyloTree,
 						caseList: this.state.EpiData,
-						size: [700, 450],
+						size: [700, 470],
 						margin: { top: 10, right: 60, bottom: 50, left: 50 },
 					}}
 				/>

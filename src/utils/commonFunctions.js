@@ -13,7 +13,7 @@ export const drawAxis = (svgGroup, xScale, yScale, size, margins, options = { ro
 	// draw Axis
 	svgGroup
 		.append('g')
-		.attr('class', 'x axis')
+		.attr('class', 'x-axis axis')
 		.attr('transform', `translate(0,${size[1] - margins.top - margins.bottom} )`)
 		.call(xAxis)
 		.selectAll('text')
@@ -29,7 +29,7 @@ export const drawAxis = (svgGroup, xScale, yScale, size, margins, options = { ro
 		.text(options.xlab);
 	svgGroup
 		.append('g')
-		.attr('class', 'y axis')
+		.attr('class', 'y-axis axis')
 		.attr('transform', `translate(${margins.left},0)`)
 		.call(yAxis);
 	// Add the text label for the Y axis

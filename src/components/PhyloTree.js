@@ -3,10 +3,21 @@ import * as d3 from 'd3v4';
 import { positionNodes, addBranches, addNodes } from '../utils/plotTreeFunctions.js';
 import { colours } from '../styles/colours';
 import { toolTipCSS } from '../utils/commonStyles';
+import { onlyUnique } from '../utils/commonFunctions';
 class Phylotree extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = { byLocation: false };
 		this.drawTree = this.drawTree.bind(this);
+		this.updateView = this.updateView.bind(this);
+	}
+	updateView() {
+		this.setState(
+			{
+				byLocation: !this.state.byLocation,
+			},
+			this.drawTree()
+		);
 	}
 	componentDidMount() {
 		this.drawTree();
@@ -22,22 +33,25 @@ class Phylotree extends React.Component {
 			const left = mouseX > 0.5 * xScale.range()[1] ? '' : `${mouseX}px`;
 			const right = mouseX > 0.5 * xScale.range()[1] ? `${xScale.range()[1] - mouseX}px` : '';
 			const metaData = that.props.caseList.filter(x => x.Id === this.id)[0];
-			d3
-				.select(infoRef)
+			const hoverText = metaData
+				? `
+			${metaData.Id}
+			</br>
+			Onset: ${metaData.Onset.toISOString().substring(0, 10)}
+			</br>
+			Sampled: ${metaData.SampleTime.toISOString().substring(0, 10)}
+			</br>
+			Outcome: ${metaData.Outcome}
+			</br>
+			Contact: Lab3
+`
+				: `No metadata for ${this.id}`;
+			d3.select(infoRef)
 				.style('left', left)
 				.style('right', right)
 				.style('top', `${mouseY}px`)
-				.style('visibility', 'visible').html(`
-                                     ${metaData.Id}
-                                     </br>
-                                     Onset: ${metaData.Onset.toISOString().substring(0, 10)}
-                                     </br>
-                                     Sampled: ${metaData.Onset.toISOString().substring(0, 10)}
-                                     </br>
-                                     Outcome: ${metaData.Outcome}
-                                     </br>
-                                     Sequencing Lab: Lab${Math.floor(Math.random(5) * 10)}
-                `);
+				.style('visibility', 'visible')
+				.html(hoverText);
 		}
 		function handleMouseOut() {
 			d3.select(infoRef).style('visibility', 'hidden');
@@ -56,6 +70,37 @@ class Phylotree extends React.Component {
 		const width = this.props.size[0];
 		const height = this.props.size[1];
 
+		//Get colors set
+		if (this.state.byLocation) {
+			// color get location of nodes
+			const locations = this.props.caseList.map(d => d.Location).filter(onlyUnique);
+
+			this.props.tree.externalNodes.forEach(node => {
+				// Get location from metadata
+				const metaData = this.props.caseList.filter(x => x.Id === node.name)[0];
+				node.color = metaData ? colours['test'][locations.indexOf(metaData.Location)] : colours['grey'];
+			});
+			[...this.props.tree.postorder()].forEach(node => {
+				if (node.children) {
+					const childColors = node.children.map(n => n.color).filter(onlyUnique);
+					node.color = childColors.length === 1 ? childColors[0] : childColors; // save for a tie breaker
+				}
+			});
+			// tie break where possible
+			const needAttention = [...this.props.tree.postorder()].filter(node => Array.isArray(node.color));
+
+			for (const trouble of needAttention) {
+				// check if the sybling has one of the colors
+				const sybling = trouble.parent ? trouble.parent.children.filter(x => x.key !== trouble.key)[0] : false;
+				if (sybling && !Array.isArray(sybling.color) && trouble.color.indexOf(sybling.color) > -1) {
+					trouble.color = sybling.color;
+				} else {
+					trouble.color = colours['grey'];
+				}
+			}
+		} else {
+			this.props.tree.nodeList.forEach(node => (node.color = colours['grey']));
+		}
 		//Assign the node positions on a scale of 0-1
 		positionNodes(tree);
 		//remove the tree if it is there already
@@ -65,12 +110,12 @@ class Phylotree extends React.Component {
 		const xScale = d3
 			.scaleLinear()
 			.domain([0, 1])
-			.range([this.props.margin.left, width - this.props.margin.right]);
+			.range([this.props.margin.left, width - this.props.margin.right - this.props.margin.left]);
 
 		const yScale = d3
 			.scaleLinear()
 			.domain([0, 1])
-			.range([this.props.margin.bottom, height - this.props.margin.top]);
+			.range([this.props.margin.bottom, height - this.props.margin.top - this.props.margin.bottom]);
 		//create otherstuff
 		const scales = { x: xScale, y: yScale };
 
@@ -78,13 +123,32 @@ class Phylotree extends React.Component {
 
 		addNodes(svgGroup, tree, scales);
 
-		svgGroup.selectAll('.branch').style('stroke', colours['grey']);
-		svgGroup.selectAll('.node').style('fill', colours['grey']);
+		//svgGroup.selectAll('.branch').style('stroke', colours['grey']);
+		//svgGroup.selectAll('.node').style('fill', colours['grey']);
 
 		svgGroup
 			.selectAll('.external-node')
 			.on('mouseout', handleMouseOut)
 			.on('mousemove', handleMouseMove);
+
+		// Add time axis
+		const xScaletime = d3
+			.scaleTime()
+			.domain(d3.extent(this.props.caseList, d => d.Onset)) // Sample time - have to think about if this is robust
+			.range([this.props.margin.left, width - this.props.margin.right - this.props.margin.left]);
+
+		const xAxis = d3.axisBottom().scale(xScaletime);
+
+		svgGroup
+			.append('g')
+			.attr('class', 'axis')
+			.attr('transform', `translate(0,${this.props.size[1] - this.props.margin.top - this.props.margin.bottom} )`)
+			.call(xAxis)
+			.selectAll('text')
+			.attr('y', 0)
+			.attr('x', 9)
+			.attr('transform', `rotate(45)`)
+			.style('text-anchor', 'start');
 
 		//  // extra parametersa are ignored if not required by the callback
 		// for(const callback of [...callBacks]){
@@ -96,6 +160,15 @@ class Phylotree extends React.Component {
 	render() {
 		return (
 			<div>
+				<div>
+					<span style={{ paddingRight: '10px' }}>Color:</span>
+
+					<label className="switch">
+						<input type="checkbox" onClick={this.updateView} />
+						<span className="slider round" />
+					</label>
+					<span style={{ paddingLeft: '10px' }}>By Location</span>
+				</div>
 				<div
 					{...toolTipCSS}
 					style={{ maxWidth: this.props.size[0] / 2 }}
