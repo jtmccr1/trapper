@@ -41,14 +41,16 @@ export const addNodes = (svgSelection, tree, scales) => {
 		.attr('cy', d => {
 			return scales.y(d.width);
 		})
-		.attr('r', 4)
 		.attr('id', node => {
 			return node.name ? node.name : node.id;
 		})
+		.style('fill', d => d.color)
 		.attr('class', d => {
 			// assign classes for styling later
 			return !d.children ? ' node external-node' : ' node internal-node';
 		});
+
+	svgSelection.selectAll('.external-node').attr('r', 4);
 };
 export const addBranches = (svgSelection, tree, scales) => {
 	const makeLinePath = d3
@@ -72,7 +74,7 @@ export const addBranches = (svgSelection, tree, scales) => {
 		.append('path')
 		.attr('class', 'line branch')
 		.attr('fill', 'none')
-		.attr('stroke', 'black')
+		.attr('stroke', d => d.target.color)
 		.attr('stroke-width', 2)
 		.attr('id', edge => edge.target.id)
 		.attr('d', edge => makeLinePath(edge.values));

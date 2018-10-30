@@ -6,6 +6,7 @@ import CasesLinePlot from './CasesLinePlot';
 import PhyloTree from './PhyloTree';
 import Tree from '../utils/figtree';
 //Styles from Rampart
+import { colours } from '../styles/colours';
 import '../styles/global'; // sets global CSS
 import '../styles/fonts.css'; // sets global fonts
 import '../styles/temporary.css'; // TODO
@@ -33,6 +34,7 @@ class App extends Component {
 	addTree = newData => {
 		let newState = this.state;
 		const tree = Tree.parseNewick(newData.newick);
+		tree.nodeList.forEach(n => (n.color = colours['grey'])); // Sets initial color
 		newState['PhyloTree'] = tree;
 		this.setState(newState);
 	};
