@@ -1,0 +1,2970 @@
+[
+	{
+		"Id": "case0",
+		"Onset": "1900-01-01",
+		"SampleTime": "1900-01-24",
+		"Contact": ["None"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case1",
+		"Onset": "1900-01-06",
+		"SampleTime": "1900-01-22",
+		"Contact": ["case0"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case2",
+		"Onset": "1900-01-10",
+		"SampleTime": "1900-02-09",
+		"Contact": ["case0"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case3",
+		"Onset": "1900-01-10",
+		"SampleTime": "1900-01-25",
+		"Contact": ["case0"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case4",
+		"Onset": "1900-01-11",
+		"SampleTime": "1900-01-22",
+		"Contact": ["case0"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case5",
+		"Onset": "1900-01-15",
+		"SampleTime": "1900-02-01",
+		"Contact": ["case0"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case6",
+		"Onset": "1900-01-18",
+		"SampleTime": "1900-02-06",
+		"Contact": ["case2"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case7",
+		"Onset": "1900-01-19",
+		"SampleTime": "1900-02-01",
+		"Contact": ["case1"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case8",
+		"Onset": "1900-01-20",
+		"SampleTime": "1900-02-12",
+		"Contact": ["case5"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case9",
+		"Onset": "1900-01-21",
+		"SampleTime": "1900-02-10",
+		"Contact": ["case0"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case10",
+		"Onset": "1900-01-22",
+		"SampleTime": "1900-02-06",
+		"Contact": ["case3"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case11",
+		"Onset": "1900-01-25",
+		"SampleTime": "1900-02-05",
+		"Contact": ["case2"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case12",
+		"Onset": "1900-01-27",
+		"SampleTime": "1900-02-12",
+		"Contact": ["case5"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case13",
+		"Onset": "1900-01-29",
+		"SampleTime": "1900-02-15",
+		"Contact": ["case7"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case14",
+		"Onset": "1900-01-29",
+		"SampleTime": "1900-02-21",
+		"Contact": ["case5"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case15",
+		"Onset": "1900-02-01",
+		"SampleTime": "1900-02-28",
+		"Contact": ["case8"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case16",
+		"Onset": "1900-02-02",
+		"SampleTime": "1900-02-19",
+		"Contact": ["case6"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case17",
+		"Onset": "1900-02-02",
+		"SampleTime": "1900-02-22",
+		"Contact": ["case9"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case18",
+		"Onset": "1900-02-03",
+		"SampleTime": "1900-02-19",
+		"Contact": ["case6"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case19",
+		"Onset": "1900-02-03",
+		"SampleTime": "1900-02-18",
+		"Contact": ["case9"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case20",
+		"Onset": "1900-02-03",
+		"SampleTime": "1900-02-20",
+		"Contact": ["case10"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case21",
+		"Onset": "1900-02-04",
+		"SampleTime": "1900-02-25",
+		"Contact": ["case8"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case22",
+		"Onset": "1900-02-06",
+		"SampleTime": "1900-02-18",
+		"Contact": ["case2"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case23",
+		"Onset": "1900-02-07",
+		"SampleTime": "1900-02-21",
+		"Contact": ["case9"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case24",
+		"Onset": "1900-02-09",
+		"SampleTime": "1900-03-01",
+		"Contact": ["case8"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case25",
+		"Onset": "1900-02-09",
+		"SampleTime": "1900-02-29",
+		"Contact": ["case15"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case26",
+		"Onset": "1900-02-09",
+		"SampleTime": "1900-02-25",
+		"Contact": ["case12"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case27",
+		"Onset": "1900-02-10",
+		"SampleTime": "1900-02-24",
+		"Contact": ["case16"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case28",
+		"Onset": "1900-02-11",
+		"SampleTime": "1900-03-05",
+		"Contact": ["case16"],
+		"Outcome": "Alive",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case29",
+		"Onset": "1900-02-11",
+		"SampleTime": "1900-02-25",
+		"Contact": ["case21"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case30",
+		"Onset": "1900-02-12",
+		"SampleTime": "1900-02-29",
+		"Contact": ["case18"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case31",
+		"Onset": "1900-02-13",
+		"SampleTime": "1900-03-06",
+		"Contact": ["case14"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case32",
+		"Onset": "1900-02-13",
+		"SampleTime": "1900-03-03",
+		"Contact": ["case22"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case33",
+		"Onset": "1900-02-14",
+		"SampleTime": "1900-03-02",
+		"Contact": ["case15"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case34",
+		"Onset": "1900-02-14",
+		"SampleTime": "1900-03-01",
+		"Contact": ["case14"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case35",
+		"Onset": "1900-02-15",
+		"SampleTime": "1900-03-04",
+		"Contact": ["case15"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case36",
+		"Onset": "1900-02-15",
+		"SampleTime": "1900-03-05",
+		"Contact": ["case22"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case37",
+		"Onset": "1900-02-16",
+		"SampleTime": "1900-02-27",
+		"Contact": ["case16"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case38",
+		"Onset": "1900-02-16",
+		"SampleTime": "1900-03-07",
+		"Contact": ["case18"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case39",
+		"Onset": "1900-02-17",
+		"SampleTime": "1900-02-26",
+		"Contact": ["case20"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case40",
+		"Onset": "1900-02-17",
+		"SampleTime": "1900-03-03",
+		"Contact": ["case15"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case41",
+		"Onset": "1900-02-18",
+		"SampleTime": "1900-03-12",
+		"Contact": ["case23"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case42",
+		"Onset": "1900-02-18",
+		"SampleTime": "1900-03-09",
+		"Contact": ["case14"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case43",
+		"Onset": "1900-02-20",
+		"SampleTime": "1900-03-11",
+		"Contact": ["case29"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case44",
+		"Onset": "1900-02-21",
+		"SampleTime": "1900-03-02",
+		"Contact": ["case24"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case45",
+		"Onset": "1900-02-22",
+		"SampleTime": "1900-03-03",
+		"Contact": ["case21"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case46",
+		"Onset": "1900-02-22",
+		"SampleTime": "1900-03-07",
+		"Contact": ["case26"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case47",
+		"Onset": "1900-02-22",
+		"SampleTime": "1900-03-11",
+		"Contact": ["case29"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case48",
+		"Onset": "1900-02-24",
+		"SampleTime": "1900-03-11",
+		"Contact": ["case37"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case49",
+		"Onset": "1900-02-24",
+		"SampleTime": "1900-03-10",
+		"Contact": ["case31"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case50",
+		"Onset": "1900-02-25",
+		"SampleTime": "1900-03-20",
+		"Contact": ["case32"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case51",
+		"Onset": "1900-02-25",
+		"SampleTime": "1900-03-16",
+		"Contact": ["case32"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case52",
+		"Onset": "1900-02-25",
+		"SampleTime": "1900-03-14",
+		"Contact": ["case15"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case53",
+		"Onset": "1900-02-25",
+		"SampleTime": "1900-03-10",
+		"Contact": ["case36"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case54",
+		"Onset": "1900-02-26",
+		"SampleTime": "1900-03-20",
+		"Contact": ["case30"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case55",
+		"Onset": "1900-02-26",
+		"SampleTime": "1900-03-10",
+		"Contact": ["case41"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case56",
+		"Onset": "1900-02-27",
+		"SampleTime": "1900-03-24",
+		"Contact": ["case34"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case57",
+		"Onset": "1900-02-27",
+		"SampleTime": "1900-03-15",
+		"Contact": ["case34"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case58",
+		"Onset": "1900-02-27",
+		"SampleTime": "1900-03-13",
+		"Contact": ["case24"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case59",
+		"Onset": "1900-02-28",
+		"SampleTime": "1900-03-19",
+		"Contact": ["case44"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case60",
+		"Onset": "1900-02-28",
+		"SampleTime": "1900-03-12",
+		"Contact": ["case33"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case61",
+		"Onset": "1900-02-29",
+		"SampleTime": "1900-03-06",
+		"Contact": ["case32"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case62",
+		"Onset": "1900-02-29",
+		"SampleTime": "1900-03-08",
+		"Contact": ["case41"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case63",
+		"Onset": "1900-02-29",
+		"SampleTime": "1900-03-25",
+		"Contact": ["case40"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case64",
+		"Onset": "1900-02-29",
+		"SampleTime": "1900-03-05",
+		"Contact": ["case32"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case65",
+		"Onset": "1900-03-01",
+		"SampleTime": "1900-03-20",
+		"Contact": ["case41"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case66",
+		"Onset": "1900-03-01",
+		"SampleTime": "1900-03-17",
+		"Contact": ["case31"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case67",
+		"Onset": "1900-03-02",
+		"SampleTime": "1900-03-20",
+		"Contact": ["case41"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case68",
+		"Onset": "1900-03-02",
+		"SampleTime": "1900-03-27",
+		"Contact": ["case36"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case69",
+		"Onset": "1900-03-02",
+		"SampleTime": "1900-03-16",
+		"Contact": ["case28"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case70",
+		"Onset": "1900-03-02",
+		"SampleTime": "1900-03-16",
+		"Contact": ["case41"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case71",
+		"Onset": "1900-03-02",
+		"SampleTime": "1900-03-17",
+		"Contact": ["case41"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case72",
+		"Onset": "1900-03-02",
+		"SampleTime": "1900-03-26",
+		"Contact": ["case41"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case73",
+		"Onset": "1900-03-02",
+		"SampleTime": "1900-03-22",
+		"Contact": ["case38"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case74",
+		"Onset": "1900-03-02",
+		"SampleTime": "1900-04-04",
+		"Contact": ["case41"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case75",
+		"Onset": "1900-03-03",
+		"SampleTime": "1900-03-29",
+		"Contact": ["case51"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case76",
+		"Onset": "1900-03-03",
+		"SampleTime": "1900-03-18",
+		"Contact": ["case31"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case77",
+		"Onset": "1900-03-04",
+		"SampleTime": "1900-03-17",
+		"Contact": ["case46"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case78",
+		"Onset": "1900-03-04",
+		"SampleTime": "1900-03-26",
+		"Contact": ["case48"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case79",
+		"Onset": "1900-03-04",
+		"SampleTime": "1900-03-25",
+		"Contact": ["case41"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case80",
+		"Onset": "1900-03-04",
+		"SampleTime": "1900-03-21",
+		"Contact": ["case38"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case81",
+		"Onset": "1900-03-05",
+		"SampleTime": "1900-03-23",
+		"Contact": ["case48"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case82",
+		"Onset": "1900-03-06",
+		"SampleTime": "1900-03-12",
+		"Contact": ["case47"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case83",
+		"Onset": "1900-03-06",
+		"SampleTime": "1900-03-22",
+		"Contact": ["case67"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case84",
+		"Onset": "1900-03-06",
+		"SampleTime": "1900-03-23",
+		"Contact": ["case49"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case85",
+		"Onset": "1900-03-06",
+		"SampleTime": "1900-03-20",
+		"Contact": ["case41"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case86",
+		"Onset": "1900-03-07",
+		"SampleTime": "1900-03-17",
+		"Contact": ["case55"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case87",
+		"Onset": "1900-03-07",
+		"SampleTime": "1900-04-06",
+		"Contact": ["case49"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case88",
+		"Onset": "1900-03-07",
+		"SampleTime": "1900-03-19",
+		"Contact": ["case59"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case89",
+		"Onset": "1900-03-08",
+		"SampleTime": "1900-03-16",
+		"Contact": ["case47"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case90",
+		"Onset": "1900-03-08",
+		"SampleTime": "1900-03-21",
+		"Contact": ["case59"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case91",
+		"Onset": "1900-03-08",
+		"SampleTime": "1900-03-25",
+		"Contact": ["case48"],
+		"Outcome": "Alive",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case92",
+		"Onset": "1900-03-09",
+		"SampleTime": "1900-04-03",
+		"Contact": ["case60"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case93",
+		"Onset": "1900-03-09",
+		"SampleTime": "1900-04-01",
+		"Contact": ["case78"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case94",
+		"Onset": "1900-03-09",
+		"SampleTime": "1900-03-22",
+		"Contact": ["case41"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case95",
+		"Onset": "1900-03-09",
+		"SampleTime": "1900-03-30",
+		"Contact": ["case65"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case96",
+		"Onset": "1900-03-10",
+		"SampleTime": "1900-03-17",
+		"Contact": ["case51"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case97",
+		"Onset": "1900-03-10",
+		"SampleTime": "1900-03-23",
+		"Contact": ["case58"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case98",
+		"Onset": "1900-03-10",
+		"SampleTime": "1900-04-06",
+		"Contact": ["case58"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case99",
+		"Onset": "1900-03-10",
+		"SampleTime": "1900-04-03",
+		"Contact": ["case59"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case100",
+		"Onset": "1900-03-11",
+		"SampleTime": "1900-03-30",
+		"Contact": ["case67"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case101",
+		"Onset": "1900-03-11",
+		"SampleTime": "1900-03-26",
+		"Contact": ["case70"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case102",
+		"Onset": "1900-03-11",
+		"SampleTime": "1900-03-19",
+		"Contact": ["case73"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case103",
+		"Onset": "1900-03-11",
+		"SampleTime": "1900-04-02",
+		"Contact": ["case52"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case104",
+		"Onset": "1900-03-12",
+		"SampleTime": "1900-04-02",
+		"Contact": ["case72"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case105",
+		"Onset": "1900-03-12",
+		"SampleTime": "1900-03-29",
+		"Contact": ["case57"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case106",
+		"Onset": "1900-03-12",
+		"SampleTime": "1900-04-02",
+		"Contact": ["case51"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case107",
+		"Onset": "1900-03-12",
+		"SampleTime": "1900-04-06",
+		"Contact": ["case84"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case108",
+		"Onset": "1900-03-12",
+		"SampleTime": "1900-03-23",
+		"Contact": ["case50"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case109",
+		"Onset": "1900-03-12",
+		"SampleTime": "1900-03-28",
+		"Contact": ["case67"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case110",
+		"Onset": "1900-03-12",
+		"SampleTime": "1900-04-05",
+		"Contact": ["case80"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case111",
+		"Onset": "1900-03-13",
+		"SampleTime": "1900-04-01",
+		"Contact": ["case70"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case112",
+		"Onset": "1900-03-13",
+		"SampleTime": "1900-04-07",
+		"Contact": ["case69"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case113",
+		"Onset": "1900-03-13",
+		"SampleTime": "1900-04-12",
+		"Contact": ["case51"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case114",
+		"Onset": "1900-03-13",
+		"SampleTime": "1900-04-09",
+		"Contact": ["case67"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case115",
+		"Onset": "1900-03-13",
+		"SampleTime": "1900-03-29",
+		"Contact": ["case74"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case116",
+		"Onset": "1900-03-13",
+		"SampleTime": "1900-04-08",
+		"Contact": ["case68"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case117",
+		"Onset": "1900-03-14",
+		"SampleTime": "1900-04-09",
+		"Contact": ["case71"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case118",
+		"Onset": "1900-03-14",
+		"SampleTime": "1900-04-09",
+		"Contact": ["case59"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case119",
+		"Onset": "1900-03-14",
+		"SampleTime": "1900-03-22",
+		"Contact": ["case73"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case120",
+		"Onset": "1900-03-14",
+		"SampleTime": "1900-04-04",
+		"Contact": ["case75"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case121",
+		"Onset": "1900-03-15",
+		"SampleTime": "1900-03-20",
+		"Contact": ["case76"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case122",
+		"Onset": "1900-03-15",
+		"SampleTime": "1900-04-07",
+		"Contact": ["case81"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case123",
+		"Onset": "1900-03-15",
+		"SampleTime": "1900-04-08",
+		"Contact": ["case67"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case124",
+		"Onset": "1900-03-15",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case59"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case125",
+		"Onset": "1900-03-16",
+		"SampleTime": "1900-04-08",
+		"Contact": ["case84"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case126",
+		"Onset": "1900-03-16",
+		"SampleTime": "1900-04-01",
+		"Contact": ["case59"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case127",
+		"Onset": "1900-03-16",
+		"SampleTime": "1900-03-31",
+		"Contact": ["case67"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case128",
+		"Onset": "1900-03-17",
+		"SampleTime": "1900-04-03",
+		"Contact": ["case79"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case129",
+		"Onset": "1900-03-17",
+		"SampleTime": "1900-04-04",
+		"Contact": ["case67"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case130",
+		"Onset": "1900-03-17",
+		"SampleTime": "1900-04-07",
+		"Contact": ["case95"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case131",
+		"Onset": "1900-03-17",
+		"SampleTime": "1900-04-06",
+		"Contact": ["case79"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case132",
+		"Onset": "1900-03-17",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case95"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case133",
+		"Onset": "1900-03-17",
+		"SampleTime": "1900-04-04",
+		"Contact": ["case85"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case134",
+		"Onset": "1900-03-17",
+		"SampleTime": "1900-04-08",
+		"Contact": ["case65"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case135",
+		"Onset": "1900-03-17",
+		"SampleTime": "1900-04-04",
+		"Contact": ["case73"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case136",
+		"Onset": "1900-03-17",
+		"SampleTime": "1900-04-03",
+		"Contact": ["case50"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case137",
+		"Onset": "1900-03-18",
+		"SampleTime": "1900-03-30",
+		"Contact": ["case94"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case138",
+		"Onset": "1900-03-18",
+		"SampleTime": "1900-03-28",
+		"Contact": ["case79"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case139",
+		"Onset": "1900-03-18",
+		"SampleTime": "1900-03-27",
+		"Contact": ["case80"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case140",
+		"Onset": "1900-03-19",
+		"SampleTime": "1900-04-06",
+		"Contact": ["case94"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case141",
+		"Onset": "1900-03-19",
+		"SampleTime": "1900-03-29",
+		"Contact": ["case83"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case142",
+		"Onset": "1900-03-19",
+		"SampleTime": "1900-03-26",
+		"Contact": ["case63"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case143",
+		"Onset": "1900-03-19",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case110"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case144",
+		"Onset": "1900-03-19",
+		"SampleTime": "1900-04-06",
+		"Contact": ["case73"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case145",
+		"Onset": "1900-03-19",
+		"SampleTime": "1900-04-07",
+		"Contact": ["case74"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case146",
+		"Onset": "1900-03-19",
+		"SampleTime": "1900-03-25",
+		"Contact": ["case104"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case147",
+		"Onset": "1900-03-20",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case100"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case148",
+		"Onset": "1900-03-20",
+		"SampleTime": "1900-04-09",
+		"Contact": ["case81"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case149",
+		"Onset": "1900-03-20",
+		"SampleTime": "1900-04-09",
+		"Contact": ["case84"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case150",
+		"Onset": "1900-03-20",
+		"SampleTime": "1900-04-03",
+		"Contact": ["case97"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case151",
+		"Onset": "1900-03-20",
+		"SampleTime": "1900-04-05",
+		"Contact": ["case91"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case152",
+		"Onset": "1900-03-20",
+		"SampleTime": "1900-04-02",
+		"Contact": ["case79"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case153",
+		"Onset": "1900-03-20",
+		"SampleTime": "1900-04-07",
+		"Contact": ["case98"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case154",
+		"Onset": "1900-03-21",
+		"SampleTime": "1900-03-28",
+		"Contact": ["case78"],
+		"Outcome": "Alive",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case155",
+		"Onset": "1900-03-21",
+		"SampleTime": "1900-04-08",
+		"Contact": ["case107"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case156",
+		"Onset": "1900-03-21",
+		"SampleTime": "1900-04-05",
+		"Contact": ["case98"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case157",
+		"Onset": "1900-03-21",
+		"SampleTime": "1900-04-06",
+		"Contact": ["case98"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case158",
+		"Onset": "1900-03-21",
+		"SampleTime": "1900-04-07",
+		"Contact": ["case99"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case159",
+		"Onset": "1900-03-21",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case114"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case160",
+		"Onset": "1900-03-22",
+		"SampleTime": "1900-04-09",
+		"Contact": ["case112"],
+		"Outcome": "Alive",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case161",
+		"Onset": "1900-03-22",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case120"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case162",
+		"Onset": "1900-03-22",
+		"SampleTime": "1900-04-05",
+		"Contact": ["case118"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case163",
+		"Onset": "1900-03-22",
+		"SampleTime": "1900-04-05",
+		"Contact": ["case106"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case164",
+		"Onset": "1900-03-22",
+		"SampleTime": "1900-04-07",
+		"Contact": ["case127"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case165",
+		"Onset": "1900-03-22",
+		"SampleTime": "1900-04-06",
+		"Contact": ["case118"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case166",
+		"Onset": "1900-03-22",
+		"SampleTime": "1900-04-07",
+		"Contact": ["case63"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case167",
+		"Onset": "1900-03-22",
+		"SampleTime": "1900-04-03",
+		"Contact": ["case91"],
+		"Outcome": "Alive",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case168",
+		"Onset": "1900-03-22",
+		"SampleTime": "1900-03-29",
+		"Contact": ["case79"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case169",
+		"Onset": "1900-03-23",
+		"SampleTime": "1900-04-09",
+		"Contact": ["case107"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case170",
+		"Onset": "1900-03-23",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case142"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case171",
+		"Onset": "1900-03-23",
+		"SampleTime": "1900-04-07",
+		"Contact": ["case95"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case172",
+		"Onset": "1900-03-23",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case78"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case173",
+		"Onset": "1900-03-23",
+		"SampleTime": "1900-03-27",
+		"Contact": ["case72"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case174",
+		"Onset": "1900-03-24",
+		"SampleTime": "1900-04-05",
+		"Contact": ["case114"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case175",
+		"Onset": "1900-03-24",
+		"SampleTime": "1900-04-07",
+		"Contact": ["case107"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case176",
+		"Onset": "1900-03-24",
+		"SampleTime": "1900-04-08",
+		"Contact": ["case98"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case177",
+		"Onset": "1900-03-24",
+		"SampleTime": "1900-04-08",
+		"Contact": ["case68"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case178",
+		"Onset": "1900-03-24",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case111"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case179",
+		"Onset": "1900-03-25",
+		"SampleTime": "1900-04-12",
+		"Contact": ["case105"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case180",
+		"Onset": "1900-03-25",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case110"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case181",
+		"Onset": "1900-03-25",
+		"SampleTime": "1900-04-14",
+		"Contact": ["case126"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case182",
+		"Onset": "1900-03-25",
+		"SampleTime": "1900-04-06",
+		"Contact": ["case93"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case183",
+		"Onset": "1900-03-25",
+		"SampleTime": "1900-04-03",
+		"Contact": ["case107"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case184",
+		"Onset": "1900-03-25",
+		"SampleTime": "1900-04-02",
+		"Contact": ["case123"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case185",
+		"Onset": "1900-03-25",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case127"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case186",
+		"Onset": "1900-03-26",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case129"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case187",
+		"Onset": "1900-03-26",
+		"SampleTime": "1900-04-06",
+		"Contact": ["case132"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case188",
+		"Onset": "1900-03-26",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case129"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case189",
+		"Onset": "1900-03-26",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case105"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case190",
+		"Onset": "1900-03-26",
+		"SampleTime": "1900-04-08",
+		"Contact": ["case125"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case191",
+		"Onset": "1900-03-26",
+		"SampleTime": "1900-04-13",
+		"Contact": ["case115"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case192",
+		"Onset": "1900-03-26",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case75"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case193",
+		"Onset": "1900-03-26",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case167"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case194",
+		"Onset": "1900-03-26",
+		"SampleTime": "1900-04-07",
+		"Contact": ["case107"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case195",
+		"Onset": "1900-03-26",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case135"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case196",
+		"Onset": "1900-03-27",
+		"SampleTime": "1900-04-05",
+		"Contact": ["case114"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case197",
+		"Onset": "1900-03-27",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case132"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case198",
+		"Onset": "1900-03-27",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case95"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case199",
+		"Onset": "1900-03-27",
+		"SampleTime": "1900-04-09",
+		"Contact": ["case122"],
+		"Outcome": "Alive",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case200",
+		"Onset": "1900-03-27",
+		"SampleTime": "1900-04-06",
+		"Contact": ["case130"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case201",
+		"Onset": "1900-03-27",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case103"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case202",
+		"Onset": "1900-03-27",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case118"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case203",
+		"Onset": "1900-03-27",
+		"SampleTime": "1900-04-15",
+		"Contact": ["case100"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case204",
+		"Onset": "1900-03-28",
+		"SampleTime": "1900-04-09",
+		"Contact": ["case99"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case205",
+		"Onset": "1900-03-28",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case104"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case206",
+		"Onset": "1900-03-28",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case143"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case207",
+		"Onset": "1900-03-28",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case127"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case208",
+		"Onset": "1900-03-28",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case123"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case209",
+		"Onset": "1900-03-28",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case131"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case210",
+		"Onset": "1900-03-28",
+		"SampleTime": "1900-04-12",
+		"Contact": ["case155"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case211",
+		"Onset": "1900-03-28",
+		"SampleTime": "1900-04-07",
+		"Contact": ["case104"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case212",
+		"Onset": "1900-03-28",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case118"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case213",
+		"Onset": "1900-03-28",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case112"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case214",
+		"Onset": "1900-03-28",
+		"SampleTime": "1900-04-17",
+		"Contact": ["case107"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case215",
+		"Onset": "1900-03-28",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case134"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case216",
+		"Onset": "1900-03-29",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case159"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case217",
+		"Onset": "1900-03-29",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case132"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case218",
+		"Onset": "1900-03-29",
+		"SampleTime": "1900-04-26",
+		"Contact": ["case131"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case219",
+		"Onset": "1900-03-29",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case163"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case220",
+		"Onset": "1900-03-29",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case160"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case221",
+		"Onset": "1900-03-29",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case126"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case222",
+		"Onset": "1900-03-29",
+		"SampleTime": "1900-04-12",
+		"Contact": ["case111"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case223",
+		"Onset": "1900-03-29",
+		"SampleTime": "1900-04-13",
+		"Contact": ["case93"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case224",
+		"Onset": "1900-03-29",
+		"SampleTime": "1900-04-14",
+		"Contact": ["case120"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case225",
+		"Onset": "1900-03-29",
+		"SampleTime": "1900-04-21",
+		"Contact": ["case134"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case226",
+		"Onset": "1900-03-29",
+		"SampleTime": "1900-05-05",
+		"Contact": ["case178"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case227",
+		"Onset": "1900-03-29",
+		"SampleTime": "1900-04-09",
+		"Contact": ["case132"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case228",
+		"Onset": "1900-03-30",
+		"SampleTime": "1900-04-14",
+		"Contact": ["case103"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case229",
+		"Onset": "1900-03-30",
+		"SampleTime": "1900-04-09",
+		"Contact": ["case104"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case230",
+		"Onset": "1900-03-30",
+		"SampleTime": "1900-04-14",
+		"Contact": ["case125"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case231",
+		"Onset": "1900-03-30",
+		"SampleTime": "1900-04-15",
+		"Contact": ["case132"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case232",
+		"Onset": "1900-03-30",
+		"SampleTime": "1900-04-08",
+		"Contact": ["case106"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case233",
+		"Onset": "1900-03-30",
+		"SampleTime": "1900-04-07",
+		"Contact": ["case132"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case234",
+		"Onset": "1900-03-30",
+		"SampleTime": "1900-04-08",
+		"Contact": ["case107"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case235",
+		"Onset": "1900-03-30",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case152"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case236",
+		"Onset": "1900-03-31",
+		"SampleTime": "1900-04-06",
+		"Contact": ["case128"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case237",
+		"Onset": "1900-03-31",
+		"SampleTime": "1900-04-08",
+		"Contact": ["case131"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case238",
+		"Onset": "1900-03-31",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case167"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case239",
+		"Onset": "1900-03-31",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case92"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case240",
+		"Onset": "1900-03-31",
+		"SampleTime": "1900-04-13",
+		"Contact": ["case131"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case241",
+		"Onset": "1900-03-31",
+		"SampleTime": "1900-04-18",
+		"Contact": ["case99"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case242",
+		"Onset": "1900-03-31",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case110"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case243",
+		"Onset": "1900-03-31",
+		"SampleTime": "1900-04-13",
+		"Contact": ["case163"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case244",
+		"Onset": "1900-03-31",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case136"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case245",
+		"Onset": "1900-03-31",
+		"SampleTime": "1900-04-13",
+		"Contact": ["case125"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case246",
+		"Onset": "1900-04-01",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case125"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case247",
+		"Onset": "1900-04-01",
+		"SampleTime": "1900-04-13",
+		"Contact": ["case147"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case248",
+		"Onset": "1900-04-01",
+		"SampleTime": "1900-04-15",
+		"Contact": ["case135"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case249",
+		"Onset": "1900-04-01",
+		"SampleTime": "1900-04-06",
+		"Contact": ["case74"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case250",
+		"Onset": "1900-04-01",
+		"SampleTime": "1900-04-20",
+		"Contact": ["case120"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case251",
+		"Onset": "1900-04-01",
+		"SampleTime": "1900-04-08",
+		"Contact": ["case129"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case252",
+		"Onset": "1900-04-01",
+		"SampleTime": "1900-04-10",
+		"Contact": ["case132"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case253",
+		"Onset": "1900-04-01",
+		"SampleTime": "1900-04-08",
+		"Contact": ["case160"],
+		"Outcome": "Alive",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case254",
+		"Onset": "1900-04-02",
+		"SampleTime": "1900-04-14",
+		"Contact": ["case163"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case255",
+		"Onset": "1900-04-02",
+		"SampleTime": "1900-04-22",
+		"Contact": ["case151"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case256",
+		"Onset": "1900-04-02",
+		"SampleTime": "1900-04-18",
+		"Contact": ["case162"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case257",
+		"Onset": "1900-04-02",
+		"SampleTime": "1900-04-19",
+		"Contact": ["case140"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case258",
+		"Onset": "1900-04-02",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case125"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case259",
+		"Onset": "1900-04-02",
+		"SampleTime": "1900-04-15",
+		"Contact": ["case196"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case260",
+		"Onset": "1900-04-02",
+		"SampleTime": "1900-04-16",
+		"Contact": ["case132"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case261",
+		"Onset": "1900-04-02",
+		"SampleTime": "1900-04-12",
+		"Contact": ["case110"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case262",
+		"Onset": "1900-04-02",
+		"SampleTime": "1900-04-14",
+		"Contact": ["case107"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case263",
+		"Onset": "1900-04-02",
+		"SampleTime": "1900-04-15",
+		"Contact": ["case148"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case264",
+		"Onset": "1900-04-03",
+		"SampleTime": "1900-04-19",
+		"Contact": ["case144"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case265",
+		"Onset": "1900-04-03",
+		"SampleTime": "1900-04-13",
+		"Contact": ["case87"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case266",
+		"Onset": "1900-04-03",
+		"SampleTime": "1900-04-23",
+		"Contact": ["case165"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case267",
+		"Onset": "1900-04-03",
+		"SampleTime": "1900-04-12",
+		"Contact": ["case185"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case268",
+		"Onset": "1900-04-03",
+		"SampleTime": "1900-04-21",
+		"Contact": ["case157"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case269",
+		"Onset": "1900-04-03",
+		"SampleTime": "1900-04-25",
+		"Contact": ["case140"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case270",
+		"Onset": "1900-04-03",
+		"SampleTime": "1900-04-18",
+		"Contact": ["case155"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case271",
+		"Onset": "1900-04-03",
+		"SampleTime": "1900-04-20",
+		"Contact": ["case200"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case272",
+		"Onset": "1900-04-03",
+		"SampleTime": "1900-04-20",
+		"Contact": ["case132"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case273",
+		"Onset": "1900-04-03",
+		"SampleTime": "1900-04-19",
+		"Contact": ["case125"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case274",
+		"Onset": "1900-04-03",
+		"SampleTime": "1900-04-17",
+		"Contact": ["case107"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case275",
+		"Onset": "1900-04-03",
+		"SampleTime": "1900-04-23",
+		"Contact": ["case131"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case276",
+		"Onset": "1900-04-03",
+		"SampleTime": "1900-04-15",
+		"Contact": ["case177"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case277",
+		"Onset": "1900-04-03",
+		"SampleTime": "1900-04-13",
+		"Contact": ["case132"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case278",
+		"Onset": "1900-04-03",
+		"SampleTime": "1900-04-25",
+		"Contact": ["case212"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case279",
+		"Onset": "1900-04-03",
+		"SampleTime": "1900-04-18",
+		"Contact": ["case98"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case280",
+		"Onset": "1900-04-03",
+		"SampleTime": "1900-04-13",
+		"Contact": ["case187"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case281",
+		"Onset": "1900-04-03",
+		"SampleTime": "1900-04-22",
+		"Contact": ["case178"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case282",
+		"Onset": "1900-04-03",
+		"SampleTime": "1900-04-11",
+		"Contact": ["case182"],
+		"Outcome": "Alive",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case283",
+		"Onset": "1900-04-03",
+		"SampleTime": "1900-04-25",
+		"Contact": ["case198"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case284",
+		"Onset": "1900-04-04",
+		"SampleTime": "1900-04-16",
+		"Contact": ["case171"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case285",
+		"Onset": "1900-04-04",
+		"SampleTime": "1900-04-28",
+		"Contact": ["case185"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case286",
+		"Onset": "1900-04-04",
+		"SampleTime": "1900-04-07",
+		"Contact": ["case199"],
+		"Outcome": "Alive",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case287",
+		"Onset": "1900-04-04",
+		"SampleTime": "1900-04-25",
+		"Contact": ["case166"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case288",
+		"Onset": "1900-04-04",
+		"SampleTime": "1900-04-16",
+		"Contact": ["case155"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case289",
+		"Onset": "1900-04-04",
+		"SampleTime": "1900-04-15",
+		"Contact": ["case153"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case290",
+		"Onset": "1900-04-04",
+		"SampleTime": "1900-04-15",
+		"Contact": ["case205"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case291",
+		"Onset": "1900-04-04",
+		"SampleTime": "1900-04-26",
+		"Contact": ["case112"],
+		"Outcome": "Alive",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case292",
+		"Onset": "1900-04-04",
+		"SampleTime": "1900-04-14",
+		"Contact": ["case130"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case293",
+		"Onset": "1900-04-04",
+		"SampleTime": "1900-04-12",
+		"Contact": ["case122"],
+		"Outcome": "Alive",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case294",
+		"Onset": "1900-04-04",
+		"SampleTime": "1900-04-21",
+		"Contact": ["case158"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case295",
+		"Onset": "1900-04-04",
+		"SampleTime": "1900-04-14",
+		"Contact": ["case178"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case296",
+		"Onset": "1900-04-04",
+		"SampleTime": "1900-04-24",
+		"Contact": ["case170"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case297",
+		"Onset": "1900-04-04",
+		"SampleTime": "1900-04-18",
+		"Contact": ["case132"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case298",
+		"Onset": "1900-04-04",
+		"SampleTime": "1900-04-13",
+		"Contact": ["case194"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case299",
+		"Onset": "1900-04-04",
+		"SampleTime": "1900-04-16",
+		"Contact": ["case194"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case300",
+		"Onset": "1900-04-04",
+		"SampleTime": "1900-04-14",
+		"Contact": ["case124"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case301",
+		"Onset": "1900-04-04",
+		"SampleTime": "1900-04-26",
+		"Contact": ["case145"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case302",
+		"Onset": "1900-04-04",
+		"SampleTime": "1900-04-12",
+		"Contact": ["case159"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case303",
+		"Onset": "1900-04-05",
+		"SampleTime": "1900-04-20",
+		"Contact": ["case155"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case304",
+		"Onset": "1900-04-05",
+		"SampleTime": "1900-04-21",
+		"Contact": ["case123"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case305",
+		"Onset": "1900-04-05",
+		"SampleTime": "1900-04-15",
+		"Contact": ["case125"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case306",
+		"Onset": "1900-04-05",
+		"SampleTime": "1900-04-14",
+		"Contact": ["case116"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case307",
+		"Onset": "1900-04-05",
+		"SampleTime": "1900-04-23",
+		"Contact": ["case155"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case308",
+		"Onset": "1900-04-05",
+		"SampleTime": "1900-04-19",
+		"Contact": ["case237"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case309",
+		"Onset": "1900-04-05",
+		"SampleTime": "1900-04-21",
+		"Contact": ["case134"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case310",
+		"Onset": "1900-04-05",
+		"SampleTime": "1900-04-19",
+		"Contact": ["case190"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case311",
+		"Onset": "1900-04-05",
+		"SampleTime": "1900-04-19",
+		"Contact": ["case177"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case312",
+		"Onset": "1900-04-05",
+		"SampleTime": "1900-04-13",
+		"Contact": ["case147"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case313",
+		"Onset": "1900-04-06",
+		"SampleTime": "1900-04-17",
+		"Contact": ["case219"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case314",
+		"Onset": "1900-04-06",
+		"SampleTime": "1900-04-18",
+		"Contact": ["case148"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case315",
+		"Onset": "1900-04-06",
+		"SampleTime": "1900-04-22",
+		"Contact": ["case198"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case316",
+		"Onset": "1900-04-06",
+		"SampleTime": "1900-04-27",
+		"Contact": ["case117"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case317",
+		"Onset": "1900-04-06",
+		"SampleTime": "1900-04-13",
+		"Contact": ["case114"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case318",
+		"Onset": "1900-04-06",
+		"SampleTime": "1900-04-17",
+		"Contact": ["case118"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case319",
+		"Onset": "1900-04-06",
+		"SampleTime": "1900-04-25",
+		"Contact": ["case160"],
+		"Outcome": "Alive",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case320",
+		"Onset": "1900-04-06",
+		"SampleTime": "1900-04-17",
+		"Contact": ["case197"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case321",
+		"Onset": "1900-04-06",
+		"SampleTime": "1900-04-24",
+		"Contact": ["case199"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case322",
+		"Onset": "1900-04-06",
+		"SampleTime": "1900-04-26",
+		"Contact": ["case204"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case323",
+		"Onset": "1900-04-06",
+		"SampleTime": "1900-05-01",
+		"Contact": ["case169"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case324",
+		"Onset": "1900-04-06",
+		"SampleTime": "1900-04-18",
+		"Contact": ["case195"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case325",
+		"Onset": "1900-04-06",
+		"SampleTime": "1900-04-17",
+		"Contact": ["case180"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case326",
+		"Onset": "1900-04-06",
+		"SampleTime": "1900-04-20",
+		"Contact": ["case149"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case327",
+		"Onset": "1900-04-06",
+		"SampleTime": "1900-04-18",
+		"Contact": ["case186"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case328",
+		"Onset": "1900-04-06",
+		"SampleTime": "1900-04-19",
+		"Contact": ["case227"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case329",
+		"Onset": "1900-04-06",
+		"SampleTime": "1900-04-25",
+		"Contact": ["case209"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case330",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-23",
+		"Contact": ["case221"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case331",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-19",
+		"Contact": ["case239"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case332",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-13",
+		"Contact": ["case208"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case333",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-20",
+		"Contact": ["case207"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case334",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-14",
+		"Contact": ["case219"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case335",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-14",
+		"Contact": ["case180"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case336",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-20",
+		"Contact": ["case195"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case337",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-20",
+		"Contact": ["case172"],
+		"Outcome": "Alive",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case338",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-21",
+		"Contact": ["case202"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case339",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-15",
+		"Contact": ["case132"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case340",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-23",
+		"Contact": ["case147"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case341",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-23",
+		"Contact": ["case172"],
+		"Outcome": "Alive",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case342",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-19",
+		"Contact": ["case147"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case343",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-21",
+		"Contact": ["case213"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case344",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-26",
+		"Contact": ["case124"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case345",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-18",
+		"Contact": ["case202"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case346",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-19",
+		"Contact": ["case220"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case347",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-26",
+		"Contact": ["case216"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case348",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-20",
+		"Contact": ["case143"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case349",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-18",
+		"Contact": ["case216"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case350",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-16",
+		"Contact": ["case189"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case351",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-26",
+		"Contact": ["case197"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case352",
+		"Onset": "1900-04-07",
+		"SampleTime": "1900-04-27",
+		"Contact": ["case178"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case353",
+		"Onset": "1900-04-08",
+		"SampleTime": "1900-04-21",
+		"Contact": ["case219"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case354",
+		"Onset": "1900-04-08",
+		"SampleTime": "1900-05-09",
+		"Contact": ["case198"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case355",
+		"Onset": "1900-04-08",
+		"SampleTime": "1900-04-22",
+		"Contact": ["case242"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case356",
+		"Onset": "1900-04-08",
+		"SampleTime": "1900-04-23",
+		"Contact": ["case219"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case357",
+		"Onset": "1900-04-08",
+		"SampleTime": "1900-04-17",
+		"Contact": ["case215"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case358",
+		"Onset": "1900-04-08",
+		"SampleTime": "1900-04-20",
+		"Contact": ["case185"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case359",
+		"Onset": "1900-04-08",
+		"SampleTime": "1900-04-26",
+		"Contact": ["case212"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case360",
+		"Onset": "1900-04-08",
+		"SampleTime": "1900-04-20",
+		"Contact": ["case186"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case361",
+		"Onset": "1900-04-08",
+		"SampleTime": "1900-04-19",
+		"Contact": ["case201"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case362",
+		"Onset": "1900-04-08",
+		"SampleTime": "1900-04-24",
+		"Contact": ["case178"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case363",
+		"Onset": "1900-04-08",
+		"SampleTime": "1900-04-17",
+		"Contact": ["case206"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case364",
+		"Onset": "1900-04-08",
+		"SampleTime": "1900-04-19",
+		"Contact": ["case209"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case365",
+		"Onset": "1900-04-08",
+		"SampleTime": "1900-04-17",
+		"Contact": ["case205"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case366",
+		"Onset": "1900-04-08",
+		"SampleTime": "1900-04-28",
+		"Contact": ["case185"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case367",
+		"Onset": "1900-04-08",
+		"SampleTime": "1900-04-26",
+		"Contact": ["case170"],
+		"Outcome": "Alive",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case368",
+		"Onset": "1900-04-08",
+		"SampleTime": "1900-04-26",
+		"Contact": ["case172"],
+		"Outcome": "Dead",
+		"Location": "Location B"
+	},
+	{
+		"Id": "case369",
+		"Onset": "1900-04-08",
+		"SampleTime": "1900-04-17",
+		"Contact": ["case159"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	},
+	{
+		"Id": "case370",
+		"Onset": "1900-04-08",
+		"SampleTime": "1900-04-16",
+		"Contact": ["case258"],
+		"Outcome": "Dead",
+		"Location": "Location A"
+	}
+]

@@ -51,7 +51,11 @@ class Panel extends React.Component {
 					callback={() => this.setState({ expanded: !this.state.expanded })}
 				/>
 
-				{this.state.expanded ? <div>{this.props.child}</div> : null}
+				{this.state.expanded ? (
+					<div style={{ textAlign: 'center' }}>
+						<div display={'inline-block'}>{<this.props.child {...this.props.childProps} />}</div>
+					</div>
+				) : null}
 			</div>
 		);
 	}
