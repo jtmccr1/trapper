@@ -179,7 +179,7 @@ class App extends Component {
 					title="Cases by location"
 					child={LocalEpidemic}
 					childProps={{
-						size: [700, 400],
+						size: [700, 250],
 						margin: { top: 50, right: 50, bottom: 50, left: 50 },
 						caseList: this.state.EpiData,
 					}}

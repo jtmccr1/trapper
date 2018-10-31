@@ -1,6 +1,24 @@
 import React from 'react';
 import * as d3 from 'd3v4';
 import { drawAxis } from '../utils/commonFunctions';
+import { css } from 'glamor';
+
+const container = {
+	position: 'relative',
+	width: '98%',
+	height: '250px',
+	minHeight: '250px',
+	margin: '10px 10px 10px 10px',
+	border: '3px solid gray',
+	borderRadius: '5px',
+};
+
+export const panelTitle = css({
+	fontWeight: 'bold',
+	fontSize: '1.3em',
+	paddingLeft: '20px',
+	color: '#F0605C',
+});
 
 // With help from https://bl.ocks.org/gcalmettes/95e3553da26ec90fd0a2890a678f3f69
 
@@ -95,7 +113,8 @@ class LocalEpidemic extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div style={container}>
+				<div {...panelTitle}>Location A</div>
 				<svg ref={node => (this.node = node)} width={this.props.size[0]} height={this.props.size[1]} />
 			</div>
 		);
