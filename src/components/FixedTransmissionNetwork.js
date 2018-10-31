@@ -194,13 +194,6 @@ class FixedTransmissionNetwork extends React.Component {
 			<div>
 				<div>
 					<button onClick={this.resetZoom}>Reset View</button>
-					<span style={{ paddingRight: '10px' }}>Color by: Clade:</span>
-
-					<label className="switch">
-						<input type="checkbox" onClick={this.props.updateView} checked={this.props.byLocation} />
-						<span className="slider round" />
-					</label>
-					<span style={{ paddingLeft: '10px', paddingRight: '10px' }}>By Location</span>
 				</div>
 				<div
 					{...toolTipCSS}

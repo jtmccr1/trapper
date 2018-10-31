@@ -249,6 +249,36 @@ export default class Tree {
 	rootToTipLengths() {
 		return this.externalNodes.map(tip => this.rootToTipLength(tip));
 	}
+	/**
+	 * returns the most recent common ancestor of the nodes provided.
+	 * @param nodes -
+	 * @returns {mrca node}
+	 */
+	MRCA(nodes) {
+		const getAncestors = node => {
+			let ancestors = [node];
+			while (node.parent) {
+				ancestors.push(node.parent);
+				node = node.parent;
+			}
+			return ancestors;
+		};
+		const getMCRA = (node1, node2) => {
+			const ancestor1 = getAncestors(node1);
+			const ancestor2 = getAncestors(node2);
+			const commonAncestors = ancestor1.filter(x => ancestor2.map(y => y.key).indexOf(x.key) > -1);
+			const mrca = commonAncestors.reduce(
+				(acc, curr) => (acc.onset > curr.onset ? acc : curr),
+				commonAncestors[0]
+			);
+			return mrca;
+		};
+		let currentMRCA = getMCRA(nodes[0], nodes[1]);
+		for (let i = 2; i < nodes.length; i++) {
+			currentMRCA = getMCRA(currentMRCA, nodes[i]);
+		}
+		return currentMRCA;
+	}
 
 	/**
 	 * A class method to create a Tree instance from a Newick format string (potentially with node

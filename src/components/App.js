@@ -13,6 +13,7 @@ import '../styles/temporary.css'; // TODO
 import FixedTransmissionNetwork from './FixedTransmissionNetwork';
 import { onlyUnique } from '../utils/commonFunctions';
 import LocalEpidemic from './LocalEpidemic';
+import TransmissionPanel from './TransmissionPanel';
 
 class App extends Component {
 	constructor(props) {
@@ -187,7 +188,7 @@ class App extends Component {
 
 				<Panel
 					title="Transmission network"
-					child={FixedTransmissionNetwork}
+					child={TransmissionPanel}
 					childProps={{
 						size: [700, 460],
 						margin: { top: 0, right: 30, bottom: 50, left: 30 },
