@@ -14,9 +14,10 @@ import '../styles/temporary.css'; // TODO
 class App extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = { View: 'userSelect' };
 		this.addEpiData = this.addEpiData.bind(this);
 		this.addTree = this.addTree.bind(this);
+		this.updateView = this.updateView.bind(this);
 	}
 	addEpiData = newData => {
 		let newState = this.state;
@@ -38,7 +39,11 @@ class App extends Component {
 		newState['PhyloTree'] = tree;
 		this.setState(newState);
 	};
-
+	updateView = () => {
+		this.setState({
+			View: this.state.View === 'byLocation' ? 'userSelect' : 'byLocation',
+		});
+	};
 	componentDidMount() {
 		getData('fullLineList.json', this.addEpiData);
 		getData('tree.json', this.addTree);
@@ -61,6 +66,8 @@ class App extends Component {
 						caseList: this.state.EpiData,
 						size: [700, 450],
 						margin: { top: 50, right: 50, bottom: 50, left: 50 },
+						view: this.state.View,
+						updateView: this.updateView,
 					}}
 				/>
 				<Panel
@@ -77,7 +84,9 @@ class App extends Component {
 						tree: this.state.PhyloTree,
 						caseList: this.state.EpiData,
 						size: [700, 470],
-						margin: { top: 10, right: 60, bottom: 50, left: 50 },
+						margin: { top: 10, right: 60, bottom: 60, left: 50 },
+						view: this.state.View,
+						updateView: this.updateView,
 					}}
 				/>
 			</div>
