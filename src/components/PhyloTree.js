@@ -10,7 +10,6 @@ class Phylotree extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			showColorOptions: false,
 			selectedNode: null,
 		};
 		this.drawTree = this.drawTree.bind(this);
@@ -68,66 +67,7 @@ class Phylotree extends React.Component {
 		const height = this.props.size[1];
 
 		//Get colors set
-		if (this.props.byLocation) {
-			// color get location of nodes
-			const locations = this.props.caseList.map(d => d.Location).filter(onlyUnique);
 
-			this.props.tree.externalNodes.forEach(node => {
-				// Get location from metadata
-				const metaData = this.props.caseList.filter(x => x.Id === node.name)[0];
-				node.color = metaData ? colours['test'][locations.indexOf(metaData.Location)] : colours['grey'];
-			});
-			[...this.props.tree.postorder()].forEach(node => {
-				if (node.children) {
-					const childColors = node.children.map(n => n.color).filter(onlyUnique);
-					node.color = childColors.length === 1 ? childColors[0] : childColors; // save for a tie breaker
-				}
-			});
-			// tie break where possible
-			const needAttention = [...this.props.tree.postorder()].filter(node => Array.isArray(node.color));
-
-			for (const trouble of needAttention) {
-				// check if the sybling has one of the colors
-				const sybling = trouble.parent ? trouble.parent.children.filter(x => x.key !== trouble.key)[0] : false;
-				if (sybling && !Array.isArray(sybling.color) && trouble.color.indexOf(sybling.color) > -1) {
-					trouble.color = sybling.color;
-				} else {
-					trouble.color = colours['grey'];
-				}
-			}
-		} else {
-			// hard coding in 4 clades for this data set.
-			this.props.tree.externalNodes.forEach((node, i) => {
-				// Get location from metadata
-
-				node.color =
-					i <= 3
-						? colours['test'][0]
-						: i <= 13
-							? colours['test'][1]
-							: i <= 19
-								? colours['test'][2]
-								: colours['test'][3];
-			});
-			[...this.props.tree.postorder()].forEach(node => {
-				if (node.children) {
-					const childColors = node.children.map(n => n.color).filter(onlyUnique);
-					node.color = childColors.length === 1 ? childColors[0] : childColors; // save for a tie breaker
-				}
-			});
-			// tie break where possible
-			const needAttention = [...this.props.tree.postorder()].filter(node => Array.isArray(node.color));
-
-			for (const trouble of needAttention) {
-				// check if the sybling has one of the colors
-				const sybling = trouble.parent ? trouble.parent.children.filter(x => x.key !== trouble.key)[0] : false;
-				if (sybling && !Array.isArray(sybling.color) && trouble.color.indexOf(sybling.color) > -1) {
-					trouble.color = sybling.color;
-				} else {
-					trouble.color = colours['grey'];
-				}
-			}
-		}
 		//Assign the node positions on a scale of 0-1
 		positionNodes(tree);
 		//remove the tree if it is there already

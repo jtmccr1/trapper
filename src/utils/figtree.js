@@ -71,7 +71,7 @@ export default class Tree {
 	 *
 	 * @returns {IterableIterator<IterableIterator<*|*>>}
 	 */
-	*preorder() {
+	*preorder(startNode = this.root) {
 		const traverse = function*(node) {
 			yield node;
 			if (node.children) {
@@ -81,7 +81,7 @@ export default class Tree {
 			}
 		};
 
-		yield* traverse(this.root);
+		yield* traverse(startNode);
 	}
 
 	/**
@@ -89,7 +89,7 @@ export default class Tree {
 	 *
 	 * @returns {IterableIterator<IterableIterator<*|*>>}
 	 */
-	*postorder() {
+	*postorder(startNode = this.root) {
 		const traverse = function*(node) {
 			if (node.children) {
 				for (const child of node.children) {
@@ -99,14 +99,14 @@ export default class Tree {
 			yield node;
 		};
 
-		yield* traverse(this.root);
+		yield* traverse(startNode);
 	}
 	/**
 	 * A search function that returns the nodes in a broad search
 	 *
 	 * @returns {array}
 	 */
-	broadSearch(startNode = this.rootNode) {
+	broadSearch(startNode = this.root) {
 		let q = [startNode];
 		let visited = [];
 		while (q.length > 0) {

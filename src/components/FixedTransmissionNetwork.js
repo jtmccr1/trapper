@@ -3,6 +3,7 @@ import * as d3 from 'd3v4';
 import { onlyUnique } from '../utils/commonFunctions';
 import { positionNodes, addBranches, addNodes } from '../utils/plotTreeFunctions';
 import { colours } from '../styles/colours';
+import { toolTipCSS } from '../utils/commonStyles';
 
 class FixedTransmissionNetwork extends React.Component {
 	constructor(props) {
@@ -11,6 +12,7 @@ class FixedTransmissionNetwork extends React.Component {
 		this.highlightNodes = this.highlightNodes.bind(this);
 		this.state = {
 			zoomNode: this.props.transmissionTree.rootNode,
+			colorChange: 0,
 		};
 		this.zoomToNode = this.zoomToNode.bind(this);
 		this.resetZoom = this.resetZoom.bind(this);
@@ -37,6 +39,37 @@ class FixedTransmissionNetwork extends React.Component {
 	}
 
 	drawTransPlot() {
+		const that = this;
+		const infoRef = this.infoRef;
+
+		function handleMouseMove(d, i) {
+			const [mouseX, mouseY] = d3.mouse(this); // [x, y] x starts from left, y starts from top
+			const left = mouseX > 0.5 * xScale.range()[1] ? '' : `${mouseX}px`;
+			const right = mouseX > 0.5 * xScale.range()[1] ? `${xScale.range()[1] - mouseX}px` : '';
+			const metaData = that.props.transmissionTree.nodeList.filter(x => x.Id === this.id)[0];
+			const hoverText = metaData
+				? `
+			${metaData.Id}
+			</br>
+			Onset: ${metaData.Onset.toISOString().substring(0, 10)}
+			</br>
+			Sampled: ${metaData.SampleTime.toISOString().substring(0, 10)}
+			</br>
+			Outcome: ${metaData.Outcome}
+			</br>
+			Contact: Lab3
+`
+				: `No metadata for ${this.id}`;
+			d3.select(infoRef)
+				.style('left', left)
+				.style('right', right)
+				.style('top', `${mouseY}px`)
+				.style('visibility', 'visible')
+				.html(hoverText);
+		}
+		function handleMouseOut() {
+			d3.select(infoRef).style('visibility', 'hidden');
+		}
 		positionNodes(this.props.transmissionTree);
 		const node = this.node;
 		const width = this.props.size[0];
@@ -90,11 +123,12 @@ class FixedTransmissionNetwork extends React.Component {
 
 		svgGroup
 			.selectAll('.branch')
-			.on('mouseover', function(d, i) {
-				d3.select(this).attr('stroke-width', 5);
+			.on('mouseover', (d, i) => {
+				const boldChildren = [...this.props.transmissionTree.postorder(d.target)].map(kid => kid.Id); // aren't they all
+				d3.selectAll('.branch').attr('stroke-width', d => (boldChildren.indexOf(d.target.Id) > -1 ? 5 : 2));
 			})
 			.on('mouseout', function(d, i) {
-				d3.select(this).attr('stroke-width', 2);
+				d3.selectAll('.branch').attr('stroke-width', 2);
 			})
 			.on('click', (d, i) => this.zoomToNode(d.target));
 
@@ -112,13 +146,19 @@ class FixedTransmissionNetwork extends React.Component {
 			.attr('cy', d => yScale(d.width))
 			.attr('r', 5)
 			.style('stroke-width', 2)
-
 			.on('click', d => this.props.selectSample(d))
+			.on('mouseover', handleMouseMove)
+			.on('mouseout', handleMouseOut)
 			.style(
 				'fill',
-				d => (this.props.byLocation ? colours['test'][locations.indexOf(d.Location)] : colours['grey'])
+				d =>
+					this.props.byLocation
+						? colours['test'][locations.indexOf(d.Location)]
+						: this.props.tree.nodeList.filter(n => n.name === d.Id).length > 0
+							? this.props.tree.nodeList.filter(n => n.name === d.Id)[0].color
+							: colours['grey'] // get color from phylonode
 			);
-		// Add time axis
+		// Add time axisa
 		const xScaletime = d3
 			.scaleTime()
 			.domain(d3.extent(processedData, d => d.Onset)) // Sample time - have to think about if this is robust
@@ -162,6 +202,13 @@ class FixedTransmissionNetwork extends React.Component {
 					</label>
 					<span style={{ paddingLeft: '10px', paddingRight: '10px' }}>By Location</span>
 				</div>
+				<div
+					{...toolTipCSS}
+					style={{ maxWidth: this.props.size[0] / 2 }}
+					ref={r => {
+						this.infoRef = r;
+					}}
+				/>
 				<svg ref={node => (this.node = node)} width={this.props.size[0]} height={this.props.size[1]} />
 			</div>
 		);

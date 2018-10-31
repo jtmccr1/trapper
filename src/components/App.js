@@ -11,6 +11,7 @@ import '../styles/global'; // sets global CSS
 import '../styles/fonts.css'; // sets global fonts
 import '../styles/temporary.css'; // TODO
 import FixedTransmissionNetwork from './FixedTransmissionNetwork';
+import { onlyUnique } from '../utils/commonFunctions';
 
 class App extends Component {
 	constructor(props) {
@@ -20,6 +21,7 @@ class App extends Component {
 		this.addTree = this.addTree.bind(this);
 		this.updateView = this.updateView.bind(this);
 		this.selectSample = this.selectSample.bind(this);
+		this.setPhyloColors = this.setPhyloColors.bind(this);
 	}
 	addEpiData = newData => {
 		let newState = this.state;
@@ -62,14 +64,17 @@ class App extends Component {
 	addTree = newData => {
 		let newState = this.state;
 		const tree = Tree.parseNewick(newData.newick);
-		tree.nodeList.forEach(n => (n.color = colours['grey'])); // Sets initial color
+		//tree.nodeList.forEach(n => (n.color = colours['grey'])); // Sets initial color
 		newState['PhyloTree'] = tree;
-		this.setState(newState);
+		this.setState(newState, () => this.setPhyloColors());
 	};
 	updateView = () => {
-		this.setState({
-			byLocation: !this.state.byLocation,
-		});
+		this.setState(
+			{
+				byLocation: !this.state.byLocation,
+			},
+			() => this.setPhyloColors()
+		);
 	};
 
 	selectSample(node) {
@@ -85,10 +90,75 @@ class App extends Component {
 			this.setState({ selectedCases: selectedCases });
 		}
 	}
+	setPhyloColors() {
+		console.log(this.state.byLocation);
+		if (this.state.byLocation) {
+			// color get location of nodes
+			const locations = this.state.EpiData.map(d => d.Location).filter(onlyUnique);
+
+			this.state.PhyloTree.externalNodes.forEach(node => {
+				// Get location from metadata
+				const metaData = this.state.EpiData.filter(x => x.Id === node.name)[0];
+				node.color = metaData ? colours['test'][locations.indexOf(metaData.Location)] : colours['grey'];
+			});
+			[...this.state.PhyloTree.postorder()].forEach(node => {
+				if (node.children) {
+					const childColors = node.children.map(n => n.color).filter(onlyUnique);
+					node.color = childColors.length === 1 ? childColors[0] : childColors; // save for a tie breaker
+				}
+			});
+			// tie break where possible
+			const needAttention = [...this.state.PhyloTree.postorder()].filter(node => Array.isArray(node.color));
+
+			for (const trouble of needAttention) {
+				// check if the sybling has one of the colors
+				const sybling = trouble.parent ? trouble.parent.children.filter(x => x.key !== trouble.key)[0] : false;
+				if (sybling && !Array.isArray(sybling.color) && trouble.color.indexOf(sybling.color) > -1) {
+					trouble.color = sybling.color;
+				} else {
+					trouble.color = colours['grey'];
+				}
+			}
+		} else {
+			// hard coding in 4 clades for this data set.
+			this.state.PhyloTree.externalNodes.forEach((node, i) => {
+				// Get location from metadata
+
+				node.color =
+					i <= 3
+						? colours['test'][0]
+						: i <= 13
+							? colours['test'][1]
+							: i <= 19
+								? colours['test'][2]
+								: colours['test'][3];
+			});
+			[...this.state.PhyloTree.postorder()].forEach(node => {
+				if (node.children) {
+					const childColors = node.children.map(n => n.color).filter(onlyUnique);
+					node.color = childColors.length === 1 ? childColors[0] : childColors; // save for a tie breaker
+				}
+			});
+			// tie break where possible
+			const needAttention = [...this.state.PhyloTree.postorder()].filter(node => Array.isArray(node.color));
+
+			for (const trouble of needAttention) {
+				// check if the sybling has one of the colors
+				const sybling = trouble.parent ? trouble.parent.children.filter(x => x.key !== trouble.key)[0] : false;
+				if (sybling && !Array.isArray(sybling.color) && trouble.color.indexOf(sybling.color) > -1) {
+					trouble.color = sybling.color;
+				} else {
+					trouble.color = colours['grey'];
+				}
+			}
+		}
+		this.setState({ colorChange: this.state.colorChange + 1 });
+	}
 	componentDidMount() {
 		getData('fullLineList.json', this.addEpiData);
 		getData('tree.json', this.addTree);
 	}
+
 	render() {
 		return (
 			<div>
@@ -135,6 +205,7 @@ class App extends Component {
 						margin: { top: 10, right: 60, bottom: 60, left: 50 },
 						byLocation: this.state.byLocation,
 						updateView: this.updateView,
+						colorChange: this.state.colorChange,
 					}}
 				/>
 			</div>
