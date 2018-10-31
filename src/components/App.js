@@ -12,6 +12,7 @@ import '../styles/fonts.css'; // sets global fonts
 import '../styles/temporary.css'; // TODO
 import FixedTransmissionNetwork from './FixedTransmissionNetwork';
 import { onlyUnique } from '../utils/commonFunctions';
+import LocalEpidemic from './LocalEpidemic';
 
 class App extends Component {
 	constructor(props) {
@@ -164,29 +165,32 @@ class App extends Component {
 			<div>
 				<Header />
 				<Panel
-					title="Cases by location"
-					childProps={{
-						size: [700, 400],
-						margin: { top: 50, right: 50, bottom: 50, left: 50 },
-					}}
-				/>
-				<Panel
-					title="New cases overtime"
+					title="Overview"
 					child={CasesLinePlot}
 					childProps={{
 						caseList: this.state.EpiData,
-						size: [700, 450],
-						margin: { top: 50, right: 50, bottom: 50, left: 50 },
+						size: [700, 460],
+						margin: { top: 0, right: 30, bottom: 50, left: 30 },
 						byLocation: this.state.byLocation,
 						updateView: this.updateView,
 					}}
 				/>
 				<Panel
-					title="Transmission network"
-					child={FixedTransmissionNetwork}
+					title="Cases by location"
+					child={LocalEpidemic}
 					childProps={{
 						size: [700, 400],
 						margin: { top: 50, right: 50, bottom: 50, left: 50 },
+						caseList: this.state.EpiData,
+					}}
+				/>
+
+				<Panel
+					title="Transmission network"
+					child={FixedTransmissionNetwork}
+					childProps={{
+						size: [700, 460],
+						margin: { top: 0, right: 30, bottom: 50, left: 30 },
 						transmissionTree: this.state.TransmissionTree,
 						selectedCases: this.state.selectedCases,
 						selectSample: this.selectSample,
