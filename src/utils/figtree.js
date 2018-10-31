@@ -101,6 +101,25 @@ export default class Tree {
 
 		yield* traverse(this.root);
 	}
+	/**
+	 * A search function that returns the nodes in a broad search
+	 *
+	 * @returns {array}
+	 */
+	broadSearch(startNode = this.rootNode) {
+		let q = [startNode];
+		let visited = [];
+		while (q.length > 0) {
+			const v = q.shift();
+			visited.push(v);
+			if (v.children) {
+				for (const child of v.children) {
+					q.push(child);
+				}
+			}
+		}
+		return visited;
+	}
 
 	/**
 	 * An instance method to return a Newick format string for the Tree. Can be called without a parameter to

@@ -2,11 +2,10 @@ import * as d3 from 'd3v4';
 
 export const positionNodes = tree => {
 	//adding string id so we can id the nodes and branches and keep them consistent during transitions
-	tree.nodeList.forEach((node, index) => (node.id = `node ${index}`));
 	// external nodes get assigned height in 0-1.
 	// external nodes are taken from the nodelist which is preorder traversal
 	const numberOfExternalNodes = tree.externalNodes.length;
-	const maxRootToTip = d3.max([...tree.rootToTipLengths()]);
+	const maxRootToTip = [...tree.rootToTipLengths()].reduce((acc, cur) => Math.max(acc, cur), 0);
 	//tree.externalNodes relies on the nodeList which is set when the object is constructed and does not update with modifications
 	// Here we get the order based on a current traversal
 	const externalNodes = tree.externalNodes.sort((a, b) => {

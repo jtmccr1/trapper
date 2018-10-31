@@ -5,9 +5,14 @@ import { colours } from '../styles/colours';
 import { toolTipCSS } from '../utils/commonStyles';
 import { onlyUnique } from '../utils/commonFunctions';
 import '../styles/temporary.css';
+
 class Phylotree extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			showColorOptions: false,
+			selectedNode: null,
+		};
 		this.drawTree = this.drawTree.bind(this);
 	}
 
@@ -48,35 +53,6 @@ class Phylotree extends React.Component {
 		function handleMouseOut() {
 			d3.select(infoRef).style('visibility', 'hidden');
 		}
-		function colorDescents(color) {
-			console.log(color);
-		}
-		function handleClick() {
-			const [mouseX, mouseY] = d3.mouse(this); // [x, y] x starts from left, y starts from top
-			const left = mouseX > 0.5 * xScale.range()[1] ? '' : `${mouseX}px`;
-			const right = mouseX > 0.5 * xScale.range()[1] ? `${xScale.range()[1] - mouseX}px` : '';
-			const colorDescents = color => {
-				console.log(color);
-			};
-			const hoverText = `
-			Color clade :
-				<ul class='custom-menu'>
-				
-				<li onClick = colorDescents(${colours['test'][0]}) data-action = ${colours['test'][0]}>${colours['test'][0]}</li>
-				<li onclick = 'colorDescents(${colours['test'][0]})' data-action = ${colours['test'][1]}>${colours['test'][1]}</li>
-				<li onClick = colorDescents(${colours['test'][0]}) data-action = ${colours['test'][2]}>${colours['test'][2]}</li>
-				<li onClick = 'colorDescents(${colours['test'][0]})' data-action = ${colours['test'][3]}>${colours['test'][3]}</li>
-
-			  </ul>
-		`; // add onclick callback to these options would be great to  make this from an array
-
-			d3.select(infoRef)
-				.style('left', left)
-				.style('right', right)
-				.style('top', `${mouseY}px`)
-				.style('visibility', 'visible')
-				.html(hoverText);
-		}
 
 		const node = this.node;
 		const infoRef = this.infoRef;
@@ -92,7 +68,7 @@ class Phylotree extends React.Component {
 		const height = this.props.size[1];
 
 		//Get colors set
-		if (this.props.view === 'byLocation') {
+		if (this.props.byLocation) {
 			// color get location of nodes
 			const locations = this.props.caseList.map(d => d.Location).filter(onlyUnique);
 
@@ -120,7 +96,37 @@ class Phylotree extends React.Component {
 				}
 			}
 		} else {
-			this.props.tree.nodeList.forEach(node => (node.color = colours['grey']));
+			// hard coding in 4 clades for this data set.
+			this.props.tree.externalNodes.forEach((node, i) => {
+				// Get location from metadata
+
+				node.color =
+					i <= 3
+						? colours['test'][0]
+						: i <= 13
+							? colours['test'][1]
+							: i <= 19
+								? colours['test'][2]
+								: colours['test'][3];
+			});
+			[...this.props.tree.postorder()].forEach(node => {
+				if (node.children) {
+					const childColors = node.children.map(n => n.color).filter(onlyUnique);
+					node.color = childColors.length === 1 ? childColors[0] : childColors; // save for a tie breaker
+				}
+			});
+			// tie break where possible
+			const needAttention = [...this.props.tree.postorder()].filter(node => Array.isArray(node.color));
+
+			for (const trouble of needAttention) {
+				// check if the sybling has one of the colors
+				const sybling = trouble.parent ? trouble.parent.children.filter(x => x.key !== trouble.key)[0] : false;
+				if (sybling && !Array.isArray(sybling.color) && trouble.color.indexOf(sybling.color) > -1) {
+					trouble.color = sybling.color;
+				} else {
+					trouble.color = colours['grey'];
+				}
+			}
 		}
 		//Assign the node positions on a scale of 0-1
 		positionNodes(tree);
@@ -180,8 +186,6 @@ class Phylotree extends React.Component {
 				d3.select(this).attr('stroke-width', 2);
 			});
 
-		svgGroup.selectAll('.branch').on('click', handleClick);
-
 		//  // extra parametersa are ignored if not required by the callback
 		// for(const callback of [...callBacks]){
 		//   callback(svgSelection,tree,scales)
@@ -193,27 +197,13 @@ class Phylotree extends React.Component {
 		return (
 			<div>
 				<div>
-					<span style={{ paddingRight: '10px' }}>Color:</span>
+					<span style={{ paddingRight: '10px' }}>Color by: Clade:</span>
 
 					<label className="switch">
-						<input
-							type="checkbox"
-							onClick={this.props.updateView}
-							checked={this.props.view === 'byLocation'}
-						/>
+						<input type="checkbox" onClick={this.props.updateView} checked={this.props.byLocation} />
 						<span className="slider round" />
 					</label>
 					<span style={{ paddingLeft: '10px', paddingRight: '10px' }}>By Location</span>
-
-					<label className="switch">
-						<input
-							type="checkbox"
-							onClick={this.props.updateView}
-							checked={this.props.view === 'userSelect'}
-						/>
-						<span className="slider round" />
-					</label>
-					<span style={{ paddingLeft: '10px' }}>By user selection</span>
 				</div>
 				<div
 					{...toolTipCSS}

@@ -2,7 +2,7 @@ export const colours = {
 	reset: '#888',
 	lightblue: '#eee',
 	grey: '#979797',
-	test: ['#001D73', '#AA7400', '#AA5200', '#979797', '#AA0C00'],
+	test: ['#001D73', '#AA7400', '#AA5200', '#AA0C00'],
 	rainbow1: ['#4C90C0'],
 	rainbow2: ['#4C90C0', '#CBB742'],
 	rainbow3: ['#4988C5', '#7EB876', '#CBB742'],

@@ -39,7 +39,7 @@ class CasesLinePlot extends React.Component {
 			.scaleLinear()
 			.range([height - this.props.margin.top - this.props.margin.bottom, this.props.margin.bottom])
 			.nice();
-		if (this.props.view === 'byLocation') {
+		if (this.props.byLocation) {
 			const locations = processedData.map(d => d.Location).filter(onlyUnique);
 			for (const location of locations) {
 				bins.push(
@@ -67,7 +67,7 @@ class CasesLinePlot extends React.Component {
 			.y(d => yScale(d.length));
 
 		drawAxis(svgGroup, xScale, yScale, this.props.size, this.props.margin, { rotate: 45, xlab: '', ylab: '' });
-		if (this.props.view === 'byLocation') {
+		if (this.props.byLocation) {
 			svgGroup
 				.selectAll('.line')
 				.data(bins)
@@ -95,11 +95,7 @@ class CasesLinePlot extends React.Component {
 					<span style={{ paddingRight: '10px' }}>All Locations</span>
 
 					<label className="switch">
-						<input
-							type="checkbox"
-							onClick={this.props.updateView}
-							checked={this.props.view === 'byLocation'}
-						/>
+						<input type="checkbox" onClick={this.props.updateView} checked={this.props.byLocation} />
 						<span className="slider round" />
 					</label>
 					<span style={{ paddingLeft: '10px' }}>By Location</span>
