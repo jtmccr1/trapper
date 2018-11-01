@@ -26,10 +26,10 @@ export const positionNodes = tree => {
 		}
 	}
 };
-export const addNodes = (svgSelection, tree, scales) => {
+export const addNodes = (svgSelection, nodes, scales) => {
 	svgSelection
 		.selectAll('circle')
-		.data(tree.nodes, node => {
+		.data(nodes, node => {
 			return node.name ? node.name : node.id;
 		}) // assign the key for continuity during transitions
 		.enter()
@@ -51,7 +51,7 @@ export const addNodes = (svgSelection, tree, scales) => {
 
 	svgSelection.selectAll('.external-node').attr('r', 5);
 };
-export const addBranches = (svgSelection, tree, scales) => {
+export const addBranches = (svgSelection, nodes, scales) => {
 	const makeLinePath = d3
 		.line()
 		.x(d => scales.x(d.height))
@@ -61,7 +61,7 @@ export const addBranches = (svgSelection, tree, scales) => {
 	svgSelection
 		.selectAll('.line')
 		.data(
-			tree.nodes.filter(n => n.parent).map(n => {
+			nodes.filter(n => n.parent).map(n => {
 				return {
 					target: n,
 					values: [{ height: n.parent.height, width: n.parent.width }, { height: n.height, width: n.width }],

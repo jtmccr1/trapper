@@ -7,8 +7,14 @@ import { toolTipCSS } from '../utils/commonStyles';
 class SelectedTransmissionNetwork extends React.Component {
 	constructor(props) {
 		super(props);
-
 		this.drawTransPlot = this.drawTransPlot.bind(this);
+		this.highlightNodes = this.highlightNodes.bind(this);
+		this.state = {
+			zoomNode: this.props.transmissionTree.rootNode,
+			colorChange: 0,
+		};
+		this.zoomToNode = this.zoomToNode.bind(this);
+		this.resetZoom = this.resetZoom.bind(this);
 	}
 	componentDidMount() {
 		this.drawTransPlot();
@@ -18,7 +24,18 @@ class SelectedTransmissionNetwork extends React.Component {
 		this.drawTransPlot();
 		this.highlightNodes();
 	}
+	zoomToNode(node) {
+		this.setState({ zoomNode: node }, this.drawTransPlot());
+	}
 
+	resetZoom() {
+		this.setState(
+			{
+				zoomNode: this.props.transmissionTree.rootNode,
+			},
+			this.drawTransPlot()
+		);
+	}
 	drawTransPlot() {
 		const that = this;
 		const infoRef = this.infoRef;
@@ -104,8 +121,11 @@ class SelectedTransmissionNetwork extends React.Component {
 			}
 		}
 
-		positionNodes(sequencedCases, subtreeParents, this.props.transmissionTree);
-		const processedData = [...sequencedCases, ...subtreeParents];
+		const allData = [...sequencedCases, ...subtreeParents];
+		const displayNodes = this.props.transmissionTree.broadSearch(this.state.zoomNode);
+		const processedData = allData.filter(d => displayNodes.map(e => e.Id).indexOf(d.Id) > -1);
+		positionNodes(processedData, subtreeParents, this.props.transmissionTree);
+
 		//positionNodes(subtree);
 		const node = this.node;
 		const width = this.props.size[0];
@@ -160,7 +180,8 @@ class SelectedTransmissionNetwork extends React.Component {
 			})
 			.on('mouseout', function(d, i) {
 				d3.selectAll('.branch').attr('stroke-width', 2);
-			});
+			})
+			.on('click', (d, i) => this.zoomToNode(d.target));
 
 		//Create nodes as circles
 		svgGroup
@@ -225,6 +246,9 @@ class SelectedTransmissionNetwork extends React.Component {
 	render() {
 		return (
 			<div>
+				<div>
+					<button onClick={this.resetZoom}>Reset View</button>
+				</div>
 				<div
 					{...toolTipCSS}
 					style={{ maxWidth: this.props.size[0] / 2 }}

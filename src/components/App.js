@@ -175,7 +175,7 @@ class App extends Component {
 						updateView: this.updateView,
 					}}
 				/>
-				<Panel
+				{/*<Panel
 					title="Cases by location"
 					child={LocalEpidemic}
 					childProps={{
@@ -183,7 +183,7 @@ class App extends Component {
 						margin: { top: 50, right: 50, bottom: 50, left: 50 },
 						caseList: this.state.EpiData,
 					}}
-				/>
+				/>*/}
 
 				<Panel
 					title="Transmission network"
@@ -210,6 +210,8 @@ class App extends Component {
 						byLocation: this.state.byLocation,
 						updateView: this.updateView,
 						colorChange: this.state.colorChange,
+						selectedCases: this.state.selectedCases,
+						selectSample: this.selectSample,
 					}}
 				/>
 			</div>

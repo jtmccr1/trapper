@@ -11,15 +11,33 @@ class Phylotree extends React.Component {
 		super(props);
 		this.state = {
 			selectedNode: null,
+			zoomNode: this.props.tree.rootNode,
 		};
 		this.drawTree = this.drawTree.bind(this);
+		this.highlightNodes = this.highlightNodes.bind(this);
+		this.zoomToNode = this.zoomToNode.bind(this);
+		this.resetZoom = this.resetZoom.bind(this);
 	}
 
 	componentDidMount() {
 		this.drawTree();
+		this.highlightNodes();
 	}
 	componentDidUpdate() {
 		this.drawTree();
+		this.highlightNodes();
+	}
+	zoomToNode(node) {
+		this.setState({ zoomNode: node }, this.drawTree());
+	}
+
+	resetZoom() {
+		this.setState(
+			{
+				zoomNode: this.props.tree.rootNode,
+			},
+			this.drawTree()
+		);
 	}
 
 	drawTree() {
@@ -69,26 +87,29 @@ class Phylotree extends React.Component {
 		//Get colors set
 
 		//Assign the node positions on a scale of 0-1
+
 		positionNodes(tree);
-		//remove the tree if it is there already
+		const displayNodes = this.props.tree.broadSearch(this.state.zoomNode);
+		const allData = this.props.tree.nodeList;
+		const processedData = allData.filter(d => displayNodes.map(e => e.key).indexOf(d.key) > -1);
 
 		//to save on writing later
 		// create the scales
 		const xScale = d3
 			.scaleLinear()
-			.domain([0, 1])
+			.domain(d3.extent(processedData.map(node => node.height)))
 			.range([this.props.margin.left, width - this.props.margin.right - this.props.margin.left]);
 
 		const yScale = d3
 			.scaleLinear()
-			.domain([0, 1])
+			.domain(d3.extent(processedData.map(node => node.width)))
 			.range([this.props.margin.bottom, height - this.props.margin.top - this.props.margin.bottom]);
 		//create otherstuff
 		const scales = { x: xScale, y: yScale };
 
-		addBranches(svgGroup, tree, scales);
+		addBranches(svgGroup, processedData, scales);
 
-		addNodes(svgGroup, tree, scales);
+		addNodes(svgGroup, processedData, scales);
 
 		//svgGroup.selectAll('.branch').style('stroke', colours['grey']);
 		//svgGroup.selectAll('.node').style('fill', colours['grey']);
@@ -96,7 +117,12 @@ class Phylotree extends React.Component {
 		svgGroup
 			.selectAll('.external-node')
 			.on('mouseout', handleMouseOut)
-			.on('mousemove', handleMouseMove);
+			.on('mousemove', handleMouseMove)
+			.on('click', d => {
+				//get case with this name
+				const caseNode = this.props.caseList.filter(x => x.Id === d.name)[0];
+				this.props.selectSample(caseNode);
+			});
 
 		// Add time axis
 		const xScaletime = d3
@@ -106,7 +132,7 @@ class Phylotree extends React.Component {
 
 		const xAxis = d3.axisBottom().scale(xScaletime);
 
-		svgGroup
+		/*svgGroup
 			.append('g')
 			.attr('class', 'axis')
 			.attr('transform', `translate(0,${this.props.size[1] - this.props.margin.top - this.props.margin.bottom} )`)
@@ -116,22 +142,28 @@ class Phylotree extends React.Component {
 			.attr('x', 9)
 			.attr('transform', `rotate(45)`)
 			.style('text-anchor', 'start');
+			*/
 
 		svgGroup
 			.selectAll('.branch')
 			.on('mouseover', (d, i) => {
-				const boldChildren = [...this.props.tree.postorder(d.target)].map(kid => kid.Id); // aren't they all
-				d3.selectAll('.branch').attr('stroke-width', d => (boldChildren.indexOf(d.target.Id) > -1 ? 5 : 2));
+				const boldChildren = [...this.props.tree.postorder(d.target)].map(kid => kid.key); // aren't they all
+				d3.selectAll('.branch').attr('stroke-width', d => (boldChildren.indexOf(d.target.key) > -1 ? 5 : 2));
 			})
 			.on('mouseout', function(d, i) {
 				d3.selectAll('.branch').attr('stroke-width', 2);
-			});
+			})
+			.on('click', (d, i) => this.zoomToNode(d.target));
+	}
+	highlightNodes() {
+		const node = this.node;
+		const svg = d3.select(node).style('font', '10px sans-serif');
+		const svgGroup = svg.select('g');
 
-		//  // extra parametersa are ignored if not required by the callback
-		// for(const callback of [...callBacks]){
-		//   callback(svgSelection,tree,scales)
-		// }
-		// //addLabels();
+		svgGroup.selectAll('circle').style('stroke', d => {
+			const color = this.props.selectedCases.map(n => n.Id).indexOf(d.name) > -1 ? 'red' : 'black';
+			return color;
+		});
 	}
 
 	render() {
@@ -145,6 +177,9 @@ class Phylotree extends React.Component {
 						<span className="slider round" />
 					</label>
 					<span style={{ paddingLeft: '10px', paddingRight: '10px' }}>By Location</span>
+				</div>
+				<div>
+					<button onClick={this.resetZoom}>Reset View</button>
 				</div>
 				<div
 					{...toolTipCSS}
