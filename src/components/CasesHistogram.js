@@ -71,7 +71,7 @@ class CasesHistogram extends React.Component {
 			// split each bin into location
 			const stack = d3.stack().keys(['grey', ...colors]);
 			series = stack(dataSet);
-			colorPallete = [colours['grey'], ...colours['test']];
+			colorPallete = [colours['grey'], ...colors];
 		} else {
 			bins = d3
 				.histogram()
