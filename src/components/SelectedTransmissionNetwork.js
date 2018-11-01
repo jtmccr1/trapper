@@ -1,19 +1,55 @@
 import React from 'react';
 import * as d3 from 'd3v4';
-import { drawAxis } from '../utils/commonFunctions';
+import { onlyUnique } from '../utils/commonFunctions';
+import { colours } from '../styles/colours';
+import { toolTipCSS } from '../utils/commonStyles';
 
 class SelectedTransmissionNetwork extends React.Component {
 	constructor(props) {
 		super(props);
+
 		this.drawTransPlot = this.drawTransPlot.bind(this);
 	}
 	componentDidMount() {
 		this.drawTransPlot();
+		this.highlightNodes();
 	}
 	componentDidUpdate() {
 		this.drawTransPlot();
+		this.highlightNodes();
 	}
+
 	drawTransPlot() {
+		const that = this;
+		const infoRef = this.infoRef;
+		function handleMouseMove(d, i) {
+			const [mouseX, mouseY] = d3.mouse(this); // [x, y] x starts from left, y starts from top
+			const left = mouseX > 0.5 * xScale.range()[1] ? '' : `${mouseX}px`;
+			const right = mouseX > 0.5 * xScale.range()[1] ? `${xScale.range()[1] - mouseX}px` : '';
+			const metaData = that.props.transmissionTree.nodeList.filter(x => x.Id === this.id)[0];
+			const hoverText = metaData
+				? `
+			${metaData.Id}
+			</br>
+			Onset: ${metaData.Onset.toISOString().substring(0, 10)}
+			</br>
+			Sampled: ${metaData.SampleTime.toISOString().substring(0, 10)}
+			</br>
+			Outcome: ${metaData.Outcome}
+			</br>
+			Contact: Lab3
+`
+				: `No metadata for ${this.id}`;
+			d3.select(infoRef)
+				.style('left', left)
+				.style('right', right)
+				.style('top', `${mouseY}px`)
+				.style('visibility', 'visible')
+				.html(hoverText);
+		}
+		function handleMouseOut() {
+			d3.select(infoRef).style('visibility', 'hidden');
+		}
 		// get sub tree from samples -
 
 		function positionNodes(selectedCases, subtreeParents, tree) {
@@ -53,9 +89,12 @@ class SelectedTransmissionNetwork extends React.Component {
 			}
 		}
 
-		const mrca = this.props.transmissionTree.MRCA(this.props.selectedCases);
+		const sequencedCases = this.props.transmissionTree.nodeList.filter(
+			x => this.props.tree.externalNodes.map(n => n.name).indexOf(x.Id) > -1
+		);
+		const mrca = this.props.transmissionTree.MRCA(sequencedCases);
 		let subtreeParents = [mrca];
-		for (const node of this.props.selectedCases) {
+		for (const node of sequencedCases) {
 			if (node.parent && node !== mrca) {
 				let currentNode = node.parent;
 				while (currentNode !== mrca) {
@@ -65,15 +104,14 @@ class SelectedTransmissionNetwork extends React.Component {
 			}
 		}
 
-		positionNodes(this.props.selectedCases, subtreeParents, this.props.transmissionTree);
-		const processedData = [...this.props.selectedCases, ...subtreeParents].filter(x => x.onset <= this.props.time);
+		positionNodes(sequencedCases, subtreeParents, this.props.transmissionTree);
+		const processedData = [...sequencedCases, ...subtreeParents];
 		//positionNodes(subtree);
 		const node = this.node;
 		const width = this.props.size[0];
 		const height = this.props.size[1];
 		const svg = d3.select(node).style('font', '10px sans-serif');
 
-		//const edges = this.props.data.filter(d => d.parent).map(d => ({ source: d.parent, target: d }));
 		const yScale = d3
 			.scaleLinear()
 			.range([height - this.props.margin.top - this.props.margin.bottom - 10, this.props.margin.bottom])
@@ -81,11 +119,11 @@ class SelectedTransmissionNetwork extends React.Component {
 		const xScale = d3
 			.scaleLinear()
 			.range([this.props.margin.left, width - this.props.margin.left - this.props.margin.right])
-			.domain([d3.min(processedData, d => d.onset), d3.max(processedData, d => d.onset)]);
+			.domain([d3.min(processedData, d => d.Onset), d3.max(processedData, d => d.Onset)]);
 
 		const makeLinePath = d3
 			.line()
-			.x(d => xScale(d.onset))
+			.x(d => xScale(d.Onset))
 			.y(d => yScale(d.subY))
 			.curve(d3.curveStepBefore);
 		//remove current plot
@@ -95,18 +133,14 @@ class SelectedTransmissionNetwork extends React.Component {
 		const svgGroup = svg.select('g');
 		//Create SVG element
 		//Create edges as lines
-		const maxMutations = this.props.transmissionTree.caseList
-			.filter(d => d.onset <= this.props.time)
-			.reduce((acc, cur) => Math.max(acc, cur.mutationsFromRoot), 0);
 		// edges
 		svgGroup
 			.selectAll('.line')
 			.data(
 				processedData.filter(d => d.Id !== mrca.Id).map(n => {
-					//processedData.map(n => {
 					return {
 						target: n,
-						values: [{ onset: n.parent.onset, subY: n.parent.subY }, { onset: n.onset, subY: n.subY }],
+						values: [{ Onset: n.parent.Onset, subY: n.parent.subY }, { Onset: n.Onset, subY: n.subY }],
 					};
 				})
 			)
@@ -118,44 +152,86 @@ class SelectedTransmissionNetwork extends React.Component {
 			.attr('d', edge => makeLinePath(edge.values))
 			.style('stroke', 'grey');
 
+		svgGroup
+			.selectAll('.branch')
+			.on('mouseover', (d, i) => {
+				const boldChildren = [...this.props.transmissionTree.postorder(d.target)].map(kid => kid.Id); // aren't they all
+				d3.selectAll('.branch').attr('stroke-width', d => (boldChildren.indexOf(d.target.Id) > -1 ? 5 : 2));
+			})
+			.on('mouseout', function(d, i) {
+				d3.selectAll('.branch').attr('stroke-width', 2);
+			});
+
 		//Create nodes as circles
 		svgGroup
 			.selectAll('circle')
 			.data(processedData)
 			.enter()
 			.append('circle');
+		const locations = this.props.transmissionTree.nodeList.map(d => d.Location).filter(onlyUnique);
 
 		svgGroup
 			.selectAll('circle')
 			.attr('id', d => d.Id)
-			.attr('cx', d => xScale(d.onset))
+			.attr('cx', d => xScale(d.Onset))
 			.attr('cy', d => yScale(d.subY))
 			.attr('r', 5)
+			.on('click', d => this.props.selectSample(d))
+			.on('mouseover', handleMouseMove)
+			.on('mouseout', handleMouseOut)
 			.style('stroke-width', 2)
 			.style('stroke', 'black')
-			.style('fill', d => (this.props.selectedCases.map(n => n.Id).indexOf(d.Id) > -1 ? 'black' : 'white'))
-			.append('title')
-			.text(function(d) {
-				return d.Id;
-			});
+			.style(
+				'fill',
+				d =>
+					this.props.byLocation
+						? colours['test'][locations.indexOf(d.Location)]
+						: this.props.tree.nodeList.filter(n => n.name === d.Id).length > 0
+							? this.props.tree.nodeList.filter(n => n.name === d.Id)[0].color
+							: colours['grey'] // get color from phylonode
+			);
 		//.attr('fill-opacity', d => (this.props.selectedCases.map(c => c.Id).indexOf(d.Id) > -1 ? 1 : 0.1));
 
-		drawAxis(
-			svgGroup,
-			xScale,
-			d3.scaleLinear().range(0),
-			this.props.size,
-			this.props.margin,
-			'Days since index case',
-			''
-		);
+		const xScaletime = d3
+			.scaleTime()
+			.domain(d3.extent(processedData, d => d.Onset)) // Sample time - have to think about if this is robust
+			.range([this.props.margin.left, width - this.props.margin.right - this.props.margin.left]);
+
+		const xAxis = d3.axisBottom().scale(xScaletime);
+
+		svgGroup
+			.append('g')
+			.attr('class', 'axis')
+			.attr('transform', `translate(0,${this.props.size[1] - this.props.margin.top - this.props.margin.bottom} )`)
+			.call(xAxis)
+			.selectAll('text')
+			.attr('y', 0)
+			.attr('x', 9)
+			.attr('transform', `rotate(45)`)
+			.style('text-anchor', 'start');
 		svgGroup.select('.y').remove();
+	}
+	highlightNodes() {
+		const node = this.node;
+		const svg = d3.select(node).style('font', '10px sans-serif');
+		const svgGroup = svg.select('g');
+
+		svgGroup.selectAll('circle').style('stroke', d => {
+			const color = this.props.selectedCases.map(n => n.Id).indexOf(d.Id) > -1 ? 'red' : 'black';
+			return color;
+		});
 	}
 
 	render() {
 		return (
 			<div>
-				<h4>Selected transmission tree</h4>
+				<div
+					{...toolTipCSS}
+					style={{ maxWidth: this.props.size[0] / 2 }}
+					ref={r => {
+						this.infoRef = r;
+					}}
+				/>
 				<svg ref={node => (this.node = node)} width={this.props.size[0]} height={this.props.size[1]} />
 			</div>
 		);

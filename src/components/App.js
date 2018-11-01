@@ -93,7 +93,6 @@ class App extends Component {
 		}
 	}
 	setPhyloColors() {
-		console.log(this.state.byLocation);
 		if (this.state.byLocation) {
 			// color get location of nodes
 			const locations = this.state.EpiData.map(d => d.Location).filter(onlyUnique);

@@ -119,11 +119,12 @@ class Phylotree extends React.Component {
 
 		svgGroup
 			.selectAll('.branch')
-			.on('mouseover', function(d, i) {
-				d3.select(this).attr('stroke-width', 5);
+			.on('mouseover', (d, i) => {
+				const boldChildren = [...this.props.tree.postorder(d.target)].map(kid => kid.Id); // aren't they all
+				d3.selectAll('.branch').attr('stroke-width', d => (boldChildren.indexOf(d.target.Id) > -1 ? 5 : 2));
 			})
 			.on('mouseout', function(d, i) {
-				d3.select(this).attr('stroke-width', 2);
+				d3.selectAll('.branch').attr('stroke-width', 2);
 			});
 
 		//  // extra parametersa are ignored if not required by the callback

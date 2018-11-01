@@ -49,7 +49,7 @@ export const addNodes = (svgSelection, tree, scales) => {
 			return !d.children ? ' node external-node' : ' node internal-node';
 		});
 
-	svgSelection.selectAll('.external-node').attr('r', 4);
+	svgSelection.selectAll('.external-node').attr('r', 5);
 };
 export const addBranches = (svgSelection, tree, scales) => {
 	const makeLinePath = d3
