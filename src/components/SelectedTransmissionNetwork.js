@@ -149,20 +149,23 @@ class SelectedTransmissionNetwork extends React.Component {
 			)
 			.enter()
 			.append('path')
-			.attr('class', 'branch')
+			.attr('class', 'transmission-branch')
 			.attr('fill', 'none')
 			.attr('stroke-width', 2)
 			.attr('d', edge => makeLinePath(edge.values))
 			.style('stroke', 'grey');
 
 		svgGroup
-			.selectAll('.branch')
+			.selectAll('.transmission-branch')
 			.on('mouseover', (d, i) => {
 				const boldChildren = [...this.props.transmissionTree.postorder(d.target)].map(kid => kid.Id); // aren't they all
-				d3.selectAll('.branch').attr('stroke-width', d => (boldChildren.indexOf(d.target.Id) > -1 ? 5 : 2));
+				d3.selectAll('.transmission-branch').attr(
+					'stroke-width',
+					d => (boldChildren.indexOf(d.target.Id) > -1 ? 5 : 2)
+				);
 			})
 			.on('mouseout', function(d, i) {
-				d3.selectAll('.branch').attr('stroke-width', 2);
+				d3.selectAll('.transmission-branch').attr('stroke-width', 2);
 			})
 			.on('click', (d, i) => this.this.props.zoomToNode('case', d.target));
 

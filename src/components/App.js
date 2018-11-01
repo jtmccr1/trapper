@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from './Header';
 import Panel from './CollapsablePanel';
 import getData from '../utils/getData';
-import CasesLinePlot from './CasesLinePlot';
+import CasesHistogram from './CasesHistogram';
 import PhyloTree from './PhyloTree';
 import Tree from '../utils/figtree';
 //Styles from Rampart
@@ -205,13 +205,15 @@ class App extends Component {
 				<Header />
 				<Panel
 					title="Overview"
-					child={CasesLinePlot}
+					child={CasesHistogram}
 					childProps={{
-						caseList: this.state.EpiData,
+						transmissionTree: this.state.transmissionTree,
 						size: [700, 460],
 						margin: { top: 0, right: 30, bottom: 50, left: 30 },
 						byLocation: this.state.byLocation,
 						updateColor: this.updateColor,
+						tree: this.state.PhyloTree,
+						zoomCase: this.state.zoomCase,
 					}}
 				/>
 				{/*<Panel
