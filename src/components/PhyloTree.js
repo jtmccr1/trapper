@@ -1,22 +1,14 @@
 import React from 'react';
 import * as d3 from 'd3v4';
 import { positionNodes, addBranches, addNodes } from '../utils/plotTreeFunctions.js';
-import { colours } from '../styles/colours';
 import { toolTipCSS } from '../utils/commonStyles';
-import { onlyUnique } from '../utils/commonFunctions';
 import '../styles/temporary.css';
 
 class Phylotree extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			selectedNode: null,
-			zoomNode: this.props.tree.rootNode,
-		};
 		this.drawTree = this.drawTree.bind(this);
 		this.highlightNodes = this.highlightNodes.bind(this);
-		this.zoomToNode = this.zoomToNode.bind(this);
-		this.resetZoom = this.resetZoom.bind(this);
 	}
 
 	componentDidMount() {
@@ -26,18 +18,6 @@ class Phylotree extends React.Component {
 	componentDidUpdate() {
 		this.drawTree();
 		this.highlightNodes();
-	}
-	zoomToNode(node) {
-		this.setState({ zoomNode: node }, this.drawTree());
-	}
-
-	resetZoom() {
-		this.setState(
-			{
-				zoomNode: this.props.tree.rootNode,
-			},
-			this.drawTree()
-		);
 	}
 
 	drawTree() {
@@ -89,7 +69,7 @@ class Phylotree extends React.Component {
 		//Assign the node positions on a scale of 0-1
 
 		positionNodes(tree);
-		const displayNodes = this.props.tree.broadSearch(this.state.zoomNode);
+		const displayNodes = this.props.tree.broadSearch(this.props.zoomPhylo);
 		const allData = this.props.tree.nodeList;
 		const processedData = allData.filter(d => displayNodes.map(e => e.key).indexOf(d.key) > -1);
 
@@ -153,7 +133,7 @@ class Phylotree extends React.Component {
 			.on('mouseout', function(d, i) {
 				d3.selectAll('.branch').attr('stroke-width', 2);
 			})
-			.on('click', (d, i) => this.zoomToNode(d.target));
+			.on('click', (d, i) => this.props.zoomToNode('phylo', d.target));
 	}
 	highlightNodes() {
 		const node = this.node;
@@ -173,13 +153,13 @@ class Phylotree extends React.Component {
 					<span style={{ paddingRight: '10px' }}>Color by: Clade:</span>
 
 					<label className="switch">
-						<input type="checkbox" onClick={this.props.updateView} checked={this.props.byLocation} />
+						<input type="checkbox" onClick={this.props.updateColor} checked={this.props.byLocation} />
 						<span className="slider round" />
 					</label>
 					<span style={{ paddingLeft: '10px', paddingRight: '10px' }}>By Location</span>
 				</div>
 				<div>
-					<button onClick={this.resetZoom}>Reset View</button>
+					<button onClick={this.props.resetZoom}>Reset View</button>
 				</div>
 				<div
 					{...toolTipCSS}

@@ -22,7 +22,7 @@ class TransmissionPanel extends React.Component {
 						<span style={{ paddingRight: '10px' }}>Color by: Clade:</span>
 
 						<label className="switch">
-							<input type="checkbox" onClick={this.props.updateView} checked={this.props.byLocation} />
+							<input type="checkbox" onClick={this.props.updateColor} checked={this.props.byLocation} />
 							<span className="slider round" />
 						</label>
 						<span style={{ paddingLeft: '10px', paddingRight: '10px' }}>By Location</span>
@@ -45,7 +45,7 @@ class TransmissionPanel extends React.Component {
 						<span style={{ paddingRight: '10px' }}>Color by: Clade:</span>
 
 						<label className="switch">
-							<input type="checkbox" onClick={this.props.updateView} checked={this.props.byLocation} />
+							<input type="checkbox" onClick={this.props.updateColor} checked={this.props.byLocation} />
 							<span className="slider round" />
 						</label>
 						<span style={{ paddingLeft: '10px', paddingRight: '10px' }}>By Location</span>

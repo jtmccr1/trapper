@@ -268,7 +268,7 @@ export default class Tree {
 			const ancestor2 = getAncestors(node2);
 			const commonAncestors = ancestor1.filter(x => ancestor2.map(y => y.key).indexOf(x.key) > -1);
 			const mrca = commonAncestors.reduce(
-				(acc, curr) => (acc.onset > curr.onset ? acc : curr),
+				(acc, curr) => (this.rootToTipLength(acc) > this.rootToTipLength(curr) ? acc : curr),
 				commonAncestors[0]
 			);
 			return mrca;

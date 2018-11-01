@@ -9,12 +9,6 @@ class SelectedTransmissionNetwork extends React.Component {
 		super(props);
 		this.drawTransPlot = this.drawTransPlot.bind(this);
 		this.highlightNodes = this.highlightNodes.bind(this);
-		this.state = {
-			zoomNode: this.props.transmissionTree.rootNode,
-			colorChange: 0,
-		};
-		this.zoomToNode = this.zoomToNode.bind(this);
-		this.resetZoom = this.resetZoom.bind(this);
 	}
 	componentDidMount() {
 		this.drawTransPlot();
@@ -24,18 +18,7 @@ class SelectedTransmissionNetwork extends React.Component {
 		this.drawTransPlot();
 		this.highlightNodes();
 	}
-	zoomToNode(node) {
-		this.setState({ zoomNode: node }, this.drawTransPlot());
-	}
 
-	resetZoom() {
-		this.setState(
-			{
-				zoomNode: this.props.transmissionTree.rootNode,
-			},
-			this.drawTransPlot()
-		);
-	}
 	drawTransPlot() {
 		const that = this;
 		const infoRef = this.infoRef;
@@ -122,7 +105,7 @@ class SelectedTransmissionNetwork extends React.Component {
 		}
 
 		const allData = [...sequencedCases, ...subtreeParents];
-		const displayNodes = this.props.transmissionTree.broadSearch(this.state.zoomNode);
+		const displayNodes = this.props.transmissionTree.broadSearch(this.props.zoomCase);
 		const processedData = allData.filter(d => displayNodes.map(e => e.Id).indexOf(d.Id) > -1);
 		positionNodes(processedData, subtreeParents, this.props.transmissionTree);
 
@@ -181,7 +164,7 @@ class SelectedTransmissionNetwork extends React.Component {
 			.on('mouseout', function(d, i) {
 				d3.selectAll('.branch').attr('stroke-width', 2);
 			})
-			.on('click', (d, i) => this.zoomToNode(d.target));
+			.on('click', (d, i) => this.this.props.zoomToNode('case', d.target));
 
 		//Create nodes as circles
 		svgGroup
@@ -247,7 +230,7 @@ class SelectedTransmissionNetwork extends React.Component {
 		return (
 			<div>
 				<div>
-					<button onClick={this.resetZoom}>Reset View</button>
+					<button onClick={this.props.resetZoom}>Reset View</button>
 				</div>
 				<div
 					{...toolTipCSS}
