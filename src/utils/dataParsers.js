@@ -18,7 +18,6 @@ export const  parseCaseData=(d)=>{
                 }
             }
     });
-    console.log(entry)
     return entry;
 }
 
@@ -40,7 +39,6 @@ export const parseEdgeData=(d)=>{
 export const readData =(fileName,formatter,callback)=>{
         d3.csv(fileName,(data)=>{
                 const parsedData = data.map(d=>formatter(d));
-                console.log(parsedData);
                 callback(parsedData);
 
       });

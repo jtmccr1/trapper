@@ -14,11 +14,13 @@ import { onlyUnique, curry } from '../utils/commonFunctions';
 import TransmissionPanel from './TransmissionPanel';
 import {parseCaseData, readData,parseEdgeData} from "../utils/dataParsers.js";
 import TransmissionGraph from './TransmissionGraph';
+import {Graph} from "../utils/Graph";
+import { line } from 'd3v4';
 
 class App extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { byLocation: false, selectedCases: [], colorChange: 0 };
+		this.state = { byLocation: false, selectedCases: [], colorChange: 0 ,data:new Graph()};
 		this.addEpiData = this.addEpiData.bind(this);
 		this.addTree = this.addTree.bind(this);
 		this.updateColor = this.updateColor.bind(this);
@@ -26,7 +28,8 @@ class App extends Component {
 		this.setPhyloColors = this.setPhyloColors.bind(this);
 		this.zoomToNode = this.zoomToNode.bind(this);
 		this.resetZoom = this.resetZoom.bind(this);
-		this.addDataToState=this.addDataToState.bind(this);
+		this.addCases=this.addCases.bind(this);
+		this.addEdges=this.addEdges.bind(this);
 	}
 	addEpiData = newData => {
 		
@@ -71,17 +74,22 @@ class App extends Component {
 	};
 
 
-	addDataToState = (key,newData)=>{
-		if(this.state.key){
-			const oldState=this.state.key;
-			oldState.push(newData)
-			this.setState({[key]:oldState});
-		}else{
-			this.setState({[key]:newData});
-		}
+	addCases = (newData)=>{
+		newData.forEach(node=>{
+			this.state.data.addNode(node)
+		})
 	}
+	addEdges = newData=>{
+		newData.forEach(edge=>{
+			const source=this.state.data.getNodeFromKeyValuePair("id",edge.source)
+			const target = this.state.data.getNodeFromKeyValuePair("id",edge.target)
+			this.state.data.addEdge({source:source,
+									target:target,
+									metaData:edge.metaData})
+	})
+}
 
-	// https://wsvincent.com/javascript-currying/
+
 	
 	addTree = newData => {
 		let newState = this.state;
@@ -213,10 +221,8 @@ class App extends Component {
 		this.setState({ colorChange: this.state.colorChange + 1 });
 	}
 	componentDidMount() {
-		const CaseAdder=curry(this.addDataToState,"cases");
-		const contactAdder=curry(this.addDataToState,"edges");
-		readData("http://localhost:3001/lineList.csv",parseCaseData,CaseAdder);
-		readData("http://localhost:3001/epiContacts.csv",parseEdgeData,contactAdder);
+		readData("http://localhost:3001/lineList.csv",parseCaseData,this.addCases);
+		readData("http://localhost:3001/epiContacts.csv",parseEdgeData,this.addEdges);
 
 		getData('fullLineList.json', this.addEpiData);
 		getData('tree.json', this.addTree);
@@ -237,7 +243,7 @@ class App extends Component {
 						updateColor: this.updateColor,
 						tree: this.state.PhyloTree,
 						zoomCase: this.state.zoomCase,
-						cases:this.state.cases
+						cases:this.state.data.getNodes()
 					}}
 				/>
 				{/*<Panel
@@ -266,7 +272,8 @@ class App extends Component {
 						zoomCase: this.state.zoomCase,
 						resetZoom: this.resetZoom,
 						edges:this.state.edges,
-						cases:this.state.case
+						cases:this.state.case,
+						data:this.state.data,
 					}}
 				/>
 				<Panel

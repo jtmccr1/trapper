@@ -1,0 +1,132 @@
+export class Graph{
+    constructor(nodes=[],edges=[]) {
+           this.nodeList =nodes;
+           this.nodeList.forEach(element => {
+               element.key=Symbol();
+           });
+           this.nodeMap = new Map(this.nodeList.map(node => [node.key, node]));
+        this.edgeList = edges;
+        this.edgeList.forEach(element => {
+            element.key=Symbol();
+        });
+        this.edgeMap = new Map(this.edgeList.map(edge => [edge.key, edge]));    
+    };
+
+    addNode(node){
+        if(Object.keys(node).indexOf("key")===-1){
+            node.key=Symbol();
+        }
+        this.nodeList.push(node);
+        this.nodeMap.set(node.key,node);
+    }
+    addEdge(edge){
+        if(Object.keys(edge).indexOf("key")===-1){
+            edge.key=Symbol();
+        }        
+        this.edgeList.push(edge);
+        this.edgeMap.set(edge.key,edge);
+    }
+    getNode(key){
+        return this.nodeMap.get(key);
+    }
+    getNodeFromKeyValuePair(key,value){
+        return this.nodeList.filter(node=>node[key]===value)[0]
+    }
+
+    getNodes(){
+        return this.nodeList;
+    }
+    removeNode(node,preserveEdges=false){
+        //remove edges
+        const edges = this.getEdges(node);
+        edges.forEach(edge=>this.removeEdge(edge))
+
+        const key=node.key
+        this.nodeList=this.nodeList.filter(node=>node.key!==key);
+        this.nodeMap.delete(key)
+    }
+
+    getEdge(key){
+        return this.edgeMap.get(key);
+    }
+    getIncomingEdges(node){
+       return [...this.edgeList.filter(edge=>edge.target===node)]
+    }
+    getOutgoingEdges(node){
+        return [...this.edgeList.filter(edge=>edge.source===node)]
+    }
+    getEdges(node){
+        return[...this.getOutgoingEdges(node),...this.getIncomingEdges(node)]
+    }
+    getEdgeList(){
+        return this.edgeList;
+    }
+    removeEdge(edge){
+        const key=edge.key
+        this.edgeList=this.edgeList.filter(edge=>edge.key!==key);
+        this.edgeMap.delete(key)
+    }
+
+    makeEdge(sourceNode,targetNode){
+        this.addEdge({source:sourceNode,target:targetNode})
+    }
+    insertNode(node,edge){
+        const newEdge = {source:edge.source,target:node}
+        const newEdge2 = {source:node,target:edge.taget}
+
+        this.removeEdge(edge)
+
+        this.addEdge(newEdge)
+        this.addEdge(newEdge2)
+    }
+
+    getClusters(){
+        this.nodeList.forEach(node=>node.visited=false)
+        let clusters=[];
+        this.nodeList.forEach(node=>{
+            if(!node.visited){
+            const cluster={nodes:[node],
+                            externalNodes:[]}
+            node.visited=true;
+            this.getEdges(node).forEach(edge=>
+                this.traverse(node,edge,cluster))
+                //If this is a on node cluster then add the node as
+                // an external as well
+                if(cluster.nodes.length===1){
+                    if(cluster.externalNodes.length===0){
+                        cluster.externalNodes.push(node);
+                    }
+                }
+             clusters.push(cluster);
+            }
+        })
+        return clusters;
+
+    }
+
+    traverse(currentNode,edge,cluster,direction='forward'){
+        let nodeToVisit;
+        let turnBack=false;
+
+        if(currentNode===edge.source){
+             nodeToVisit = edge.target;
+             direction="forward";
+        }else{
+            nodeToVisit= edge.source
+            if(direction==="forward"){
+                turnBack=true;
+            }
+            direction="backward";
+        }
+        if(nodeToVisit.visited){
+            if(turnBack){
+                cluster.externalNodes.push(currentNode);
+            }
+            return;
+        }else{
+            nodeToVisit.visited=true;
+            cluster.nodes.push(nodeToVisit);
+            this.getEdges(nodeToVisit).forEach(edge=>this.traverse(nodeToVisit,edge,cluster,direction));
+        }
+    }
+}
