@@ -46,4 +46,10 @@ export const drawAxis = (svgGroup, xScale, yScale, size, margins, options = { ro
 export const onlyUnique = (value, index, self) => {
 	return self.indexOf(value) === index;
 };
-//https://stackoverflow.com/questions/35813177/d3-simple-drop-down-menu-on-click
+// https://wsvincent.com/javascript-currying/
+export const curry = (fn, ...args) =>{
+	return (fn.length <= args.length) ?
+	  fn(...args) :
+	  (...more) => curry(fn, ...args, ...more);
+	  }
+  

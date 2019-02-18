@@ -1,6 +1,7 @@
 import React from 'react';
 import FixedTransmissionNetwork from './FixedTransmissionNetwork';
 import SelectedTransmissionNetwork from './SelectedTransmissionNetwork';
+import TransmissionGraph from './TransmissionGraph';
 
 class TransmissionPanel extends React.Component {
 	constructor(props) {
@@ -35,7 +36,7 @@ class TransmissionPanel extends React.Component {
 						</label>
 						<span style={{ paddingLeft: '10px', paddingRight: '10px' }}>Sequenced Cases</span>
 					</div>
-					<FixedTransmissionNetwork {...this.props} />>
+					<TransmissionGraph {...this.props} />>
 				</div>
 			);
 		} else {

@@ -1,0 +1,3 @@
+[submodule "src/lib/figtree.js"]
+	path = src/lib/figtree.js
+	url = https://github.com/rambaut/figtree.js.git

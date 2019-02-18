@@ -10,8 +10,10 @@ import { colours } from '../styles/colours';
 import '../styles/global'; // sets global CSS
 import '../styles/fonts.css'; // sets global fonts
 import '../styles/temporary.css'; // TODO
-import { onlyUnique } from '../utils/commonFunctions';
+import { onlyUnique, curry } from '../utils/commonFunctions';
 import TransmissionPanel from './TransmissionPanel';
+import {parseCaseData, readData,parseEdgeData} from "../utils/dataParsers.js";
+import TransmissionGraph from './TransmissionGraph';
 
 class App extends Component {
 	constructor(props) {
@@ -24,8 +26,11 @@ class App extends Component {
 		this.setPhyloColors = this.setPhyloColors.bind(this);
 		this.zoomToNode = this.zoomToNode.bind(this);
 		this.resetZoom = this.resetZoom.bind(this);
+		this.addDataToState=this.addDataToState.bind(this);
 	}
 	addEpiData = newData => {
+		
+
 		let newState = this.state;
 		//parse dates - maybe in the future check for different formats or specify
 		newData.forEach(person => {
@@ -65,6 +70,19 @@ class App extends Component {
 		this.setState(newState);
 	};
 
+
+	addDataToState = (key,newData)=>{
+		if(this.state.key){
+			const oldState=this.state.key;
+			oldState.push(newData)
+			this.setState({[key]:oldState});
+		}else{
+			this.setState({[key]:newData});
+		}
+	}
+
+	// https://wsvincent.com/javascript-currying/
+	
 	addTree = newData => {
 		let newState = this.state;
 		const tree = Tree.parseNewick(newData.newick);
@@ -195,6 +213,11 @@ class App extends Component {
 		this.setState({ colorChange: this.state.colorChange + 1 });
 	}
 	componentDidMount() {
+		const CaseAdder=curry(this.addDataToState,"cases");
+		const contactAdder=curry(this.addDataToState,"edges");
+		readData("http://localhost:3001/lineList.csv",parseCaseData,CaseAdder);
+		readData("http://localhost:3001/epiContacts.csv",parseEdgeData,contactAdder);
+
 		getData('fullLineList.json', this.addEpiData);
 		getData('tree.json', this.addTree);
 	}
@@ -214,6 +237,7 @@ class App extends Component {
 						updateColor: this.updateColor,
 						tree: this.state.PhyloTree,
 						zoomCase: this.state.zoomCase,
+						cases:this.state.cases
 					}}
 				/>
 				{/*<Panel
@@ -228,7 +252,7 @@ class App extends Component {
 
 				<Panel
 					title="Transmission network"
-					child={TransmissionPanel}
+					child={TransmissionGraph}
 					childProps={{
 						size: [700, 460],
 						margin: { top: 0, right: 30, bottom: 50, left: 30 },
@@ -241,6 +265,8 @@ class App extends Component {
 						zoomToNode: this.zoomToNode,
 						zoomCase: this.state.zoomCase,
 						resetZoom: this.resetZoom,
+						edges:this.state.edges,
+						cases:this.state.case
 					}}
 				/>
 				<Panel
