@@ -4,16 +4,12 @@ import Panel from './CollapsablePanel';
 import getData from '../utils/getData';
 import CasesHistogram from './CasesHistogram';
 import PhyloTree from './PhyloTree';
-import Tree from '../utils/figtree';
 //Styles from Rampart
-import { colours } from '../styles/colours';
 import '../styles/global'; // sets global CSS
 import '../styles/fonts.css'; // sets global fonts
 import '../styles/temporary.css'; // TODO
-import { onlyUnique, curry } from '../utils/commonFunctions';
 import TransmissionPanel from './TransmissionPanel';
 import {parseCaseData, readData,parseEdgeData} from "../utils/dataParsers.js";
-import TransmissionGraph from './TransmissionGraph';
 import {Graph} from "../utils/Graph";
 import * as d3 from 'd3v4';
 
@@ -99,7 +95,7 @@ class App extends Component {
 				
 				<Panel
 					title="Transmission network"
-					child={TransmissionGraph}
+					child={TransmissionPanel}
 					childProps={{
 						size: [900, 460],
 						margin: { top: 0, right: 30, bottom: 60, left: 30 },

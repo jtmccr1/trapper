@@ -19,7 +19,7 @@ export class TranmissionLayout{
                     i = {}; // intermediate node
                 this.nodes.push(i);
                 this.edges.push({source: s, target: i}, {source: i, target: t});
-                this.bilinks.push([s, i, t]);
+                this.bilinks.push([s, i, t,{"key":link.key}]);
               });
 
         }

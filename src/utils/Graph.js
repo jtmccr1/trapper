@@ -64,6 +64,18 @@ export class Graph{
     getEdge(key){
         return this.edgeMap.get(key);
     }
+    getEdgeHtml(edge){
+        // const formatDate=d3.timeFormat("%Y-%m-%d")
+        let outString = `Source:${edge.source.id} </br> Target: ${edge.target.id}</br>`;
+        for(const key of Object.keys(edge.metaData)){
+            if(key.toLowerCase().indexOf("date")>-1){
+            outString = `${outString}${key}: ${edge.metaData[key].toISOString().substring(0, 10)}</br>`;
+            }else{
+            outString = `${outString}${key}: ${edge.metaData[key]}</br>`;
+            }
+        }
+        return outString;
+    }
     getIncomingEdges(node){
        return [...this.edgeList.filter(edge=>edge.target===node)]
     }

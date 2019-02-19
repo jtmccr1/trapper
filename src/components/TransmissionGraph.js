@@ -41,6 +41,20 @@ class TransmissionGraph extends React.Component {
 			d3.select(infoRef).style('visibility', 'hidden');
 		}
 
+		function handleMouseMoveLink(d, i) {
+			const left = d[1].x < 0.5 * xScale.range()[1] ? `${xScale.range()[0] + d[1].x}px`:'';
+			const right = d[1].x > 0.5 * xScale.range()[1] ? `${xScale.range()[1] - d[1].x}px` : '';
+			const dataEdge = layout.graph.getEdge(d[3].key);
+			const hoverText = layout.graph.getEdgeHtml(dataEdge);
+			d3.select(infoRef)
+				.style('left', left)
+				.style('right', right)
+				.style('top', `${d[1].y}px`)
+				.style('visibility', 'visible')
+				.html(hoverText);
+		}
+
+
 		const width = this.props.size[0];
 		const height = this.props.size[1];
 		const svg = d3.select(node).style('font', '10px sans-serif');
@@ -67,16 +81,17 @@ class TransmissionGraph extends React.Component {
 
 		const scaleForAxis=this.props.xScale.range([this.props.margin.left, width - this.props.margin.left - this.props.margin.right]);
 		const xAxis = d3.axisBottom().scale(scaleForAxis);
+
 		svgGroup
-		.append('g')
-		.attr('class', 'x-axis axis')
-		.attr('transform', `translate(0,${height - this.props.margin.top -this.props.margin.bottom +15} )`)
-		.call(xAxis)
-		.selectAll('text')
-		.attr('y', 0)
-		.attr('x', 9)
-		.attr('transform', `rotate(${45})`)
-		.style('text-anchor', 'start');
+			.append('g')
+			.attr('class', 'x-axis axis')
+			.attr('transform', `translate(0,${height - this.props.margin.top -this.props.margin.bottom +15} )`)
+			.call(xAxis)
+			.selectAll('text')
+			.attr('y', 0)
+			.attr('x', 9)
+			.attr('transform', `rotate(${45})`)
+			.style('text-anchor', 'start');
 
 
 
@@ -113,6 +128,8 @@ class TransmissionGraph extends React.Component {
     					.style("stroke", "#bbb")  // colour the line
 						.style("stroke-width",3)
 						.style("fill",'none')
+						.on('mouseover', handleMouseMoveLink)
+						.on('mouseout', handleMouseOut)
 		
 		const nodes = svgGroup.append('g')
 			.selectAll('cirlce')
@@ -124,11 +141,11 @@ class TransmissionGraph extends React.Component {
 			.style("stroke", "#fff")
 			.style("stroke-width", "1.5px")
 			.call(d3.drag()
-          .on("start", dragstarted)
-          .on("drag", dragged)
-		  .on("end", dragended))
-		  .on('mouseover', handleMouseMove)
-		  .on('mouseout', handleMouseOut)
+			.on("start", dragstarted)
+			.on("drag", dragged)
+			.on("end", dragended))
+			.on('mouseover', handleMouseMove)
+			.on('mouseout', handleMouseOut)
 		  
 		simulation
 		  .nodes(layout.nodes)

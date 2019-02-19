@@ -1,6 +1,4 @@
 import React from 'react';
-import TransmissionGraph from './TransmissionGraph';
-
 class TransmissionPanel extends React.Component {
 	constructor(props) {
 		super(props);
