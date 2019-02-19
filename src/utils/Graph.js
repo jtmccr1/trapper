@@ -1,3 +1,4 @@
+import * as d3 from 'd3v4'
 export class Graph{
     constructor(nodes=[],edges=[]) {
            this.nodeList =nodes;
@@ -12,6 +13,7 @@ export class Graph{
         this.edgeMap = new Map(this.edgeList.map(edge => [edge.key, edge]));   
         // This is used in identifying terminal tips  
         this.traversalDirection="forward"
+        
     };
 
     addNode(node){
@@ -34,6 +36,30 @@ export class Graph{
     getNodeFromKeyValuePair(key,value){
         return this.nodeList.filter(node=>node[key]===value)[0]
     }
+    getNodeHtml(node){
+        // const formatDate=d3.timeFormat("%Y-%m-%d")
+        let outString = `${node.id} </br>`
+        for(const key of Object.keys(node)){
+            if(node[key]){
+                if(key!=="id"&& key!=="metaData"&&key!=="key"){
+                    if(key.toLowerCase().indexOf("date")>-1){
+                        outString = `${outString}${key}: ${node[key].toISOString().substring(0, 10)}</br>`;
+                        }else{
+                        outString = `${outString}${key}: ${node[key]}</br>`;
+                        }            
+                    }
+            }
+        }
+    
+        for(const key of Object.keys(node.metaData)){
+            if(key.toLowerCase().indexOf("date")>-1){
+            outString = `${outString}${key}: ${node.metaData[key].toISOString().substring(0, 10)}</br>`;
+            }else{
+            outString = `${outString}${key}: ${node.metaData[key]}</br>`;
+            }
+        }
+        return outString;
+    }
 
     getNodes(){
         return this.nodeList;
@@ -50,6 +76,18 @@ export class Graph{
 
     getEdge(key){
         return this.edgeMap.get(key);
+    }
+    getEdgeHtml(edge){
+        // const formatDate=d3.timeFormat("%Y-%m-%d")
+        let outString = `Source:${edge.source.id} </br> Target: ${edge.target.id}</br>`;
+        for(const key of Object.keys(edge.metaData)){
+            if(key.toLowerCase().indexOf("date")>-1){
+            outString = `${outString}${key}: ${edge.metaData[key].toISOString().substring(0, 10)}</br>`;
+            }else{
+            outString = `${outString}${key}: ${edge.metaData[key]}</br>`;
+            }
+        }
+        return outString;
     }
     getIncomingEdges(node){
        return [...this.edgeList.filter(edge=>edge.target===node)]
