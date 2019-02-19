@@ -132,29 +132,18 @@ class TransmissionGraph extends React.Component {
 						.on('mouseout', handleMouseOut)
 		
 		const nodes = svgGroup.append('g')
-			.selectAll("g")
+			.selectAll("circle")
 			.data(layout.nodes.filter(d=>d.key))
 			.enter()
-			.append('g')
-
-			nodes
 			.append("circle")
-			.attr("r",nodeRadius)
+			.attr("r",d=>layout.getDataNode(d.key).metaData.dataType=="Inferred"?nodeRadius-1.5:nodeRadius)
 			.attr("class",d=>`${layout.getDataNode(d.key).metaData.dataType} transmission-node`)
 			.call(d3.drag()
 			.on("start", dragstarted)
 			.on("drag", dragged)
 			.on("end", dragended))
 			.on('mouseover', handleMouseMove)
-			.on('mouseout', handleMouseOut)
-
-			nodes.append("cirlce")
-			.attr("r",d=>layout.getDataNode(d.key).metaData.dataType==="Inferred"?10:0)
-			.attr("class","inner-node")
-			
-			
-
-
+			.on('mouseout', handleMouseOut);
 		  
 		simulation
 		  .nodes(layout.nodes)
