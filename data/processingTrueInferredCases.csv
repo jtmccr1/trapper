@@ -1,0 +1,51 @@
+"","Id","Date of inferred onset","Contact","Location","Sample Id"
+"1","Unsampled case 1",2018-08-12,"None","Location A",NA
+"2","Unsampled case 2",2018-08-18,"Unsampled case 1","Location A",NA
+"3","Unsampled case 3",2018-08-22,"Unsampled case 1","Location A",NA
+"4","Unsampled case 4",2018-08-22,"Unsampled case 1","Location A",NA
+"5","Unsampled case 5",2018-08-27,"Unsampled case 1","Location A",NA
+"6","Unsampled case 6",2018-08-30,"Unsampled case 3","Location A",NA
+"7","Unsampled case 7",2018-08-31,"Unsampled case 2","Location A",NA
+"8","Unsampled case 8",2018-09-01,"Unsampled case 5","Location A",NA
+"9","Unsampled case 9",2018-09-02,"Unsampled case 1","Location A",NA
+"10","PHR-3",2018-09-03,"Unsampled case 4","Location A","PHR-3"
+"11","Unsampled case 10",2018-09-08,"Unsampled case 5","Location A",NA
+"12","PHR-25",2018-09-10,"Unsampled case 5","Location A","PHR-25"
+"13","PHR-36",2018-09-13,"Unsampled case 8","Location A","PHR-36"
+"14","PHR-15",2018-09-14,"Unsampled case 6","Location B","PHR-15"
+"15","PHR-17",2018-09-15,"PHR-3","Location A","PHR-17"
+"16","PHR-27",2018-09-16,"Unsampled case 8","Location A","PHR-27"
+"17","PHR-9",2018-09-18,"Unsampled case 3","Location A","PHR-9"
+"18","PHR-22",2018-09-19,"Unsampled case 9","Location A","PHR-22"
+"19","PHR-39",2018-09-21,"Unsampled case 8","Location A","PHR-39"
+"20","PHR-28",2018-09-21,"Unsampled case 10","Location A","PHR-28"
+"21","Unsampled case 11",2018-09-25,"PHR-25","Location A",NA
+"22","Unsampled case 12",2018-09-28,"PHR-15","Location B",NA
+"23","Unsampled case 13",2018-09-29,"PHR-36","Location A",NA
+"24","Unsampled case 14",2018-09-30,"PHR-22","Location A",NA
+"25","PHR-40",2018-10-03,"PHR-39","Location A","PHR-40"
+"26","Unsampled case 15",2018-10-04,"PHR-28","Location A",NA
+"27","Unsampled case 16",2018-10-06,"Unsampled case 12","Location B",NA
+"28","PHR-46",2018-10-06,"Unsampled case 11","Location A","PHR-46"
+"29","Unsampled case 17",2018-10-09,"PHR-39","Location A",NA
+"30","Unsampled case 18",2018-10-10,"PHR-40","Location A",NA
+"31","Unsampled case 19",2018-10-11,"Unsampled case 13","Location A",NA
+"32","Unsampled case 20",2018-10-12,"Unsampled case 14","Location A",NA
+"33","PHR-54",2018-10-13,"Unsampled case 14","Location A","PHR-54"
+"34","Unsampled case 21",2018-10-13,"Unsampled case 14","Location A",NA
+"35","Unsampled case 22",2018-10-13,"Unsampled case 14","Location A",NA
+"36","Unsampled case 23",2018-10-14,"Unsampled case 11","Location A",NA
+"37","PHR-57",2018-10-16,"Unsampled case 16","Location B","PHR-57"
+"38","Unsampled case 24",2018-10-17,"PHR-46","Location A",NA
+"39","PHR-66",2018-10-20,"Unsampled case 20","Location A","PHR-66"
+"40","Unsampled case 25",2018-10-23,"Unsampled case 24","Location A",NA
+"41","PHR-71",2018-10-24,"Unsampled case 21","Location A","PHR-71"
+"42","Unsampled case 26",2018-10-24,"PHR-54","Location A",NA
+"43","Unsampled case 27",2018-10-26,"PHR-57","Location B",NA
+"44","Unsampled case 28",2018-10-27,"Unsampled case 24","Location A",NA
+"45","Unsampled case 29",2018-10-27,"PHR-54","Location A",NA
+"46","PHR-85",2018-10-28,"PHR-66","Location A","PHR-85"
+"47","PHR-89",2018-11-04,"PHR-71","Location A","PHR-89"
+"48","Unsampled case 30",2018-11-05,"Unsampled case 29","Location A",NA
+"49","Unsampled case 31",2018-11-07,"Unsampled case 27","Location B",NA
+"50","Unsampled case 32",2018-11-13,"Unsampled case 28","Location A",NA
