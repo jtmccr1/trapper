@@ -31,7 +31,7 @@ export class TranmissionLayout{
         const clusters = this.graph.getClusters();
         // Set y of external nodes
         clusters.sort((a,b)=>b.externalNodes.length-a.externalNodes.length);
-        let i=0;
+        let i=1;
         for(const cluster of clusters){
             for(const externalNode of cluster.externalNodes){
                 const plotNode=this.getNode(externalNode.key)//plot node
@@ -49,7 +49,7 @@ export class TranmissionLayout{
             return;
         }else{
             const children = this.getOutgoingEdges(node).map(edge=>edge.target);
-            children.filter(child=>!child.y).forEach(child=>this.setY(child))
+            children.forEach(child=>this.setY(child))
             node.y=d3.mean(children,child=>child.y)
         }
     }

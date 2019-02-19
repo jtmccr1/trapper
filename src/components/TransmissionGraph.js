@@ -25,8 +25,8 @@ class TransmissionGraph extends React.Component {
 		const svgGroup = svg.select('g');
 
 		const layout = new TranmissionLayout(this.props.data);
-		layout.layOutNodes(d=>d.dateOfSampling)
-
+		layout.layOutNodes(d=>d.metaData['Date of onset']);
+		// layout.layOutNodes(d=>d.dateOfSampleing);
 		const xScale=d3
 					.scaleLinear()
 					.domain(d3.extent(layout.nodes,d=>d.x))
@@ -37,6 +37,7 @@ class TransmissionGraph extends React.Component {
 					.domain(d3.extent(layout.nodes,d=>d.y))
 					.range([height - this.props.margin.top - this.props.margin.bottom, this.props.margin.bottom])
 					.nice();
+
 
 		svgGroup.append('g')
 				.selectAll("circle")
@@ -60,7 +61,7 @@ class TransmissionGraph extends React.Component {
     			.attr("x2", d=>xScale(d.target.x))     // x position of the second end of the line
    				 .attr("y2", d=>yScale(d.target.y));    // y position of the seco
 
-
+		console.log(layout)
 
 		
 

@@ -10,6 +10,7 @@ export class Graph{
             element.key=Symbol();
         });
         this.edgeMap = new Map(this.edgeList.map(edge => [edge.key, edge]));    
+        this.traversalDirection="forward"
     };
 
     addNode(node){
@@ -83,6 +84,7 @@ export class Graph{
     getClusters(){
         this.nodeList.forEach(node=>node.visited=false)
         let clusters=[];
+        this.traversalDirection="forward";
         this.nodeList.forEach(node=>{
             if(!node.visited){
             const cluster={nodes:[node],
@@ -104,19 +106,19 @@ export class Graph{
 
     }
 
-    traverse(currentNode,edge,cluster,direction='forward'){
+    traverse(currentNode,edge,cluster){
         let nodeToVisit;
         let turnBack=false;
 
         if(currentNode===edge.source){
              nodeToVisit = edge.target;
-             direction="forward";
+            this.traversalDirection="forward"
         }else{
             nodeToVisit= edge.source
-            if(direction==="forward"){
+            if(this.traversalDirection==="forward"){
                 turnBack=true;
             }
-            direction="backward";
+            this.traversalDirection="backward"
         }
         if(nodeToVisit.visited){
             if(turnBack){
@@ -126,7 +128,7 @@ export class Graph{
         }else{
             nodeToVisit.visited=true;
             cluster.nodes.push(nodeToVisit);
-            this.getEdges(nodeToVisit).forEach(edge=>this.traverse(nodeToVisit,edge,cluster,direction));
+            this.getEdges(nodeToVisit).forEach(edge=>this.traverse(nodeToVisit,edge,cluster));
         }
     }
 }
