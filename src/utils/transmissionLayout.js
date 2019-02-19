@@ -30,7 +30,14 @@ export class TranmissionLayout{
         // set height based on that.
         const clusters = this.graph.getClusters();
         // Set y of external nodes
-        clusters.sort((a,b)=>b.externalNodes.length-a.externalNodes.length);
+        clusters.sort((a,b)=>{
+            if(b.nodes.length===1&a.nodes.length>1){
+                return -1;
+            }else{
+                return(d3.min(a.nodes,d=>xFunction(d))-d3.min(b.nodes,d=>xFunction(d)))
+            }
+   
+        });
         let i=1;
         for(const cluster of clusters){
             for(const externalNode of cluster.externalNodes){
@@ -39,7 +46,7 @@ export class TranmissionLayout{
                 i++;
             }
         }
-        
+        // fix overplotting
         // Set the y of internal nodes as the mean of their children.
         this.nodes.forEach(node=>this.setY(node));
     }
