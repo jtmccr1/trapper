@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Header from './Header';
 import Panel from './CollapsablePanel';
-import getData from '../utils/getData';
 import CasesHistogram from './CasesHistogram';
 import PhyloTree from './PhyloTree';
 //Styles from Rampart
@@ -29,7 +28,7 @@ class App extends Component {
 		})
 		this.setState({xScale:d3
 			.scaleTime()
-			.domain(d3.extent(newData, d => d.dateOfSampling))
+			.domain(d3.extent(newData, d => d.dateOfSampling? d.dateOfSampling: d.metaData["Date of onset"]))
 			.nice()})
 	}
 	addEdges = newData=>{
@@ -41,18 +40,6 @@ class App extends Component {
 									metaData:edge.metaData})
 	})
 }
-
-
-	
-	// addTree = newData => {
-	// 	let newState = this.state;
-	// 	const tree = Tree.parseNewick(newData.newick);
-	// 	//tree.nodeList.forEach(n => (n.color = colours['grey'])); // Sets initial color
-	// 	newState['PhyloTree'] = tree;
-	// 	newState['zoomPhylo'] = tree.rootNode;
-
-	// 	this.setState(newState, () => this.setPhyloColors());
-	// };
 
 
 	selectSample(node) {
@@ -70,11 +57,14 @@ class App extends Component {
 	}
 	
 	componentDidMount() {
-		readData("http://localhost:3001/lineList.csv",parseCaseData,this.addCases);
-		readData("http://localhost:3001/epiContacts.csv",parseEdgeData,this.addEdges);
+		const prefix = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : '';
 
-		getData('fullLineList.json', this.addEpiData);
-		getData('tree.json', this.addTree);
+		readData(`${prefix}/lineList.csv`,parseCaseData,this.addCases);
+		readData(`${prefix}/UnsampledTrueCases.csv`,parseCaseData,this.addCases);
+
+		readData(`${prefix}/epiContacts.csv`,parseEdgeData,this.addEdges);
+		readData(`${prefix}/PerfectGeneticLinks.csv`,parseEdgeData,this.addEdges);
+
 	}
 
 	render() {

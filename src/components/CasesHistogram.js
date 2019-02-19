@@ -27,7 +27,7 @@ class CasesHistogram extends React.Component {
 
 		svg.selectAll('g').remove();
 
-		const processedData = this.props.cases;
+		// const processedData = this.props.cases.filter(node=>node.metaData.dataType? node.metaData.dataType.toLowerCase()!=="inferred":true);
 		const yAxisHeight = height - this.props.margin.bottom - this.props.margin.top;
 		const xScale = this.props.xScale.range([this.props.margin.left, width - this.props.margin.left - this.props.margin.right])
 
@@ -41,7 +41,7 @@ class CasesHistogram extends React.Component {
 				.histogram()
 				.domain(xScale.domain())
 				.thresholds(xScale.ticks(10))
-				.value(d => d.dateOfSampling)(processedData);
+				.value(d => d.dateOfSampling? d.dateOfSampling: d.metaData["Date of onset"])(this.props.cases);
 
 		yScale.domain([0, d3.max(bins, d => d.length)]);
 

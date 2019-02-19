@@ -37,7 +37,19 @@ export class Graph{
     }
     getNodeHtml(node){
         // const formatDate=d3.timeFormat("%Y-%m-%d")
-        let outString = `${node.id} </br>Date of Sampling: ${node.dateOfSampling.toISOString().substring(0, 10)}</br>`;
+        let outString = `${node.id} </br>`
+        for(const key of Object.keys(node)){
+            if(node[key]){
+                if(key!=="id"&& key!=="metaData"&&key!=="key"){
+                    if(key.toLowerCase().indexOf("date")>-1){
+                        outString = `${outString}${key}: ${node[key].toISOString().substring(0, 10)}</br>`;
+                        }else{
+                        outString = `${outString}${key}: ${node[key]}</br>`;
+                        }            
+                    }
+            }
+        }
+    
         for(const key of Object.keys(node.metaData)){
             if(key.toLowerCase().indexOf("date")>-1){
             outString = `${outString}${key}: ${node.metaData[key].toISOString().substring(0, 10)}</br>`;

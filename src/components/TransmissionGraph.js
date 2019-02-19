@@ -2,6 +2,7 @@ import React from 'react';
 import * as d3 from 'd3v4';
 import {TranmissionLayout} from "../utils/transmissionLayout"
 import { toolTipCSS } from '../utils/commonStyles';
+import '../styles/TransmissionGraph.css'; // TODO
 
 
 class TransmissionGraph extends React.Component {
@@ -22,7 +23,6 @@ class TransmissionGraph extends React.Component {
 	drawTransPlot() {
 		const node = this.node;
 		const infoRef = this.infoRef;
-		const self=this;
 
 
 		function handleMouseMove(d, i) {
@@ -132,20 +132,29 @@ class TransmissionGraph extends React.Component {
 						.on('mouseout', handleMouseOut)
 		
 		const nodes = svgGroup.append('g')
-			.selectAll('cirlce')
+			.selectAll("g")
 			.data(layout.nodes.filter(d=>d.key))
 			.enter()
+			.append('g')
+
+			nodes
 			.append("circle")
 			.attr("r",nodeRadius)
-			.style("fill","#001D73")
-			.style("stroke", "#fff")
-			.style("stroke-width", "1.5px")
+			.attr("class",d=>`${layout.getDataNode(d.key).metaData.dataType} transmission-node`)
 			.call(d3.drag()
 			.on("start", dragstarted)
 			.on("drag", dragged)
 			.on("end", dragended))
 			.on('mouseover', handleMouseMove)
 			.on('mouseout', handleMouseOut)
+
+			nodes.append("cirlce")
+			.attr("r",d=>layout.getDataNode(d.key).metaData.dataType==="Inferred"?10:0)
+			.attr("class","inner-node")
+			
+			
+
+
 		  
 		simulation
 		  .nodes(layout.nodes)
