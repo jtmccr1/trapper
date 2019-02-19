@@ -1,6 +1,6 @@
 import * as d3 from 'd3v4';
 export class TranmissionLayout{
-    constructor(graph) {
+    constructor(graph,bezier=true) {
         this.graph=graph
         this.nodes=this.graph.getNodes().map(node=>  {return{"key":node.key,"height":null,"spacingDimension":null}})
         this.nodeMap = new Map(this.nodes.map(node => [node.key, node]));
@@ -9,6 +9,20 @@ export class TranmissionLayout{
                                                             "source":this.getNode(edge.source.key),
                                                             "target":this.getNode(edge.target.key)};
                                                         });
+        // adding intermediate nodes for Bezier curves
+        this.bilinks=[];
+        // https://bl.ocks.org/mbostock/4600693
+        if(bezier){
+            this.edges.forEach((link)=> {
+                var s = link.source,
+                    t = link.target,
+                    i = {}; // intermediate node
+                this.nodes.push(i);
+                this.edges.push({source: s, target: i}, {source: i, target: t});
+                this.bilinks.push([s, i, t]);
+              });
+
+        }
 
     };
     
@@ -25,7 +39,8 @@ export class TranmissionLayout{
         return this.graph.getEdge(key);
     }
     layOutNodes(heigthFunction){
-        this.nodes.forEach(node=>node.height=heigthFunction(this.getDataNode(node.key)))
+        const nodesFromData=this.nodes.filter(node=>node.key);
+        nodesFromData.forEach(node=>node.height=heigthFunction(this.getDataNode(node.key)))
         // each time we go back from going fowards count an external tip.
         // set height based on that.
         const clusters = this.graph.getClusters();
@@ -48,7 +63,7 @@ export class TranmissionLayout{
         }
         // fix overplotting
         // Set the y of internal nodes as the mean of their children.
-        this.nodes.forEach(node=>this.setSpacingDimension(node));
+        nodesFromData.forEach(node=>this.setSpacingDimension(node));
     }
 
     setSpacingDimension(node){

@@ -29,12 +29,9 @@ class CasesHistogram extends React.Component {
 
 		const processedData = this.props.cases;
 		const yAxisHeight = height - this.props.margin.bottom - this.props.margin.top;
+		const xScale = this.props.xScale.range([this.props.margin.left, width - this.props.margin.left - this.props.margin.right])
 
-		const xScale = d3
-			.scaleTime()
-			.range([this.props.margin.left, width - this.props.margin.left - this.props.margin.right])
-			.domain(d3.extent(processedData, d => d.dateOfSampling))
-			.nice();
+
 
 		const yScale = d3
 			.scaleLinear()
@@ -54,7 +51,7 @@ class CasesHistogram extends React.Component {
 
 		const svgGroup = svg.select('g');
 
-		drawAxis(svgGroup, xScale, yScale, this.props.size, this.props.margin, { rotate: 45, xlab: '', ylab: '' });
+		drawAxis(svgGroup, this.props.xScale, yScale, this.props.size, this.props.margin, { rotate: 45, xlab: '', ylab: '' });
 
 		svgGroup.append("g")
 		.attr("fill", "grey")

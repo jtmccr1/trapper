@@ -1,3 +1,4 @@
+import * as d3 from 'd3v4'
 export class Graph{
     constructor(nodes=[],edges=[]) {
            this.nodeList =nodes;
@@ -11,6 +12,7 @@ export class Graph{
         });
         this.edgeMap = new Map(this.edgeList.map(edge => [edge.key, edge]));    
         this.traversalDirection="forward"
+        
     };
 
     addNode(node){
@@ -32,6 +34,18 @@ export class Graph{
     }
     getNodeFromKeyValuePair(key,value){
         return this.nodeList.filter(node=>node[key]===value)[0]
+    }
+    getNodeHtml(node){
+        // const formatDate=d3.timeFormat("%Y-%m-%d")
+        let outString = `${node.id} </br>Date of Sampling: ${node.dateOfSampling.toISOString().substring(0, 10)}</br>`;
+        for(const key of Object.keys(node.metaData)){
+            if(key.toLowerCase().indexOf("date")>-1){
+            outString = `${outString}${key}: ${node.metaData[key].toISOString().substring(0, 10)}</br>`;
+            }else{
+            outString = `${outString}${key}: ${node.metaData[key]}</br>`;
+            }
+        }
+        return outString;
     }
 
     getNodes(){
