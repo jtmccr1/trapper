@@ -9,7 +9,8 @@ export class Graph{
         this.edgeList.forEach(element => {
             element.key=Symbol();
         });
-        this.edgeMap = new Map(this.edgeList.map(edge => [edge.key, edge]));    
+        this.edgeMap = new Map(this.edgeList.map(edge => [edge.key, edge]));   
+        // This is used in identifying terminal tips  
         this.traversalDirection="forward"
     };
 
