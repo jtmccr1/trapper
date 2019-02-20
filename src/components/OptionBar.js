@@ -5,14 +5,11 @@ import "../styles/menu.css"
 import {onlyUnique} from '../utils/commonFunctions';
  
 export const OptionBar=(props)=>  {
-
-    const nodeDataTypes = props.data.getNodes().map( d=>d.metaData.dataType).filter(onlyUnique);
-    const edgeDataTypes = props.data.getEdgeList().map( d=>d.metaData.dataType).filter(onlyUnique);
-    console.log(props.data);
-    const nodeOptions=nodeDataTypes.map((d,i)=>{
+console.log(props.edges)
+    const nodeOptions=props.nodeOptions.map((d,i)=>{
      return (<CheckBox key={i.toString()} title={d}/>);
     })
-    const edgeOptions = edgeDataTypes.map((d,i)=>{
+    const edgeOptions = props.transmissionOptions.map((d,i)=>{
       return (<CheckBox key={i.toString()} title={d}/>);
      })
     return (

@@ -7,6 +7,7 @@
   "homepage": "./",
   "dependencies": {
     "cors": "^2.8.4",
+    "d3-fetch": "^1.1.2",
     "d3v4": "^4.2.2",
     "electron-is-dev": "^1.0.1",
     "glamor": "^2.20.40",

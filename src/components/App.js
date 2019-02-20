@@ -13,11 +13,13 @@ import {Graph} from "../utils/Graph";
 import * as d3 from 'd3v4';
 import {OptionBar} from "./OptionBar"
 import "../styles/App.css"
+import {onlyUnique} from "../utils/commonFunctions";
+import {csv}  from 'd3-fetch'
 
 class App extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { byLocation: false, selectedCases: [], colorChange: 0 ,data:new Graph()};
+		this.state = { byLocation: false, selectedCases: [], counter: 0 ,data:new Graph(),resolved:false};
 		// this.addTree = this.addTree.bind(this);
 		this.selectSample = this.selectSample.bind(this);
 		this.addCases=this.addCases.bind(this);
@@ -60,21 +62,43 @@ class App extends Component {
 	
 	componentDidMount() {
 		const prefix = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : '';
+		Promise.all([
+			csv(`${prefix}/lineList.csv`),
+			csv(`${prefix}/UnsampledTrueCases.csv`),
+			csv(`${prefix}/epiContacts.csv`),
+			csv(`${prefix}/PerfectGeneticLinks.csv`)
+		]).then(([lineList,unSampledNodes,epiLinks,allLinks])=>{
+			const parsedLineList=lineList.map(d=>parseCaseData(d));
+			this.addCases(parsedLineList);
 
-		readData(`${prefix}/lineList.csv`,parseCaseData,this.addCases);
-		readData(`${prefix}/UnsampledTrueCases.csv`,parseCaseData,this.addCases);
+			const parsedUnsampledNodes=unSampledNodes.map(d=>parseCaseData(d));
+			this.addCases(parsedUnsampledNodes);
 
-		readData(`${prefix}/epiContacts.csv`,parseEdgeData,this.addEdges);
-		readData(`${prefix}/PerfectGeneticLinks.csv`,parseEdgeData,this.addEdges);
+			const parsedEpiLinks=epiLinks.map(d=>parseEdgeData(d));
+			this.addEdges(parsedEpiLinks);
 
+			const parsedAllLinks=allLinks.map(d=>parseEdgeData(d));
+			this.addEdges(parsedAllLinks);
+			return true
+		}).then((result)=>{
+			this.setState({resolved:result})
+		})
 	}
 
+
+
+
 	render() {
-		return (
+		if (!this.state.resolved) {
+			return <div>Loading...</div>;
+		  } else {
+			return (
 			<div>
 				<Header />
 				<OptionBar 
-				data={this.state.data}
+				nodeOptions={this.state.data.getNodes().map(d=>d.metaData.dataType).filter(onlyUnique)}
+				transmissionOptions={this.state.data.getEdgeList().map(d=>d.metaData.dataType).filter(onlyUnique)}
+				edges = {this.state.data.getEdgeList()}
 				/>
 
 				<div className="Panels">
@@ -124,6 +148,7 @@ class App extends Component {
 			</div>
 		);
 	}
+}
 }
 
 export default App;
