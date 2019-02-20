@@ -93,7 +93,8 @@ class App extends Component {
 	
 	componentDidMount() {
 		// Wait to render until the data is read
-		const prefix = process.env.NODE_ENV === 'development' ? 'http://localhost:3001/' : '';
+		const prefix = process.env.NODE_ENV === 'development' ? 'http://localhost:3001/' : 'https://raw.githubusercontent.com/jtmccr1/trapper/master/src/';
+		// const prefix ="https://github.com/jtmccr1/trapper/tree/master/src/";
 		Promise.all([
 			csv(`${prefix}data/lineList.csv`),
 			csv(`${prefix}data/UnsampledTrueCases.csv`),
