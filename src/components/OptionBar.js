@@ -5,9 +5,10 @@ import "../styles/menu.css"
  
 export const OptionBar=(props)=>  {
     const nodeOptions=props.nodeOptions.map((d,i)=>{
-     return (<CheckBox key={i.toString()} title={d}/>);
+      const callback=props.nodeDataCallback(i);
+     return (<CheckBox key={i.toString()} title={d} status={props.nodeStatus[i]} callback={callback}/>);
     })
-    const edgeOptions = props.transmissionOptions.map((d,i)=>{
+    const edgeOptions = props.edgeOptions.map((d,i)=>{
       return (<CheckBox key={i.toString()} title={d}/>);
      })
     return (

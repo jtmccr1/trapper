@@ -11,7 +11,7 @@ import {parseCaseData,  parseEdgeData} from "../utils/dataParsers.js";
 import {Graph} from "../utils/Graph";
 import {OptionBar} from "./OptionBar"
 import "../styles/App.css"
-import {onlyUnique, curry} from "../utils/commonFunctions";
+import {onlyUnique} from "../utils/commonFunctions";
 import {csv}  from 'd3-fetch'
 import FigTreeComponent from "./FigTreeComponent"
 import * as d3 from 'd3v4';
@@ -19,12 +19,20 @@ import * as d3 from 'd3v4';
 class App extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { byLocation: false, selectedCases: [], counter: 0 ,data:new Graph(),transmissionLayout:false,resolved:false};
+		this.state = { byLocation: false, 
+			selectedCases: [], 
+			counter: 0 ,
+			data:new Graph(),
+			transmissionLayout:false,
+			resolved:false,
+			nodeDataSources:[],
+			nodeDataStatuses:[]};
 		// this.addTree = this.addTree.bind(this);
 		this.selectSample = this.selectSample.bind(this);
 		this.addCases=this.addCases.bind(this);
 		this.addEdges=this.addEdges.bind(this);
 		this.checkThatBox=this.checkThatBox.bind(this);
+		this.checkThatBoxArray=this.checkThatBoxArray.bind(this);
 	}
 	
 	addCases = (newData)=>{
@@ -52,6 +60,19 @@ class App extends Component {
 			this.setState(newState)
 		}
 		return(checkThisOne)
+	}
+	checkThatBoxArray(stateKey){
+		const self=this;
+		const thisIndexPlease=(i)=>{
+			const checkIt=()=>{
+				const newState={};
+				newState[stateKey]=self.state[stateKey];
+				newState[stateKey][i]=!self.state[stateKey][i]
+				self.setState(newState)
+			}
+			return(checkIt)
+		}
+		return(thisIndexPlease)
 	}
 
 
@@ -99,6 +120,12 @@ class App extends Component {
 							}))
 			return true;
 		}).then((result)=>{
+			this.setState({nodeDataSources:this.state.data.getNodes().map(d=>d.metaData.dataType).filter(onlyUnique)});
+			this.setState({nodeDataStatuses:this.state.data.getNodes().map(d=>d.metaData.dataType).filter(onlyUnique).map(x=>true)})
+			this.setState({edgeDataSources:this.state.data.getEdgeList().map(d=>d.metaData.dataType).filter(onlyUnique)});
+			this.setState({edgeDataStatuses:this.state.data.getEdgeList().map(d=>d.metaData.dataType).filter(onlyUnique).map(x=>true)});
+			return true
+		}).then((result)=>{
 			this.setState({resolved:result})
 		})
 	}
@@ -111,12 +138,15 @@ class App extends Component {
 			return <div>Loading...</div>;
 		  } else {
 			return (
-			<div id="outer-contanier">
+			<div id="outer-contanier" >
 				<Header />
 				<OptionBar 
-				nodeOptions={this.state.data.getNodes().map(d=>d.metaData.dataType).filter(onlyUnique)}
-				transmissionOptions={this.state.data.getEdgeList().map(d=>d.metaData.dataType).filter(onlyUnique)}
-				edges = {this.state.data.getEdgeList()}
+				nodeOptions={this.state.nodeDataSources}
+				nodeStatus = {this.state.nodeDataStatuses}
+				edgeOptions={this.state.edgeDataSources}
+				edgeStatus ={this.state.edgeDataStatuses}
+				nodeDataCallback ={this.checkThatBoxArray("nodeDataStatuses")}
+				edgeDataCallback ={this.checkThatBoxArray("edgeDataStatuses")}
 				transmissionLayout={this.state.transmissionLayout}
 				transmissionCallBack={this.checkThatBox("transmissionLayout")}
 				/>
