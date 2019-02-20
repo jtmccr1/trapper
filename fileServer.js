@@ -7,7 +7,7 @@ app.use(function(req, res, next) {
 	next();
 });
 
-app.use(express.static('./data'));
+app.use(express.static('./src/'));
 
 app.set('port', process.env.PORT || 3001);
 app.listen(app.get('port'), () => console.log('Data available for visualization.'));

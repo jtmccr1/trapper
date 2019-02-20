@@ -21,7 +21,10 @@ class FigTreeComponent extends Component {
   componentDidUpdate(){
     const layout = this.props.transmissionLayout? transmissionLayout:rectangularLayout;
     this.state.FigTree.treeLayout = layout;
-     
+
+    // const sort = this.props.transmissionLayout? true:false;
+    // this.state.tree.order(this.state.tree.rootNode, sort);     
+    
     this.state.FigTree.update()
   }
   
@@ -62,7 +65,7 @@ class FigTreeComponent extends Component {
     }
     figTree.update();
 
-    this.setState({FigTree:figTree})
+    this.setState({FigTree:figTree,Tree:tree})
   
   }
 

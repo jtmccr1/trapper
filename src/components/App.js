@@ -93,12 +93,12 @@ class App extends Component {
 	
 	componentDidMount() {
 		// Wait to render until the data is read
-		const prefix = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : '';
+		const prefix = process.env.NODE_ENV === 'development' ? 'http://localhost:3001/' : '';
 		Promise.all([
-			csv(`${prefix}/lineList.csv`),
-			csv(`${prefix}/UnsampledTrueCases.csv`),
-			csv(`${prefix}/epiContacts.csv`),
-			csv(`${prefix}/PerfectGeneticLinks.csv`)
+			csv(`${prefix}data/lineList.csv`),
+			csv(`${prefix}data/UnsampledTrueCases.csv`),
+			csv(`${prefix}data/epiContacts.csv`),
+			csv(`${prefix}data/PerfectGeneticLinks.csv`)
 		]).then(([lineList,unSampledNodes,epiLinks,allLinks])=>{
 			const parsedLineList=lineList.map(d=>parseCaseData(d));
 			this.addCases(parsedLineList);
@@ -114,7 +114,7 @@ class App extends Component {
 
 			return true
 		}).then((result)=>{
-			fetch(`${prefix}/sampledTree.phy`)
+			fetch(`${prefix}data/sampledTree.phy`)
 			.then(response=>response.text()
 							.then(text=>{
 								this.setState({treeString:text})
