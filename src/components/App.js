@@ -15,6 +15,7 @@ import {OptionBar} from "./OptionBar"
 import "../styles/App.css"
 import {onlyUnique} from "../utils/commonFunctions";
 import {csv}  from 'd3-fetch'
+import FigTreeComponent from "./FigTreeComponent"
 
 class App extends Component {
 	constructor(props) {
@@ -61,6 +62,7 @@ class App extends Component {
 	}
 	
 	componentDidMount() {
+		// Wait to render until the data is read
 		const prefix = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : '';
 		Promise.all([
 			csv(`${prefix}/lineList.csv`),
@@ -128,20 +130,13 @@ class App extends Component {
 				/>
 				<Panel
 					title="Phylogeny"
-					child={PhyloTree}
+					child={FigTreeComponent}
 					childProps={{
-						tree: this.state.PhyloTree,
+						svgId: "tree",
 						caseList: this.state.EpiData,
-						size: [700, 470],
-						margin: { top: 10, right: 60, bottom: 60, left: 50 },
-						byLocation: this.state.byLocation,
-						updateColor: this.updateColor,
-						colorChange: this.state.colorChange,
-						selectedCases: this.state.selectedCases,
-						selectSample: this.selectSample,
-						zoomToNode: this.zoomToNode,
-						zoomPhylo: this.state.zoomPhylo,
-						resetZoom: this.resetZoom,
+						width: 700,
+						height:500
+						
 					}}
 				/>
 				</div>

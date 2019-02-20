@@ -10,6 +10,7 @@
     "d3-fetch": "^1.1.2",
     "d3v4": "^4.2.2",
     "electron-is-dev": "^1.0.1",
+    "figtree": "file:../figtree.js",
     "glamor": "^2.20.40",
     "react": "^16.5.2",
     "react-burger-menu": "^2.6.5",

@@ -121,8 +121,9 @@ class TransmissionGraph extends React.Component {
 						.force("collide",d3.forceCollide(d=>nodeRadius))
 						.force("xPosition",pickyForceX)
 						.force("yPosition",pickyForceY)
-						.force("charge", d3.forceManyBody().strength(0.05))
-						.force("link", d3.forceLink().distance(10).strength(0.5));
+						.force("center",d3.forceCenter(width/2,height/2))
+						.force("charge", d3.forceManyBody().strength(0.07))
+						.force("link", d3.forceLink().distance(5).strength(0.5));
 
 
 	
@@ -142,7 +143,7 @@ class TransmissionGraph extends React.Component {
 			.data(layout.nodes.filter(d=>d.key))
 			.enter()
 			.append("circle")
-			.attr("r",d=>layout.getDataNode(d.key).metaData.dataType=="Inferred"?nodeRadius-1.5:nodeRadius)
+			.attr("r",d=>layout.getDataNode(d.key).metaData.dataType==="Inferred"?nodeRadius-1.5:nodeRadius)
 			.attr("class",d=>`${layout.getDataNode(d.key).metaData.dataType} transmission-node`)
 			.call(d3.drag()
 			.on("start", dragstarted)
