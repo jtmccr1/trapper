@@ -3,10 +3,11 @@ text {
     font-size: 14pt;
     font-weight: 300;
 }
+
 .branch {
     fill: none;
-    stroke: #541753;
-    stroke-width: 2px;
+    stroke: #bbb;
+    stroke-width: 3px;
     stroke-linecap: round;
     stroke-linejoin: round;
 }
@@ -31,7 +32,7 @@ text {
     /*stroke: rgb(0,0,0);*/
 }
 .internal-node .node-shape {
-    fill: #29c5ef;
+    fill:#001D73;
     /*stroke: rgb(255, 255, 255);*/
     /*stroke-width: 1;*/
 }
@@ -77,12 +78,15 @@ text {
     font-size: 8pt;
 }
 #tooltip {
-    background: #F6EECA;
-    border: 1px solid #005C68;
-    color: #005C68;
+    background:hsla(0,0%,0%,.8); /* #F6EECA;*/
+    /* border: 1px solid #005C68; */
+    color:white;
     border-radius: 5px;
     padding: 5px;
     font-family: "helvetica-neue",  "helvetica",  "sans-serif";
     font-size: 12pt;
     font-weight: 300;
+    display: "none";
+    position: absolute;
+
 }

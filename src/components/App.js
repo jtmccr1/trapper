@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Header from './Header';
 import Panel from './CollapsablePanel';
 import CasesHistogram from './CasesHistogram';
-import PhyloTree from './PhyloTree';
 //Styles from Rampart
 import '../styles/global'; // sets global CSS
 import '../styles/fonts.css'; // sets global fonts
@@ -10,12 +9,12 @@ import '../styles/temporary.css'; // TODO
 import TransmissionPanel from './TransmissionPanel';
 import {parseCaseData, readData,parseEdgeData} from "../utils/dataParsers.js";
 import {Graph} from "../utils/Graph";
-import * as d3 from 'd3v4';
 import {OptionBar} from "./OptionBar"
 import "../styles/App.css"
 import {onlyUnique} from "../utils/commonFunctions";
 import {csv}  from 'd3-fetch'
 import FigTreeComponent from "./FigTreeComponent"
+import * as d3 from 'd3v4';
 
 class App extends Component {
 	constructor(props) {
@@ -81,7 +80,15 @@ class App extends Component {
 
 			const parsedAllLinks=allLinks.map(d=>parseEdgeData(d));
 			this.addEdges(parsedAllLinks);
+
 			return true
+		}).then((result)=>{
+			fetch(`${prefix}/sampledTree.phy`)
+			.then(response=>response.text()
+							.then(text=>{
+								this.setState({treeString:text})
+							}))
+			return true;
 		}).then((result)=>{
 			this.setState({resolved:result})
 		})
@@ -133,7 +140,8 @@ class App extends Component {
 					child={FigTreeComponent}
 					childProps={{
 						svgId: "tree",
-						caseList: this.state.EpiData,
+						caseData:this.state.data,
+						treeString:this.state.treeString,
 						width: 700,
 						height:500
 						
