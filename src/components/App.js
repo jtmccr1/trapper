@@ -11,6 +11,8 @@ import TransmissionPanel from './TransmissionPanel';
 import {parseCaseData, readData,parseEdgeData} from "../utils/dataParsers.js";
 import {Graph} from "../utils/Graph";
 import * as d3 from 'd3v4';
+import {OptionBar} from "./OptionBar"
+import "../styles/App.css"
 
 class App extends Component {
 	constructor(props) {
@@ -71,6 +73,11 @@ class App extends Component {
 		return (
 			<div>
 				<Header />
+				<OptionBar 
+				data={this.state.data}
+				/>
+
+				<div className="Panels">
 				<Panel
 					title="Overview"
 					child={CasesHistogram}
@@ -88,7 +95,7 @@ class App extends Component {
 					child={TransmissionPanel}
 					childProps={{
 						size: [900, 460],
-						margin: { top: 0, right: 30, bottom: 60, left: 30 },
+						margin: { top: 0, right: 30, bottom: 80, left: 30 },
 						selectedCases: this.state.selectedCases,
 						selectSample: this.selectSample,
 						data:this.state.data,
@@ -113,6 +120,7 @@ class App extends Component {
 						resetZoom: this.resetZoom,
 					}}
 				/>
+				</div>
 			</div>
 		);
 	}

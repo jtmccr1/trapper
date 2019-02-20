@@ -1,0 +1,16 @@
+text{
+font-family: "helvetica-neue",  "helvetica",  "sans-serif";
+font-size: 14pt;
+font-weight: 300;
+}
+
+.axis text {
+    font-family: "helvetica-neue",  "helvetica",  "sans-serif";
+    font-size: 12pt;
+    font-weight: 300;
+}
+.axis-label text {
+    font-family: "helvetica-neue",  "helvetica",  "sans-serif";
+    font-size: 12pt;
+    font-weight: bold;
+}

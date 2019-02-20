@@ -27,11 +27,8 @@ class CasesHistogram extends React.Component {
 
 		svg.selectAll('g').remove();
 
-		// const processedData = this.props.cases.filter(node=>node.metaData.dataType? node.metaData.dataType.toLowerCase()!=="inferred":true);
 		const yAxisHeight = height - this.props.margin.bottom - this.props.margin.top;
 		const xScale = this.props.xScale.range([this.props.margin.left, width - this.props.margin.left - this.props.margin.right])
-
-
 
 		const yScale = d3
 			.scaleLinear()
@@ -70,7 +67,7 @@ class CasesHistogram extends React.Component {
                 .attr("transform", `translate(${this.props.margin.left},${this.props.margin.top})`)
                 .append("text")
                 .attr("transform", "rotate(-90)")
-                .attr("y", 0 - this.props.margin.left)
+                .attr("y", 0-this.props.margin.left-10)
                 .attr("x", 0 - (yAxisHeight / 2))
                 .attr("dy", "1em")
                 .style("text-anchor", "middle")
@@ -81,18 +78,7 @@ class CasesHistogram extends React.Component {
 	render() {
 		return (
 			<div>
-				<div>
-					<span style={{ paddingRight: '10px' }}>All Locations</span>
-
-					<label className="switch">
-						<input type="checkbox" onClick={this.props.updateColor} checked={this.props.byLocation} />
-						<span className="slider round" />
-					</label>
-					<span style={{ paddingLeft: '10px' }}>By Location</span>
-				</div>
-				<div>
-					<svg ref={node => (this.node = node)} width={this.props.size[0]} height={this.props.size[1]} />
-				</div>
+				<svg ref={node => (this.node = node)} width={this.props.size[0]} height={this.props.size[1]} />
 			</div>
 		);
 	}

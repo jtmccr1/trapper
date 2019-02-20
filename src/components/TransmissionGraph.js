@@ -1,8 +1,9 @@
 import React from 'react';
 import * as d3 from 'd3v4';
 import {TranmissionLayout} from "../utils/transmissionLayout"
-import { toolTipCSS } from '../utils/commonStyles';
+import { toolTipCSS, toolTipCSSInverse } from '../utils/commonStyles';
 import '../styles/TransmissionGraph.css'; // TODO
+import '../styles/commonPlotStyle.css'
 
 
 class TransmissionGraph extends React.Component {
@@ -23,6 +24,8 @@ class TransmissionGraph extends React.Component {
 	drawTransPlot() {
 		const node = this.node;
 		const infoRef = this.infoRef;
+		const infoRef2 = this.infoRef2;
+
 
 
 		function handleMouseMove(d, i) {
@@ -46,12 +49,15 @@ class TransmissionGraph extends React.Component {
 			const right = d[1].x > 0.5 * xScale.range()[1] ? `${xScale.range()[1] - d[1].x}px` : '';
 			const dataEdge = layout.graph.getEdge(d[3].key);
 			const hoverText = layout.graph.getEdgeHtml(dataEdge);
-			d3.select(infoRef)
+			d3.select(infoRef2)
 				.style('left', left)
 				.style('right', right)
 				.style('top', `${d[1].y}px`)
 				.style('visibility', 'visible')
 				.html(hoverText);
+		}
+		function handleMouseOutLink() {
+			d3.select(infoRef2).style('visibility', 'hidden');
 		}
 
 
@@ -85,7 +91,7 @@ class TransmissionGraph extends React.Component {
 		svgGroup
 			.append('g')
 			.attr('class', 'x-axis axis')
-			.attr('transform', `translate(0,${height - this.props.margin.top -this.props.margin.bottom +15} )`)
+			.attr('transform', `translate(0,${(height - this.props.margin.top -this.props.margin.bottom +25)} )`)
 			.call(xAxis)
 			.selectAll('text')
 			.attr('y', 0)
@@ -115,7 +121,7 @@ class TransmissionGraph extends React.Component {
 						.force("collide",d3.forceCollide(d=>nodeRadius))
 						.force("xPosition",pickyForceX)
 						.force("yPosition",pickyForceY)
-						.force("charge", d3.forceManyBody())
+						.force("charge", d3.forceManyBody().strength(0.05))
 						.force("link", d3.forceLink().distance(10).strength(0.5));
 
 
@@ -129,7 +135,7 @@ class TransmissionGraph extends React.Component {
 						.style("stroke-width",3)
 						.style("fill",'none')
 						.on('mouseover', handleMouseMoveLink)
-						.on('mouseout', handleMouseOut)
+						.on('mouseout', handleMouseOutLink)
 		
 		const nodes = svgGroup.append('g')
 			.selectAll("circle")
@@ -182,14 +188,6 @@ class TransmissionGraph extends React.Component {
 			d.fx = null;
 			 d.fy = null;
 		  }
-
-  
-				
-
-
-		
-
-
 	}
 
 	render() {
@@ -200,6 +198,13 @@ class TransmissionGraph extends React.Component {
 					style={{ maxWidth: this.props.size[0] / 2 }}
 					ref={r => {
 						this.infoRef = r;
+					}}
+				/>
+							<div
+					{...toolTipCSSInverse}
+					style={{ maxWidth: this.props.size[0] / 2 }}
+					ref={r => {
+						this.infoRef2 = r;
 					}}
 				/>
 				<svg ref={node => (this.node = node)} width={this.props.size[0]} height={this.props.size[1]} />
