@@ -32,7 +32,7 @@ class FigTreeComponent extends Component {
     const tree = Tree.parseNewick(this.props.treeString);
     const treeSVG = document.getElementById(this.props.svgId);
     const figTree = new FigTree(treeSVG, tree, { top: 10, bottom: 60, left: 10, right: 50}, { nodeRadius: 4,   xAxisTitle: ""});
-    // d3.select(treeSVG).selectAll(".internal-node").attr("display","none")
+    d3.select(treeSVG).selectAll(".internal-node").attr("display","none")
     d3.select(treeSVG).selectAll(".axis").remove()
 
     const annotations= {};
@@ -59,6 +59,7 @@ class FigTreeComponent extends Component {
     figTree.onClickNode(FigTree.rotate);
 
     tree.annotateNodesFromTips("Location");
+    tree.order(tree.rootNode,false)
 
     if(this.props.transmissionLayout){
     figTree.treeLayout = transmissionLayout;

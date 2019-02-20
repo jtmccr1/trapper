@@ -21,7 +21,7 @@ export const OptionBar=(props)=>  {
       <h5>Transmission events</h5>
       {edgeOptions}
       <h4>Color options</h4>
-      <CheckBox/>
+      <h5>TODO</h5>
       <h4>Tree</h4>
       <CheckBox title={"Transmission Layout"} status={props.transmissionLayout} callback={props.transmissionCallBack}/>
       </Menu>

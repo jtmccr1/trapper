@@ -139,7 +139,7 @@ class App extends Component {
 			return <div>Loading...</div>;
 		  } else {
 			return (
-			<div id="outer-contanier" >
+			<div id="outer-contanier" style={{overflow: 'auto', height:'500%'}} >
 				<Header />
 				<OptionBar 
 				nodeOptions={this.state.nodeDataSources}
