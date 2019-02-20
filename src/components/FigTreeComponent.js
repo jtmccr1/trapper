@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3v4';
-import { Tree,FigTree,transmissionLayout } from 'figtree';
+import { Tree,FigTree,transmissionLayout,rectangularLayout } from 'figtree';
 import "../styles/figtree.css"
 
 
@@ -17,9 +17,11 @@ class FigTreeComponent extends Component {
   }
   componentDidMount() {
     this.drawTree()
-    console.log("mounted")
   }
   componentDidUpdate(){
+    const layout = this.props.transmissionLayout? transmissionLayout:rectangularLayout;
+    this.state.FigTree.treeLayout = layout;
+     
     this.state.FigTree.update()
   }
   
@@ -55,8 +57,9 @@ class FigTreeComponent extends Component {
 
     tree.annotateNodesFromTips("Location");
 
+    if(this.props.transmissionLayout){
     figTree.treeLayout = transmissionLayout;
-
+    }
     figTree.update();
 
     this.setState({FigTree:figTree})

@@ -86,7 +86,7 @@ text {
     font-family: "helvetica-neue",  "helvetica",  "sans-serif";
     font-size: 12pt;
     font-weight: 300;
-    display: "none";
+    display: none;
     position: absolute;
 
 }

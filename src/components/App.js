@@ -7,11 +7,11 @@ import '../styles/global'; // sets global CSS
 import '../styles/fonts.css'; // sets global fonts
 import '../styles/temporary.css'; // TODO
 import TransmissionPanel from './TransmissionPanel';
-import {parseCaseData, readData,parseEdgeData} from "../utils/dataParsers.js";
+import {parseCaseData,  parseEdgeData} from "../utils/dataParsers.js";
 import {Graph} from "../utils/Graph";
 import {OptionBar} from "./OptionBar"
 import "../styles/App.css"
-import {onlyUnique} from "../utils/commonFunctions";
+import {onlyUnique, curry} from "../utils/commonFunctions";
 import {csv}  from 'd3-fetch'
 import FigTreeComponent from "./FigTreeComponent"
 import * as d3 from 'd3v4';
@@ -19,11 +19,12 @@ import * as d3 from 'd3v4';
 class App extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { byLocation: false, selectedCases: [], counter: 0 ,data:new Graph(),resolved:false};
+		this.state = { byLocation: false, selectedCases: [], counter: 0 ,data:new Graph(),transmissionLayout:false,resolved:false};
 		// this.addTree = this.addTree.bind(this);
 		this.selectSample = this.selectSample.bind(this);
 		this.addCases=this.addCases.bind(this);
 		this.addEdges=this.addEdges.bind(this);
+		this.checkThatBox=this.checkThatBox.bind(this);
 	}
 	
 	addCases = (newData)=>{
@@ -44,6 +45,14 @@ class App extends Component {
 									metaData:edge.metaData})
 	})
 }
+	checkThatBox(stateKey){
+		const checkThisOne=()=>{
+			const newState={};
+			 newState[stateKey]=!this.state[stateKey];
+			this.setState(newState)
+		}
+		return(checkThisOne)
+	}
 
 
 	selectSample(node) {
@@ -102,15 +111,18 @@ class App extends Component {
 			return <div>Loading...</div>;
 		  } else {
 			return (
-			<div>
+			<div id="outer-contanier">
 				<Header />
 				<OptionBar 
 				nodeOptions={this.state.data.getNodes().map(d=>d.metaData.dataType).filter(onlyUnique)}
 				transmissionOptions={this.state.data.getEdgeList().map(d=>d.metaData.dataType).filter(onlyUnique)}
 				edges = {this.state.data.getEdgeList()}
+				transmissionLayout={this.state.transmissionLayout}
+				transmissionCallBack={this.checkThatBox("transmissionLayout")}
 				/>
+				
 
-				<div className="Panels">
+				<div className="Panels" id="page-wrap">
 				<Panel
 					title="Overview"
 					child={CasesHistogram}
@@ -142,6 +154,7 @@ class App extends Component {
 						svgId: "tree",
 						caseData:this.state.data,
 						treeString:this.state.treeString,
+						transmissionLayout:this.state.transmissionLayout,
 						width: 700,
 						height:500
 						
