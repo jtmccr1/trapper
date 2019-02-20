@@ -30,6 +30,15 @@ class CasesHistogram extends React.Component {
 		const yAxisHeight = height - this.props.margin.bottom - this.props.margin.top;
 		const xScale = this.props.xScale.range([this.props.margin.left, width - this.props.margin.left - this.props.margin.right])
 
+		//filter
+		const selectedDataTypes=[];
+		this.props.nodeDataStatuses.forEach((selected,i)=>{
+			if(selected){
+				selectedDataTypes.push(this.props.nodeDataSources[i])
+			}
+		})
+		const filteredData=this.props.cases.filter(d=>selectedDataTypes.indexOf(d.metaData.dataType)>-1)
+
 		const yScale = d3
 			.scaleLinear()
 			.range([height - this.props.margin.top - this.props.margin.bottom, this.props.margin.bottom])
@@ -38,9 +47,15 @@ class CasesHistogram extends React.Component {
 				.histogram()
 				.domain(xScale.domain())
 				.thresholds(xScale.ticks(10))
-				.value(d => d.dateOfSampling? d.dateOfSampling: d.metaData["Date of onset"])(this.props.cases);
+				.value(d => d.dateOfSampling? d.dateOfSampling: d.metaData["Date of onset"])(filteredData);
 
-		yScale.domain([0, d3.max(bins, d => d.length)]);
+
+		const binsForStableAxis = d3
+				.histogram()
+				.domain(xScale.domain())
+				.thresholds(xScale.ticks(10))
+				.value(d => d.dateOfSampling? d.dateOfSampling: d.metaData["Date of onset"])(this.props.cases);
+		yScale.domain([0, d3.max(binsForStableAxis, d => d.length)]);
 
 		svg.selectAll('g').remove();
 		// do the drawing

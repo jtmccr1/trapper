@@ -10,16 +10,43 @@ class TransmissionGraph extends React.Component {
 	constructor(props) {
 		super(props);
 		this.drawTransPlot = this.drawTransPlot.bind(this);
+		this.updateNodeVisibility=this.updateNodeVisibility.bind(this);
+		this.updateEdgeVisibility=this.updateEdgeVisibility.bind(this);
 	}
 	componentDidMount() {
 		this.drawTransPlot();
 	}
-	shouldComponentUpdate(){
-		return false;
-	}
 	componentDidUpdate() {
-		this.drawTransPlot();
+		this.updateNodeVisibility();
+		this.updateEdgeVisibility();
+
+			}
+
+	updateNodeVisibility(){
+		this.props.nodeDataStatuses.forEach((selected,i)=>{
+			const newOpacity = selected? 1:0;
+			const classSelector=`.${this.props.nodeDataSources[i]}`
+			d3.selectAll(`${classSelector}`)
+				.transition()
+				.duration(300)
+				.ease(d3.easeLinear)
+				.style("opacity", newOpacity);
+	
+	  })
 	}
+	updateEdgeVisibility(){
+		this.props.edgeDataStatuses.forEach((selected,i)=>{
+			const newOpacity = selected? 1:0;
+			const classSelector=`.${this.props.edgeDataSources[i].replace(/ /g, '-')}`
+			d3.selectAll(`${classSelector}`)
+				.transition()
+				.duration(300)
+				.ease(d3.easeLinear)
+				.style("opacity", newOpacity);
+	
+	  })
+	}
+
 
 	drawTransPlot() {
 		const node = this.node;
@@ -70,8 +97,6 @@ class TransmissionGraph extends React.Component {
 
 		const layout = new TranmissionLayout(this.props.data);
 		layout.layOutNodes(d=>d.metaData['Date of onset']);
-
-
 
 		// layout.layOutNodes(d=>d.dateOfSampling);
 		const xScale=d3
@@ -131,7 +156,7 @@ class TransmissionGraph extends React.Component {
 						.selectAll(".link")
 						.data(layout.bilinks)
 						.enter().append("path")
-		  				.attr("class", "link")
+		  				.attr("class", d=>`${layout.getDataEdge(d[3].key).metaData.dataType.replace(/ /g, '-')} link`)
     					.style("stroke", "#bbb")  // colour the line
 						.style("stroke-width",3)
 						.style("fill",'none')
@@ -158,6 +183,12 @@ class TransmissionGraph extends React.Component {
 
 		simulation.force("link")
 		  .links(layout.edges);
+
+		  // hide nodes that we don't want
+		this.updateNodeVisibility();
+		// this.updateEdgeVisibility();
+		
+		//   svgGroup.selectAll()
 
 		  function ticked() {
 			links.attr("d", positionLink);

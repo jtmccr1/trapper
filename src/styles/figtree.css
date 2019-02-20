@@ -33,6 +33,7 @@ text {
 }
 .internal-node .node-shape {
     fill:#001D73;
+    opacity: 0.5;
     /*stroke: rgb(255, 255, 255);*/
     /*stroke-width: 1;*/
 }

@@ -25,6 +25,7 @@ class App extends Component {
 			data:new Graph(),
 			transmissionLayout:false,
 			resolved:false,
+			// use a map here instead of 2 arrays?
 			nodeDataSources:[],
 			nodeDataStatuses:[]};
 		// this.addTree = this.addTree.bind(this);
@@ -159,9 +160,11 @@ class App extends Component {
 					childProps={{
 						size: [900, 460],
 						margin: { top: 0, right: 30, bottom: 50, left: 30 },
-						zoomCase: this.state.zoomCase,
 						cases:this.state.data.getNodes(),
-						xScale:this.state.xScale
+						xScale:this.state.xScale,
+						nodeDataSources:this.state.nodeDataSources,
+						nodeDataStatuses:this.state.nodeDataStatuses,
+
 					}}
 				/>
 				
@@ -175,6 +178,10 @@ class App extends Component {
 						selectSample: this.selectSample,
 						data:this.state.data,
 						xScale:this.state.xScale,
+						nodeDataSources:this.state.nodeDataSources,
+						nodeDataStatuses:this.state.nodeDataStatuses,
+						edgeDataSources:this.state.edgeDataSources,
+						edgeDataStatuses:this.state.edgeDataStatuses,
 					}}
 				/>
 				<Panel

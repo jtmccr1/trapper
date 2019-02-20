@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { push as Menu } from 'react-burger-menu'
 import{CheckBox} from "./CheckBox"
 import "../styles/menu.css"
@@ -9,7 +9,9 @@ export const OptionBar=(props)=>  {
      return (<CheckBox key={i.toString()} title={d} status={props.nodeStatus[i]} callback={callback}/>);
     })
     const edgeOptions = props.edgeOptions.map((d,i)=>{
-      return (<CheckBox key={i.toString()} title={d}/>);
+      const callback=props.edgeDataCallback(i);
+
+      return (<CheckBox key={i.toString()} title={d} status={props.edgeStatus[i]} callback={callback}/>);
      })
     return (
       <Menu left noOverlay push pageWrapId={ "page-wrap" } outerContainerId={ "outer-container" } >
