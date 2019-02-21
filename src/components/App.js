@@ -97,17 +97,19 @@ class App extends Component {
 		// const prefix ="https://github.com/jtmccr1/trapper/tree/master/src/";
 		Promise.all([
 			csv(`${prefix}data/lineList.csv`),
-			csv(`${prefix}data/UnsampledTrueCases.csv`),
+			// csv(`${prefix}data/UnsampledTrueCases.csv`),
 			csv(`${prefix}data/UnsampledTransPhyloCases.csv`),
 			csv(`${prefix}data/epiContacts.csv`),
-			csv(`${prefix}data/PerfectGeneticLinks.csv`),
+			// csv(`${prefix}data/PerfectGeneticLinks.csv`),
 			csv(`${prefix}data/TransPhyloLinks.csv`),
-		]).then(([lineList,unSampledNodes,transPhyloCases,epiLinks,allLinks,transPhyloLinks])=>{
+		// ]).then(([lineList,unSampledNodes,transPhyloCases,epiLinks,allLinks,transPhyloLinks])=>{
+			]).then(([lineList,transPhyloCases,epiLinks,transPhyloLinks])=>{
+
 			const parsedLineList=lineList.map(d=>parseCaseData(d));
 			this.addCases(parsedLineList);
 
-			const parsedUnsampledNodes=unSampledNodes.map(d=>parseCaseData(d));
-			this.addCases(parsedUnsampledNodes);
+			// const parsedUnsampledNodes=unSampledNodes.map(d=>parseCaseData(d));
+			// this.addCases(parsedUnsampledNodes);
 
 			const parsedTransPhyloCases=transPhyloCases.map(d=>parseCaseData(d));
 			this.addCases(parsedTransPhyloCases);
@@ -115,8 +117,8 @@ class App extends Component {
 			const parsedEpiLinks=epiLinks.map(d=>parseEdgeData(d));
 			this.addEdges(parsedEpiLinks);
 
-			const parsedAllLinks=allLinks.map(d=>parseEdgeData(d));
-			this.addEdges(parsedAllLinks);
+			// const parsedAllLinks=allLinks.map(d=>parseEdgeData(d));
+			// this.addEdges(parsedAllLinks);
 
 			const parsedtransPhyloLinks=transPhyloLinks.map(d=>parseEdgeData(d));
 			this.addEdges(parsedtransPhyloLinks);

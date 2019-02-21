@@ -1,4 +1,5 @@
 import * as d3 from 'd3v4'
+import {onlyUnique} from './commonFunctions'
 export class Graph{
     constructor(nodes=[],edges=[]) {
            this.nodeList =nodes;
@@ -32,6 +33,9 @@ export class Graph{
     }
     getNode(key){
         return this.nodeMap.get(key);
+    }
+    getExternalNodes(){
+            return this.nodeList.filter(d=>this.getOutgoingEdges().length===0);
     }
     getNodeFromKeyValuePair(key,value){
         return this.nodeList.filter(node=>node[key]===value)[0]
@@ -121,28 +125,35 @@ export class Graph{
     }
 
     getClusters(){
-        this.nodeList.forEach(node=>node.visited=false)
+        // A cluster is dataType specific Observed nodes can be in any cluster
+        const linkTypes = this.edgeList.map(d=>d.metaData.dataType).filter(onlyUnique);
         let clusters=[];
-        this.traversalDirection="forward";
-        this.nodeList.forEach(node=>{
-            if(!node.visited){
-            const cluster={nodes:[node],
-                            externalNodes:[]}
-            node.visited=true;
-            this.getEdges(node).forEach(edge=>
-                this.traverse(node,edge,cluster))
-                //If this is a on node cluster then add the node as
-                // an external as well
-                if(cluster.nodes.length===1){
-                    if(cluster.externalNodes.length===0){
-                        cluster.externalNodes.push(node);
-                    }
-                }
-             clusters.push(cluster);
-            }
-        })
-        return clusters;
 
+        for(const linkType of linkTypes){
+            console.log(linkType)
+            this.nodeList.forEach(node=>node.visited=false)
+            this.traversalDirection="forward";
+            this.nodeList
+                .forEach(node=>{
+                    if(!node.visited){
+                    const cluster={nodes:[node],
+                                    externalNodes:[]}
+                    node.visited=true;
+                    this.getEdges(node).filter(edge=>edge.metaData.dataType==linkType)
+                        .forEach(edge=>
+                            this.traverse(node,edge,cluster))
+                            //If this is a on node cluster then add the node as
+                            // an external as well
+                            if(cluster.nodes.length===1){
+                                if(cluster.externalNodes.length===0){
+                                    cluster.externalNodes.push(node);
+                                }
+                            }
+                clusters.push(cluster);
+                }
+            })
+       }
+       return clusters;
     }
 
     traverse(currentNode,edge,cluster){
@@ -169,5 +180,6 @@ export class Graph{
             cluster.nodes.push(nodeToVisit);
             this.getEdges(nodeToVisit).forEach(edge=>this.traverse(nodeToVisit,edge,cluster));
         }
+
     }
 }
