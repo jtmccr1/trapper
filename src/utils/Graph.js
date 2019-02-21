@@ -123,11 +123,7 @@ export class Graph{
         this.addEdge(newEdge)
         this.addEdge(newEdge2)
     }
-    getExternalNodes(){
-        //All nodes that aren't a source
-
-        return this.nodeList.filter(d=>this.getOutgoingEdges(d).length===0)
-    }
+ 
 
     getClusters(){
         // A cluster is dataType specific Observed nodes can be in any cluster
@@ -144,7 +140,7 @@ export class Graph{
                     const cluster={nodes:[node],
                                     externalNodes:[]}
                     node.visited=true;
-                    this.getEdges(node).filter(edge=>edge.metaData.dataType==linkType)
+                    this.getEdges(node).filter(edge=>edge.metaData.dataType===linkType)
                         .forEach(edge=>
                             this.traverse(node,edge,cluster))
                             //If this is a on node cluster then add the node as

@@ -43,15 +43,15 @@ export class TranmissionLayout{
         nodesFromData.forEach(node=>node.height=heigthFunction(this.getDataNode(node.key)))
         // each time we go back from going fowards count an external tip.
         // set height based on that.
-        // const clusters = this.graph.getClusters();
+        const clusters = this.graph.getClusters();
         // Set y of external nodes
-
-        // clusters.sort((a,b)=>{
-        //     if(b.nodes.length===1&a.nodes.length>1){
-        //         return -1;
-        //     }else{
-        //         return(d3.min(a.nodes,d=>heigthFunction(d))-d3.min(b.nodes,d=>heigthFunction(d)))
-        //     }
+      
+        clusters.sort((a,b)=>{
+            if(b.nodes.length===1&a.nodes.length>1){
+                return -1;
+            }else{
+                return(d3.min(a.nodes,d=>heigthFunction(d))-d3.min(b.nodes,d=>heigthFunction(d)))
+            }
    
         });
         let i=1;

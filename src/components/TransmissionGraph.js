@@ -99,7 +99,6 @@ class TransmissionGraph extends React.Component {
 
 		const layout = new EconomyLayout(this.props.data,"TransPhylo");
 		layout.layOutNodes(d=>d.metaData['Date of onset']);
-		console.log(layout)
 
 		// layout.layOutNodes(d=>d.dateOfSampling);
 		const xScale=d3
@@ -107,11 +106,11 @@ class TransmissionGraph extends React.Component {
 					.domain(d3.extent(layout.nodes,d=>d.height))
 					.range([this.props.margin.left, width - this.props.margin.left - this.props.margin.right])
 					.nice()
-		// const yScale = d3
-		// 			.scaleLinear()
-		// 			// .domain(d3.extent(layout.nodes,d=>d.spacingDimension))
-		// 			.range([height - this.props.margin.top - this.props.margin.bottom, this.props.margin.bottom])
-		// 			.nice();
+		const yScale = d3
+					.scaleLinear()
+					.domain(d3.extent(layout.nodes,d=>d.spacingDimension))
+					.range([height - this.props.margin.top - this.props.margin.bottom, this.props.margin.bottom])
+					.nice();
 
 		const scaleForAxis=this.props.xScale.range([this.props.margin.left, width - this.props.margin.left - this.props.margin.right]);
 		const xAxis = d3.axisBottom().scale(scaleForAxis);
@@ -146,7 +145,7 @@ class TransmissionGraph extends React.Component {
 		const simulation = d3.forceSimulation()
 						.force("collide",d3.forceCollide(d=>nodeRadius))
 						.force("xPosition",pickyForceX)
-						// .force("yPosition",pickyForceY)
+						.force("yPosition",pickyForceY)
 						.force("center",d3.forceCenter(width/2,height/2))
 						.force("charge", d3.forceManyBody().strength(-1))
 						.force("link", d3.forceLink().distance(5).strength(0.5));
