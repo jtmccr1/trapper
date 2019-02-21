@@ -1,15 +1,11 @@
-.Observed{
-    fill:#001D73;
-    stroke:#fff;
-    stroke-width: 1.5px;
-}
+
 .transmission-node{
-    fill:#001D73;
-    stroke:#fff;
-    stroke-width: 1.5px;
-}
-.Inferred{
     stroke:#001D73;
     stroke-width: 3px;
     fill: #fff
+}
+.Observed.transmission-node{
+    fill:#001D73;
+    stroke:#fff;
+    stroke-width: 1.5px;
 }

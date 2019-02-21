@@ -1,0 +1,70 @@
+Target,Source,dataType
+Inferred unsampled case 2,Inferred unsampled case 1,TransPhylo
+Inferred unsampled case 3,Inferred unsampled case 1,TransPhylo
+Inferred unsampled case 4,Inferred unsampled case 1,TransPhylo
+PHR-6,Inferred unsampled case 1,TransPhylo
+Inferred unsampled case 5,Inferred unsampled case 2,TransPhylo
+PHR-3,Inferred unsampled case 4,TransPhylo
+Inferred unsampled case 6,Inferred unsampled case 3,TransPhylo
+Inferred unsampled case 7,Inferred unsampled case 3,TransPhylo
+Inferred unsampled case 8,Inferred unsampled case 2,TransPhylo
+PHR-11,Inferred unsampled case 2,TransPhylo
+Inferred unsampled case 9,Inferred unsampled case 5,TransPhylo
+PHR-20,Inferred unsampled case 7,TransPhylo
+PHR-9,Inferred unsampled case 6,TransPhylo
+PHR-15,Inferred unsampled case 7,TransPhylo
+PHR-25,Inferred unsampled case 5,TransPhylo
+PHR-17,PHR-3,TransPhylo
+PHR-22,PHR-11,TransPhylo
+PHR-36,Inferred unsampled case 8,TransPhylo
+PHR-30,Inferred unsampled case 8,TransPhylo
+PHR-28,Inferred unsampled case 9,TransPhylo
+Inferred unsampled case 10,Inferred unsampled case 8,TransPhylo
+PHR-27,Inferred unsampled case 8,TransPhylo
+PHR-44,PHR-15,TransPhylo
+PHR-43,PHR-9,TransPhylo
+PHR-33,PHR-17,TransPhylo
+Inferred unsampled case 11,PHR-25,TransPhylo
+Inferred unsampled case 12,PHR-15,TransPhylo
+Inferred unsampled case 13,PHR-22,TransPhylo
+Inferred unsampled case 14,PHR-36,TransPhylo
+PHR-39,Inferred unsampled case 10,TransPhylo
+PHR-40,Inferred unsampled case 10,TransPhylo
+PHR-42,PHR-27,TransPhylo
+PHR-46,Inferred unsampled case 11,TransPhylo
+PHR-47,PHR-28,TransPhylo
+Inferred unsampled case 15,PHR-40,TransPhylo
+PHR-54,Inferred unsampled case 13,TransPhylo
+PHR-51,Inferred unsampled case 11,TransPhylo
+Inferred unsampled case 16,PHR-46,TransPhylo
+PHR-57,Inferred unsampled case 12,TransPhylo
+PHR-60,Inferred unsampled case 14,TransPhylo
+Inferred unsampled case 17,Inferred unsampled case 13,TransPhylo
+Inferred unsampled case 18,PHR-39,TransPhylo
+PHR-66,Inferred unsampled case 13,TransPhylo
+Inferred unsampled case 19,Inferred unsampled case 13,TransPhylo
+Inferred unsampled case 20,Inferred unsampled case 16,TransPhylo
+PHR-67,Inferred unsampled case 15,TransPhylo
+PHR-71,Inferred unsampled case 17,TransPhylo
+PHR-87,PHR-66,TransPhylo
+Inferred unsampled case 21,PHR-57,TransPhylo
+PHR-74,PHR-54,TransPhylo
+Inferred unsampled case 22,PHR-54,TransPhylo
+PHR-79,Inferred unsampled case 19,TransPhylo
+PHR-78,Inferred unsampled case 16,TransPhylo
+PHR-75,Inferred unsampled case 18,TransPhylo
+PHR-77,PHR-54,TransPhylo
+PHR-83,Inferred unsampled case 20,TransPhylo
+Inferred unsampled case 23,Inferred unsampled case 20,TransPhylo
+PHR-91,PHR-87,TransPhylo
+PHR-95,PHR-87,TransPhylo
+PHR-89,PHR-71,TransPhylo
+PHR-85,PHR-87,TransPhylo
+Inferred unsampled case 24,Inferred unsampled case 21,TransPhylo
+Inferred unsampled case 25,Inferred unsampled case 23,TransPhylo
+PHR-92,PHR-85,TransPhylo
+PHR-103,Inferred unsampled case 22,TransPhylo
+PHR-101,PHR-89,TransPhylo
+PHR-98,Inferred unsampled case 24,TransPhylo
+PHR-93,PHR-85,TransPhylo
+PHR-94,Inferred unsampled case 25,TransPhylo

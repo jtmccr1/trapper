@@ -98,20 +98,28 @@ class App extends Component {
 		Promise.all([
 			csv(`${prefix}data/lineList.csv`),
 			csv(`${prefix}data/UnsampledTrueCases.csv`),
+			csv(`${prefix}data/UnsampledTransPhyloCases.csv`),
 			csv(`${prefix}data/epiContacts.csv`),
-			csv(`${prefix}data/PerfectGeneticLinks.csv`)
-		]).then(([lineList,unSampledNodes,epiLinks,allLinks])=>{
+			csv(`${prefix}data/PerfectGeneticLinks.csv`),
+			csv(`${prefix}data/TransPhyloLinks.csv`),
+		]).then(([lineList,unSampledNodes,transPhyloCases,epiLinks,allLinks,transPhyloLinks])=>{
 			const parsedLineList=lineList.map(d=>parseCaseData(d));
 			this.addCases(parsedLineList);
 
 			const parsedUnsampledNodes=unSampledNodes.map(d=>parseCaseData(d));
 			this.addCases(parsedUnsampledNodes);
 
+			const parsedTransPhyloCases=transPhyloCases.map(d=>parseCaseData(d));
+			this.addCases(parsedTransPhyloCases);
+
 			const parsedEpiLinks=epiLinks.map(d=>parseEdgeData(d));
 			this.addEdges(parsedEpiLinks);
 
 			const parsedAllLinks=allLinks.map(d=>parseEdgeData(d));
 			this.addEdges(parsedAllLinks);
+
+			const parsedtransPhyloLinks=transPhyloLinks.map(d=>parseEdgeData(d));
+			this.addEdges(parsedtransPhyloLinks);
 
 			return true
 		}).then((result)=>{
