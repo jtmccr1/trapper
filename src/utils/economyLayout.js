@@ -1,6 +1,8 @@
 import * as d3 from 'd3v4';
-export class TranmissionLayout{
-    constructor(graph,bezier=true) {
+export class EconomyLayout{
+    constructor(graph,linkType,bezier=true) {
+        // Linktype should connect all nodes
+        this.linkType=linkType;
         this.graph=graph
         this.nodes=this.graph.getNodes().map(node=>  {return{"key":node.key,"height":null,"spacingDimension":null}})
         this.nodeMap = new Map(this.nodes.map(node => [node.key, node]));
@@ -23,6 +25,7 @@ export class TranmissionLayout{
               });
 
         }
+        this.currentSpacing=0;
 
     };
     
@@ -41,46 +44,36 @@ export class TranmissionLayout{
     layOutNodes(heigthFunction){
         const nodesFromData=this.nodes.filter(node=>node.key);
         nodesFromData.forEach(node=>node.height=heigthFunction(this.getDataNode(node.key)))
-        // each time we go back from going fowards count an external tip.
-        // set height based on that.
-        // const clusters = this.graph.getClusters();
-        // Set y of external nodes
-
-        // clusters.sort((a,b)=>{
-        //     if(b.nodes.length===1&a.nodes.length>1){
-        //         return -1;
-        //     }else{
-        //         return(d3.min(a.nodes,d=>heigthFunction(d))-d3.min(b.nodes,d=>heigthFunction(d)))
-        //     }
-   
-        });
-        let i=1;
-        for(const cluster of clusters){
-            for(const externalNode of cluster.externalNodes){
-                const plotNode=this.getNode(externalNode.key)//plot node
-                // will visit the observed nodes each time so don't want that
-                if(!plotNode.setSpacingDimension){
-                plotNode.spacingDimension=i;
-                i++;
-                }
-            }
+        
+        let dataRootNode = this.graph.getNodes().filter(node=>this.graph.getOutgoingEdges(node)
+                                                .filter(edge=>edge.metaData.dataType===this.linkType).length>0 & this.graph.getIncomingEdges(node)
+                                                                                                            .filter(edge=>edge.metaData.dataType===this.linkType).length===0);
+        if(dataRootNode.length>1){
+            alert("The links used to set the transmission layout should link all nodes")
         }
-        console.log(clusters)
-        // const externalNodes = this.graph.getExternalNodes();
+        const plotRoot=this.getNode(dataRootNode[0].key);
+        
+        
+        this.setSpacingDimension(plotRoot);
 
-        // fix overplotting
-        // Set the y of internal nodes as the mean of their children.
-        nodesFromData.forEach(node=>this.setSpacingDimension(node));
     }
 
-    // setSpacingDimension(node){
-    //     if(node.spacingDimension){
-    //         return;
-    //     }else{
-    //         const children = this.getOutgoingEdges(node).map(edge=>edge.target);
-    //         children.forEach(child=>this.setSpacingDimension(child))
-    //         node.spacingDimension=d3.mean(children,child=>child.spacingDimension)
-    //     }
-    // }
+    setSpacingDimension(node){
+        // if(node.spacingDimension){
+        //     return;
+        // }else{
+            node.spacingDimension=this.currentSpacing
+            this.currentSpacing++;
+            console.log(node)
+            console.log(this.getOutgoingEdges(node).filter(edge=>edge.key)
+            .map(edge=>this.getDataEdge(edge.key)))
+
+            const children = this.getOutgoingEdges(node)
+                .filter(edge=>edge.key)
+                .filter(edge=>this.getDataEdge(edge.key).metaData.dataType===this.linkType)
+                .map(edge=>edge.target);
+            children.forEach(child=>this.setSpacingDimension(child))
+        // }
+    }
 
 }

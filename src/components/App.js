@@ -103,6 +103,8 @@ class App extends Component {
 			csv(`${prefix}data/PerfectGeneticLinks.csv`),
 			csv(`${prefix}data/TransPhyloLinks.csv`),
 		]).then(([lineList,unSampledNodes,transPhyloCases,epiLinks,allLinks,transPhyloLinks])=>{
+			// ]).then(([lineList,transPhyloCases,epiLinks,transPhyloLinks])=>{
+
 			const parsedLineList=lineList.map(d=>parseCaseData(d));
 			this.addCases(parsedLineList);
 

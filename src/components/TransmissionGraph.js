@@ -1,6 +1,7 @@
 import React from 'react';
 import * as d3 from 'd3v4';
 import {TranmissionLayout} from "../utils/transmissionLayout"
+import {EconomyLayout} from "../utils/economyLayout"
 import { toolTipCSS, toolTipCSSInverse } from '../utils/commonStyles';
 import '../styles/TransmissionGraph.css'; // TODO
 import '../styles/commonPlotStyle.css'
@@ -26,7 +27,7 @@ class TransmissionGraph extends React.Component {
 		this.props.nodeDataStatuses.forEach((selected,i)=>{
 			const newOpacity = selected? 1:0;
 			const classSelector=`.${this.props.nodeDataSources[i].replace(/ /g, '-')}`
-			d3.selectAll(`${classSelector}`)
+			d3.selectAll(`${classSelector}.transmission-node`)
 				.transition()
 				.duration(300)
 				.ease(d3.easeLinear)
@@ -38,7 +39,7 @@ class TransmissionGraph extends React.Component {
 		this.props.edgeDataStatuses.forEach((selected,i)=>{
 			const newOpacity = selected? 1:0;
 			const classSelector=`.${this.props.edgeDataSources[i].replace(/ /g, '-')}`
-			d3.selectAll(`${classSelector}`)
+			d3.selectAll(`${classSelector}.link`)
 				.transition()
 				.duration(300)
 				.ease(d3.easeLinear)
@@ -96,8 +97,9 @@ class TransmissionGraph extends React.Component {
 		svg.append('g').attr('transform', `translate(${this.props.margin.left},${this.props.margin.top})`);
 		const svgGroup = svg.select('g');
 
-		const layout = new TranmissionLayout(this.props.data);
+		const layout = new EconomyLayout(this.props.data,"TransPhylo");
 		layout.layOutNodes(d=>d.metaData['Date of onset']);
+		console.log(layout)
 
 		// layout.layOutNodes(d=>d.dateOfSampling);
 		const xScale=d3
@@ -129,27 +131,25 @@ class TransmissionGraph extends React.Component {
 
 		const nodeRadius=7;
 
-		const pickyForceX=d3.forceX(d=>xScale(d.height)).strength(2);
+		const pickyForceX=d3.forceX(d=>xScale(d.height)).strength(0.7);
 		const pickXInit = pickyForceX.initialize;
 		pickyForceX.initialize=function(nodes){
 			pickXInit(nodes.filter(node=>node.key))
 		}
 
-		// const pickyForceY=d3.forceY(d=>yScale(d.spacingDimension)).strength(0.5);
-		// const pickYInit = pickyForceY.initialize;
-		// pickyForceY.initialize=function(nodes){
-		// 	pickYInit(nodes.filter(node=>node.key))
-		// }
-
-
+		const pickyForceY=d3.forceY(d=>yScale(d.spacingDimension)).strength(0.3);
+		const pickYInit = pickyForceY.initialize;
+		pickyForceY.initialize=function(nodes){
+			pickYInit(nodes.filter(node=>node.key&& node.spacingDimension))
+		}
 
 		const simulation = d3.forceSimulation()
 						.force("collide",d3.forceCollide(d=>nodeRadius))
 						.force("xPosition",pickyForceX)
 						// .force("yPosition",pickyForceY)
 						.force("center",d3.forceCenter(width/2,height/2))
-						.force("charge", d3.forceManyBody().strength(-5))
-						.force("link", d3.forceLink().distance(5).strength(0.2));
+						.force("charge", d3.forceManyBody().strength(-1))
+						.force("link", d3.forceLink().distance(5).strength(0.5));
 
 
 	
