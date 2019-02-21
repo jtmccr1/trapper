@@ -26,7 +26,7 @@ class TransmissionGraph extends React.Component {
 	updateNodeVisibility(){
 		this.props.nodeDataStatuses.forEach((selected,i)=>{
 			const newOpacity = selected? 1:0;
-			const classSelector=`.${this.props.nodeDataSources[i]}`
+			const classSelector=`.${this.props.nodeDataSources[i].replace(/ /g, '-')}`
 			d3.selectAll(`${classSelector}.transmission-node`)
 				.transition()
 				.duration(300)
@@ -169,7 +169,7 @@ class TransmissionGraph extends React.Component {
 			.enter()
 			.append("circle")
 			.attr("r",d=>layout.getDataNode(d.key).metaData.dataType==="Observed"?nodeRadius:nodeRadius-1.5)
-			.attr("class",d=>`${layout.getDataNode(d.key).metaData.dataType} transmission-node`)
+			.attr("class",d=>`${layout.getDataNode(d.key).metaData.dataType.replace(/ /g, '-')} transmission-node`)
 			.call(d3.drag()
 			.on("start", dragstarted)
 			.on("drag", dragged)

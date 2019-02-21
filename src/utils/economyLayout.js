@@ -45,7 +45,9 @@ export class EconomyLayout{
         const nodesFromData=this.nodes.filter(node=>node.key);
         nodesFromData.forEach(node=>node.height=heigthFunction(this.getDataNode(node.key)))
         
-        let dataRootNode = this.graph.getNodes().filter(node=>this.graph.getOutgoingEdges(node).length>0 & this.graph.getIncomingEdges(node).length===0);
+        let dataRootNode = this.graph.getNodes().filter(node=>this.graph.getOutgoingEdges(node)
+                                                .filter(edge=>edge.metaData.dataType===this.linkType).length>0 & this.graph.getIncomingEdges(node)
+                                                                                                            .filter(edge=>edge.metaData.dataType===this.linkType).length===0);
         if(dataRootNode.length>1){
             alert("The links used to set the transmission layout should link all nodes")
         }
