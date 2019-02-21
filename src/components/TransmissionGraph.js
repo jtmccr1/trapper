@@ -25,7 +25,7 @@ class TransmissionGraph extends React.Component {
 	updateNodeVisibility(){
 		this.props.nodeDataStatuses.forEach((selected,i)=>{
 			const newOpacity = selected? 1:0;
-			const classSelector=`.${this.props.nodeDataSources[i]}`
+			const classSelector=`.${this.props.nodeDataSources[i].replace(/ /g, '-')}`
 			d3.selectAll(`${classSelector}`)
 				.transition()
 				.duration(300)
@@ -52,6 +52,7 @@ class TransmissionGraph extends React.Component {
 		const node = this.node;
 		const infoRef = this.infoRef;
 		const infoRef2 = this.infoRef2;
+		const self = this;
 
 
 
@@ -104,11 +105,11 @@ class TransmissionGraph extends React.Component {
 					.domain(d3.extent(layout.nodes,d=>d.height))
 					.range([this.props.margin.left, width - this.props.margin.left - this.props.margin.right])
 					.nice()
-		const yScale = d3
-					.scaleLinear()
-					.domain(d3.extent(layout.nodes,d=>d.spacingDimension))
-					.range([height - this.props.margin.top - this.props.margin.bottom, this.props.margin.bottom])
-					.nice();
+		// const yScale = d3
+		// 			.scaleLinear()
+		// 			// .domain(d3.extent(layout.nodes,d=>d.spacingDimension))
+		// 			.range([height - this.props.margin.top - this.props.margin.bottom, this.props.margin.bottom])
+		// 			.nice();
 
 		const scaleForAxis=this.props.xScale.range([this.props.margin.left, width - this.props.margin.left - this.props.margin.right]);
 		const xAxis = d3.axisBottom().scale(scaleForAxis);
@@ -128,27 +129,27 @@ class TransmissionGraph extends React.Component {
 
 		const nodeRadius=7;
 
-		const pickyForceX=d3.forceX(d=>xScale(d.height)).strength(0.5);
+		const pickyForceX=d3.forceX(d=>xScale(d.height)).strength(2);
 		const pickXInit = pickyForceX.initialize;
 		pickyForceX.initialize=function(nodes){
 			pickXInit(nodes.filter(node=>node.key))
 		}
 
-		const pickyForceY=d3.forceY(d=>yScale(d.spacingDimension)).strength(0.5);
-		const pickYInit = pickyForceY.initialize;
-		pickyForceY.initialize=function(nodes){
-			pickYInit(nodes.filter(node=>node.key))
-		}
+		// const pickyForceY=d3.forceY(d=>yScale(d.spacingDimension)).strength(0.5);
+		// const pickYInit = pickyForceY.initialize;
+		// pickyForceY.initialize=function(nodes){
+		// 	pickYInit(nodes.filter(node=>node.key))
+		// }
 
 
 
 		const simulation = d3.forceSimulation()
 						.force("collide",d3.forceCollide(d=>nodeRadius))
 						.force("xPosition",pickyForceX)
-						.force("yPosition",pickyForceY)
+						// .force("yPosition",pickyForceY)
 						.force("center",d3.forceCenter(width/2,height/2))
-						.force("charge", d3.forceManyBody().strength(0.07))
-						.force("link", d3.forceLink().distance(5).strength(0.5));
+						.force("charge", d3.forceManyBody().strength(-5))
+						.force("link", d3.forceLink().distance(5).strength(0.2));
 
 
 	
@@ -168,8 +169,8 @@ class TransmissionGraph extends React.Component {
 			.data(layout.nodes.filter(d=>d.key))
 			.enter()
 			.append("circle")
-			.attr("r",d=>layout.getDataNode(d.key).metaData.dataType==="Inferred"?nodeRadius-1.5:nodeRadius)
-			.attr("class",d=>`${layout.getDataNode(d.key).metaData.dataType} transmission-node`)
+			.attr("r",d=>layout.getDataNode(d.key).metaData.dataType==="Observed"?nodeRadius:nodeRadius-1.5)
+			.attr("class",d=>`${layout.getDataNode(d.key).metaData.dataType.replace(/ /g, '-')} transmission-node`)
 			.call(d3.drag()
 			.on("start", dragstarted)
 			.on("drag", dragged)
@@ -194,14 +195,24 @@ class TransmissionGraph extends React.Component {
 			links.attr("d", positionLink);
 			nodes.attr("transform", positionNode);
 		  }
-		
+		function bind(d){
+			const boundedPosition={}
+			boundedPosition.x=Math.max(nodeRadius, Math.min((width-self.props.margin.left-self.props.margin.right) - nodeRadius, d.x));
+			boundedPosition.y=Math.min((height-self.props.margin.bottom-self.props.margin.top+25) - nodeRadius, d.y);
+			return boundedPosition;
+		}
 		  function positionLink(d) {
-			const pathString = `M${d[0].x},${d[0].y}S${d[1].x},${d[1].y} ${d[2].x},${d[2].y}`;
+			const start = bind(d[0]);
+			const mid = bind(d[1]);
+			const end = bind(d[2])
+			const pathString = `M${start.x},${start.y}S${mid.x},${mid.y} ${end.x},${end.y}`;
 			return pathString;
 		  }
 		  
 		  function positionNode(d) {
-			return "translate(" + d.x + "," + d.y + ")";
+			  //Bounds in svg
+			  const boundedPosition = bind(d); 
+			return `translate( ${boundedPosition.x} , ${boundedPosition.y} )`;
 		  }
 		  
 		  function dragstarted(d) {

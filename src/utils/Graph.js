@@ -119,6 +119,11 @@ export class Graph{
         this.addEdge(newEdge)
         this.addEdge(newEdge2)
     }
+    getExternalNodes(){
+        //All nodes that aren't a source
+
+        return this.nodeList.filter(d=>this.getOutgoingEdges(d).length===0)
+    }
 
     getClusters(){
         this.nodeList.forEach(node=>node.visited=false)
