@@ -49,12 +49,6 @@ class App extends Component {
 		newData.forEach(edge=>{
 			const source=this.state.data.getNodesFromKeyValuePair("id",edge.source)
 			const target = this.state.data.getNodesFromKeyValuePair("id",edge.target)
-			if(source.length!==1||target.length!==1){
-				// alert("Id's should be unique to each node")
-				console.log(edge)
-				console.log(source);
-				console.log(target);
-			}
 			this.state.data.makeEdge(source[0],
 									target[0],
 									edge.metaData)
@@ -137,6 +131,18 @@ class App extends Component {
 								this.setState({treeString:text})
 							}))
 			return true;
+		}).then((result)=>{
+			//annotate nodes
+			const nodeAnnotations = {}
+			this.state.data.nodes.forEach(n=>nodeAnnotations[n.key]={...n.metaData});
+			console.log(nodeAnnotations);
+
+			this.state.data.annotateNodes(nodeAnnotations);
+
+			console.log(this.state.data)
+
+			//annotate edges
+			return true
 		}).then((result)=>{
 			this.setState({nodeDataSources:this.state.data.nodes.map(d=>d.metaData.dataType).filter(onlyUnique)});
 			this.setState({nodeDataStatuses:this.state.data.nodes.map(d=>d.metaData.dataType).filter(onlyUnique).map(x=>true)})

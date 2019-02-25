@@ -2,6 +2,7 @@ import * as d3 from 'd3v4';
 
 const  parseDate = d3.timeParse("%Y-%m-%d")
 
+
 export const  parseCaseData=(d)=>{
     const standardColumns =["Id","Date of sampling"]
     const entry = {
