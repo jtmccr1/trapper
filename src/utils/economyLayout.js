@@ -4,9 +4,9 @@ export class EconomyLayout{
         // Linktype should connect all nodes
         this.linkType=linkType;
         this.graph=graph
-        this.nodes=this.graph.getNodes().map(node=>  {return{"key":node.key,"height":null,"spacingDimension":null}})
+        this.nodes=this.graph.nodes.map(node=>  {return{"key":node.key,"height":null,"spacingDimension":null}})
         this.nodeMap = new Map(this.nodes.map(node => [node.key, node]));
-        this.edges = this.graph.getEdgeList().map(edge=>{
+        this.edges = this.graph.edges.map(edge=>{
                                                         return{"key":edge.key,
                                                             "source":this.getNode(edge.source.key),
                                                             "target":this.getNode(edge.target.key)};
@@ -45,7 +45,7 @@ export class EconomyLayout{
         const nodesFromData=this.nodes.filter(node=>node.key);
         nodesFromData.forEach(node=>node.height=heigthFunction(this.getDataNode(node.key)))
         
-        let dataRootNode = this.graph.getNodes().filter(node=>this.graph.getOutgoingEdges(node)
+        let dataRootNode = this.graph.nodes.filter(node=>this.graph.getOutgoingEdges(node)
                                                 .filter(edge=>edge.metaData.dataType===this.linkType).length>0 & this.graph.getIncomingEdges(node)
                                                                                                             .filter(edge=>edge.metaData.dataType===this.linkType).length===0);
         if(dataRootNode.length>1){

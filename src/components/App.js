@@ -47,11 +47,17 @@ class App extends Component {
 	}
 	addEdges = newData=>{
 		newData.forEach(edge=>{
-			const source=this.state.data.getNodeFromKeyValuePair("id",edge.source)
-			const target = this.state.data.getNodeFromKeyValuePair("id",edge.target)
-			this.state.data.addEdge({source:source,
-									target:target,
-									metaData:edge.metaData})
+			const source=this.state.data.getNodesFromKeyValuePair("id",edge.source)
+			const target = this.state.data.getNodesFromKeyValuePair("id",edge.target)
+			if(source.length!==1||target.length!==1){
+				// alert("Id's should be unique to each node")
+				console.log(edge)
+				console.log(source);
+				console.log(target);
+			}
+			this.state.data.makeEdge(source[0],
+									target[0],
+									edge.metaData)
 	})
 }
 	checkThatBox(stateKey){
@@ -132,10 +138,10 @@ class App extends Component {
 							}))
 			return true;
 		}).then((result)=>{
-			this.setState({nodeDataSources:this.state.data.getNodes().map(d=>d.metaData.dataType).filter(onlyUnique)});
-			this.setState({nodeDataStatuses:this.state.data.getNodes().map(d=>d.metaData.dataType).filter(onlyUnique).map(x=>true)})
-			this.setState({edgeDataSources:this.state.data.getEdgeList().map(d=>d.metaData.dataType).filter(onlyUnique)});
-			this.setState({edgeDataStatuses:this.state.data.getEdgeList().map(d=>d.metaData.dataType).filter(onlyUnique).map(x=>true)});
+			this.setState({nodeDataSources:this.state.data.nodes.map(d=>d.metaData.dataType).filter(onlyUnique)});
+			this.setState({nodeDataStatuses:this.state.data.nodes.map(d=>d.metaData.dataType).filter(onlyUnique).map(x=>true)})
+			this.setState({edgeDataSources:this.state.data.edges.map(d=>d.metaData.dataType).filter(onlyUnique)});
+			this.setState({edgeDataStatuses:this.state.data.edges.map(d=>d.metaData.dataType).filter(onlyUnique).map(x=>true)});
 			return true
 		}).then((result)=>{
 			this.setState({resolved:result})
@@ -171,7 +177,7 @@ class App extends Component {
 					childProps={{
 						size: [900, 460],
 						margin: { top: 0, right: 30, bottom: 50, left: 30 },
-						cases:this.state.data.getNodes(),
+						cases:this.state.data.nodes,
 						xScale:this.state.xScale,
 						nodeDataSources:this.state.nodeDataSources,
 						nodeDataStatuses:this.state.nodeDataStatuses,

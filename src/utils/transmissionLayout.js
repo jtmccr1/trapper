@@ -2,9 +2,9 @@ import * as d3 from 'd3v4';
 export class TranmissionLayout{
     constructor(graph,bezier=true) {
         this.graph=graph
-        this.nodes=this.graph.getNodes().map(node=>  {return{"key":node.key,"height":null,"spacingDimension":null}})
+        this.nodes=this.graph.nodes.map(node=>  {return{"key":node.key,"height":null,"spacingDimension":null}})
         this.nodeMap = new Map(this.nodes.map(node => [node.key, node]));
-        this.edges = this.graph.getEdgeList().map(edge=>{
+        this.edges = this.graph.edges.map(edge=>{
                                                         return{"key":edge.key,
                                                             "source":this.getNode(edge.source.key),
                                                             "target":this.getNode(edge.target.key)};

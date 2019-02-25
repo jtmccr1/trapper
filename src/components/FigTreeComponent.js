@@ -33,7 +33,7 @@ class FigTreeComponent extends Component {
 
     const annotations= {};
     
-    this.props.caseData.getNodes().forEach(node=>{
+    this.props.caseData.nodes.forEach(node=>{
       if(tree.nodes.map(node=>node.name).indexOf(node.id)>-1){
       annotations[node.id]={
        "Date of Sampling":node.dateOfSampling?node.dateOfSampling.toISOString().substring(0, 10):"",
@@ -45,7 +45,6 @@ class FigTreeComponent extends Component {
     })
    
     tree.annotateTips(annotations);
-
     figTree.setNodeLabels();
     figTree.addToolTip('.node', FigTree.nodeInfo);
     
