@@ -22,7 +22,6 @@ export class Graph{
         this.outGoingEdgeMap = new Map(this.nodeList.map(node=>[node,[...this.edgeList.filter(edge=>edge.source===node)]]));
         this.incomingEdgeMap= new Map(this.nodeList.map(node=>[node,[...this.edgeList.filter(edge=>edge.target===node)]]));
         // This is used in identifying terminal tips  
-
     };
     
     /**
@@ -206,7 +205,7 @@ export class Graph{
 
 
     /**
-     * Inserts a node into an edge updating the source and target of the edges
+     * Inserts a node into an edge. This replaced the edge with two new edges which pass through a node.
      * @param {*} node 
      * @param {*} edge 
      */
@@ -218,39 +217,122 @@ export class Graph{
         this.makeEdge(node,edge.taget);
         this.removeEdge(edge)
     }
-    /**
-     * A depth first search of the the graph starting at a provided node
-     * @param {*} node 
-     * @param {object} options - an optional object with filterEdges:function() that filters the edges used in the traversal
-     * @returns {object} - An object with nodes: an array of nodes visited in the search and edges: the edges that were either discovered or treated as back edges in the search
-     */
+
     
-    depthFirstSearch(node,options={filterEdges:(e)=>true}){
-        this.nodeList.forEach(n => n.visited=false);
-        this.edgeList.forEach(e=>e.visited=false);
-        DFS.call(this,node,options);
-        return({nodes:[...this.nodeList.filter(n=>n.visited===true)],edges:[...this.edgeList.filter(e=>e.visited)]});
-    }
+
     /**
-     * 
+     * A function to return a sub graph given an arrary of nodes.
+     * @param {array} nodes - An array of nodes
      * @param {*} options - an optional object with filterEdges:function() that filters the edges used in the traversal
-     * @returns {array} - an array of graph objects where each entery is an idependent cluster
+     * @returns {*} A graph object including the provided nodes and edges linking the node. If there is no path between all nodes the 
+     * object will be empty 
      */
-    getSubGraphs(options={filterEdges:(e)=>true}){
-        const clusters=[];
-        const visitedNodes=[];
-        for(const node of this.nodeList){
-            if(visitedNodes.indexOf(node)===-1){
-                const cluster = this.depthFirstSearch(node);
-                const subGraph = new Graph(cluster.nodes,cluster.edges);
-                clusters.push(subGraph)
-                visitedNodes.push(...cluster.nodes)
-            }
+    getSubGraph(nodes,options={filterEdges:(e)=>true}){
+        // check there is a path between all nodes
+        const preorder= [...this.preorder(nodes[0])];
+        if(nodes.some(n=>preorder.indexOf(n)===-1)){ 
+            // If there is at least 1 node not hit in the traversal
+            return new Graph();
         }
-       return clusters;
+        const edges = nodes.map(n=>[...this.getOutgoingEdges(n).filter(e=>options.filterEdges(e)).filter(e=>nodes.indexOf(e.taget)>-1),
+                                    ...this.getIncomingEdges(n).filter(e=>options.filterEdges(e)).filter(e=>nodes.indexOf(e.source)>-1)]);
+        const uniqueEdges = [...new Set(edges)];
+        return new Graph(nodes,uniqueEdges)
+       
+    }
+
+        /**
+     * A function to return a sub graph given an arrary of nodes.
+     * @param {array} nodes - An array of nodes
+     * @param {*} options - an optional object with filterEdges:function() that filters the edges used in the traversal
+     * @returns {*} A graph object including the provided nodes and edges linking the node. If there is no path between all nodes the 
+     * object will be empty 
+     */
+    getPath(nodes,options={filterEdges:(e)=>true}){
+        // check there is a path between all nodes
+        const preorder= [...this.preorder(nodes[0])];
+        if(nodes.some(n=>preorder.indexOf(n)===-1)){ 
+            // If there is at least 1 node not hit in the traversal
+            return new Graph();
+        }
+        const edges = nodes.map(n=>[...this.getOutgoingEdges(n).filter(e=>options.filterEdges(e)).filter(e=>nodes.indexOf(e.taget)>-1),
+                                    ...this.getIncomingEdges(n).filter(e=>options.filterEdges(e)).filter(e=>nodes.indexOf(e.source)>-1)]);
+        const uniqueEdges = [...new Set(edges)];
+        return new Graph(nodes,uniqueEdges)
+       
     }
 
 // -----------  Methods from figtree.js tree object -----------------------------
+    /**
+     * A generator function that returns the nodes in a pre-order traversal. Starting at 
+     * node. An optional options objects can be used to select which edges are used in the traversal
+     * @param {*} node 
+     * @param {object} options - an optional object with filterEdges:function() that filters the edges used in the traversal
+     * @returns {IterableIterator<IterableIterator<*|*>>}
+     */
+    *preorder(node,options) {
+        // We have to mark nodes as visited since it is possible to cycle back
+        this.edgeList.forEach(e=>e.visited=false);
+        this.nodeList.forEach(n => n.visited=false);
+        const traverse = function *(node,options){
+            yield node;
+            this.getEdges(node).filter(e=>options.filterEdges(e)).forEach(edge=>{
+                if(!edge.visited){
+                    let nextNode;
+                    if(node===edge.source){
+                        nextNode = edge.target;
+                    }else{
+                        nextNode=edge.source;
+                    }
+                    if(!nextNode.visited){
+                        edge.visited=true;
+                        traverse(nextNode,options);
+                    }else{
+                        edge.visited=true; // technically a back edge
+                    }
+                }
+            })
+        };
+        yield* traverse(node,options);
+        this.edgeList.forEach(e=> delete e["visited"]);
+        this.nodeList.forEach(n => delete n["visited"]);
+    }
+
+    /**
+     * A generator function that returns the nodes in a post-order traversal. Starting at 
+     * node. An optional options objects can be used to select which edges are used in the traversal
+     * @param {*} node 
+     * @param {object} options - an optional object with filterEdges:function() that filters the edges used in the traversal
+     * @returns {IterableIterator<IterableIterator<*|*>>}
+     */
+    *postorder(node,options) {
+        // We have to mark nodes as visited since it is possible to cycle back
+        this.edgeList.forEach(e=>e.visited=false);
+        this.nodeList.forEach(n => n.visited=false);
+        const traverse = function *(node,options){
+            this.getEdges(node).filter(e=>options.filterEdges(e)).forEach(edge=>{
+                if(!edge.visited){
+                    let nextNode;
+                    if(node===edge.source){
+                        nextNode = edge.target;
+                    }else{
+                        nextNode=edge.source;
+                    }
+                    if(!nextNode.visited){
+                        edge.visited=true;
+                        traverse(nextNode,options);
+                    }else{
+                        edge.visited=true; // technically a back edge
+                    }
+                }
+            })
+            yield node;
+
+        };
+        yield* traverse(node,options);
+        this.edgeList.forEach(e=> delete e["visited"]);
+        this.nodeList.forEach(n => delete n["visited"]);
+    }
 
     /**
      * This is similar to annotateTips but the annotation objects are keyed by node
@@ -428,34 +510,11 @@ export class Graph{
             this.annotations[key] = annotation;
         }
     }
-
-
 }
 
 /*
  * Private methods, called by the class using the <function>.call(this) function.
  */
 
-/**
- * A private recursive function traverses the graph in a depth first fashion. and marks visited edges and nodes
- * @param node
- */
-function DFS(node,options) {
-    node.visited=true; // visit node
-    this.getEdges(node).filter(e=>options.filterEdges(e)).forEach(edge=>{
-        if(!edge.visited){
-            let nextNode;
-            if(node===edge.source){
-                nextNode = edge.target;
-            }else{
-                nextNode=edge.source;
-            }
-            if(!nextNode.visited){
-                edge.visited=true;
-                this.DFS(nextNode);
-            }else{
-                edge.visited=true; // technically a back edge
-            }
-        }
-    })
-}
+
+
