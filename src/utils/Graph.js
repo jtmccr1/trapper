@@ -1,6 +1,6 @@
 /** @module Graph */
 
-import {Type} from 'figtree';
+// import {Type} from 'figtree';
 /**
  * The graph class
  *
@@ -242,23 +242,16 @@ export class Graph{
     }
 
         /**
-     * A function to return a sub graph given an arrary of nodes.
-     * @param {array} nodes - An array of nodes
+     * A function returning 
+     * @param {*} nodes - An array of nodes
      * @param {*} options - an optional object with filterEdges:function() that filters the edges used in the traversal
-     * @returns {*} A graph object including the provided nodes and edges linking the node. If there is no path between all nodes the 
-     * object will be empty 
+     * @returns {*} 
+     * Not yet implimented. Should each path be a sub-graph?
      */
-    getPath(nodes,options={filterEdges:(e)=>true}){
+    getPaths(node1,node2,options={filterEdges:(e)=>true}){
         // check there is a path between all nodes
-        const preorder= [...this.preorder(nodes[0])];
-        if(nodes.some(n=>preorder.indexOf(n)===-1)){ 
-            // If there is at least 1 node not hit in the traversal
-            return new Graph();
-        }
-        const edges = nodes.map(n=>[...this.getOutgoingEdges(n).filter(e=>options.filterEdges(e)).filter(e=>nodes.indexOf(e.taget)>-1),
-                                    ...this.getIncomingEdges(n).filter(e=>options.filterEdges(e)).filter(e=>nodes.indexOf(e.source)>-1)]);
-        const uniqueEdges = [...new Set(edges)];
-        return new Graph(nodes,uniqueEdges)
+        throw new Error("Not yet implimented");
+
        
     }
 
