@@ -3,28 +3,37 @@
   "productName": "Trapper",
   "version": "0.1.0",
   "private": true,
-  "main": "public/electron.js",
   "homepage": "http://jtmccr1.github.io/trapper",
   "dependencies": {
+    "chalk": "^2.4.1",
+    "chokidar": "^2.0.4",
+    "collections": "^2.0.3",
     "cors": "^2.8.4",
-    "d3-fetch": "^1.1.2",
-    "d3v4": "^4.2.2",
-    "electron-is-dev": "^1.0.1",
-    "figtree": "github:jtmccr1/figtree.js#packaging_as_dependency",
-    "glamor": "^2.20.40",
-    "react": "^16.5.2",
-    "react-burger-menu": "^2.6.5",
-    "react-dom": "^16.5.2",
-    "react-scripts": "^2.1.5"
+    "csvtojson": "^1.1.9",
+    "d3-array": "1.2.4",
+    "d3-axis": "^1.0.8",
+    "d3-color": "^1.2.0",
+    "d3-interpolate": "^1.2.0",
+    "d3-scale": "^2.0.0",
+    "d3-scale-chromatic": "^1.3.3",
+    "d3-selection": "^1.3.0",
+    "d3-shape": "^1.2.0",
+    "eslint-plugin-import": "^2.17.2",
+    "express": "^4.16.3",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-color": "^2.17.3",
+    "react-contextmenu": "^2.11.0",
+    "react-dom": "^16.8.6",
+    "react-icons": "^3.6.1",
+    "react-scripts": "3.0.0",
+    "react-select": "2.4.2",
+    "socket.io": "2.2.0",
+    "socket.io-client": "^2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-pack": "build --mac -c.extraMetadata.main=build/electron.js ",
-    "preelectron-pack": "yarn build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
@@ -38,20 +47,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "concurrently": "^4.1.0",
-    "electron": "^4.0.5",
-    "electron-builder": "^20.38.5",
-    "gh-pages": "^2.0.1",
-    "wait-on": "^3.2.0"
-  },
-  "build": {
-    "appId": "jt",
-    "files": [
-      "build/**/*",
-      "node_modules/**/*"
-    ],
-    "directories": {
-      "buildResources": "assets"
-    }
+    "gh-pages": "^2.0.1"
   }
 }

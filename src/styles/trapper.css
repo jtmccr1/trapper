@@ -1,0 +1,192 @@
+
+:root {
+    --dark-background: #02292e;
+    --dark-foreground: #fffcf2;
+    --artic-red: #e06962;
+    --header: #255a66;
+    --light-text: #F6EECA;
+  }
+  /* ------------ FONTS --------------------- */
+@font-face {
+    font-family: 'Lato';
+    src: local('LatoLatin-Light'), url(./LatoLatin-Light.woff) format('woff');
+    font-weight: bold;
+  }
+  
+  @font-face {
+    font-family: 'Lato';
+    src: local('LatoLatin-Hairline'), url(./LatoLatin-Hairline.woff) format('woff');
+    font-weight: normal;
+  }
+  /* ----------- GLOBALS (BODY) --------------*/
+body {
+    overflow-x: hidden;
+    font-family: "Lato";
+    background: var(--dark-background);
+    color: var(--dark-foreground);
+  }
+  /* --------------- SIDEBARS --------------- */
+div.sidebar {
+    position: absolute;
+    max-width: 85%;
+    overflow-x: scroll;
+    height: 95%;
+    color: #fffcf2;
+    background-color: var(--dark-background);
+    padding: 10px;
+    border: 3px solid var(--artic-red);
+    border-radius: 10px;
+    transition: 0.5s ease-out;
+    -webkit-transition: 0.5s ease-out;
+  }
+  div.sidebar.closed {
+    right: -500px;
+  }
+  div.sidebar.open {
+    right: 5px;
+  }
+  .sidebar input.hidden {
+    display: none;
+  }
+  .sidebar .inner {
+    height: 100%;
+    overflow: scroll;
+  }
+  .sidebar .topRight {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+  /* -------------------- HEADER --------------------- */
+div.header {
+    width: 100%;
+    margin: auto;
+    background-color: var(--header);
+    color: var(--light-text);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  div.header .logo {
+    float: left;
+    margin: 10px;
+    padding:10px
+  }
+  div.header .title {
+    float: left;
+    margin: 10px;
+    padding:10px;
+    font-size: "1.8em"
+  }
+  div.header .buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 20px 10px 20px 0;
+  }
+
+  /* ----------------- MODERN BUTTONS --------------------- */
+button.modernButton {
+    display: block;
+    background: var(--artic-red);
+    color: var(--dark-foreground);
+    border: 1px solid var(--dark-foreground);
+    border-radius: 3px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background 0.3s, color 0.3s;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.2em;
+    padding: 5px;
+    margin: 5px;
+  }
+  button.modernButton:hover {
+    border: 1px solid var(--dark-foreground);
+    background: var(--dark-foreground);
+    color: var(--artic-red);
+  }
+  button.modernButton > div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  button.modernButton > div > svg {
+    transform: scale(1.4);
+    padding: 0px 5px 0px 5px;
+  }
+  button.modernButton > div > span {
+    padding-right: 5px;
+  }
+
+  /* -------------------   UNKNOWN --------------------- */
+
+/* config stuff */
+div.sidebar {
+    position: absolute;
+    right: 0px;
+  }
+
+  /* ---------------  C H A R T S ----------------- */
+.graphContainer {
+    margin: auto;
+    height: 100%;
+    position: relative;
+  }
+  .chartTitle {
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.2em;
+    color: var(--light-text);
+    padding-right: 25px; /* to stop icon overlap */
+  }
+  .hoverInfo {
+    z-index: 20;
+    position: absolute;
+    border-radius: 5px;
+    padding: 5px;
+    margin: auto;
+    /* background-color: hsla(0,0%,0%,.8); */
+    background-color: var(--artic-red);
+    color: var(--light-text);
+    pointer-events: none;
+    visibility: hidden;
+    font-size: 14px;
+    font-weight: 700;
+    overflow-wrap: break-word;
+  }
+  .chartExpandContractIcon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    transform: scale(1.3);
+  }
+  
+  /* --------------------- D3 --------------------- */
+  .axis text,
+  text.axis {
+    fill: var(--light-text); /* not color as it's SVG */
+    font-size: '12px';
+  }
+  .legend > text {
+    fill: var(--light-text); /* not color as it's SVG */
+  }
+  rect.amplicon,
+  rect.gene {
+    stroke: none;
+    fill: var(--light-text);
+  }
+  rect.gene + text {
+    fill: var(--dark-background);
+  }
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: var(--light-text);
+    stroke-width: 1;
+    shape-rendering: auto;
+  }
+  
