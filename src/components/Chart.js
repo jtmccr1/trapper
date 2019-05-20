@@ -5,9 +5,9 @@ import {scaleTime,scaleLinear} from 'd3-scale';
 import {timeWeek} from "d3-time";
 import {max,min} from "d3-array";
 import {select} from "d3-selection";
-const calcChartGeom = (DOMRect,siblings) => ({
+const calcChartGeom = (DOMRect) => ({
     width: DOMRect.width,
-    height: DOMRect.height , // title line
+    height: (DOMRect.height) , // title line
     spaceLeft: 60,
     spaceRight: 60,
     spaceBottom: 60,
@@ -18,7 +18,6 @@ function Chart(props){
 
 
     const el = useRef(null);     
-    const boundingDOM = useRef(null)   
     const startWeek= timeWeek(new Date("1900-01-14"));
     const endWeek = timeWeek(new Date("1900-05-13"));
     
@@ -27,12 +26,21 @@ function Chart(props){
     const measuredRef = useCallback(node => {
         if (node !== null) {
             setChartGeom(calcChartGeom(node.getBoundingClientRect(),props.siblings));
+            // const handleResize = () =>  {
+            //     const element = node.getBoundingClientRect();
+            //     const chartGeom = calcChartGeom(element,props.siblings);
+            //     console.log(element)
+            //     setChartGeom(chartGeom)
+            // }
+            // window.addEventListener('resize', handleResize);
+            // return () => {
+            //   window.removeEventListener('resize', handleResize);
+            // };
         }
-      }, []);
+      }, [props.siblings]);
     const bin2 = bins.map(d=>({"length":d.length,"x0":timeWeek.floor(min(d,x=>new Date(x))),"x1":timeWeek.ceil(max(d,x=>new Date(x)))}))
 
         useEffect(()=>{
-       
         const scales={
             x:scaleTime().domain([startWeek,endWeek]).range([chartGeom.spaceLeft,(chartGeom.width-chartGeom.spaceRight)]),
             y:scaleLinear().domain([0,max(bins,d=>d.length)]).range([(chartGeom.height - chartGeom.spaceBottom), chartGeom.spaceTop])
@@ -40,8 +48,6 @@ function Chart(props){
         const chart = new histogramChart(el.current);
         chart.draw(bin2,scales,chartGeom)
     },[chartGeom,bin2])
-
-
     return (
         <div className="sizeGetter" ref={measuredRef}  >
         <div className="chartContainer" width={`100%`} height={chartGeom.height}>

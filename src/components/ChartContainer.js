@@ -5,7 +5,8 @@ function ChartContainer(props){
 
     return(
         <div className = "timelineContainer">
-            <Chart siblings={4} />
+            <Chart  />
+
         </div>
     )
 
