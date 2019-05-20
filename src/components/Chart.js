@@ -5,14 +5,18 @@ import {scaleTime,scaleLinear} from 'd3-scale';
 import {timeWeek} from "d3-time";
 import {max,min} from "d3-array";
 import {select} from "d3-selection";
-const calcChartGeom = (DOMRect) => ({
-    width: DOMRect.width,
-    height: (DOMRect.height) , // title line
+const calcChartGeom = (n) => {
+    const styles = window.getComputedStyle(n);
+
+    return ({
+    width: styles.getPropertyValue("width").split("px")[0],
+    height: styles.getPropertyValue("height").split("px")[0],
     spaceLeft: 60,
     spaceRight: 60,
     spaceBottom: 60,
     spaceTop: 10
-});
+    });
+};
 
 function Chart(props){
 
@@ -25,12 +29,11 @@ function Chart(props){
     
     const measuredRef = useCallback(node => {
         if (node !== null) {
-            setChartGeom(calcChartGeom(node.getBoundingClientRect(),props.siblings));
+            setChartGeom(calcChartGeom(node));
+            console.log(window.getComputedStyle(node).getPropertyValue("height"))
             // const handleResize = () =>  {
-            //     const element = node.getBoundingClientRect();
-            //     const chartGeom = calcChartGeom(element,props.siblings);
-            //     console.log(element)
-            //     setChartGeom(chartGeom)
+            //       setChartGeom(calcChartGeom(node));
+
             // }
             // window.addEventListener('resize', handleResize);
             // return () => {
@@ -50,7 +53,7 @@ function Chart(props){
     },[chartGeom,bin2])
     return (
         <div className="sizeGetter" ref={measuredRef}  >
-        <div className="chartContainer" width={`100%`} height={chartGeom.height}>
+        <div className="chartContainer" >
         <svg className="chart"
         ref={el}
         height={chartGeom.height}
