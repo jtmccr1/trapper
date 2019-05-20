@@ -1,15 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useCallback,useState,useRef } from 'react';
 import {histogramChart} from '../lib/charts/histogram';
 import {bins} from '../examples/dev/bins';
 import {scaleTime,scaleLinear} from 'd3-scale';
 import {timeWeek} from "d3-time";
 import {max,min} from "d3-array";
 import {select} from "d3-selection";
-const calcChartGeom = (DOMRect) => ({
+const calcChartGeom = (DOMRect,siblings) => ({
     width: DOMRect.width,
-    height: DOMRect.height - 20, // title line
+    height: DOMRect.height , // title line
     spaceLeft: 60,
-    spaceRight: 0,
+    spaceRight: 60,
     spaceBottom: 60,
     spaceTop: 10
 });
@@ -17,38 +17,40 @@ const calcChartGeom = (DOMRect) => ({
 function Chart(props){
 
 
-    const el = useRef(null);
+    const el = useRef(null);     
+    const boundingDOM = useRef(null)   
+    const startWeek= timeWeek(new Date("1900-01-14"));
+    const endWeek = timeWeek(new Date("1900-05-13"));
+    
+    const  [chartGeom,setChartGeom] = useState({});
+    
+    const measuredRef = useCallback(node => {
+        if (node !== null) {
+            setChartGeom(calcChartGeom(node.getBoundingClientRect(),props.siblings));
+        }
+      }, []);
+    const bin2 = bins.map(d=>({"length":d.length,"x0":timeWeek.floor(min(d,x=>new Date(x))),"x1":timeWeek.ceil(max(d,x=>new Date(x)))}))
 
-    const chartGeom ={ width: 700,
-        height: 200, // title line
-        spaceLeft: 60,
-        spaceRight: 0,
-        spaceBottom: 60,
-        spaceTop: 10} //calcChartGeom(this.boundingDOMref.getBoundingClientRect())
-        // Hardcoding to be replaced;
-        
-        const startWeek= timeWeek(new Date("1900-01-14"));
-        const endWeek = timeWeek(new Date("1900-05-13"));
+        useEffect(()=>{
+       
         const scales={
             x:scaleTime().domain([startWeek,endWeek]).range([chartGeom.spaceLeft,(chartGeom.width-chartGeom.spaceRight)]),
             y:scaleLinear().domain([0,max(bins,d=>d.length)]).range([(chartGeom.height - chartGeom.spaceBottom), chartGeom.spaceTop])
         }
-
-        const bin2 = bins.map(d=>({"length":d.length,"x0":timeWeek.floor(min(d,x=>new Date(x))),"x1":timeWeek.ceil(max(d,x=>new Date(x)))}))
-    useEffect(()=>{
-        console.log(select(el.current))        
         const chart = new histogramChart(el.current);
         chart.draw(bin2,scales,chartGeom)
-    },[el])
+    },[chartGeom,bin2])
 
 
     return (
-        <div className={props.className} style={{width: 900,height:200}}>
-        <svg
+        <div className="sizeGetter" ref={measuredRef}  >
+        <div className="chartContainer" width={`100%`} height={chartGeom.height}>
+        <svg className="chart"
         ref={el}
-        height={chartGeom.height || 0}
-        width={chartGeom.width || 0}
+        height={chartGeom.height}
+        width={chartGeom.width}
     />
+    </div>
     </div>
 );
 }

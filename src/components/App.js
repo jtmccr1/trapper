@@ -1,13 +1,13 @@
 import React from 'react';
 import Header from './Header';
-import Chart from './Chart';
+import ChartContainer from './ChartContainer';
 import "../styles/trapper.css"
 
 function App() {
 		return(
-			<div>
+			<div className="App">
 			<Header />
-			<Chart />
+			<ChartContainer />
 			</div>
 			)
 }
