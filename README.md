@@ -6,7 +6,7 @@ git clone https://github.com/jtmccr1/trapper.git
 
 cd trapper
 
-yarn
+npm install
 ```
 to run (in separate terminals)
 ```
