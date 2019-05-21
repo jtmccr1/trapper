@@ -74,9 +74,7 @@ export class histogramChart{
 export function histogramLayout(data,scales,callback=(d)=>d){
     const bins = histogram()
        .domain(scales.x.domain())
-       .thresholds(scales.weeks)(data.map(d=>d.symptomOnset),callback)
-    //updating ydomain.
-    scales.y.domain([0,max(bins,d=>d.length)])
+       .thresholds(scales.weeks)(data.map(callback))
     const y= scaleLinear().range([...scales.y.range()]).domain([0,max(bins,d=>d.length)]);
     const newScales ={...scales,...{"y":y}};
     return([bins,newScales]);

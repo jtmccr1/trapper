@@ -1,10 +1,10 @@
 import React, {useState,useCallback,useEffect} from 'react';
-import bins from '../examples/dev/bins'
 import Chart from "./Chart";
 import {csv} from "d3-fetch";
-import{timeParse} from "d3-time-format";
 import Case from "../lib/outbreak/Case";
+import {dateParse} from "../utils/commonFunctions"
 import {histogramChart, histogramLayout} from '../lib/charts/histogram';
+import {stackedHistogramChart, stackedHistogramLayout} from '../lib/charts/stackedHistogram';
 import {scaleTime,scaleLinear} from 'd3-scale';
 import {timeWeek} from "d3-time";
 import {max,min} from "d3-array";
@@ -15,7 +15,6 @@ function ChartContainer(props){
     //------------ Data processing ------------------------
 
     // hardcoding in data processing - magic number
-    const dateParse = timeParse("%Y-%m-%d");
 
       const [ogLineList,setOgLineList]=useState(null);
       const [scales,setScales]=useState(null);
@@ -45,11 +44,11 @@ function ChartContainer(props){
         const startWeek= timeWeek(min(ogLineList,d=>timeWeek(d.getSymptomOnset())));
         const endWeek = timeWeek(max(ogLineList,d=>timeWeek(d.getSymptomOnset())));
         const scales={
-            x:scaleTime().domain([timeWeek.offset(startWeek,-1),timeWeek.offset(endWeek,-1)]).range([chartGeom.spaceLeft,(chartGeom.width-chartGeom.spaceRight)]),
+            x:scaleTime().domain([timeWeek.offset(startWeek,-1),timeWeek.offset(endWeek,2)]).range([chartGeom.spaceLeft,(chartGeom.width-chartGeom.spaceRight)]),
             y:scaleLinear().domain([0,1]).range([(chartGeom.height - chartGeom.spaceBottom), chartGeom.spaceTop]),
         }
         // scales.x.ticks(timeWeek.range(scales.x.domain()[0],scales.x.domain()[1]));
-        scales.weeks=timeWeek.range(scales.x.domain()[0],scales.x.domain()[1])
+        scales.weeks=timeWeek.range(scales.x.domain()[0],timeWeek.offset(scales.x.domain()[1],1))
         setScales(scales);
 
     };
@@ -77,6 +76,8 @@ function ChartContainer(props){
             };
         }
       },[]);
+
+      //Ensure we don't render before we have scales ect.
       const isFull = Object.values([scales,ogLineList]).every(x => (x !== null & x !== ''));
       
       return(
@@ -84,23 +85,15 @@ function ChartContainer(props){
           {isFull&&<Chart  chartGeom={chartGeom} 
           chart = {histogramChart} 
           layout = {histogramLayout}
+          layoutAccessor = {(d)=>d.symptomOnset}
           scales={scales}
           data={ogLineList}/>}
           {isFull&&<Chart  chartGeom={chartGeom} 
-          chart = {histogramChart} 
-          layout = {histogramLayout}
+          chart = {stackedHistogramChart} 
+          layout = {stackedHistogramLayout}
           scales={scales}
           data={ogLineList}/>}
-          {isFull&&<Chart  chartGeom={chartGeom} 
-          chart = {histogramChart} 
-          layout = {histogramLayout}
-          scales={scales}
-          data={ogLineList}/>}
-          {isFull&&<Chart  chartGeom={chartGeom} 
-          chart = {histogramChart} 
-          layout = {histogramLayout}
-          scales={scales}
-          data={ogLineList}/>}
+         
         </div>
     )
     // <Chart  />

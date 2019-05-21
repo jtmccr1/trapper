@@ -4,7 +4,7 @@ function Chart(props){
 
     const el = useRef(null);     
 
-    const [laidOutData,laidOutScale] = props.layout(props.data,props.scales);
+    const [laidOutData,laidOutScale] = props.layout(props.data,props.scales,props.layoutAccessor);
     useEffect(()=>{
         const chart = new props.chart(el.current);
         chart.draw(laidOutData,laidOutScale,props.chartGeom)
