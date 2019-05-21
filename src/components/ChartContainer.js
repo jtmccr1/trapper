@@ -10,6 +10,7 @@ import {scaleTime,scaleLinear} from 'd3-scale';
 import {timeWeek} from "d3-time";
 import {max,min} from "d3-array";
 import {nest} from "d3-collection";
+import { Graph } from '../lib/outbreak/Graph';
 function ChartContainer(props){
   
     const prefix = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://raw.githubusercontent.com/jtmccr1/trapper/master/src';
@@ -23,6 +24,7 @@ function ChartContainer(props){
       const [scales,setScales]=useState(null);
       const [chartGeom,setChartGeom]=useState(null);
       const [domRect,setDomRect]=useState(null);
+      const [outbreakGraph,setOutbreakGraph] = useState(null);
 
 
     //Get lineList
@@ -41,25 +43,84 @@ function ChartContainer(props){
     },[]);// [] only run on first render otherwise we get an infinite loop.
        //Get links TODO get all links
        useEffect(()=>{
-        csv(`${prefix}/examples/simulated/transphyloLinks.csv`,
-        d=>{
-            const dataPoint = {
-                   target:d.target,
-                   source:d.source,
-                   dataType:d.dataType
-                }
-            return new Link(dataPoint);
-          }).then(data=>setOgLinks(data));
-    },[]);
+        Promise.all([csv(`${prefix}/examples/simulated/transphyloLinks.csv`,
+                        d=>{
+                            const dataPoint = {
+                                  target:d.target,
+                                  source:d.source,
+                                  dataSource:d.dataSource
+                                }
+                            return new Link(dataPoint);
+                              }),
+                              csv(`${prefix}/examples/simulated/epiContacts.csv`,
+                              d=>{
+                                  const dataPoint = {
+                                        target:d.target,
+                                        source:d.source,
+                                        dataSource:d.dataSource
+                                      }
+                                  return new Link(dataPoint);
+                                    })
+                                  ]).then(([data1,data2])=>setOgLinks([...data1,...data2]));
+                        },[]);
 
 
     //Summarize links for each target for each type get % of incoming links with this source
-    if(ogLinks!=null){
-      console.log(nest().key(d=>d.target)
-      .key(d=>d.source)
-      .key(d=>d.dataType)
-      .entries(ogLinks));
-    }
+    // [graph,setGraph] = useState(null)
+    
+    useEffect(()=>{
+      if(ogLinks!=null){
+            // link is an object keyed by target each 
+            // the output should be 
+            // {target, source, dataSource:, metadata:{source1:{ support: %
+            //   links:[links]}[links] source2:linkes}}
+            const nestLinks = nest()
+            .key(d=>d.target)
+            .key(d=>d.source)
+            .key(d=>d.dataSource)
+            .entries(ogLinks)
+
+            const dataSources= [];
+            ogLinks.forEach(l => {
+              dataSources.indexOf(l.dataSource)===-1 && dataSources.push(l.dataSource);
+            });
+
+            const links =[];
+            for(const l of nestLinks){
+              const target = l.key;
+              const totalObservations ={};
+              for(const ds of dataSources){
+                totalObservations[ds] = l.values.map(s=>s.values.filter(d=>d.key==ds)) // array of array of {key:soures, value:data} with an entry for each source
+                                    .reduce((acc,curr)=>{  // flatten array above
+                                      return acc.concat(curr)
+                                    },[])
+                                    .reduce((acc,curr)=>acc+curr.values.length,0); // sum number of data points 
+                                            // .reduce((acc,curr)=>acc+curr.values.length,0)));
+              }
+              
+
+                for(const s of l.values){
+                  const source = s.key;
+                  const metaData=dataSources.reduce((acc,curr)=>{
+                          acc[curr]={support:null,data:[]};
+                          return(acc)
+                        },{})
+                  for(const ds of s.values){
+                    metaData[ds.key].data=ds.values;
+                    metaData[ds.key].support=totalObservations[ds.key]!==0? ds.values.length/totalObservations[ds.key]: null;
+                  }
+                  links.push({"target":target,"source":source,"metaData":metaData})
+                }
+        
+              }
+              setOutbreakGraph(links)
+            }
+    },[ogLinks]);
+    
+      
+      
+      const outbreak = new Graph();
+
 
 
     //update scale 

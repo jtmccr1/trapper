@@ -1,4 +1,4 @@
-target,source,unknownIntermediates,dataType
+target,source,unknownIntermediates,dataSource
 PHR-11,UnsampledrootCase,2,transphylo
 PHR-22,PHR-11,0,transphylo
 PHR-79,PHR-22,2,transphylo

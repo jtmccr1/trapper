@@ -18,7 +18,7 @@ class Link{
           return new Map([
                   ['target','target'],
                   ['source','source'],
-                  ['dataType','dataType'],
+                  ['dataSource','dataSource'],
                 ]);
       }
     constructor(data,keyMap=new Map()){
@@ -26,9 +26,8 @@ class Link{
       
       this.target = data[dataMap.get('target')]? data[dataMap.get('target')] :"Unknown";
       this.source = data[dataMap.get('source')]?data[dataMap.get('source')]:"Unknown";      
-      this.dataType=data[dataMap.get('dataType')]?data[dataMap.get('dataType')]:"Unknown";
+      this.dataSource=data[dataMap.get('dataSource')]?data[dataMap.get('dataSource')]:"Unknown";
       this.metadata={};
-      console.log(dataMap.values())
       for(const key of Object.keys(data).filter(k=>[...dataMap.values()].indexOf(k)===-1)){ 
           this.metadata[key]=data[key];
        }

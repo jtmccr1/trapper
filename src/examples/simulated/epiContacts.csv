@@ -1,4 +1,4 @@
-target,source,dataType
+target,source,dataSource
 PHR-17,PHR-3,Epidemiological contact
 PHR-30,PHR-27,Epidemiological contact
 PHR-33,PHR-17,Epidemiological contact
