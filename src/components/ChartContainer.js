@@ -3,14 +3,14 @@ import bins from '../examples/dev/bins'
 import Chart from "./Chart"
 function ChartContainer(props){
 
-   const [domRect,setDomRect]=useState(0);
+   const [domRect,setDomRect]=useState({});
 
     const measuredRef = useCallback(node => {
         if (node !== null) {
-            // setDomRect({...node.getBoundingClientRect()})
-            console.log(node.getBoundingClientRect())
+            setDomRect({"height":node.getBoundingClientRect().height,"width":node.getBoundingClientRect().width})
+            console.log({"height":node.getBoundingClientRect().height,"width":node.getBoundingClientRect().width})
             const handleResize = () =>  {
-                setDomRect(node.getBoundingClientRect());
+                setDomRect({"height":node.getBoundingClientRect().height,"width":node.getBoundingClientRect().width});
 
             }
             window.addEventListener('resize', handleResize);
@@ -18,10 +18,10 @@ function ChartContainer(props){
               window.removeEventListener('resize', handleResize);
             };
         }
-      });
+      },[]);
     return(
         <div className = "timelineContainer" ref={measuredRef}>
-            
+            <Chart  parentDimensions={domRect}/>
         </div>
     )
     // <Chart  />
