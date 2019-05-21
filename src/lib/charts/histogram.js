@@ -1,7 +1,8 @@
 import {axisLeft, axisBottom} from "d3-axis";
 import {select,selectAll} from "d3-selection";
+import {scaleLinear} from "d3-scale";
 import {easeLinear} from "d3-ease";
-import {histogram} from "d3-array"
+import {histogram,max} from "d3-array"
 import {transition} from "d3-transition"
 
 export class histogramChart{
@@ -64,14 +65,18 @@ export class histogramChart{
       this.svg.append("g")
         .attr("class", "y axis")
         .attr("transform", `translate(${chartGeom.spaceLeft},0)`)
-          .call(axisLeft(scales.y));
+          .call(axisLeft(scales.y).ticks(5));
     }
     
   }
-export function histogramLayout(data,scales,thresholds,callback=(d)=>d){
+export function histogramLayout(data,scales,callback=(d)=>d){
     const bins = histogram()
        .domain(scales.x.domain())
-       .thresholds(thresholds)(data,callback)
-    return(bins)
+       .thresholds(scales.weeks)(data.map(d=>d.symptomOnset),callback)
+    //updating ydomain.
+    scales.y.domain([0,max(bins,d=>d.length)])
+    const y= scaleLinear().range([...scales.y.range()]).domain([0,max(bins,d=>d.length)]);
+    const newScales ={...scales,...{"y":y}};
+    return([bins,newScales]);
    }
 
