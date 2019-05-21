@@ -90,7 +90,6 @@ export function stackedHistogramLayout(data,scales,callback=(d)=>d){
     let currentCount=0;
     let maxCount=0;
     for(const week of dateBins){
-        maxCount=max([maxCount,currentCount])
         currentCount=0;
         for(const k of keys){
             const kEntry = week.values.filter(w=>w.key===k);
@@ -103,10 +102,11 @@ export function stackedHistogramLayout(data,scales,callback=(d)=>d){
                 entry.cases=kEntry[0].values;
                 entry.y0=currentCount;
                 entry.y1=currentCount+entry.cases.length;
-                currentCount+=entry.y1;
+                currentCount=entry.y1;
             }
             laidOutData.push(entry);
         }
+        maxCount=max([maxCount,currentCount])
     }
     //updating ydomain.
     const y= scaleLinear().range([...scales.y.range()]).domain([0,maxCount]);

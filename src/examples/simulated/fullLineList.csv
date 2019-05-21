@@ -1,4 +1,4 @@
-Id,Onset,SampleTime,Contact,Outcome,Location
+Id,symptomOnset,sampleDate,Contact,Outcome,Location
 case0,1900-01-01,1900-01-24,["None"],Dead,Location A
 case1,1900-01-06,1900-01-22,["case0"],Alive,Location A
 case2,1900-01-10,1900-02-09,["case0"],Dead,Location A

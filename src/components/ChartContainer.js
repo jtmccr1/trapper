@@ -24,7 +24,7 @@ function ChartContainer(props){
 
     //Get lineList
     useEffect(()=>{
-        csv(`${prefix}/examples/simulated/lineList.csv`,
+        csv(`${prefix}/examples/simulated/fullLineList.csv`,
         d=>{
             const dataPoint = {
                    id:d.Id,
@@ -57,7 +57,7 @@ function ChartContainer(props){
     //Update chart sizes
     useEffect(()=>{
         if(domRect!==null){
-        const margins={"spaceTop":10,"spaceBottom":20,"spaceLeft":60,"spaceRight":60};
+        const margins={"spaceTop":5,"spaceBottom":20,"spaceLeft":60,"spaceRight":60};
         const parentBaseDim={"height":max([domRect.height*0.25,50]),"width":max([domRect.width*0.9,50])};
         setChartGeom({...margins,...parentBaseDim})
         }
