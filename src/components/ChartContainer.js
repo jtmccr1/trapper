@@ -2,12 +2,14 @@ import React, {useState,useCallback,useEffect} from 'react';
 import Chart from "./Chart";
 import {csv} from "d3-fetch";
 import Case from "../lib/outbreak/Case";
+import Link from "../lib/outbreak/Link";
 import {dateParse} from "../utils/commonFunctions"
 import {histogramChart, histogramLayout} from '../lib/charts/histogram';
 import {stackedHistogramChart, stackedHistogramLayout} from '../lib/charts/stackedHistogram';
 import {scaleTime,scaleLinear} from 'd3-scale';
 import {timeWeek} from "d3-time";
 import {max,min} from "d3-array";
+import {nest} from "d3-collection";
 function ChartContainer(props){
   
     const prefix = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://raw.githubusercontent.com/jtmccr1/trapper/master/src';
@@ -17,6 +19,7 @@ function ChartContainer(props){
     // hardcoding in data processing - magic number
 
       const [ogLineList,setOgLineList]=useState(null);
+      const [ogLinks,setOgLinks] = useState(null)
       const [scales,setScales]=useState(null);
       const [chartGeom,setChartGeom]=useState(null);
       const [domRect,setDomRect]=useState(null);
@@ -24,7 +27,7 @@ function ChartContainer(props){
 
     //Get lineList
     useEffect(()=>{
-        csv(`${prefix}/examples/simulated/fullLineList.csv`,
+        csv(`${prefix}/examples/simulated/LineList.csv`,
         d=>{
             const dataPoint = {
                    id:d.Id,
@@ -36,7 +39,29 @@ function ChartContainer(props){
             return new Case(dataPoint);
           }).then(data=>setOgLineList(data));
     },[]);// [] only run on first render otherwise we get an infinite loop.
-   
+       //Get links TODO get all links
+       useEffect(()=>{
+        csv(`${prefix}/examples/simulated/transphyloLinks.csv`,
+        d=>{
+            const dataPoint = {
+                   target:d.target,
+                   source:d.source,
+                   dataType:d.dataType
+                }
+            return new Link(dataPoint);
+          }).then(data=>setOgLinks(data));
+    },[]);
+
+
+    //Summarize links for each target for each type get % of incoming links with this source
+    if(ogLinks!=null){
+      console.log(nest().key(d=>d.target)
+      .key(d=>d.source)
+      .key(d=>d.dataType)
+      .entries(ogLinks));
+    }
+
+
     //update scale 
     useEffect(()=>{
         // epi start and stop week;
@@ -50,7 +75,6 @@ function ChartContainer(props){
         // scales.x.ticks(timeWeek.range(scales.x.domain()[0],scales.x.domain()[1]));
         scales.weeks=timeWeek.range(scales.x.domain()[0],timeWeek.offset(scales.x.domain()[1],1))
         setScales(scales);
-
     };
     },[ogLineList,chartGeom]);
 
