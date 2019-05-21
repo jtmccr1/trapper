@@ -161,6 +161,7 @@ div.sidebar {
 
 .chartContainer {
     margin: auto;
+    margin-top:10px;
     position: relative;
     padding:1%;
     border: 1px solid #F6EECA;
@@ -210,7 +211,7 @@ div.sidebar {
     border-radius: 5pt;
     padding:1%;
     flex-grow:1;
-
+    overflow: scroll;
 
   }
   /* --------------------- D3 --------------------- */

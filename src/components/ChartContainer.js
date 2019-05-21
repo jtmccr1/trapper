@@ -78,11 +78,24 @@ function ChartContainer(props){
         }
       },[]);
       const isFull = Object.values([scales,ogLineList]).every(x => (x !== null & x !== ''));
-      console.log([scales,ogLineList]);
-      console.log(isFull);
       
       return(
         <div className = "timelineContainer" ref={measuredRef}>
+          {isFull&&<Chart  chartGeom={chartGeom} 
+          chart = {histogramChart} 
+          layout = {histogramLayout}
+          scales={scales}
+          data={ogLineList}/>}
+          {isFull&&<Chart  chartGeom={chartGeom} 
+          chart = {histogramChart} 
+          layout = {histogramLayout}
+          scales={scales}
+          data={ogLineList}/>}
+          {isFull&&<Chart  chartGeom={chartGeom} 
+          chart = {histogramChart} 
+          layout = {histogramLayout}
+          scales={scales}
+          data={ogLineList}/>}
           {isFull&&<Chart  chartGeom={chartGeom} 
           chart = {histogramChart} 
           layout = {histogramLayout}
