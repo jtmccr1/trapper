@@ -10,7 +10,8 @@ import {scaleTime,scaleLinear} from 'd3-scale';
 import {timeWeek} from "d3-time";
 import {max,min} from "d3-array";
 import {nest} from "d3-collection";
-import { Graph } from '../lib/outbreak/Graph';
+import { Graph } from 'figtree';
+import Histogram from './Histogram';
 function ChartContainer(props){
   
     const prefix = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://raw.githubusercontent.com/jtmccr1/trapper/master/src';
@@ -32,14 +33,16 @@ function ChartContainer(props){
         csv(`${prefix}/examples/simulated/LineList.csv`,
         d=>{
             const dataPoint = {
-                   id:d.Id,
+                   id:d.id,
                    symptomOnset:dateParse(d.symptomOnset),
                    sampleDate:[dateParse(d.sampleDate)],
                    location:d.Location,
                    resolution:d.Outcome,
                 }
             return new Case(dataPoint);
-          }).then(data=>setOgLineList(data));
+          }).then(data=>{
+            setOgLineList(data)
+          });
     },[]);// [] only run on first render otherwise we get an infinite loop.
        //Get links TODO get all links
        useEffect(()=>{
@@ -97,8 +100,6 @@ function ChartContainer(props){
                                     .reduce((acc,curr)=>acc+curr.values.length,0); // sum number of data points 
                                             // .reduce((acc,curr)=>acc+curr.values.length,0)));
               }
-              
-
                 for(const s of l.values){
                   const source = s.key;
                   const metaData=dataSources.reduce((acc,curr)=>{
@@ -113,13 +114,24 @@ function ChartContainer(props){
                 }
         
               }
-              setOutbreakGraph(links)
+              // Add any sources that aren't included 
+              const sources =  links.map(l=>l.source).reduce((acc,curr)=>{
+                                                      if(acc.indexOf(curr)===-1){
+                                                        return(acc.concat(curr));
+                                                      }
+                                                      return(acc);
+                                                    },[]);
+              const cases = [...ogLineList];
+              for(const source of sources){
+                if(cases.filter(d=>d.id===source).length===0){
+                  const newCase = new Case({"id":source});
+                  cases.push(newCase);
+                }
+              }
+              
+              setOutbreakGraph(new Graph(cases,links));
             }
-    },[ogLinks]);
-    
-      
-      
-      const outbreak = new Graph();
+    },[ogLinks,ogLineList]);
 
 
 
@@ -163,21 +175,10 @@ function ChartContainer(props){
       },[]);
 
       //Ensure we don't render before we have scales ect.
-      const isFull = Object.values([scales,ogLineList]).every(x => (x !== null & x !== ''));
       
       return(
         <div className = "timelineContainer" ref={measuredRef}>
-          {isFull&&<Chart  chartGeom={chartGeom} 
-          chart = {histogramChart} 
-          layout = {histogramLayout}
-          layoutAccessor = {(d)=>d.symptomOnset}
-          scales={scales}
-          data={ogLineList}/>}
-          {isFull&&<Chart  chartGeom={chartGeom} 
-          chart = {stackedHistogramChart} 
-          layout = {stackedHistogramLayout}
-          scales={scales}
-          data={ogLineList}/>}
+          <Histogram data={ogLineList} scales = {scales} chartGeom={chartGeom}/>;
          
         </div>
     )
@@ -185,3 +186,15 @@ function ChartContainer(props){
 }
 
 export default  ChartContainer;
+
+// {isFull&&<Chart  chartGeom={chartGeom} 
+//           chart = {histogramChart} 
+//           layout = {histogramLayout}
+//           layoutAccessor = {(d)=>d.symptomOnset}
+//           scales={scales}
+//           data={ogLineList}/>}
+//           {isFull&&<Chart  chartGeom={chartGeom} 
+//           chart = {stackedHistogramChart} 
+//           layout = {stackedHistogramLayout}
+//           scales={scales}
+//           data={ogLineList}/>}
