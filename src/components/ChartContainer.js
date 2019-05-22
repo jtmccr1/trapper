@@ -9,6 +9,8 @@ import {max,min} from "d3-array";
 import {nest} from "d3-collection";
 import { Graph } from 'figtree';
 import StackedHistogram from './StackedHistogram';
+// import ArcTransmission from "./ArcTransmission";
+import PhyloChart from './PhyloChart';
 function ChartContainer(props){
   
     const prefix = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://raw.githubusercontent.com/jtmccr1/trapper/master/src';
@@ -181,6 +183,12 @@ function ChartContainer(props){
             chartGeom={chartGeom}
             callbacks={{groups:d=>d.location}}/>
           </div>  
+          <div className = "chartContainer">
+          <PhyloChart  
+          graph={outbreakGraph} 
+          scales = {scales} 
+          chartGeom={chartGeom}/>
+        </div>  
         </div>
     )
     // <Chart  />

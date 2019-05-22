@@ -100,7 +100,6 @@ class TransmissionGraph extends React.Component {
 		const layout = new EconomyLayout(this.props.data,"TransPhylo");
 		layout.layOutNodes(d=>d.metaData['Date of onset']);
 
-		// layout.layOutNodes(d=>d.dateOfSampling);
 		const xScale=d3
 					.scaleLinear()
 					.domain(d3.extent(layout.nodes,d=>d.height))
