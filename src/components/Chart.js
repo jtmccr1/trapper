@@ -5,12 +5,12 @@ function Chart(props){
 
     useEffect(()=>{
         const chart = new props.chart(el.current);
-        chart.draw(props.data,props.scales,props.chartGeom)
+        chart.draw(props.data,props.scales,props.chartGeom,props.callbacks)
     },[]);
 
     useEffect(()=>{
         const chart = new props.chart(el.current);
-        chart.update(props.data,props.scales,props.chartGeom)
+        chart.update(props.data,props.scales,props.chartGeom,props.callbacks)
     },[props.data,props.scales,props.chartGeom]);
 
     return (

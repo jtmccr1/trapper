@@ -9,12 +9,12 @@ import {createReferenceColours} from "../../utils/colours"
 import {transition} from "d3-transition"
 
 export class stackedHistogramChart{
-    constructor(ref,...callBacks){
+    constructor(ref){
      this.svg = select(ref);
      this.referenceColours= createReferenceColours();
     }
     
-    draw(data,scales,chartGeom){
+    draw(data,scales,chartGeom,callbacks={}){
     this.svg.selectAll("g").remove();
     
     const bar = this.svg.append("g")
@@ -26,6 +26,14 @@ export class stackedHistogramChart{
         .attr("width", d => Math.max(0, scales.x(d.x1) - scales.x(d.x0) - 1))
         .attr("y", d => scales.y(d.y1))
         .attr("height", d =>  scales.y(d.y0) -  scales.y(d.y1));
+
+        if(Object.keys(callbacks).indexOf("handleMouseOver")>-1){
+          bar.on("mouseover", d=>callbacks.handleMouseOver(d))
+          bar.on("mouseout", d=>callbacks.handleMouseOut(d));
+        }
+        if(Object.keys(callbacks).indexOf("handleClick")>-1){
+          bar.on("click", d=>callbacks.handleClick(d))
+        }
     
     this.svg.append("g")
       .attr("class", "x axis")
@@ -37,15 +45,15 @@ export class stackedHistogramChart{
         .call(axisLeft(scales.y));
     }
     
-    update(data,scales,chartGeom){
+    update(data,scales,chartGeom,callbacks={}){
       
-      this.updateBars(data,scales,chartGeom);
+      this.updateBars(data,scales,callbacks);
       this.updateAxis(scales,chartGeom);
           
     }
-    updateBars(data,scales,chartGeom){
-      const bars = this.svg.selectAll("rect").data(data);
-        bars.join()
+    updateBars(data,scales,callbacks={}){
+      const bar = this.svg.selectAll("rect").data(data);
+        bar.join()
         .attr("x", d => scales.x(d.x0) + 1)
         .attr("width", d => Math.max(0, scales.x(d.x1) - scales.x(d.x0) - 1))
         .attr("y", d => scales.y(d.y1))
@@ -53,6 +61,14 @@ export class stackedHistogramChart{
         .transition()
         .duration(300)
         .ease(easeLinear)
+
+        if(Object.keys(callbacks).indexOf("handleMouseOver")>-1){
+          bar.on("mouseover", d=>callbacks.handleMouseOver(d))
+          bar.on("mouseout", d=>callbacks.handleMouseOut(d));
+        }
+        if(Object.keys(callbacks).indexOf("handleClick")>-1){
+          bar.on("click", d=>callbacks.handleClick(d))
+        }
     }
     updateAxis(scales,chartGeom){
           // update axis

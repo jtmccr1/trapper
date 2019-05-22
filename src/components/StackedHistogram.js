@@ -5,12 +5,15 @@ import {stackedHistogramChart, stackedHistogramLayout} from '../lib/charts/stack
 function StackedHistogram(props){
     const isFull = Object.values(props).every(x => (x !== null & x !== ''));
     if(isFull){
+        const callbacks = {"handleMouseOver":d=>console.log(d), "handleMouseOut":d=>console.log("left")};
+
          const [laidOutData,laidOutScales] = stackedHistogramLayout(props.data,props.scales,props.callbacks);//d=>d.location);
          return(
             <Chart  chartGeom={props.chartGeom} 
                   chart = {stackedHistogramChart} 
                   scales={laidOutScales}
-                  data={laidOutData}/>
+                  data={laidOutData}
+                  callbacks = {callbacks}/>
             )}else{
                 return(null)
         }
