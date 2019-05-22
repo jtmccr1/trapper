@@ -21,7 +21,8 @@ export class stackedHistogramChart{
         .selectAll("rect")
         .data(data)
         .join("rect")
-        .attr("fill", d=>this.referenceColours[scales.keys.indexOf(d.key)])
+        .attr("fill", d=>this.referenceColours[scales.colours.indexOf(d.colorKey)])
+        .attr("stroke",d=>this.referenceColours[scales.colours.indexOf(d.colorKey)])
         .attr("x", d => scales.x(d.x0) + 1)
         .attr("width", d => Math.max(0, scales.x(d.x1) - scales.x(d.x0) - 1))
         .attr("y", d => scales.y(d.y1))
@@ -54,6 +55,7 @@ export class stackedHistogramChart{
     updateBars(data,scales,callbacks={}){
       const bar = this.svg.selectAll("rect").data(data);
         bar.join()
+        .attr("fill", d=>this.referenceColours[scales.colours.indexOf(d.colorKey)])
         .attr("x", d => scales.x(d.x0) + 1)
         .attr("width", d => Math.max(0, scales.x(d.x1) - scales.x(d.x0) - 1))
         .attr("y", d => scales.y(d.y1))
@@ -93,42 +95,41 @@ export class stackedHistogramChart{
   }
 export function stackedHistogramLayout(data,scales,callbacks={"groups":d=>1}){
     const dateBins = nest().key(d=>timeWeek.floor(d.symptomOnset))
-                        .key(d=>callbacks.groups(d))
+                        // .key(d=>callbacks.groups(d)) // sort by this 
                         .entries(data)
                         .map(d=>({"x0":timeWeek(new Date(d.key)),"x1":timeWeek.offset(new Date(d.key),1),"values":d.values}));    
     //get the keys used to bin the data
-    const keys= dateBins.reduce((acc,curr) =>{
-                                    curr.values.forEach(c=>{    
-                                                        if(acc.indexOf(c.key)===-1){
-                                                            acc.push(c.key)
+    
+    const colorKeys= data.map(d=>callbacks.groups(d)).reduce((acc,curr) =>{
+                                                        if(acc.indexOf(curr)===-1){
+                                                            acc.push(curr)
                                                         };
-                                                    });
-                                                    return(acc)},[]);
+                                                        return(acc)},[]);
+                                                    
     const laidOutData=[];
     let currentCount=0;
     let maxCount=0;
     for(const week of dateBins){
         currentCount=0;
-        for(const k of keys){
-            const kEntry = week.values.filter(w=>w.key===k);
-            const entry = {"x0":week.x0,"x1":week.x1,"key":k};
-            if(kEntry.length===0){
-                entry.cases=[];
-                entry.y0=currentCount;
-                entry.y1=currentCount;
-            }else{
-                entry.cases=kEntry[0].values;
-                entry.y0=currentCount;
-                entry.y1=currentCount+entry.cases.length;
-                currentCount=entry.y1;
+        for(const k of colorKeys){
+            const kEntry = week.values.filter(w=>callbacks.groups(w)===k);
+            const entry = {"x0":week.x0,"x1":week.x1,"colorKey":k}; // key is used for color
+            if(kEntry.length>0){
+                for(const kase of kEntry){
+                  const caseEntry = {...entry,...{"case":kase}};
+                  caseEntry.y0=currentCount;
+                  caseEntry.y1=currentCount+1;
+                  currentCount+=1;
+                  laidOutData.push(caseEntry);
+                }
             }
-            laidOutData.push(entry);
         }
         maxCount=max([maxCount,currentCount])
     }
+
     //updating ydomain.
     const y= scaleLinear().range([...scales.y.range()]).domain([0,maxCount]);
-    const newScales ={...scales,...{"y":y,"keys":keys}};
+    const newScales ={...scales,...{"y":y,"colours":colorKeys}};
     return([laidOutData,newScales]);
    }
 
