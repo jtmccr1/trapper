@@ -1,17 +1,14 @@
 import React, {useState,useCallback,useEffect} from 'react';
-import Chart from "./Chart";
 import {csv} from "d3-fetch";
 import Case from "../lib/outbreak/Case";
 import Link from "../lib/outbreak/Link";
 import {dateParse} from "../utils/commonFunctions"
-import {histogramChart, histogramLayout} from '../lib/charts/histogram';
-import {stackedHistogramChart, stackedHistogramLayout} from '../lib/charts/stackedHistogram';
 import {scaleTime,scaleLinear} from 'd3-scale';
 import {timeWeek} from "d3-time";
 import {max,min} from "d3-array";
 import {nest} from "d3-collection";
 import { Graph } from 'figtree';
-import Histogram from './Histogram';
+import StackedHistogram from './StackedHistogram';
 function ChartContainer(props){
   
     const prefix = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://raw.githubusercontent.com/jtmccr1/trapper/master/src';
@@ -178,23 +175,15 @@ function ChartContainer(props){
       
       return(
         <div className = "timelineContainer" ref={measuredRef}>
-          <Histogram data={ogLineList} scales = {scales} chartGeom={chartGeom}/>;
-         
+        <div className = "chartContainer">
+          <StackedHistogram  data={ogLineList} 
+            scales = {scales} 
+            chartGeom={chartGeom}
+            callbacks={{groups:d=>d.location}}/>
+          </div>  
         </div>
     )
     // <Chart  />
 }
 
 export default  ChartContainer;
-
-// {isFull&&<Chart  chartGeom={chartGeom} 
-//           chart = {histogramChart} 
-//           layout = {histogramLayout}
-//           layoutAccessor = {(d)=>d.symptomOnset}
-//           scales={scales}
-//           data={ogLineList}/>}
-//           {isFull&&<Chart  chartGeom={chartGeom} 
-//           chart = {stackedHistogramChart} 
-//           layout = {stackedHistogramLayout}
-//           scales={scales}
-//           data={ogLineList}/>}

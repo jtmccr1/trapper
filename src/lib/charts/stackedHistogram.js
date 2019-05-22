@@ -6,6 +6,8 @@ import {max} from "d3-array";
 import {nest} from "d3-collection";
 import {timeWeek} from "d3-time"
 import {createReferenceColours} from "../../utils/colours"
+import {transition} from "d3-transition"
+
 export class stackedHistogramChart{
     constructor(ref,...callBacks){
      this.svg = select(ref);
@@ -73,9 +75,9 @@ export class stackedHistogramChart{
     }
     
   }
-export function stackedHistogramLayout(data,scales,callback=(d)=>d){
+export function stackedHistogramLayout(data,scales,callbacks={"groups":d=>1}){
     const dateBins = nest().key(d=>timeWeek.floor(d.symptomOnset))
-                        .key(d=>d.location)
+                        .key(d=>callbacks.groups(d))
                         .entries(data)
                         .map(d=>({"x0":timeWeek(new Date(d.key)),"x1":timeWeek.offset(new Date(d.key),1),"values":d.values}));    
     //get the keys used to bin the data

@@ -1,14 +1,14 @@
 import React from 'react';
 import Chart from "./Chart";
-import {histogramChart, histogramLayout} from '../lib/charts/histogram';
+import {stackedHistogramChart, stackedHistogramLayout} from '../lib/charts/stackedHistogram';
 
-function Histogram(props){
+function StackedHistogram(props){
     const isFull = Object.values(props).every(x => (x !== null & x !== ''));
     if(isFull){
-         const [laidOutData,laidOutScales] = histogramLayout(props.data,props.scales,d=>d.symptomOnset);
+         const [laidOutData,laidOutScales] = stackedHistogramLayout(props.data,props.scales,props.callbacks);//d=>d.location);
          return(
             <Chart  chartGeom={props.chartGeom} 
-                  chart = {histogramChart} 
+                  chart = {stackedHistogramChart} 
                   scales={laidOutScales}
                   data={laidOutData}/>
             )}else{
@@ -18,4 +18,4 @@ function Histogram(props){
 }
 
 
-export default Histogram;
+export default StackedHistogram;
