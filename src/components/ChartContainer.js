@@ -11,6 +11,9 @@ import { Graph } from 'figtree';
 import StackedHistogram from './StackedHistogram';
 // import ArcTransmission from "./ArcTransmission";
 import PhyloChart from './PhyloChart';
+import {Tree} from "figtree";
+
+
 function ChartContainer(props){
   
     const prefix = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://raw.githubusercontent.com/jtmccr1/trapper/master/src';
@@ -25,6 +28,8 @@ function ChartContainer(props){
       const [chartGeom,setChartGeom]=useState(null);
       const [domRect,setDomRect]=useState(null);
       const [outbreakGraph,setOutbreakGraph] = useState(null);
+      const [phylogeny,setPhylogeny] = useState(null);
+      const [phyloAttributes,setPhyloAttributes]=useState(null);
 
 
     //Get lineList
@@ -65,6 +70,19 @@ function ChartContainer(props){
                                     })
                                   ]).then(([data1,data2])=>setOgLinks([...data1,...data2]));
                         },[]);
+
+      useEffect(()=>{
+        fetch(`${prefix}/examples/simulated/simulated.trees`)
+        .then(response=>response.text()
+                .then(text=>{
+                  setPhylogeny(Tree.parseNewick(text));
+                }));
+        fetch(`${prefix}/examples/simulated/simulated.json`)
+                .then(response=>response.json()
+                        .then(json=>{
+                          setPhyloAttributes(json)
+                        })); 
+      },[])
 
 
     //Summarize links for each target for each type get % of incoming links with this source
@@ -174,7 +192,14 @@ function ChartContainer(props){
       },[]);
 
       //Ensure we don't render before we have scales ect.
-      
+      const isFull = Object.values([ogLineList,ogLinks,scales,chartGeom,outbreakGraph,phylogeny,phyloAttributes])
+      .every(x => (x !== null & x !== ''));
+      if(!isFull){
+        return(
+          <div className = "timelineContainer" ref={measuredRef}>
+          </div>
+          )
+      }else{
       return(
         <div className = "timelineContainer" ref={measuredRef}>
         <div className = "chartContainer">
@@ -185,12 +210,13 @@ function ChartContainer(props){
           </div>  
           <div className = "chartContainer">
           <PhyloChart  
-          graph={outbreakGraph} 
+          phylogeny={phylogeny} 
           scales = {scales} 
           chartGeom={chartGeom}/>
         </div>  
         </div>
-    )
+
+    )}
     // <Chart  />
 }
 
