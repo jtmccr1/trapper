@@ -211,11 +211,11 @@ function ChartContainer(props){
           <div className = "chartContainer">
           <PhyloChart  
           phylogeny={phylogeny} 
+          attributes = {phyloAttributes}
           scales = {scales} 
           chartGeom={chartGeom}/>
         </div>  
         </div>
-
     )}
     // <Chart  />
 }

@@ -210,7 +210,7 @@ div.sidebar {
     stroke-linejoin: round;
 }
 
-.branch.hovered {
+.branch .branch-path.hovered {
     stroke-width: 5;
 }
 
