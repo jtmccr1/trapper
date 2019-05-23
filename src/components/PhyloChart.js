@@ -1,5 +1,4 @@
-import React, {useCallback,useEffect,useState} from 'react';
-import ObjectChart from "./ObjectChart";
+import React, {useCallback,useState} from 'react';
 import {TransmissionLayout, RectangularLayout, Tree} from 'figtree';
 import { FigTree, CircleBauble } from 'figtree';
 import {select} from 'd3-selection';
@@ -57,7 +56,6 @@ function PhyloChart(props){
                 width={props.chartGeom.width}
             />);
          
-
 };
 
 

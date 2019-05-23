@@ -12,6 +12,7 @@ import StackedHistogram from './StackedHistogram';
 // import ArcTransmission from "./ArcTransmission";
 import PhyloChart from './PhyloChart';
 import {Tree} from "figtree";
+import ArcTransmission from './ArcTransmission';
 
 
 function ChartContainer(props){
@@ -215,6 +216,12 @@ function ChartContainer(props){
           scales = {scales} 
           chartGeom={chartGeom}/>
         </div>  
+        <div className = "chartContainer">
+        <ArcTransmission  
+        graph={outbreakGraph} 
+        scales = {scales} 
+        chartGeom={chartGeom}/>
+      </div>  
         </div>
     )}
     // <Chart  />

@@ -205,13 +205,13 @@ div.sidebar {
   .branch {
     fill: none;
     stroke: #AAAAAA;
-    stroke-width: 2;
+    stroke-width: 5;
     stroke-linecap: round;
     stroke-linejoin: round;
 }
 
 .branch .branch-path.hovered {
-    stroke-width: 5;
+    stroke-width: 10;
 }
 
 .node-background {
