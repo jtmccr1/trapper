@@ -16,6 +16,8 @@
 .env.test.local
 .env.production.local
 
+#Intermediate analysis
+.snakemake/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

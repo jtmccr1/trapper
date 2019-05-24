@@ -1,0 +1,87 @@
+# N=1
+
+config={"dir":"simulated","startingTree":"data/sampledTree.tree","fileName":"simulated"}
+
+rule all:
+    input:       
+        "%s/results/%s.json" %(config["dir"],config["fileName"]),
+         "%s/results/%s.trees" %(config["dir"],config["fileName"]),
+        "%s/results/%s.csv" %(config["dir"],config["fileName"]),
+# rule subsample:
+#     message: 
+#         "Sampling 1 tree from {input.trees}."
+#     input:
+#           trees = "simulated/data/sampledTree.tree"
+#     params:
+#         burninTrees=0
+#     output:
+#           # sampledTree="results/sampledTrees/sampledTree.{i}.tree"
+#           sampledTree="results/sampledTrees/sampledTree.tree"
+
+#     shell:
+#         """
+#         python3 scripts/sampleNexus.py -t {input.trees} -o {output.sampledTree} -n 1 -b {params.burninTrees}
+#         """
+
+rule transphylo:
+    message:
+      "Estimating transmission chain with transphylo on {input.tree}"
+    input:
+      # tree=rules.subsample.output.sampledTree
+      tree="%s/%s" %(config["dir"],config["startingTree"])
+    output:
+      treeLog = "%s/results/%s.trees" %(config["dir"],config["fileName"]),
+      treeAnnotation = "%s/results/%s.json" %(config["dir"],config["fileName"]),
+      links = "%s/results/%s.csv" %(config["dir"],config["fileName"])
+    log: "simulated/results/simulated.log"
+    params:
+      dateLastSample=2019.03,
+      shape=8.7,
+      scale=0.0046,
+      MCMC= 10000,
+      thinning=100,
+      samples = 50,
+      file = "%s/results/%s" %(config["dir"],config["fileName"])
+    shell:
+      """
+        scripts/transphylo.R \
+          --tree {input.tree} \
+          --dateLastSample {params.dateLastSample} \
+          --shape={params.shape} \
+          --scale={params.scale} \
+          --MCMC={params.MCMC} \
+          --thinning={params.thinning} \
+          --samples={params.samples}\
+          --file={params.file}
+        """
+    
+# rule logCombiner:
+#   message:
+#     "Combining logs from {N} transphylo runs"
+#   input:
+#     expand("results/Transphylo/sampledTree.{i}.log",i=range(1,N))
+#   output:
+#     combinedLog="results/combinedLog.log"
+#   params:
+#     burnin=10000000,
+
+#   shell:
+#     """
+#       logcombiner -burnin {params.burnin} -renumber {input} {output.combinedLog}
+#     """
+
+# rule treeCombiner:
+#   message:
+#     "Combining trees from {N} transphylo runs"
+#   input:
+#     expand("results/Transphylo/sampledTree.{i}.log",i=range(1,N))
+#   output:
+#     combinedLog="results/combinedTrees.trees"
+#   params:
+#     burnin=10000000,
+#     resample=1000000, # N times 
+
+#   shell:
+#     """
+#       logcombiner -trees -burnin {params.burnin}  -renumber {input} {output.combinedLog}
+#     """

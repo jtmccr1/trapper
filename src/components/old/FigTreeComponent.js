@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3v4';
 import { Tree,FigTree,transmissionLayout,rectangularLayout } from 'figtree';
-import "../styles/figtree.css"
+// import "../styles/figtree.css"
 
 
 /**
