@@ -37,7 +37,7 @@ function ChartContainer(props){
 
     //Get lineList
     useEffect(()=>{
-        csv(`${prefix}/examples/simulated/LineList.csv`,
+        csv(`${prefix}/examples/simulated/lineList.csv`,
         d=>{
             const dataPoint = {
                    id:d.id,
