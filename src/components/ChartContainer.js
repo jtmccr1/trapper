@@ -4,8 +4,8 @@ import Case from "../lib/outbreak/Case";
 import Link from "../lib/outbreak/Link";
 import {dateParse} from "../utils/commonFunctions"
 import {scaleTime,scaleLinear} from 'd3-scale';
-import {timeWeek} from "d3-time";
-import {max,min} from "d3-array";
+import {timeWeek,timeYear} from "d3-time";
+import {max,min,extent} from "d3-array";
 import {nest} from "d3-collection";
 import { Graph, RectangularLayout, TransmissionLayout } from 'figtree';
 import StackedHistogram from './StackedHistogram';
@@ -13,6 +13,7 @@ import StackedHistogram from './StackedHistogram';
 import PhyloChart from './PhyloChart';
 import {Tree} from "figtree";
 import ArcTransmission from './ArcTransmission';
+import TimeAxis from './TimeAxis';
 
 
 function ChartContainer(props){
@@ -31,6 +32,7 @@ function ChartContainer(props){
       const [outbreakGraph,setOutbreakGraph] = useState(null);
       const [phylogeny,setPhylogeny] = useState(null);
       const [phyloAttributes,setPhyloAttributes]=useState(null);
+      const [dateRange,setDateRange] = useState(null)
 
 
     //Get lineList
@@ -177,6 +179,19 @@ function ChartContainer(props){
         setChartGeom({...margins,...parentBaseDim})
         }
     },[domRect]);
+    // Set the date scale
+
+    useEffect(()=>{
+      if(phylogeny!==null&&outbreakGraph!==null){
+        //get date range of case
+        const casesRange = extent(outbreakGraph.nodes,d=>d.symptomOnset);
+        const treeMaxTipLength = max(phylogeny.nodes,n=>phylogeny.rootToTipLength(n));
+        const treeMaxTip = phylogeny.nodes.find(n=>phylogeny.rootToTipLength(n)===treeMaxTipLength);
+        const treeMaxDate = outbreakGraph.getNode(treeMaxTip.name).getSymptomOnset(); // names must match case id's in line list;
+        const treeRootDate = timeYear.offset(treeMaxDate,-1*phylogeny.rootToTipLength(phylogeny.rootNode));
+        setDateRange(extent([treeRootDate,...casesRange]));
+      }
+    },[ogLineList,outbreakGraph])
 
     //Getting the size of the container to pass to children
     const measuredRef = useCallback(node => {
@@ -193,7 +208,7 @@ function ChartContainer(props){
       },[]);
 
       //Ensure we don't render before we have scales ect.
-      const isFull = Object.values([ogLineList,ogLinks,scales,chartGeom,outbreakGraph,phylogeny,phyloAttributes])
+      const isFull = Object.values([ogLineList,ogLinks,scales,chartGeom,outbreakGraph,phylogeny,phyloAttributes,dateRange])
       .every(x => (x !== null & x !== ''));
       if(!isFull){
         return(
@@ -216,6 +231,7 @@ function ChartContainer(props){
           curve ={"bezier"}
           chartGeom={chartGeom}/>
         </div>  
+        <TimeAxis domain={dateRange} chartGeom={chartGeom}/>
         <div className = "chartContainer">
         <ArcTransmission
         graph={outbreakGraph} 
@@ -238,10 +254,9 @@ function ChartContainer(props){
       attributes = {phyloAttributes}
       scales = {scales} 
       chartGeom={chartGeom}/>
-  </div>  
-
-        </div>
-    )}
+  </div> 
+</div>
+)}
     // <Chart  />
 }
 

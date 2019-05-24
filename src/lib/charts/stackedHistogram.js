@@ -64,11 +64,11 @@ export class stackedHistogramChart{
         // create the scales
         const xScale = scaleTime()
         .domain(this.layout.horizontalRange)
-        .range([this.margins.left, width - this.margins.right]);
-
+        .range([this.margins.left, width - this.margins.right-this.margins.left]);
+        //height is total 
         const yScale = scaleLinear()
             .domain(this.layout.verticalRange)
-            .range([this.margins.top, height -this.margins.bottom]);
+            .range([height -this.margins.bottom-this.margins.top,this.margins.top]);
 
         this.scales = {x:xScale, y:yScale, width, height};
         addAxis.call(this, this.margins);
@@ -99,8 +99,8 @@ export class stackedHistogramChart{
             height = this.svg.getBoundingClientRect().height;
         }
         // update the scales' domains
-        this.scales.x.domain(this.layout.horizontalRange).range([this.margins.left, width - this.margins.right]);
-        this.scales.y.domain(this.layout.verticalRange).range([this.margins.top + 20, height -this. margins.bottom - 20]);
+        this.scales.x.domain(this.layout.horizontalRange).range([this.margins.left, width - this.margins.right-this.margins.left]);
+        this.scales.y.domain(this.layout.verticalRange).range([height -this.margins.bottom-this.margins.top,this.margins.top]);
         this.scales.width=width;
         this.scales.height=height;
 
@@ -113,14 +113,19 @@ export class stackedHistogramChart{
       updateRects.call(this);
 
     }
-
+/**
+ * Add a hover callback
+ * @param {*} action  - object which has 2 functions enter and exit each takes 3 arguments d,i,n d is data n[i] is `this`
+ * @param {*} selection  - what to select defaults to .rect class
+ */
   onHover(action,selection=null){
       const selected = this.svgSelection.selectAll(`${selection ? selection : ".rect"}`);
-      selected.on("mouseover", (rect) => {
-          action.enter(rect);
+      console.log(selected);
+      selected.on("mouseover", (d,i,n) => {
+          action.enter(d,i,n);
       });
-      selected.on("mouseout", (rect) => {
-          action.exit(rect);
+      selected.on("mouseout", (d,i,n) => {
+          action.exit(d,i,n);
       });
   }
 
@@ -133,18 +138,18 @@ function updateRects(){
 
     // DATA JOIN
     // Join new data with old elements, if any.
-      const rects = rectLayer.selectAll("rect")
-                  .data(this.bins, (c) => `c_${c.id}`);
+      const rects = rectLayer.selectAll(".rect")
+                  .data(this.bins, (c) => `c_${c.data.id}`);
     // ENTER
     // Create new elements as needed.
     const newRects = rects.enter()
       .append("rect")
       .attr("id", (v) => v.id)
-      .attr("class", (v) => ["rect"].join(" "))
+      .attr("class", (v) => ["rect"].join(" ")) // add attribute classes here
       .attr("x", d => this.scales.x(d.x0) + 1)
       .attr("width", d => Math.max(0, this.scales.x(d.x1) - this.scales.x(d.x0) - 1))
-      .attr("y", d => this.scales.y.range()[1]-this.scales.y(d.y0))
-      .attr("height", d =>  this.scales.y(1));
+      .attr("y", d => this.scales.y(d.y1))
+      .attr("height", d => this.scales.y(d.y0)- this.scales.y(d.y1));
 
        // update the existing elements
        rects
@@ -152,8 +157,8 @@ function updateRects(){
         .duration(this.settings.transitionDuration)
         .attr("x", d => this.scales.x(d.x0) + 1)
         .attr("width", d => Math.max(0, this.scales.x(d.x1) - this.scales.x(d.x0) - 1))
-        .attr("y", d => this.scales.y.range()[1]-this.scales.y(d.y0))
-        .attr("height", d =>  this.scales.y(1));
+        .attr("y", d => this.scales.y(d.y1))
+        .attr("height", d => this.scales.y(d.y0)- this.scales.y(d.y1));
 
      // EXIT
     // Remove old elements as needed.
@@ -163,18 +168,18 @@ function updateRectBackgrounds(){
   const rectBackgroundLayer = this.svgSelection.select(".rect-background-layer");
       // DATA JOIN
     // Join new data with old elements, if any.
-    const rects = rectBackgroundLayer.selectAll("rect-background")
-    .data(this.bins, (c) => `cb_${c.id}`);
+    const rects = rectBackgroundLayer.selectAll(".rect-background")
+    .data(this.bins, (c) => `cb_${c.data.id}`);
     // ENTER
     // Create new elements as needed.
     const newRects = rects.enter()
     .append("rect")
     .attr("id", (v) => v.id)
-    .attr("class", (v) => ["rect-background"].join(" "))
+    .attr("class", (v) => ["rect-background"].join(" ")) // add attribute classes 
     .attr("x", d => this.scales.x(d.x0) + 1)
     .attr("width", d => Math.max(0, this.scales.x(d.x1) - this.scales.x(d.x0) - 1))
-    .attr("y", d => this.scales.y.range()[1]-this.scales.y(d.y0))
-    .attr("height", d =>  this.scales.y(1));
+    .attr("y", d => this.scales.y(d.y1))
+    .attr("height", d => this.scales.y(d.y0)- this.scales.y(d.y1));
 
     // update the existing elements
     rects
@@ -182,8 +187,8 @@ function updateRectBackgrounds(){
     .duration(this.settings.transitionDuration)
     .attr("x", d => this.scales.x(d.x0) + 1)
     .attr("width", d => Math.max(0, this.scales.x(d.x1) - this.scales.x(d.x0) - 1))
-    .attr("y", d => this.scales.y.range()[1]-this.scales.y(d.y0))
-    .attr("height", d =>  this.scales.y(1));
+    .attr("y", d => this.scales.y(d.y1))
+    .attr("height", d => this.scales.y(d.y0)- this.scales.y(d.y1));
 
     // EXIT
     // Remove old elements as needed.
@@ -210,7 +215,6 @@ function addAxis(){
           // update axis
   
       this.svgSelection.select("#x-axis")
-      .attr("transform", `translate(0, ${this.scales.height - this.margins.bottom + 5})`)
         .call(axisBottom(this.scales.x))
         .transition()
         .duration(this.settings.transitionDuration)
@@ -253,7 +257,7 @@ export class stackedHistogramLayout{
     this.data = data;
     // default ranges - these should be set in layout()
     this._horizontalRange = [0.0, 1.0];
-    this._verticalRange = [0, 1.0];
+    this._verticalRange = [1.0, 0];
 }
   /**
    * Layout the data. Given a bins array population the arrary with one entry per datapoint with x0,x1 positions and y0,y1
@@ -281,8 +285,8 @@ export class stackedHistogramLayout{
         const kEntry = time.values.filter(w=>this.settings.groupingFunction(w)===k);
         const entry = {"x0":time.x0,"x1":time.x1,"colorKey":k}; // key is used for color
         if(kEntry.length>0){
-        for(const kase of kEntry){
-          const caseEntry = {...entry,...{"case":kase}};
+        for(const data of kEntry){
+          const caseEntry = {...entry,...{"data":data}};
           caseEntry.y0=currentCount;
           caseEntry.y1=currentCount+1;
           currentCount+=1;

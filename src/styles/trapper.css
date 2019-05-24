@@ -151,17 +151,12 @@ div.sidebar {
   }
 
   /* ---------------  C H A R T S ----------------- */
-  .sizeGetter{
-    margin: auto;
-    position: relative;
-    height: 100%;
-    width:100%;
-    padding:5px;
-  }
 
 .chartContainer {
     margin: auto;
     margin-top:10px;
+    margin-bottom:10px;
+
     position: relative;
     padding:1%;
     border: 1px solid #F6EECA;
@@ -205,13 +200,13 @@ div.sidebar {
   .branch {
     fill: none;
     stroke: #AAAAAA;
-    stroke-width: 5;
+    stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
 }
 
 .branch .branch-path.hovered {
-    stroke-width: 10;
+    stroke-width: 4;
 }
 
 .node-background {
@@ -271,6 +266,15 @@ div.sidebar {
     display: none;
     font-size: 8pt;
 }
+  /*---------------------Other charts line container ----------*/
+.rect{
+  fill: #22b680;
+}
+.rect.hovered{
+  fill: #edb23b;
+}
+
+
 
   /*---------------------Time line container ----------*/
   .timelineContainer{
@@ -283,7 +287,10 @@ div.sidebar {
     padding:1%;
     flex-grow:1;
     overflow: scroll;
-
+  }
+  .fixedAxis{
+    position: absolute;
+    margin: auto;
   }
   /* --------------------- D3 --------------------- */
   .axis text,
