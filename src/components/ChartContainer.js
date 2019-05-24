@@ -231,7 +231,7 @@ function ChartContainer(props){
           curve ={"bezier"}
           chartGeom={chartGeom}/>
         </div>  
-        <TimeAxis domain={dateRange} chartGeom={chartGeom}/>
+        {/*<TimeAxis domain={dateRange} chartGeom={chartGeom}/> */}
         <div className = "chartContainer">
         <ArcTransmission
         graph={outbreakGraph} 

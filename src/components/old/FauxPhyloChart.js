@@ -1,5 +1,5 @@
 import React, {useEffect,useState} from 'react';
-import ObjectChart from "./ObjectChart";
+import ObjectChart from "../ObjectChart";
 import {TransmissionLayout, RectangularLayout, Tree} from 'figtree';
 import { FigTree, CircleBauble } from 'figtree';
 import {select} from 'd3-selection';
