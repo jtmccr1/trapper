@@ -7,7 +7,7 @@ import {scaleTime,scaleLinear} from 'd3-scale';
 import {timeWeek} from "d3-time";
 import {max,min} from "d3-array";
 import {nest} from "d3-collection";
-import { Graph } from 'figtree';
+import { Graph, RectangularLayout, TransmissionLayout } from 'figtree';
 import StackedHistogram from './StackedHistogram';
 // import ArcTransmission from "./ArcTransmission";
 import PhyloChart from './PhyloChart';
@@ -202,7 +202,7 @@ function ChartContainer(props){
           )
       }else{
       return(
-        <div className = "timelineContainer" ref={measuredRef}>
+       <div className = "timelineContainer" ref={measuredRef}>
         <div className = "chartContainer">
           <StackedHistogram  data={ogLineList} 
             scales = {scales} 
@@ -210,18 +210,36 @@ function ChartContainer(props){
             callbacks={{groups:d=>d.location}}/>
           </div>  
           <div className = "chartContainer">
-          <PhyloChart  
-          phylogeny={phylogeny} 
-          attributes = {phyloAttributes}
+          <ArcTransmission  
+          graph={outbreakGraph} 
           scales = {scales} 
+          curve ={"bezier"}
           chartGeom={chartGeom}/>
         </div>  
         <div className = "chartContainer">
-        <ArcTransmission  
+        <ArcTransmission
         graph={outbreakGraph} 
         scales = {scales} 
+        curve = {"arc"}
         chartGeom={chartGeom}/>
       </div>  
+      <div className = "chartContainer">
+          <PhyloChart  
+          phylogeny={phylogeny} 
+          layout = {TransmissionLayout}
+          attributes = {phyloAttributes}
+          scales = {scales} 
+          chartGeom={chartGeom}/>
+      </div>  
+      <div className = "chartContainer">
+      <PhyloChart  
+      phylogeny={phylogeny} 
+      layout = {RectangularLayout}
+      attributes = {phyloAttributes}
+      scales = {scales} 
+      chartGeom={chartGeom}/>
+  </div>  
+
         </div>
     )}
     // <Chart  />

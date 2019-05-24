@@ -13,24 +13,7 @@ export class histogramChart{
     draw(data,scales,chartGeom){
     this.svg.selectAll("g").remove();
     
-    const bar = this.svg.append("g")
-        .selectAll("rect")
-        .data(data)
-        .join("rect")
-        .attr("fill", "steelblue")
-        .attr("x", d => scales.x(d.x0) + 1)
-        .attr("width", d => Math.max(0, scales.x(d.x1) - scales.x(d.x0) - 1))
-        .attr("y", d => scales.y(d.length))
-        .attr("height", d =>  scales.y(0) -  scales.y(d.length));
-    
-    this.svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", `translate(0,${chartGeom.height - chartGeom.spaceBottom})`)
-      .call(axisBottom(scales.x));
-    this.svg.append("g")
-      .attr("class", "y axis")
-      .attr("transform", `translate(${chartGeom.spaceLeft},0)`)
-        .call(axisLeft(scales.y));
+    this.update();
     }
     
     update(data,scales,chartGeom){
@@ -68,6 +51,18 @@ export class histogramChart{
         .transition()
         .duration(300)
         .ease(easeLinear)
+    }
+
+    onHover(action,selection=null){
+        const selected = this.svgSelection.selectAll(`${selection ? selection : "rect"}`);        
+        selected.on("mouseover", (vertex) => {
+            action.enter(vertex);
+        });
+        selected.on("mouseout", (vertex) => {
+            action.exit(vertex);
+        });
+    }
+
     }
     
   }

@@ -1,135 +1,310 @@
 import {axisLeft, axisBottom} from "d3-axis";
 import {select,selectAll} from "d3-selection";
-import {scaleLinear} from "d3-scale";
+import {scaleLinear,scaleTime} from "d3-scale";
 import {easeLinear} from "d3-ease";
-import {max} from "d3-array";
+import {max,min} from "d3-array";
 import {nest} from "d3-collection";
 import {timeWeek} from "d3-time"
-import {createReferenceColours} from "../../utils/colours"
 import {transition} from "d3-transition"
 
 export class stackedHistogramChart{
-    constructor(ref){
-     this.svg = select(ref);
-     this.referenceColours= createReferenceColours();
-    }
-    
-    draw(data,scales,chartGeom,callbacks={}){
-    this.svg.selectAll("g").remove();
-    
-    const bar = this.svg.append("g")
-        .selectAll("rect")
-        .data(data)
-        .join("rect")
-        .attr("fill", d=>this.referenceColours[scales.colours.indexOf(d.colorKey)])
-        .attr("stroke",d=>this.referenceColours[scales.colours.indexOf(d.colorKey)])
-        .attr("x", d => scales.x(d.x0) + 1)
-        .attr("width", d => Math.max(0, scales.x(d.x1) - scales.x(d.x0) - 1))
-        .attr("y", d => scales.y(d.y1))
-        .attr("height", d =>  scales.y(d.y0) -  scales.y(d.y1));
+  static DEFAULT_SETTINGS() {
+        return {
+      hoverBorder: 2,
+      backgroundBorder: 0,
+      baubles: [],
+      transitionDuration:500,
+        }
+      }
+      /**
+       * The constructor
+       * @param {*} svg 
+       * @param {*} layout 
+       * @param {*} margins top,bottom,left,right
+       * @param {*} settings 
+       */
+    constructor(svg, layout, margins, settings = {}){
+      this.layout = layout;
+      this.margins = margins;
 
-        if(Object.keys(callbacks).indexOf("handleMouseOver")>-1){
-          bar.on("mouseover", d=>callbacks.handleMouseOver(d))
-          bar.on("mouseout", d=>callbacks.handleMouseOut(d));
-        }
-        if(Object.keys(callbacks).indexOf("handleClick")>-1){
-          bar.on("click", d=>callbacks.handleClick(d))
-        }
+      // merge the default settings with the supplied settings
+      this.settings = {...stackedHistogramChart.DEFAULT_SETTINGS(), ...settings};
+      this.svg=svg;
+      }
     
-    this.svg.append("g")
+    draw(){
+       // get the size of the svg we are drawing on
+       let width,height;
+       if(Object.keys(this.settings).indexOf("width")>-1){
+           width =this. settings.width;
+       }else{
+           width = this.svg.getBoundingClientRect().width;
+       }
+       if(Object.keys(this.settings).indexOf("height")>-1){
+           height =this.settings.height;
+       }else{
+           height = this.svg.getBoundingClientRect().height;
+       }
+
+       //remove the tree if it is there already
+       select(this.svg).select("g").remove();
+
+       // add a group which will contain the new plot
+       select(this.svg).append("g")
+           .attr("transform",`translate(${this.margins.left},${this.margins.top})`);
+
+        //to selecting every time
+        this.svgSelection = select(this.svg).select("g");
+
+        this.svgSelection.append("g").attr("class", "axes-layer");
+        if (this.settings.backgroundBorder > 0) {
+            this.svgSelection.append("g").attr("class", "rect-background-layer");
+        }
+        this.svgSelection.append("g").attr("class", "rect-layer");
+        // create the scales
+        const xScale = scaleTime()
+        .domain(this.layout.horizontalRange)
+        .range([this.margins.left, width - this.margins.right]);
+
+        const yScale = scaleLinear()
+            .domain(this.layout.verticalRange)
+            .range([this.margins.top, height -this.margins.bottom]);
+
+        this.scales = {x:xScale, y:yScale, width, height};
+        addAxis.call(this, this.margins);
+
+        this.bins=[]; 
+        // Called whenever the layout changes...
+          this.layout.updateCallback = () => {
+                this.update();
+            }
+    
+            this.update();
+        }
+
+        update(){
+        // get new positions
+        this.bins = []; // rest to so will be filled
+        this.layout.layout(this.bins);
+        // svg may have changed sizes
+        let width,height;
+        if(Object.keys(this.settings).indexOf("width")>-1){
+            width =this. settings.width;
+        }else{
+            width = this.svg.getBoundingClientRect().width;
+        }
+        if(Object.keys(this.settings).indexOf("height")>-1){
+            height =this. settings.height;
+        }else{
+            height = this.svg.getBoundingClientRect().height;
+        }
+        // update the scales' domains
+        this.scales.x.domain(this.layout.horizontalRange).range([this.margins.left, width - this.margins.right]);
+        this.scales.y.domain(this.layout.verticalRange).range([this.margins.top + 20, height -this. margins.bottom - 20]);
+        this.scales.width=width;
+        this.scales.height=height;
+
+        updateAxis.call(this);
+
+        if (this.settings.backgroundBorder > 0) {
+          updateRectBackgrounds.call(this);
+      }
+
+      updateRects.call(this);
+
+    }
+
+  onHover(action,selection=null){
+      const selected = this.svgSelection.selectAll(`${selection ? selection : ".rect"}`);
+      selected.on("mouseover", (rect) => {
+          action.enter(rect);
+      });
+      selected.on("mouseout", (rect) => {
+          action.exit(rect);
+      });
+  }
+
+  }
+    /**
+     * adds or updates rects
+     */
+function updateRects(){
+      const rectLayer = select(this.svg).select(".rect-layer");
+
+    // DATA JOIN
+    // Join new data with old elements, if any.
+      const rects = rectLayer.selectAll("rect")
+                  .data(this.bins, (c) => `c_${c.id}`);
+    // ENTER
+    // Create new elements as needed.
+    const newRects = rects.enter()
+      .append("rect")
+      .attr("id", (v) => v.id)
+      .attr("class", (v) => ["rect"].join(" "))
+      .attr("x", d => this.scales.x(d.x0) + 1)
+      .attr("width", d => Math.max(0, this.scales.x(d.x1) - this.scales.x(d.x0) - 1))
+      .attr("y", d => this.scales.y.range()[1]-this.scales.y(d.y0))
+      .attr("height", d =>  this.scales.y(1));
+
+       // update the existing elements
+       rects
+        .transition()
+        .duration(this.settings.transitionDuration)
+        .attr("x", d => this.scales.x(d.x0) + 1)
+        .attr("width", d => Math.max(0, this.scales.x(d.x1) - this.scales.x(d.x0) - 1))
+        .attr("y", d => this.scales.y.range()[1]-this.scales.y(d.y0))
+        .attr("height", d =>  this.scales.y(1));
+
+     // EXIT
+    // Remove old elements as needed.
+    rects.exit().remove();
+    }
+function updateRectBackgrounds(){
+  const rectBackgroundLayer = this.svgSelection.select(".rect-background-layer");
+      // DATA JOIN
+    // Join new data with old elements, if any.
+    const rects = rectBackgroundLayer.selectAll("rect-background")
+    .data(this.bins, (c) => `cb_${c.id}`);
+    // ENTER
+    // Create new elements as needed.
+    const newRects = rects.enter()
+    .append("rect")
+    .attr("id", (v) => v.id)
+    .attr("class", (v) => ["rect-background"].join(" "))
+    .attr("x", d => this.scales.x(d.x0) + 1)
+    .attr("width", d => Math.max(0, this.scales.x(d.x1) - this.scales.x(d.x0) - 1))
+    .attr("y", d => this.scales.y.range()[1]-this.scales.y(d.y0))
+    .attr("height", d =>  this.scales.y(1));
+
+    // update the existing elements
+    rects
+    .transition()
+    .duration(this.settings.transitionDuration)
+    .attr("x", d => this.scales.x(d.x0) + 1)
+    .attr("width", d => Math.max(0, this.scales.x(d.x1) - this.scales.x(d.x0) - 1))
+    .attr("y", d => this.scales.y.range()[1]-this.scales.y(d.y0))
+    .attr("height", d =>  this.scales.y(1));
+
+    // EXIT
+    // Remove old elements as needed.
+    rects.exit().remove();
+
+}
+function addAxis(){
+  const axesLayer = this.svgSelection.select(".axes-layer");
+    axesLayer.append("g")
       .attr("class", "x axis")
-      .attr("transform", `translate(0,${chartGeom.height - chartGeom.spaceBottom})`)
-      .call(axisBottom(scales.x));
-    this.svg.append("g")
+      .attr("id", "x-axis")
+      .attr("transform", `translate(0, ${this.scales.height - this.margins.bottom + 5})`)
+      .call(axisBottom(this.scales.x));
+
+      axesLayer.append("g")
       .attr("class", "y axis")
-      .attr("transform", `translate(${chartGeom.spaceLeft},0)`)
-        .call(axisLeft(scales.y));
+      .attr("id", "y-axis")
+        .attr("transform", `translate(${this.margins.left },0)`)
+        .call(axisLeft(this.scales.y));
     }
     
-    update(data,scales,chartGeom,callbacks={}){
-      
-      this.updateBars(data,scales,callbacks);
-      this.updateAxis(scales,chartGeom);
-          
-    }
-    updateBars(data,scales,callbacks={}){
-      const bar = this.svg.selectAll("rect").data(data);
-        bar.join()
-        .attr("fill", d=>this.referenceColours[scales.colours.indexOf(d.colorKey)])
-        .attr("x", d => scales.x(d.x0) + 1)
-        .attr("width", d => Math.max(0, scales.x(d.x1) - scales.x(d.x0) - 1))
-        .attr("y", d => scales.y(d.y1))
-        .attr("height", d =>  scales.y(d.y0) -  scales.y(d.y1))
-        .transition()
-        .duration(300)
-        .ease(easeLinear)
 
-        if(Object.keys(callbacks).indexOf("handleMouseOver")>-1){
-          bar.on("mouseover", d=>callbacks.handleMouseOver(d))
-          bar.on("mouseout", d=>callbacks.handleMouseOut(d));
-        }
-        if(Object.keys(callbacks).indexOf("handleClick")>-1){
-          bar.on("click", d=>callbacks.handleClick(d))
-        }
-    }
-    updateAxis(scales,chartGeom){
+  function updateAxis(){
           // update axis
-      // this.svg.selectAll(".axis").remove()
   
-      this.svg.select(".x.axis")
-        .attr("transform", `translate(0,${chartGeom.height - chartGeom.spaceBottom})`)
-        .call(axisBottom(scales.x))
+      this.svgSelection.select("#x-axis")
+      .attr("transform", `translate(0, ${this.scales.height - this.margins.bottom + 5})`)
+        .call(axisBottom(this.scales.x))
         .transition()
-        .duration(300)
+        .duration(this.settings.transitionDuration)
         .ease(easeLinear)
         ;
       
-      this.svg.select(".y.axis")
-        .attr("transform", `translate(${chartGeom.spaceLeft},0)`)
-        .call(axisLeft(scales.y).ticks(5))
+      this.svgSelection.select("#y-axis")
+      .attr("transform", `translate(${this.margins.left.height },0)`)
+      .call(axisLeft(this.scales.y).ticks(5))
         .transition()
-        .duration(300)
+        .duration(this.settings.transitionDuration)
         .ease(easeLinear)
     }
     
-  }
-export function stackedHistogramLayout(data,scales,callbacks={"groups":d=>1}){
-    const dateBins = nest().key(d=>timeWeek.floor(d.symptomOnset))
-                        // .key(d=>callbacks.groups(d)) // sort by this 
-                        .entries(data)
-                        .map(d=>({"x0":timeWeek(new Date(d.key)),"x1":timeWeek.offset(new Date(d.key),1),"values":d.values}));    
-    //get the keys used to bin the data
-    
-    const colorKeys= data.map(d=>callbacks.groups(d)).reduce((acc,curr) =>{
-                                                        if(acc.indexOf(curr)===-1){
-                                                            acc.push(curr)
-                                                        };
-                                                        return(acc)},[]);
-                                                    
-    const laidOutData=[];
-    let currentCount=0;
-    let maxCount=0;
-    for(const week of dateBins){
+  
+/** 
+ * StackedHisogram layout
+ * settings 
+ */
+export class stackedHistogramLayout{
+      static DEFAULT_SETTINGS() {
+        return {
+            groupingFunction:d=>1,
+            binnedFunction:d=>timeWeek.floor(d.symptomOnset),
+            keyToXFunction:{x0:d=>timeWeek(new Date(d.key)),x1: d=>timeWeek.offset(new Date(d.key),1)}
+            
+        };
+    }
+    /**
+     * The constuctor
+     * @param {*} data which will be binned and  grouped 
+     * @param {*} settings functions that will bin and group (color) the data
+     *                    groupingFunction:d=>1 - given the data assign it a group for coloring
+     *                    binnedFunction:d=>timeWeek.floor(d.symptomOnset), - given the data point return category for binning will be used as key in d3.nest
+                          keyToXFunction:{x0:d=>timeWeek(new Date(d.key)), -given the key (from above) convert to x0 and x1 on axis.
+                                          x1: timeWeek.offset(new Date(d.key),1)
+     */
+  constructor(data,settings = { }){
+    this.settings = {...stackedHistogramLayout.DEFAULT_SETTINGS(), ...settings};
+    this.data = data;
+    // default ranges - these should be set in layout()
+    this._horizontalRange = [0.0, 1.0];
+    this._verticalRange = [0, 1.0];
+}
+  /**
+   * Layout the data. Given a bins array population the arrary with one entry per datapoint with x0,x1 positions and y0,y1
+   * This will stack the data from each bin ordered by group.
+   * @param {*} bins 
+   */
+  layout(bins){
+            const dateBins = nest().key(d=>timeWeek.floor(d.symptomOnset))
+            .entries(this.data)
+            .map(d=>({"x0":timeWeek(new Date(d.key)),"x1":timeWeek.offset(new Date(d.key),1),"values":d.values}));    
+       
+       //get the keys used to group the data within each bin
+
+        const groupKeys= this.data.map(d=>this.settings.groupingFunction(d)).reduce((acc,curr) =>{
+                                            if(acc.indexOf(curr)===-1){
+                                                acc.push(curr)
+                                            };
+                                            return(acc)},[]);
+                                        
+        let currentCount=0;
+        let maxCount=0;
+        for(const time of dateBins){
         currentCount=0;
-        for(const k of colorKeys){
-            const kEntry = week.values.filter(w=>callbacks.groups(w)===k);
-            const entry = {"x0":week.x0,"x1":week.x1,"colorKey":k}; // key is used for color
-            if(kEntry.length>0){
-                for(const kase of kEntry){
-                  const caseEntry = {...entry,...{"case":kase}};
-                  caseEntry.y0=currentCount;
-                  caseEntry.y1=currentCount+1;
-                  currentCount+=1;
-                  laidOutData.push(caseEntry);
-                }
-            }
+        for(const k of groupKeys){
+        const kEntry = time.values.filter(w=>this.settings.groupingFunction(w)===k);
+        const entry = {"x0":time.x0,"x1":time.x1,"colorKey":k}; // key is used for color
+        if(kEntry.length>0){
+        for(const kase of kEntry){
+          const caseEntry = {...entry,...{"case":kase}};
+          caseEntry.y0=currentCount;
+          caseEntry.y1=currentCount+1;
+          currentCount+=1;
+          bins.push(caseEntry);
+          }
+          }
         }
         maxCount=max([maxCount,currentCount])
+        }
+        this._horizontalRange = [min(dateBins,d=>d.x0),max(dateBins,d=>d.x1)];
+        this._verticalRange = [0,maxCount];
+      }
+      update() {
+        this.updateCallback();
     }
+    get horizontalRange() {
+      return this._horizontalRange;
+  }
 
-    //updating ydomain.
-    const y= scaleLinear().range([...scales.y.range()]).domain([0,maxCount]);
-    const newScales ={...scales,...{"y":y,"colours":colorKeys}};
-    return([laidOutData,newScales]);
-   }
+  get verticalRange() {
+      return this._verticalRange;
+  }
+          
+  }
 

@@ -9,36 +9,38 @@ import {select,selectAll} from 'd3-selection';
 function ArcTransmission(props){
 
     const [figtree,setFigtree]=useState(null);
-    const xscale = scaleTime().domain([new Date("2018-08-29"),new Date("2018-12-01")]).range([0,1]); // pass in date domain
-    const xfunc=(n,i)=>xscale(n.symptomOnset) // for setting the x postion;
+    const xScale = scaleTime().domain([new Date("2018-08-29"),new Date("2018-12-01")]).range([0,1]); // pass in date domain
+    const xfunc=(n,i)=>n.id==="UnsampledrootCase"? xScale.range()[0]:xScale(n.symptomOnset) // for setting the x postion;
 
     const el = useCallback(node => {
         
         if (node !== null) {
             if(node.children.length===0){ // make it the first time
-                const layout = new ArcLayout(props.graph,{xFunction:xfunc});
+                const layout = new ArcLayout(props.graph,{xFunction:xfunc,curve:props.curve});
                 const margins = {"top":props.chartGeom.spaceTop,"bottom":10,"left":10,"right":50};
-
-                const fig = new FigTree(node,layout,margins,{ hoverBorder: 4, backgroundBorder:2,
+                const settings = { hoverBorder: 4, backgroundBorder:2,
                     baubles: [
                         new CircleBauble(),
                     ],
                     transitionDuration:300
-                });
+                };
+                const fig = new FigTree(node,layout,margins,settings);
             fig.draw();
-            fig.hilightBranches();
             fig.hilightInternalNodes();
             fig.hilightExternalNodes();
+            fig.hilightBranches();
             select(node).select(".axes-layer").remove();
             setFigtree(fig);
     }else{
         figtree.update();
+
     }
 }});
+const rand_id = `b${Math.random().toString(36).substring(4)}`
 
 
         return(
-            <svg className="chart"
+            <svg className="chart" id= {rand_id}
             ref={el}
             height={props.chartGeom.height}
             width={props.chartGeom.width}

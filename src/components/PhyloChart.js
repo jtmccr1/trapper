@@ -21,7 +21,7 @@ function PhyloChart(props){
 
 
             // props.phylogeny.annotateTips(flattenedAttributes);
-            const layout = new TransmissionLayout(props.phylogeny);
+            const layout = new props.layout(props.phylogeny);
             
             const margins = {"top":props.chartGeom.spaceTop,"bottom":10,"left":10,"right":50};
             const fig = new FigTree(node,layout,margins, { hoverBorder: 4, backgroundBorder:2,
@@ -42,6 +42,7 @@ function PhyloChart(props){
             figtree.update();
         }
         }});
+        const rand_id = `b${Math.random().toString(36).substring(4)}`
 
         // useEffect(()=>{
         //     if(figtree!==null){
@@ -50,7 +51,7 @@ function PhyloChart(props){
         // },[props.chartGeom,props.phylogeny])
 
          return(
-                <svg className="chart"
+                <svg className="chart" id={rand_id}
                 ref={el}
                 height={props.chartGeom.height}
                 width={props.chartGeom.width}
