@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/trapper/static/css/main.6121c100.chunk.css",
-    "main.js": "/trapper/static/js/main.e107d26a.chunk.js",
-    "main.js.map": "/trapper/static/js/main.e107d26a.chunk.js.map",
+    "main.js": "/trapper/static/js/main.bb39f785.chunk.js",
+    "main.js.map": "/trapper/static/js/main.bb39f785.chunk.js.map",
     "runtime~main.js": "/trapper/static/js/runtime~main.f338064b.js",
     "runtime~main.js.map": "/trapper/static/js/runtime~main.f338064b.js.map",
     "static/js/2.abeca37a.chunk.js": "/trapper/static/js/2.abeca37a.chunk.js",
     "static/js/2.abeca37a.chunk.js.map": "/trapper/static/js/2.abeca37a.chunk.js.map",
     "index.html": "/trapper/index.html",
-    "precache-manifest.5a128d80616db552f11e8697b3676578.js": "/trapper/precache-manifest.5a128d80616db552f11e8697b3676578.js",
+    "precache-manifest.72a2457bbb3573b1ae30b11616c97311.js": "/trapper/precache-manifest.72a2457bbb3573b1ae30b11616c97311.js",
     "service-worker.js": "/trapper/service-worker.js",
     "static/css/main.6121c100.chunk.css.map": "/trapper/static/css/main.6121c100.chunk.css.map",
     "static/media/trapper.css": "/trapper/static/media/LatoLatin-Light.4725b48f.woff",
