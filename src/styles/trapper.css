@@ -6,6 +6,7 @@
     --header: #255a66;
     --light-text: #F6EECA;
   }
+  
   /* ------------ FONTS --------------------- */
 @font-face {
     font-family: 'Lato';
@@ -159,8 +160,11 @@ div.sidebar {
 
     position: relative;
     padding:1%;
-    border: 1px solid #F6EECA;
+    border-style: solid;
+    border-color: var(--header);
+    border-width: 1px 1px 1px 24px;
     border-radius: 5pt;
+    background: var(--dark-background);
   }
   .chartContainer#child {
     margin: auto;
@@ -199,7 +203,7 @@ div.sidebar {
 
   .branch {
     fill: none;
-    stroke: #AAAAAA;
+    stroke: #b9b0a0;
     stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
@@ -210,22 +214,28 @@ div.sidebar {
 }
 
 .node-background {
-    fill: #541753;
+    fill: #b9b0a0;
 }
 
 .node-background {
-  fill: #541753;
+  fill: #b9b0a0;
 }
 
-
+/*
+#433446
+#a8d8c9
+#d26a54
+#e9c964
+#b9b0a0
+ */
 .external-node .node-shape.hovered {
-    fill: #edb23b;
+    fill: #e9c964;
 }
 .external-node .node-shape {
-    fill: #22b680;
+    fill: #d26a54;
 }
 .internal-node .node-shape {
-    fill: #29c5ef;
+    fill: #a8d8c9;
 }
 
 /* #root .node-shape {
@@ -268,10 +278,10 @@ div.sidebar {
 }
   /*---------------------Other charts line container ----------*/
 .rect{
-  fill: #22b680;
+  fill: #d26a54;
 }
 .rect.hovered{
-  fill: #edb23b;
+  fill: #e9c964;
 }
 
 
@@ -282,11 +292,13 @@ div.sidebar {
     width: 95%;
     margin: auto;
     margin-top: 10px;
-    border: 3px solid #F6EECA;
-    border-radius: 5pt;
-    padding:1%;
+    border-style: solid;
+    border-color: #F6EECA;
+    border-width: 1px 1px 1px 1px;
+    border-radius: 5px;
+    padding:10px;
     flex-grow:1;
-    overflow: scroll;
+    overflow-y: scroll;
   }
   .fixedAxis{
     position: absolute;
