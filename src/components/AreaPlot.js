@@ -12,13 +12,12 @@ function AreaPlot(props){
             if(node.children.length===0){ // make it the first time
 
             const layout = new fishLayout(props.epidemic);
-            const margins = {"top":props.chartGeom.spaceTop,"bottom":10,"left":10,"right":50};
+            const margins = {"top":props.chartGeom.spaceTop,"bottom":10,"left":50,"right":50};
             const fig = new areaPlot(node,layout,margins, { hoverBorder: 4, backgroundBorder:2,transitionDuration:300});
             fig.draw();
-            // fig.onHover (d=>console.log(d))
-            select(node).select(".axes-layer").remove();
+            // select(node).select(".axes-layer").remove();
             setPlot(fig);
-
+            console.log(fig.points)
         }else{
             plot.update();
         }

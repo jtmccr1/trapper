@@ -27,34 +27,38 @@ export class fishLayout {
     // This adds a parent entry to each outbreak that has one.
     
 
-    // creates a map that has each outbreak as a key. with values that are maps with timepoints as the key
-    // And values that are arrays of 2 where the first entry is __ and the last entry in ___.
+    /**
+     * creates a map that has each outbreak as a key. with values that are maps with timepoints as the key
+     * And values that are arrays of [space on top, ... space between child 1 and child 2, space between child2& 3 ..., space between childLast and bottom]
+     */
     setGapMap(){
-  
+      // get every time point
       const totalCourse = this.backgroundOutbreak.timeCourse;
       for(const outbreak of [...this.backgroundOutbreak.preorder()]){
         const timeGap = new Map();
         const timeCourse = outbreak.timeCourse;
        for(const time of outbreak.timePoints){
           const timePoint = timeCourse.has(time)? timeCourse.get(time): {time:new Date(time), cases:0,totalDescendents:0}
-          
-          timePoint.percent = totalCourse.get(time)["totalDescendents"]!==0?timePoint.totalDescendents/totalCourse.get(time)["totalDescendents"]:0;
-  
+          // The % of total cases at this time point that can be attributed the this outbreak and it's dependents.
+         timePoint.percent = totalCourse.get(time)["totalDescendents"]!==0?timePoint.totalDescendents/totalCourse.get(time)["totalDescendents"]:0;
+         // what percent of this outbreak's space is attributed to it's children in raw total percent
          const childrenSpace = timePoint.totalDescendents!==0? ((timePoint.totalDescendents-timePoint.cases)/timePoint.totalDescendents)*timePoint.percent:0;
          
          let activeChildren = 0;
          if( childrenSpace>0){
-            //how many children 
+            //how many children have cases at this time
            activeChildren =  outbreak.children
                                 .filter(chap=>chap.timeCourse.has(time) && chap.timeCourse.get(time).totalDescendents>0).length
          }
          
-         
+         // how much space is there to divy up between the top, bottom and between children
         const innerSpace =(timePoint.percent-childrenSpace);///(activeChildren+1);
          // we want most of the space to be on top so the children curves aren't pulled up buy the parent
          // ~75% of gap on top. ~20% at bottom 5% between children
+         // an array of 0.05/# of children
          const kidGaps = Array(max([(activeChildren-1),0])).fill(0.05/(activeChildren-1));
          const innerSpaceArray = [0.85,...kidGaps,(1-0.85-sum(kidGaps))].map(d=>d*innerSpace);
+         // inner space Arrary is [space on top, ... space between child 1 and child 2, space between child2& 3 ..., space between childLast and bottom]
           timeGap.set(time,innerSpaceArray);
        }
       this.gapMap.set(outbreak,timeGap);   
@@ -63,11 +67,13 @@ export class fishLayout {
     }
     
     setPoints(outbreak = this.backgroundOutbreak){
+      // Get all the time points of the data
       const totalCourse = this.backgroundOutbreak.timeCourse;
-      const gapMap = this.gapMap.get(this.backgroundOutbreak);
+      // Get the gapMap of the background outbreak - should be of the outbreak.
+      const gapMap = this.gapMap.get(outbreak);
       // will be updated overtime to account for the space that has been taken up.
       let i=0;
-      const spaceFilled= new Map(this.backgroundOutbreak.timePoints.map(t=>[t,gapMap.get(t)[i]])); // starts as just the top gaps.
+      const spaceFilled= new Map(outbreak.timePoints.map(t=>[t,gapMap.get(t)[i]])); // starts as just the top gaps.
       // fillPoints 
       for(const childOutbreak of outbreak.children){
          let points = [];

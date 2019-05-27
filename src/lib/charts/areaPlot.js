@@ -56,7 +56,7 @@ export class areaPlot{
         this.svgSelection = select(this.svg).select("g");
 
         this.svgSelection.append("g").attr("class", "axes-layer");
-       
+
         this.svgSelection.append("g").attr("class", "area-layer");
         // create the scales
         const xScale = scaleTime()
@@ -68,7 +68,7 @@ export class areaPlot{
             .range([height -this.margins.bottom-this.margins.top,this.margins.top]);
 
         this.scales = {x:xScale, y:yScale, width, height};
-        // addAxis.call(this, this.margins);
+        addAxis.call(this, this.margins);
 
         // Called whenever the layout changes...
           this.layout.updateCallback = () => {
@@ -85,12 +85,12 @@ export class areaPlot{
         // svg may have changed sizes
         let width,height;
         if(Object.keys(this.settings).indexOf("width")>-1){
-            width =this. settings.width;
+            width =this.settings.width;
         }else{
             width = this.svg.getBoundingClientRect().width;
         }
         if(Object.keys(this.settings).indexOf("height")>-1){
-            height =this. settings.height;
+            height =this.settings.height;
         }else{
             height = this.svg.getBoundingClientRect().height;
         }
@@ -100,7 +100,7 @@ export class areaPlot{
         this.scales.width=width;
         this.scales.height=height;
 
-        // updateAxis.call(this);
+        updateAxis.call(this);
 
       updateAreas.call(this);
 
@@ -155,3 +155,23 @@ function updateAreas(){
     // Remove old elements as needed.
     areas.exit().remove();
 };
+function addAxis(){
+    const axesLayer = this.svgSelection.select(".axes-layer");  
+        axesLayer.append("g")
+        .attr("class", "y axis")
+        .attr("id", "y-axis")
+          .attr("transform", `translate(${this.margins.left },0)`)
+          .call(axisLeft(this.scales.y));
+      }
+
+function updateAxis(){
+        // update axis
+    
+    this.svgSelection.select("#y-axis")
+    .attr("transform", `translate(${this.margins.left.height },0)`)
+    .call(axisLeft(this.scales.y).ticks(5))
+      .transition()
+      .duration(this.settings.transitionDuration)
+      .ease(easeLinear)
+  }
+  
