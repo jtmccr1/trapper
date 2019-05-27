@@ -10,7 +10,8 @@ import {axisBottom} from "d3-axis";
 export class XTimeAxis{
     static DEFAULT_SETTINGS() {
       return {
-        transitionDuration:500
+        transitionDuration:500,
+        axisStyle:axisBottom,
       };
   }
   /**
@@ -30,7 +31,7 @@ draw(){
        // get the size of the svg we are drawing on
        let width,height;
        if(Object.keys(this.settings).indexOf("width")>-1){
-           width =this. settings.width;
+           width =this.settings.width;
        }else{
            width = this.svg.getBoundingClientRect().width;
        }
@@ -58,7 +59,7 @@ draw(){
         .append("g")
         .attr("class", "x axis")
         .attr("id", "x-axis")
-        .call(axisBottom(this.scales.x));
+        .call(this.settings.axisStyle(this.scales.x));
 
     
 }
@@ -66,7 +67,7 @@ update(){
            // get the size of the svg we are drawing on
            let width,height;
            if(Object.keys(this.settings).indexOf("width")>-1){
-               width =this. settings.width;
+               width =this.settings.width;
            }else{
                width = this.svg.getBoundingClientRect().width;
            }
@@ -80,7 +81,7 @@ update(){
                         width:width,
                         height:height}
         this.svgSelection.select("#x-axis")
-                        .call(axisBottom(this.scales.x))
+                        .call(this.settings.axisStyle(this.scales.x))
                         .transition()
                         .duration(this.settings.transitionDuration)
                         .ease(easeLinear);

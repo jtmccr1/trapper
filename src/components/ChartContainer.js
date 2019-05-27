@@ -7,6 +7,7 @@ import {scaleTime,scaleLinear} from 'd3-scale';
 import {timeWeek,timeYear} from "d3-time";
 import {max,min,extent} from "d3-array";
 import {nest} from "d3-collection";
+import {axisTop,axisBottom} from "d3-axis"
 import { Graph, RectangularLayout, TransmissionLayout } from 'figtree';
 import StackedHistogram from './StackedHistogram';
 // import ArcTransmission from "./ArcTransmission";
@@ -249,7 +250,12 @@ function ChartContainer(props){
           )
       }else{
       return(
-       <div className = "timelineContainer" ref={measuredRef}>
+        <div className ="fillHorizontalSpace">
+        <TimeAxis domain = {dateRange} 
+                  chartGeom = {chartGeom} 
+                  className="fixedAxis"
+                  axisStyle = {axisTop}/>
+       <div className = "timelineContainer" ref={measuredRef} >
         <div className = "chartContainer">
           <StackedHistogram  data={ogLineList} 
             scales = {scales} 
@@ -257,26 +263,18 @@ function ChartContainer(props){
             callbacks={{groups:d=>d.location}}/>
           </div>  
           <div className = "chartContainer">
+          <AreaPlot  
+          epidemic={epidemic} 
+          scales={scales}
+          chartGeom={chartGeom}/>
+        </div>  
+          <div className = "chartContainer">
           <ArcTransmission  
           graph={outbreakGraph} 
           scales = {scales} 
           curve ={"bezier"}
           chartGeom={chartGeom}/>
         </div>  
-        <div className = "chartContainer">
-        <AreaPlot  
-        epidemic={epidemic} 
-        scales={scales}
-        chartGeom={chartGeom}/>
-      </div>  
-        {/*<TimeAxis domain={dateRange} chartGeom={chartGeom}/> */}
-        <div className = "chartContainer">
-        <ArcTransmission
-        graph={outbreakGraph} 
-        scales = {scales} 
-        curve = {"arc"}
-        chartGeom={chartGeom}/>
-      </div>  
       <div className = "chartContainer">
           <PhyloChart  
           phylogeny={phylogeny} 
@@ -293,6 +291,11 @@ function ChartContainer(props){
       scales = {scales} 
       chartGeom={chartGeom}/>
   </div> 
+</div>
+<TimeAxis domain = {dateRange} 
+chartGeom = {chartGeom} 
+className="fixedAxis"
+axisStyle = {axisBottom}/>
 </div>
 )}
     // <Chart  />

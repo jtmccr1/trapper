@@ -27,7 +27,7 @@ body {
     color: var(--dark-foreground);
     overflow: hidden;
   }
-  .App{
+  .fillHorizontalSpace{
     height: 100%;
     width: 100%;
     padding:0;
@@ -44,6 +44,10 @@ body {
     margin:0;
     display: flex;
     flex-direction: column;
+  }
+   /* box sizing on all elements so padding and broders are included in width and height */
+  * {
+    box-sizing: border-box;
   }
 
   /* --------------- SIDEBARS --------------- */
@@ -162,7 +166,7 @@ div.sidebar {
     padding:1%;
     border-style: solid;
     border-color: var(--header);
-    border-width: 1px 1px 1px 24px;
+    border-width: 0px 24px 0px 24px;
     border-radius: 5pt;
     background: var(--dark-background);
   }
@@ -296,21 +300,25 @@ div.sidebar {
   }
   /*---------------------Time line container ----------*/
   .timelineContainer{
-    height: 100%;
+    height: 95%;
     width: 95%;
+
     margin: auto;
-    margin-top: 10px;
+    margin-top: 0px;
     border-style: solid;
     border-color: #F6EECA;
-    border-width: 1px 1px 1px 1px;
+    border-width: 0px 1px 0px 1px;
     border-radius: 5px;
-    padding:10px;
+    padding:0px 10px 10px 10px;
     flex-grow:1;
     overflow-y: scroll;
+    box-sizing: border-box;
   }
   .fixedAxis{
-    position: absolute;
+    /* position: absolute; */
     margin: auto;
+    margin-bottom: 0px;
+    margin-top: 0px;
   }
   /* --------------------- D3 --------------------- */
   .axis text,

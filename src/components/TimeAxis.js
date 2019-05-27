@@ -7,8 +7,8 @@ function TimeAxis(props){
         
         if (node !== null) {
             if(node.children.length===0){ // make it the first time
-                const margins = {"top":props.chartGeom.spaceTop,"bottom":10,"left":50,"right":50};
-                const fig = new XTimeAxis(node,props.domain,margins);
+                const margins = {"top":20,"bottom":0,"left":50,"right":50};
+                const fig = new XTimeAxis(node,props.domain,margins,{axisStyle:props.axisStyle});
                 fig.draw();
                 Setaxis(fig);
             }else{

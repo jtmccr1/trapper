@@ -5,7 +5,7 @@ import "../styles/trapper.css"
 
 function App() {
 		return(
-			<div className="App">
+			<div className="fillHorizontalSpace">
 			<Header />
 			<ChartContainer />
 			</div>
