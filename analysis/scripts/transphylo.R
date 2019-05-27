@@ -129,19 +129,21 @@ getTransmissionTimes<-function(node,ctree){
   parentHost=parent[4]
   nodeHeight<-ctree_mat[node,1]
   #The parent node is a bifurcation so there are no inserted cases
+  #The NA happends when length of parent==0 but sometimes isn't caught above
+  
   if(!parentIsInserted){
     return(NA)
     
   }else{
     transmissionTimes<-c()
     hosts<-c()
-    while(parentIsInserted){
+    
+    while(!is.na(parentIsInserted)&&parentIsInserted){ # If we hit the root case parentisInserted is NA
       parentHeight<-parent[1]
       transmissionTimes<-c(transmissionTimes,(nodeHeight-parentHeight))
       hosts<-c(hosts,nam[parent[4]])
       node =  which(apply(ctree_mat, 1, function(x) identical(x, parent)))
       parent = ctree_mat[which(ctree_mat[,2]==node|ctree_mat[,3]==node),]
-      
       parentIsInserted = parent[2]==0 | parent[3]==0
       
     }
@@ -249,7 +251,7 @@ make_option(c("--beastTree"), action = "store_true",default="FALSE",
 )
 opt <- parse_args(OptionParser(option_list=option_list))
 
-# opt<-tibble::tibble(tree="./data/sampledTree.nexus",dateLastSample=2019.03,shape = 8.7,scale=0.004,MCMC=1000,thinning=1,file="test",samples=2,beastTree=F)
+# opt<-tibble::tibble(tree="../simulated/data/sampledTree.tree",dateLastSample=2019.03,shape = 8.7,scale=0.0046,MCMC=100000,thinning=100,file="test",samples=500,beastTree=F)
 
 tree<-read.beast(opt$tree)
 ptree<-ptreeFromPhylo(tree@phylo,dateLastSample=opt$dateLastSample)

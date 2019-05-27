@@ -38,9 +38,9 @@ rule transphylo:
       dateLastSample=2019.03,
       shape=8.7,
       scale=0.0046,
-      MCMC= 10000,
+      MCMC= 100000,
       thinning=100,
-      samples = 50,
+      samples = 500,
       file = "%s/results/%s" %(config["dir"],config["fileName"])
     shell:
       """
