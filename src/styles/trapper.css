@@ -284,8 +284,16 @@ div.sidebar {
   fill: #e9c964;
 }
 
-
-
+  /* ------- Hard coded areas ------------------------------*/  
+  .area-layer .location-Location_A{
+    fill:#433446
+  }
+  .area-layer .location-Location_B{
+    fill:#a8d8c9
+  }
+  .area-layer .location-Location_C{
+    fill:#d26a54
+  }
   /*---------------------Time line container ----------*/
   .timelineContainer{
     height: 100%;

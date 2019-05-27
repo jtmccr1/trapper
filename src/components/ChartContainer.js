@@ -11,9 +11,26 @@ import { Graph, RectangularLayout, TransmissionLayout } from 'figtree';
 import StackedHistogram from './StackedHistogram';
 // import ArcTransmission from "./ArcTransmission";
 import PhyloChart from './PhyloChart';
+import AreaPlot from './AreaPlot';
 import {Tree} from "figtree";
 import ArcTransmission from './ArcTransmission';
+import {Epidemic} from "../lib/outbreak/Epidemic";
 import TimeAxis from './TimeAxis';
+
+
+
+function mostProbableTransphyloEdgeCondition(graph){
+  const actualFilterFunction = (edge)=>{
+    const target = edge.target;
+    // get incoming edges
+    const incomingEdges = graph.getIncomingEdges(target);
+    const maxTransphyloProb = max(incomingEdges, e =>e.metaData.transphylo.support);
+    return (edge === incomingEdges.find(e=> e.metaData.transphylo.support===maxTransphyloProb))
+  }
+  return actualFilterFunction
+}
+
+
 
 
 function ChartContainer(props){
@@ -33,6 +50,7 @@ function ChartContainer(props){
       const [phylogeny,setPhylogeny] = useState(null);
       const [phyloAttributes,setPhyloAttributes]=useState(null);
       const [dateRange,setDateRange] = useState(null)
+      const [epidemic,setEpidemic] = useState(null);
 
 
     //Get lineList
@@ -179,6 +197,20 @@ function ChartContainer(props){
         setChartGeom({...margins,...parentBaseDim})
         }
     },[domRect]);
+
+    // Set the epidemic data
+
+    useEffect(()=>{
+      if(outbreakGraph!==null){
+        const indexCase = outbreakGraph.nodes.find(n=>outbreakGraph.getOutgoingEdges(n).length>0&&outbreakGraph.getIncomingEdges(n).length===0);
+        indexCase.location = "Location A";
+        indexCase.symptomOnset=null;
+
+        const outbreakEpidemic = new Epidemic(indexCase,outbreakGraph,mostProbableTransphyloEdgeCondition);
+        setEpidemic(outbreakEpidemic);
+      }
+    },[outbreakGraph]);
+
     // Set the date scale
 
     useEffect(()=>{
@@ -208,7 +240,7 @@ function ChartContainer(props){
       },[]);
 
       //Ensure we don't render before we have scales ect.
-      const isFull = Object.values([ogLineList,ogLinks,scales,chartGeom,outbreakGraph,phylogeny,phyloAttributes,dateRange])
+      const isFull = Object.values([ogLineList,ogLinks,scales,chartGeom,outbreakGraph,phylogeny,phyloAttributes,dateRange,epidemic])
       .every(x => (x !== null & x !== ''));
       if(!isFull){
         return(
@@ -231,6 +263,12 @@ function ChartContainer(props){
           curve ={"bezier"}
           chartGeom={chartGeom}/>
         </div>  
+        <div className = "chartContainer">
+        <AreaPlot  
+        epidemic={epidemic} 
+        scales={scales}
+        chartGeom={chartGeom}/>
+      </div>  
         {/*<TimeAxis domain={dateRange} chartGeom={chartGeom}/> */}
         <div className = "chartContainer">
         <ArcTransmission

@@ -128,6 +128,13 @@ export class stackedHistogramChart{
           action.exit(d,i,n);
       });
   }
+  onClick(action,selection=null){
+    const selected = this.svgSelection.selectAll(`${selection ? selection : ".rect"}`);
+    console.log(selected);
+    selected.on("click", (d,i,n) => {
+        action(d,i,n);
+    });
+  }
 
   }
     /**

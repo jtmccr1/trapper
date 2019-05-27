@@ -18,6 +18,8 @@ function StackedHistogram(props){
 
                 const callback = {enter:mouseEnter,exit:mouseExit};
                 fig.onHover(callback)
+                fig.onClick((d,i,n)=>alert(`clicked ${d.data.id}`))
+
                 select(node).select(".axes-layer").select("#x-axis").remove();
                 setHistogram(fig);
             }else{
