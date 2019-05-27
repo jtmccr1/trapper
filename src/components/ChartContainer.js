@@ -296,6 +296,8 @@ function ChartContainer(props){
 chartGeom = {chartGeom} 
 className="fixedAxis"
 axisStyle = {axisBottom}/>
+<div className = "axisBoxHolder" >
+</div>
 </div>
 )}
     // <Chart  />

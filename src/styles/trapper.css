@@ -320,6 +320,17 @@ div.sidebar {
     margin-bottom: 0px;
     margin-top: 0px;
   }
+  .axisBoxHolder{
+    z-index: 1;
+    position: absolute;
+    width:600px;
+    height:900px;
+    background-color:#b9b0a0;
+    border-width:10px;
+    pointer-events: none;
+    opacity: 0.5;
+    
+  }
   /* --------------------- D3 --------------------- */
   .axis text,
   text.axis {
