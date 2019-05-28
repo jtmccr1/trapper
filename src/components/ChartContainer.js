@@ -4,7 +4,7 @@ import Case from "../lib/outbreak/Case";
 import Link from "../lib/outbreak/Link";
 import {dateParse} from "../utils/commonFunctions"
 import {scaleTime,scaleLinear} from 'd3-scale';
-import {timeWeek,timeYear} from "d3-time";
+import {timeWeek,timeDay} from "d3-time";
 import {max,min,extent} from "d3-array";
 import {nest} from "d3-collection";
 import {axisTop,axisBottom} from "d3-axis"
@@ -222,7 +222,7 @@ function ChartContainer(props){
         const treeMaxTipLength = max(phylogeny.nodes,n=>phylogeny.rootToTipLength(n));
         const treeMaxTip = phylogeny.nodes.find(n=>phylogeny.rootToTipLength(n)===treeMaxTipLength);
         const treeMaxDate = max(outbreakGraph.getNode(treeMaxTip.name).sampleDate); // names must match case id's in line list; sampleDate is an array.
-        const treeRootDate = timeYear.offset(treeMaxDate,-1*phylogeny.rootToTipLength(phylogeny.rootNode));
+        const treeRootDate = timeDay.offset(treeMaxDate,(-1*treeMaxTipLength*365)); // not exact
         const totalExtent = extent([treeRootDate,...casesRange]);
         const week0 = timeWeek.offset(timeWeek.floor(totalExtent[0]),-1);
         // add anextra one for the range function [,)
@@ -278,6 +278,8 @@ function ChartContainer(props){
         </div>  
           <div className = "chartContainer">
           <ArcTransmission  
+          phylogeny={phylogeny} 
+          treeDateRange={treeDateRange}
           graph={outbreakGraph} 
           dateRange ={dateRange}
           scales = {scales} 

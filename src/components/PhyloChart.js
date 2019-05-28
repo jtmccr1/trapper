@@ -14,7 +14,7 @@ function PhyloChart(props){
             if(node.children.length===0){ // make it the first time
             const dateRangeScale = scaleTime().domain(extent(props.dateRange)).range([0,1]); // converts date to final domain (horizontal scale)
             const treeRange = props.treeDateRange.map(d=>dateRangeScale(d)); // horizontal range of tree within date range converted to [0,1]
-            const rootToTipScale = scaleLinear().domain(extent([...props.phylogeny.rootToTipLengths()])).range(treeRange) // converts root to tip distance to horizontal range of tree on [0,1]
+            const rootToTipScale = scaleLinear().domain(extent([0,...props.phylogeny.rootToTipLengths()])).range(treeRange) // converts root to tip distance to horizontal range of tree on [0,1]
             const layout = new props.layout(props.phylogeny,{horizontalScale:rootToTipScale});
             
             const margins = {"top":props.chartGeom.spaceTop,"bottom":10,"left":10,"right":50};

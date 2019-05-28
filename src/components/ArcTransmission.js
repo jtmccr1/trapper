@@ -2,13 +2,12 @@ import React, {useState,useCallback} from 'react';
 import ObjectChart from "./ObjectChart";
 import {ArcLayout,CircleBauble} from 'figtree';
 import { FigTree } from 'figtree';
-import {scaleTime} from "d3-scale";
+import {scaleTime,scaleLinear} from "d3-scale";
 import {select,selectAll} from 'd3-selection';
 import {extent} from 'd3-array';
 
 
 function ArcTransmission(props){
-
     const [figtree,setFigtree]=useState(null);
     const xScale = scaleTime().domain(extent(props.dateRange)).range([0,1]); // pass in date domain
     const xfunc=(n,i)=>n.id==="UnsampledrootCase"? xScale.range()[0]:xScale(n.symptomOnset) // for setting the x postion;
