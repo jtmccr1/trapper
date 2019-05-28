@@ -2,7 +2,8 @@ import React, {useCallback,useState} from 'react';
 import {TransmissionLayout, RectangularLayout, Tree} from 'figtree';
 import { FigTree, CircleBauble } from 'figtree';
 import {select} from 'd3-selection';
-import {nest} from "d3-collection"
+import {scaleTime,scaleLinear} from "d3-scale";
+import {extent} from "d3-array";
 
 function PhyloChart(props){
     const [figtree,setFigtree]=useState(null);
@@ -11,17 +12,10 @@ function PhyloChart(props){
         
         if (node !== null) {
             if(node.children.length===0){ // make it the first time
-            // const attributes = nest().key(d=>d.id).entries(props.attributes[0]);
-            // const flattenedAttributes={};
-            // for(const entry of attributes){
-            //     // can't handle transmission key yet
-            //     delete entry.values[0].transmissions;
-            //     flattenedAttributes[entry.key]=entry.values[0] //should be just one node for each id;
-            // }
-
-
-            // props.phylogeny.annotateTips(flattenedAttributes);
-            const layout = new props.layout(props.phylogeny);
+            const dateRangeScale = scaleTime().domain(extent(props.dateRange)).range([0,1]); // converts date to final domain (horizontal scale)
+            const treeRange = props.treeDateRange.map(d=>dateRangeScale(d)); // horizontal range of tree within date range converted to [0,1]
+            const rootToTipScale = scaleLinear().domain(extent([0,...props.phylogeny.rootToTipLengths()])).range(treeRange) // converts root to tip distance to horizontal range of tree on [0,1]
+            const layout = new props.layout(props.phylogeny,{horizontalScale:rootToTipScale});
             
             const margins = {"top":props.chartGeom.spaceTop,"bottom":10,"left":10,"right":50};
             const fig = new FigTree(node,layout,margins, { hoverBorder: 4, backgroundBorder:2,

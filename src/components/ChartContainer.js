@@ -4,7 +4,7 @@ import Case from "../lib/outbreak/Case";
 import Link from "../lib/outbreak/Link";
 import {dateParse} from "../utils/commonFunctions"
 import {scaleTime,scaleLinear} from 'd3-scale';
-import {timeWeek,timeYear} from "d3-time";
+import {timeWeek,timeDay} from "d3-time";
 import {max,min,extent} from "d3-array";
 import {nest} from "d3-collection";
 import {axisTop,axisBottom} from "d3-axis"
@@ -52,6 +52,7 @@ function ChartContainer(props){
       const [phyloAttributes,setPhyloAttributes]=useState(null);
       const [dateRange,setDateRange] = useState(null)
       const [epidemic,setEpidemic] = useState(null);
+      const [treeDateRange,setTreeDateRange] = useState(null);
 
 
     //Get lineList
@@ -220,9 +221,14 @@ function ChartContainer(props){
         const casesRange = extent(outbreakGraph.nodes,d=>d.symptomOnset);
         const treeMaxTipLength = max(phylogeny.nodes,n=>phylogeny.rootToTipLength(n));
         const treeMaxTip = phylogeny.nodes.find(n=>phylogeny.rootToTipLength(n)===treeMaxTipLength);
-        const treeMaxDate = outbreakGraph.getNode(treeMaxTip.name).getSymptomOnset(); // names must match case id's in line list;
-        const treeRootDate = timeYear.offset(treeMaxDate,-1*phylogeny.rootToTipLength(phylogeny.rootNode));
-        setDateRange(extent([treeRootDate,...casesRange]));
+        const treeMaxDate = max(outbreakGraph.getNode(treeMaxTip.name).sampleDate); // names must match case id's in line list; sampleDate is an array.
+        const treeRootDate = timeDay.offset(treeMaxDate,(-1*treeMaxTipLength*365)); // not exact
+        const totalExtent = extent([treeRootDate,...casesRange]);
+        const week0 = timeWeek.offset(timeWeek.floor(totalExtent[0]),-1);
+        // add anextra one for the range function [,)
+        const weekEnd = timeWeek.offset(timeWeek.ceil(totalExtent[1]),2);
+        setDateRange(timeWeek.range(week0,weekEnd));
+        setTreeDateRange([treeRootDate,treeMaxDate]);
       }
     },[ogLineList,outbreakGraph])
 
@@ -241,7 +247,7 @@ function ChartContainer(props){
       },[]);
 
       //Ensure we don't render before we have scales ect.
-      const isFull = Object.values([ogLineList,ogLinks,scales,chartGeom,outbreakGraph,phylogeny,phyloAttributes,dateRange,epidemic])
+      const isFull = Object.values([ogLineList,ogLinks,scales,chartGeom,outbreakGraph,phylogeny,phyloAttributes,dateRange,epidemic,treeDateRange])
       .every(x => (x !== null & x !== ''));
       if(!isFull){
         return(
@@ -266,18 +272,24 @@ function ChartContainer(props){
           <div className = "chartContainer">
           <AreaPlot  
           epidemic={epidemic} 
+          dateRange ={dateRange}
           scales={scales}
           chartGeom={chartGeom}/>
         </div>  
           <div className = "chartContainer">
           <ArcTransmission  
+          phylogeny={phylogeny} 
+          treeDateRange={treeDateRange}
           graph={outbreakGraph} 
+          dateRange ={dateRange}
           scales = {scales} 
           curve ={"bezier"}
           chartGeom={chartGeom}/>
         </div>  
       <div className = "chartContainer">
           <PhyloChart  
+          dateRange ={dateRange}
+          treeDateRange={treeDateRange}
           phylogeny={phylogeny} 
           layout = {TransmissionLayout}
           attributes = {phyloAttributes}
@@ -286,6 +298,8 @@ function ChartContainer(props){
       </div>  
       <div className = "chartContainer">
       <PhyloChart  
+      dateRange ={dateRange}
+      treeDateRange={treeDateRange}
       phylogeny={phylogeny} 
       layout = {RectangularLayout}
       attributes = {phyloAttributes}

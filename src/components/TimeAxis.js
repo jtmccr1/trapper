@@ -1,5 +1,6 @@
 import React, {useCallback,useState} from 'react';
 import {XTimeAxis} from '../lib/charts/axis';
+import {extent} from 'd3-array';
 function TimeAxis(props){
     const [axis,Setaxis]=useState(null);
     
@@ -8,7 +9,7 @@ function TimeAxis(props){
         if (node !== null) {
             if(node.children.length===0){ // make it the first time
                 const margins = {"top":20,"bottom":0,"left":50,"right":50};
-                const fig = new XTimeAxis(node,props.domain,margins,{axisStyle:props.axisStyle});
+                const fig = new XTimeAxis(node,extent(props.domain),margins,{axisStyle:props.axisStyle});
                 fig.draw();
                 Setaxis(fig);
             }else{
