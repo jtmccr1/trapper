@@ -2,12 +2,9 @@ import {axisLeft, axisBottom} from "d3-axis";
 import {select,selectAll} from "d3-selection";
 import {scaleLinear,scaleTime} from "d3-scale";
 import {easeLinear} from "d3-ease";
-import {max,min} from "d3-array";
-import {nest} from "d3-collection";
-import {timeWeek} from "d3-time"
-import {transition} from "d3-transition"
+import {d3Plot} from "./d3Plot";
 
-export class stackedHistogramChart{
+export class stackedHistogramChart extends d3Plot{
   static DEFAULT_SETTINGS() {
         return {
       hoverBorder: 2,
@@ -24,64 +21,24 @@ export class stackedHistogramChart{
        * @param {*} settings 
        */
     constructor(svg, layout, margins, settings = {}){
+      super();
       this.layout = layout;
       this.margins = margins;
 
       // merge the default settings with the supplied settings
-      this.settings = {...stackedHistogramChart.DEFAULT_SETTINGS(), ...settings};
+      this.settings = {...d3Plot.DEFAULT_SETTINGS(), ...stackedHistogramChart.DEFAULT_SETTINGS(), ...settings};
       this.svg=svg;
       }
-    
-    draw(){
-       // get the size of the svg we are drawing on
-       let width,height;
-       if(Object.keys(this.settings).indexOf("width")>-1){
-           width =this. settings.width;
-       }else{
-           width = this.svg.getBoundingClientRect().width;
-       }
-       if(Object.keys(this.settings).indexOf("height")>-1){
-           height =this.settings.height;
-       }else{
-           height = this.svg.getBoundingClientRect().height;
-       }
-
-       //remove the tree if it is there already
-       select(this.svg).select("g").remove();
-
-       // add a group which will contain the new plot
-       select(this.svg).append("g")
-           .attr("transform",`translate(${this.margins.left},${this.margins.top})`);
-
-        //to selecting every time
-        this.svgSelection = select(this.svg).select("g");
-
-        this.svgSelection.append("g").attr("class", "axes-layer");
-        if (this.settings.backgroundBorder > 0) {
-            this.svgSelection.append("g").attr("class", "rect-background-layer");
-        }
-        this.svgSelection.append("g").attr("class", "rect-layer");
-        // create the scales
-        const xScale = scaleTime()
-        .domain(this.layout.horizontalRange)
-        .range([this.margins.left, width - this.margins.right-this.margins.left]);
-        //height is total 
-        const yScale = scaleLinear()
-            .domain(this.layout.verticalRange)
-            .range([height -this.margins.bottom-this.margins.top,this.margins.top]);
-
-        this.scales = {x:xScale, y:yScale, width, height};
-        addAxis.call(this, this.margins);
-
-        this.bins=[]; 
-        // Called whenever the layout changes...
-          this.layout.updateCallback = () => {
-                this.update();
-            }
-    
-            this.update();
-        }
-
+      /**
+       * @override
+       * Adds rect-background and rect layers for data addition later
+       */
+      addDataLayers(){
+          if (this.settings.backgroundBorder > 0) {
+              this.svgSelection.append("g").attr("class", "rect-background-layer");
+          }
+          this.svgSelection.append("g").attr("class", "rect-layer");
+      }
         update(){
         // get new positions
         this.bins = []; // rest to so will be filled
@@ -89,12 +46,12 @@ export class stackedHistogramChart{
         // svg may have changed sizes
         let width,height;
         if(Object.keys(this.settings).indexOf("width")>-1){
-            width =this. settings.width;
+            width =this.settings.width;
         }else{
             width = this.svg.getBoundingClientRect().width;
         }
         if(Object.keys(this.settings).indexOf("height")>-1){
-            height =this. settings.height;
+            height =this.settings.height;
         }else{
             height = this.svg.getBoundingClientRect().height;
         }
@@ -104,13 +61,14 @@ export class stackedHistogramChart{
         this.scales.width=width;
         this.scales.height=height;
 
-        updateAxis.call(this);
 
         if (this.settings.backgroundBorder > 0) {
           updateRectBackgrounds.call(this);
       }
 
       updateRects.call(this);
+      this.updateAxis();
+      this.updateAxisBars();
 
     }
 /**
@@ -202,120 +160,4 @@ function updateRectBackgrounds(){
     rects.exit().remove();
 
 }
-function addAxis(){
-  const axesLayer = this.svgSelection.select(".axes-layer");
-    axesLayer.append("g")
-      .attr("class", "x axis")
-      .attr("id", "x-axis")
-      .attr("transform", `translate(0, ${this.scales.height - this.margins.bottom + 5})`)
-      .call(axisBottom(this.scales.x));
-
-      axesLayer.append("g")
-      .attr("class", "y axis")
-      .attr("id", "y-axis")
-        .attr("transform", `translate(${this.margins.left },0)`)
-        .call(axisLeft(this.scales.y));
-    }
-    
-
-  function updateAxis(){
-          // update axis
-  
-      this.svgSelection.select("#x-axis")
-        .call(axisBottom(this.scales.x))
-        .transition()
-        .duration(this.settings.transitionDuration)
-        .ease(easeLinear)
-        ;
-      
-      this.svgSelection.select("#y-axis")
-      .attr("transform", `translate(${this.margins.left.height },0)`)
-      .call(axisLeft(this.scales.y).ticks(5))
-        .transition()
-        .duration(this.settings.transitionDuration)
-        .ease(easeLinear)
-    }
-    
-  
-/** 
- * StackedHisogram layout
- * settings 
- */
-export class stackedHistogramLayout{
-      static DEFAULT_SETTINGS() {
-        return {
-            groupingFunction:d=>1,
-            binnedFunction:d=>timeWeek.floor(d.symptomOnset),
-            keyToXFunction:{x0:d=>timeWeek(new Date(d.key)),x1: d=>timeWeek.offset(new Date(d.key),1)}
-            
-        };
-    }
-    /**
-     * The constuctor
-     * @param {*} data which will be binned and  grouped 
-     * @param {*} settings functions that will bin and group (color) the data
-     *                    groupingFunction:d=>1 - given the data assign it a group for coloring
-     *                    binnedFunction:d=>timeWeek.floor(d.symptomOnset), - given the data point return category for binning will be used as key in d3.nest
-                          keyToXFunction:{x0:d=>timeWeek(new Date(d.key)), -given the key (from above) convert to x0 and x1 on axis.
-                                          x1: timeWeek.offset(new Date(d.key),1)
-     */
-  constructor(data,settings = { }){
-    this.settings = {...stackedHistogramLayout.DEFAULT_SETTINGS(), ...settings};
-    this.data = data;
-    // default ranges - these should be set in layout()
-    this._horizontalRange = [0.0, 1.0];
-    this._verticalRange = [1.0, 0];
-}
-  /**
-   * Layout the data. Given a bins array population the arrary with one entry per datapoint with x0,x1 positions and y0,y1
-   * This will stack the data from each bin ordered by group.
-   * @param {*} bins 
-   */
-  layout(bins){
-            const dateBins = nest().key(d=>timeWeek.floor(d.symptomOnset))
-            .entries(this.data)
-            .map(d=>({"x0":timeWeek(new Date(d.key)),"x1":timeWeek.offset(new Date(d.key),1),"values":d.values}));    
-       
-       //get the keys used to group the data within each bin
-
-        const groupKeys= this.data.map(d=>this.settings.groupingFunction(d)).reduce((acc,curr) =>{
-                                            if(acc.indexOf(curr)===-1){
-                                                acc.push(curr)
-                                            };
-                                            return(acc)},[]);
-                                        
-        let currentCount=0;
-        let maxCount=0;
-        for(const time of dateBins){
-        currentCount=0;
-        for(const k of groupKeys){
-        const kEntry = time.values.filter(w=>this.settings.groupingFunction(w)===k);
-        const entry = {"x0":time.x0,"x1":time.x1,"colorKey":k}; // key is used for color
-        if(kEntry.length>0){
-        for(const data of kEntry){
-          const caseEntry = {...entry,...{"data":data}};
-          caseEntry.y0=currentCount;
-          caseEntry.y1=currentCount+1;
-          currentCount+=1;
-          bins.push(caseEntry);
-          }
-          }
-        }
-        maxCount=max([maxCount,currentCount])
-        }
-        this._horizontalRange = [min(dateBins,d=>d.x0),max(dateBins,d=>d.x1)];
-        this._verticalRange = [0,maxCount];
-      }
-      update() {
-        this.updateCallback();
-    }
-    get horizontalRange() {
-      return this._horizontalRange;
-  }
-
-  get verticalRange() {
-      return this._verticalRange;
-  }
-          
-  }
 

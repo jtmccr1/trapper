@@ -260,6 +260,7 @@ function ChartContainer(props){
           <StackedHistogram  data={ogLineList} 
             scales = {scales} 
             chartGeom={chartGeom}
+            dateRange ={dateRange}
             callbacks={{groups:d=>d.location}}/>
           </div>  
           <div className = "chartContainer">
