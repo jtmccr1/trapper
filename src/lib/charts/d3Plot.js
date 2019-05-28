@@ -130,7 +130,7 @@ export class d3Plot{
             axesLayer.append("g")
             .attr("class", "y axis")
             .attr("id", "y-axis")
-            .attr("transform", `translate(${this.margins.left },0)`)
+            .attr("transform", `translate(${this.margins.left/2},0)`)
             .call(axisLeft(this.scales.y).ticks(5));
         }
     }
@@ -142,8 +142,9 @@ export class d3Plot{
             .duration(this.settings.transitionDuration)
             .ease(easeLinear);
 
+        
         this.svgSelection.select("#y-axis")
-        .attr("transform", `translate(${this.margins.left.height },0)`)
+        .attr("transform", `translate(${this.margins.left/2},0)`)
         .call(axisLeft(this.scales.y).ticks(5))
         .transition()
         .duration(this.settings.transitionDuration)

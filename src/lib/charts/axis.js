@@ -48,9 +48,11 @@ draw(){
            height = this.svg.getBoundingClientRect().height;
        }
        //
-       this.scales={x:this.settings.horizontalScale().domain(this._horizontalRange).range([0,width-this.margins.left-this.margins.right]),
-                    width:width,
-                    height:height}
+       this.scales={x:this.settings.horizontalScale()
+        .domain(this._horizontalRange)
+        .range([this.margins.left, width - this.margins.right-this.margins.left]),
+        width:width,
+        height:height}
 
        //remove the tree if it is there already
        select(this.svg).select("g").remove();
@@ -66,14 +68,16 @@ draw(){
         .append("g")
         .attr("class", "top axis")
         .attr("id", "x-axis-top")
-        .call(axisTop(this.scales.x));
+        .call(axisTop(this.scales.x).tickValues(this.layout.horizontalAxisTicks));
 
         this.svgSelection.select(".axes-layer")
         .append("g")
         .attr("transform",`translate(0,${(this.scales.height-this.margins.bottom-this.margins.top-50)})`)
         .attr("class", "bottom axis")
         .attr("id", "x-axis-bottom")
-        .call(axisBottom(this.scales.x));
+        .call(axisBottom(this.scales.x).tickValues(this.layout.horizontalAxisTicks));
+
+        console.log(this.scales.x.domain())
     
 }
 update(){
@@ -92,18 +96,19 @@ update(){
            //
         this.scales={x:this.settings.horizontalScale()
                         .domain(this._horizontalRange)
-                        .range([0,width-this.margins.left-this.margins.right]),
+                        .range([this.margins.left, width - this.margins.right-this.margins.left]),
                         width:width,
                         height:height}
+
         this.svgSelection.select("#x-axis-top")
-                        .call(axisTop(this.scales.x))
+                        .call(axisTop(this.scales.x).tickValues(this.layout.horizontalAxisTicks))
                         .transition()
                         .duration(this.settings.transitionDuration)
                         .ease(easeLinear);
 
     this.svgSelection.select("#x-axis-bottom")
                         .attr("transform",`translate(0,${(this.scales.height-this.margins.bottom-this.margins.top)})`)
-                        .call(axisBottom(this.scales.x))
+                        .call(axisBottom(this.scales.x).tickValues(this.layout.horizontalAxisTicks))
                         .transition()
                         .duration(this.settings.transitionDuration)
 

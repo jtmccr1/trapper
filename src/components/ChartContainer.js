@@ -291,6 +291,7 @@ function ChartContainer(props){
           <div className = "chartContainer">
           <ArcTransmission  
           margins = {margins}
+          treeDateRange={treeDateRange}
           phylogeny={phylogeny} 
           treeDateRange={treeDateRange}
           graph={outbreakGraph} 

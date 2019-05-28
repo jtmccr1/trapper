@@ -10,7 +10,7 @@ import {extent} from 'd3-array';
 function ArcTransmission(props){
     const [figtree,setFigtree]=useState(null);
     const xScale = scaleTime().domain(extent(props.dateRange)).range([0,1]); // pass in date domain
-    const xfunc=(n,i)=>n.id==="UnsampledrootCase"? xScale.range()[0]:xScale(n.symptomOnset) // for setting the x postion;
+    const xfunc=(n,i)=>n.id==="UnsampledrootCase"? xScale(props.treeDateRange[0]):xScale(n.symptomOnset) // for setting the x postion;
 
     const el = useCallback(node => {
         
