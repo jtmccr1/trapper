@@ -3,7 +3,9 @@ import {stackedHistogramChart} from '../lib/charts/stackedHistogram';
 import {stackedHistogramLayout} from "../lib/charts/stackedHistogramLayout"
 import {select} from "d3-selection";
 import {scaleTime} from "d3-scale";
-import {timeWeek} from "d3-time"
+import {timeWeek} from "d3-time";
+import {extent} from 'd3-array';
+
 function StackedHistogram(props){
     const [histogram,setHistogram]=useState(null);
     
@@ -11,8 +13,8 @@ function StackedHistogram(props){
         
         if (node !== null) {
             if(node.children.length===0){ // make it the first time
-                const layoutSettings = {horizontalRange:props.dateRange,
-                                        horizontalTicks:timeWeek.range(timeWeek.offset(props.dateRange[0],-1),timeWeek.offset(props.dateRange[1],1)),
+                const layoutSettings = {horizontalRange:extent(props.dateRange),
+                                        horizontalTicks:props.dateRange,
                                         horizontalScale:scaleTime};
                 const layout = new stackedHistogramLayout(props.data,layoutSettings);
                 const margins = {"top":props.chartGeom.spaceTop,"bottom":10,"left":50,"right":50};

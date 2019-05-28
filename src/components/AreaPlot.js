@@ -1,7 +1,10 @@
 import React, {useCallback,useState} from 'react';
 import {select} from 'd3-selection';
 import {fishLayout} from "../lib/charts/fishplotLayout"
-import {areaPlot} from "../lib/charts/areaPlot"
+import {areaPlot} from "../lib/charts/areaPlot";
+import {timeWeek} from "d3-time";
+import {scaleTime} from "d3-scale";
+import {extent} from 'd3-array';
 
 function AreaPlot(props){
     const [plot,setPlot]=useState(null);
@@ -10,14 +13,15 @@ function AreaPlot(props){
         
         if (node !== null) {
             if(node.children.length===0){ // make it the first time
-
-            const layout = new fishLayout(props.epidemic);
+            const layoutSettings = {horizontalRange:extent(props.dateRange),
+                                    horizontalTicks:props.dateRange,
+                                    horizontalScale:scaleTime};
+            const layout = new fishLayout(props.epidemic,layoutSettings);
             const margins = {"top":props.chartGeom.spaceTop,"bottom":10,"left":50,"right":50};
             const fig = new areaPlot(node,layout,margins, { hoverBorder: 4, backgroundBorder:2,transitionDuration:300});
             fig.draw();
             // select(node).select(".axes-layer").remove();
             setPlot(fig);
-            console.log(fig.points)
         }else{
             plot.update();
         }

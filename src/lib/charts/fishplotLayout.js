@@ -1,6 +1,7 @@
 import {Outbreak} from "../outbreak/Outbreak";
 import {max, sum,min,extent} from 'd3-array';
 import {timeWeek} from 'd3-time';
+import {scaleLinear} from 'd3-scale';
 
 /**
  * The Fishplot layout
@@ -10,11 +11,20 @@ import {timeWeek} from 'd3-time';
 
 
 export class fishLayout {  
+  static DEFAULT_SETTINGS() {
+    return {
+        horizontalRange:null,
+        horizontalTicks:null,
+        horizontalScale:scaleLinear,
+    }
+}
   /**
    * The constructor 
    * @param {Epidemic} And epidemic object Epidemic 
+   * @param {*} settings 
    */
-    constructor (Epidemic){
+    constructor (Epidemic,settings){
+      this.settings = {...fishLayout.DEFAULT_SETTINGS(), ...settings};
       this.backgroundOutbreak=new Outbreak("background",null,[]);
       this.backgroundOutbreak.addChild(Epidemic.rootOutbreak)
       this.gapMap = new Map();
@@ -23,6 +33,8 @@ export class fishLayout {
       // Defualt ranges
       this._horizontalRange = [0.0, 1.0];
       this._verticalRange = [1.0, 0];
+      this._horizontalTicks= this.settings.horizontalScale()
+      .domain(this._horizontalRange).ticks(5)
      }
     // This adds a parent entry to each outbreak that has one.
     
@@ -137,8 +149,19 @@ export class fishLayout {
       this.setPoints();
       input_points.push(...this.points);
 
+      if(!this.settings.horizontalRange){
+        this._horizontalRange = extent(this.points.reduce((acc,curr)=>[...acc,...curr],[]),k=>new Date(k.time));
+      }else{
+        this._horizontalRange=this.settings.horizontalRange;
+    }
+    
+    if(!this.settings.horizontalTicks){
+        this._horizontalTicks= this.settings.horizontalScale()
+            .domain(this._horizontalRange).ticks(5)
+    }else{
+        this._horizontalTicks=this.settings.horizontalTicks;
+    }
       this._verticalRange = extent(this.points.reduce((acc,curr)=>[...acc,...curr],[]),k=>k.total*k.y1)
-      this._horizontalRange = extent(this.points.reduce((acc,curr)=>[...acc,...curr],[]),k=>new Date(k.time));
     }
 
     update() {
@@ -152,6 +175,9 @@ export class fishLayout {
   get verticalRange() {
       return this._verticalRange;
     }
+    get horizontalAxisTicks(){
+      return this._horizontalTicks;
+  }
   }
 
   

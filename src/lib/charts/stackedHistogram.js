@@ -78,7 +78,6 @@ export class stackedHistogramChart extends d3Plot{
  */
   onHover(action,selection=null){
       const selected = this.svgSelection.selectAll(`${selection ? selection : ".rect"}`);
-      console.log(selected);
       selected.on("mouseover", (d,i,n) => {
           action.enter(d,i,n);
       });
@@ -88,7 +87,6 @@ export class stackedHistogramChart extends d3Plot{
   }
   onClick(action,selection=null){
     const selected = this.svgSelection.selectAll(`${selection ? selection : ".rect"}`);
-    console.log(selected);
     selected.on("click", (d,i,n) => {
         action(d,i,n);
     });
