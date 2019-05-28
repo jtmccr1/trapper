@@ -223,13 +223,6 @@ div.sidebar {
   fill: #b9b0a0;
 }
 
-/*
-#433446
-#a8d8c9
-#d26a54
-#e9c964
-#b9b0a0
- */
 .external-node .node-shape.hovered {
     fill: #e9c964;
 }
@@ -288,8 +281,8 @@ div.sidebar {
 }
  /*------------------ axis boxes ------------------------*/
  .axis-box.even{
-   fill:#b9b0a0;
-   opacity: 0.2
+   fill: var(--dark-foreground);
+   opacity: 0.04
  }
 
  .axis-box.odd{
