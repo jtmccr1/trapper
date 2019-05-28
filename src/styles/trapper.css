@@ -287,6 +287,15 @@ div.sidebar {
 .rect.hovered{
   fill: #e9c964;
 }
+ /*------------------ axis boxes ------------------------*/
+ .axis-box.even{
+   fill:#b9b0a0;
+   opacity: 0.2
+ }
+
+ .axis-box.odd{
+  fill:none
+}
 
   /* ------- Hard coded areas ------------------------------*/  
   .area-layer .location-Location_A{
@@ -320,17 +329,7 @@ div.sidebar {
     margin-bottom: 0px;
     margin-top: 0px;
   }
-  .axisBoxHolder{
-    z-index: 1;
-    position: absolute;
-    width:600px;
-    height:900px;
-    background-color:#b9b0a0;
-    border-width:10px;
-    pointer-events: none;
-    opacity: 0.5;
-    
-  }
+  
   /* --------------------- D3 --------------------- */
   .axis text,
   text.axis {

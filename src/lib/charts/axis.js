@@ -57,7 +57,7 @@ draw(){
         
         this.svgSelection.select(".axes-layer")
         .append("g")
-        .attr("class", "x axis")
+        .attr("class", "top axis")
         .attr("id", "x-axis")
         .call(this.settings.axisStyle(this.scales.x));
 

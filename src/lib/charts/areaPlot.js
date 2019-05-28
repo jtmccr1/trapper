@@ -11,7 +11,7 @@ export class areaPlot{
   static DEFAULT_SETTINGS() {
         return {
       hoverBorder: 2,
-      transitionDuration:500,
+      transitionDuration:300,
       curve:curveBasis,
         }
       }
