@@ -1,4 +1,4 @@
-const prefix = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : '';
+const prefix = process.env.NODE_ENV === 'development' ? 'http://localhost:4001' : '';
 
 export default function getData(route, Callback) {
 	fetch(`${prefix}/${route}`)
