@@ -1,6 +1,6 @@
 
 :root {
-    --dark-background: #02292e;
+    --dark-background: #2d3333;
     --dark-foreground: #fffcf2;
     --artic-red: #e06962;
     --header: #255a66;
@@ -252,6 +252,7 @@ div.sidebar {
     font-family: "helvetica-neue",  "helvetica",  "sans-serif";
     font-size: 8pt;
     font-weight: 300;
+      fill: var(--dark-foreground); /* not color as it's SVG */
 }
 
 .trend-line {
@@ -290,13 +291,20 @@ div.sidebar {
 
   /* ------- Hard coded areas ------------------------------*/  
   .area-layer .location-Location_A{
-    fill:#433446
+    fill:#433446;
+    stroke-width: 1px;
+    stroke: var(--dark-foreground);
   }
   .area-layer .location-Location_B{
-    fill:#a8d8c9
+    fill:#a8d8c9;
+    stroke-width: 1px;
+    stroke: var(--dark-foreground);
+
   }
   .area-layer .location-Location_C{
-    fill:#d26a54
+    fill:#d26a54;
+    stroke-width: 1px;
+    stroke: var(--dark-foreground);
   }
   /*---------------------Time line container ----------*/
   .timelineContainer{
@@ -323,16 +331,17 @@ div.sidebar {
   /* --------------------- D3 --------------------- */
   .axis text,
   text.axis {
-    fill: var(--light-text); /* not color as it's SVG */
-    font-size: '12px';
+    font-family: "helvetica-neue",  "helvetica",  "sans-serif";
+    font-size: 14px;
+    fill: var(--dark-foreground); /* not color as it's SVG */
   }
   .legend > text {
-    fill: var(--light-text); /* not color as it's SVG */
+    fill: var(--dark-foreground); /* not color as it's SVG */
   }
   rect.amplicon,
   rect.gene {
     stroke: none;
-    fill: var(--light-text);
+    fill: var(--dark-foreground);
   }
   rect.gene + text {
     fill: var(--dark-background);
@@ -340,7 +349,7 @@ div.sidebar {
   .axis path,
   .axis line {
     fill: none;
-    stroke: var(--light-text);
+    stroke: var(--dark-foreground);
     stroke-width: 1;
     shape-rendering: auto;
   }
