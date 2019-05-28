@@ -1,10 +1,11 @@
 
 :root {
-    --dark-background: #2d3333;
+    --dark-background: #213539; /*#273336*/
     --dark-foreground: #fffcf2;
-    --artic-red: #e06962;
-    --header: #255a66;
-    --light-text: #F6EECA;
+    --artic-red: #cf7155;
+    --artic-green: #819d8b;
+    --header: #345358;
+    --light-text: #dfd9ad;
   }
   
   /* ------------ FONTS --------------------- */
@@ -92,12 +93,12 @@ div.header {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    height:200px;
+    height:165px;
   }
   div.header .logo {
     float: left;
-    margin: 10px;
-    padding:10px
+    margin: 5px;
+    padding:0px
   }
   div.header .title {
     float: left;
@@ -165,7 +166,7 @@ div.sidebar {
     position: relative;
     padding:1%;
     border-style: solid;
-    border-color: var(--header);
+    border-color: var(--artic-green);
     border-width: 0px 24px 0px 24px;
     border-radius: 5pt;
     background: var(--dark-background);
@@ -323,7 +324,7 @@ div.sidebar {
     margin: auto;
     margin-top: 0px;
     border-style: solid;
-    border-color: #F6EECA;
+    border-color: var(--light-text);
     border-width: 0px 1px 0px 1px;
     border-radius: 5px;
     padding:0px 10px 10px 10px;
