@@ -53,7 +53,7 @@ function ChartContainer(props){
       const [dateRange,setDateRange] = useState(null)
       const [epidemic,setEpidemic] = useState(null);
       const [treeDateRange,setTreeDateRange] = useState(null);
-
+      const margins = {"top":10,"bottom":10,"left":50,"right":50};
 
     //Get lineList
     useEffect(()=>{
@@ -194,9 +194,8 @@ function ChartContainer(props){
     //Update chart sizes
     useEffect(()=>{
         if(domRect!==null){
-        const margins={"spaceTop":5,"spaceBottom":20,"spaceLeft":60,"spaceRight":60};
         const parentBaseDim={"height":max([domRect.height*0.25,50]),"width":max([domRect.width*0.9,50])};
-        setChartGeom({...margins,...parentBaseDim})
+        setChartGeom(parentBaseDim)
         }
     },[domRect]);
 
@@ -256,16 +255,20 @@ function ChartContainer(props){
           )
       }else{
       return(
-        <div className ="fillHorizontalSpace">
+        <div className ="fillHorizontalSpace" background={"none"}>
         <div className = "axisContainer">
+          <div className ="mockChartContainer">
         <TimeAxis dateRange = {dateRange} 
-          domRect = {domRect} 
-        axisStyle = {axisTop}/>
+        margins = {margins}
+          chartGeom = {chartGeom} 
+          domRect = {domRect}/>
+        </div>
         </div>
 
        <div className = "timelineContainer" ref={measuredRef} >
         <div className = "chartContainer">
           <StackedHistogram  data={ogLineList} 
+          margins = {margins}
             scales = {scales} 
             chartGeom={chartGeom}
             dateRange ={dateRange}
@@ -273,6 +276,7 @@ function ChartContainer(props){
           </div>  
           <div className = "chartContainer">
           <AreaPlot  
+          margins = {margins}
           epidemic={epidemic} 
           dateRange ={dateRange}
           scales={scales}
@@ -280,6 +284,7 @@ function ChartContainer(props){
         </div>  
           <div className = "chartContainer">
           <ArcTransmission  
+          margins = {margins}
           phylogeny={phylogeny} 
           treeDateRange={treeDateRange}
           graph={outbreakGraph} 
@@ -290,6 +295,7 @@ function ChartContainer(props){
         </div>  
       <div className = "chartContainer">
           <PhyloChart  
+          margins = {margins}
           dateRange ={dateRange}
           treeDateRange={treeDateRange}
           phylogeny={phylogeny} 
@@ -298,16 +304,6 @@ function ChartContainer(props){
           scales = {scales} 
           chartGeom={chartGeom}/>
       </div>  
-      <div className = "chartContainer">
-      <PhyloChart  
-      dateRange ={dateRange}
-      treeDateRange={treeDateRange}
-      phylogeny={phylogeny} 
-      layout = {RectangularLayout}
-      attributes = {phyloAttributes}
-      scales = {scales} 
-      chartGeom={chartGeom}/>
-  </div> 
 </div>
 </div>
 )}

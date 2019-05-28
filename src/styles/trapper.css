@@ -158,20 +158,6 @@ div.sidebar {
   }
 
   /* ---------------  C H A R T S ----------------- */
-
-.chartContainer {
-    margin: 10px 10px 10px 10px;
-    position: relative;
-    border-style: solid;
-    border-color: var(--artic-green);
-    border-width: 0px 5px 0px 24px;
-    border-radius: 5pt;
-    background: none/* var(--dark-background);*/
-  }
-  .chartContainer#child {
-    margin: auto;
-    margin-bottom: 0
-  }
   .chartTitle {
     text-align: center;
     font-weight: 600;
@@ -321,18 +307,38 @@ div.sidebar {
     overflow-y: scroll;
     /* box-sizing: border-box; */
   }
+  .chartContainer {
+    margin: 10px 10px 10px 10px;
+    position: relative;
+    border-style: solid;
+    border-color: var(--artic-green);
+    border-width: 0px 5px 0px 24px;
+    border-radius: 5pt;
+    background: none/* var(--dark-background);*/
+  }
+  /* .chartContainer#child {
+    margin: auto;
+    margin-bottom: 0
+  } */
   .axisContainer{
     z-index: -1000;
-    margin: 10px 60px 1px 60px;
-    /* border-style: solid; */
-    border-color:none;
-    border-width: 0px 1px 0px 1px;
-    border-radius: 5px;
-    padding:0px 11px 10px 11px; /* 11 so we have the same total distance as in the timelinecontainer above*/
+    height: 95%;
+    width: 95%;
+    margin: 20px 60px 50px 60px;
+    padding:10px 11px 10px 11px;
+    /* add 1 for timeine border and then what is needed for chartContainer border
+     so we have the same total distance as in the timelinecontainer above*/
     position: absolute;
     /* flex-grow:1; */
     /* overflow-y: scroll; */
     /* box-sizing: border-box; */
+  }
+
+  .mockChartContainer{
+    z-index: -1000;
+    margin: 0px 10px 10px 10px;
+    position: relative;
+    padding: 0px 5px 0px 24px;
   }
   
   /* --------------------- D3 --------------------- */

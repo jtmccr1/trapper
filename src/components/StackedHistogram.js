@@ -17,9 +17,8 @@ function StackedHistogram(props){
                                         horizontalTicks:props.dateRange,
                                         horizontalScale:scaleTime};
                 const layout = new stackedHistogramLayout(props.data,layoutSettings);
-                const margins = {"top":props.chartGeom.spaceTop,"bottom":10,"left":50,"right":50};
                 const settings = { hoverBorder: 4, backgroundBorder:0,transitionDuration:300};
-                const fig = new stackedHistogramChart(node,layout,margins,settings);
+                const fig = new stackedHistogramChart(node,layout,props.margins,settings);
                 fig.draw();
                 const mouseEnter = (d, i, n)=>{select(n[i]).classed("hovered", true);};
                 const mouseExit = (d,i,n) => {select(n[i]).classed("hovered", false);};

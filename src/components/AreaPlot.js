@@ -17,8 +17,7 @@ function AreaPlot(props){
                                     horizontalTicks:props.dateRange,
                                     horizontalScale:scaleTime};
             const layout = new fishLayout(props.epidemic,layoutSettings);
-            const margins = {"top":props.chartGeom.spaceTop,"bottom":10,"left":50,"right":50};
-            const fig = new areaPlot(node,layout,margins, { hoverBorder: 4, backgroundBorder:2,transitionDuration:300});
+            const fig = new areaPlot(node,layout,props.margins, { hoverBorder: 4, backgroundBorder:2,transitionDuration:300});
             fig.draw();
             // select(node).select(".axes-layer").remove();
             setPlot(fig);

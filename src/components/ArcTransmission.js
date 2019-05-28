@@ -17,14 +17,13 @@ function ArcTransmission(props){
         if (node !== null) {
             if(node.children.length===0){ // make it the first time
                 const layout = new ArcLayout(props.graph,{xFunction:xfunc,curve:props.curve});
-                const margins = {"top":props.chartGeom.spaceTop,"bottom":10,"left":50,"right":50};
                 const settings = { hoverBorder: 4, backgroundBorder:2,
                     baubles: [
                         new CircleBauble(),
                     ],
                     transitionDuration:300
                 };
-                const fig = new FigTree(node,layout,margins,settings);
+                const fig = new FigTree(node,layout,props.margins,settings);
             fig.draw();
             fig.hilightInternalNodes();
             fig.hilightExternalNodes();

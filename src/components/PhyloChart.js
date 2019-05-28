@@ -17,8 +17,7 @@ function PhyloChart(props){
             const rootToTipScale = scaleLinear().domain(extent([0,...props.phylogeny.rootToTipLengths()])).range(treeRange) // converts root to tip distance to horizontal range of tree on [0,1]
             const layout = new props.layout(props.phylogeny,{horizontalScale:rootToTipScale});
             
-            const margins = {"top":props.chartGeom.spaceTop,"bottom":10,"left":10,"right":50};
-            const fig = new FigTree(node,layout,margins, { hoverBorder: 4, backgroundBorder:2,
+            const fig = new FigTree(node,layout,props.margins, { hoverBorder: 4, backgroundBorder:2,
                 baubles: [
                     new CircleBauble(),
                 ],

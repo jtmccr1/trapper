@@ -70,7 +70,7 @@ draw(){
 
         this.svgSelection.select(".axes-layer")
         .append("g")
-        .attr("transform",`translate(${this.margins.left},${(this.scales.height-this.margins.bottom-this.margins.top)})`)
+        .attr("transform",`translate(0,${(this.scales.height-this.margins.bottom-this.margins.top-50)})`)
         .attr("class", "bottom axis")
         .attr("id", "x-axis-bottom")
         .call(axisBottom(this.scales.x));
@@ -107,6 +107,8 @@ update(){
                         .call(axisBottom(this.scales.x))
                         .transition()
                         .duration(this.settings.transitionDuration)
+
+
                         this.updateAxisBars();
 }
 

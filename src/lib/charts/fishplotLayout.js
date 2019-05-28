@@ -1,4 +1,4 @@
-import {Outbreak} from "../outbreak/Outbreak";
+import {Outbreak} from "../outbreak/Outbreak.js";
 import {max, sum,min,extent} from 'd3-array';
 import {timeWeek} from 'd3-time';
 import {scaleLinear} from 'd3-scale';
