@@ -36,7 +36,7 @@ function mostProbableTransphyloEdgeCondition(graph){
 
 function ChartContainer(props){
   
-    const prefix = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://raw.githubusercontent.com/jtmccr1/trapper/master/src';
+    const prefix = process.env.NODE_ENV === 'development' ? 'http://localhost:4001' : 'https://raw.githubusercontent.com/jtmccr1/trapper/master/src';
     
     //------------ Data processing ------------------------
 

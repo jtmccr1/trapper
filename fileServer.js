@@ -9,7 +9,7 @@ app.use(function(req, res, next) {
 
 app.use(express.static('./src/'));
 
-app.set('port', process.env.PORT || 3001);
+app.set('port', process.env.PORT || 4001);
 app.listen(app.get('port'), () => console.log('Data available for visualization.'));
 
 module.exports = app;

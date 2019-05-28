@@ -94,23 +94,24 @@ div.header {
     flex-direction: row;
     justify-content: flex-start;
     height:165px;
+    margin-bottom: 10px;
   }
   div.header .logo {
     float: left;
     margin: 5px;
-    padding:0px
   }
   div.header .title {
     float: left;
-    margin: 10px;
-    padding:10px;
+    margin-left: 20px;
+    padding:0px;
     font-size: "1.8em"
   }
   div.header .buttons {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    padding: 20px 10px 20px 0;
+    margin-left: auto;
+  padding: 20px 10px 20px 0;
   }
 
   /* ----------------- MODERN BUTTONS --------------------- */
@@ -167,7 +168,7 @@ div.sidebar {
     padding:1%;
     border-style: solid;
     border-color: var(--artic-green);
-    border-width: 0px 24px 0px 24px;
+    border-width: 0px 5px 0px 24px;
     border-radius: 5pt;
     background: var(--dark-background);
   }
@@ -326,7 +327,7 @@ div.sidebar {
     border-style: solid;
     border-color: var(--light-text);
     border-width: 0px 1px 0px 1px;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     padding:0px 10px 10px 10px;
     flex-grow:1;
     overflow-y: scroll;
