@@ -257,10 +257,12 @@ function ChartContainer(props){
       }else{
       return(
         <div className ="fillHorizontalSpace">
-        <TimeAxis domain = {dateRange} 
-                  chartGeom = {chartGeom} 
-                  className="fixedAxis"
-                  axisStyle = {axisTop}/>
+        <div className = "axisContainer">
+        <TimeAxis dateRange = {dateRange} 
+          domRect = {domRect} 
+        axisStyle = {axisTop}/>
+        </div>
+
        <div className = "timelineContainer" ref={measuredRef} >
         <div className = "chartContainer">
           <StackedHistogram  data={ogLineList} 
@@ -307,10 +309,6 @@ function ChartContainer(props){
       chartGeom={chartGeom}/>
   </div> 
 </div>
-<TimeAxis domain = {dateRange} 
-chartGeom = {chartGeom} 
-className="fixedAxis"
-axisStyle = {axisBottom}/>
 </div>
 )}
     // <Chart  />

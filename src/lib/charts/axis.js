@@ -1,31 +1,38 @@
 import {easeLinear} from 'd3-ease';
 import {transition} from "d3-transition";
 import {select} from 'd3-selection';
-import {scaleTime} from 'd3-scale';
-import {axisBottom} from "d3-axis";
+import {scaleLinear,scaleTime} from 'd3-scale';
+import {axisBottom,axisTop} from "d3-axis";
+import { d3Plot } from './d3Plot';
 /** 
  * time Axis
  * settings 
  */
-export class XTimeAxis{
+export class XTimeAxis extends d3Plot{
     static DEFAULT_SETTINGS() {
       return {
         transitionDuration:500,
-        axisStyle:axisBottom,
-      };
-  }
+        horizontalRange:[0,1],
+        horizontalAxisTicks:[0,0.5,1],
+        horizontalScale:scaleLinear
+        }
+    }
   /**
    * The constuctor
    * @param {*} domain array of first and last dates in axis
    * @param {*} settings ticksUnit : timeWeek is default
    */
 
-constructor(svg,domain,margins,settings = { }){
+constructor(svg,layout,margins,settings = { }){
+    super();
+    this.layout = layout;
+
   this.settings = {...XTimeAxis.DEFAULT_SETTINGS(), ...settings};
   // default ranges - these should be set in layout()
-  this._horizontalRange = domain;
+  this._horizontalRange = this.settings.horizontalRange;
   this.svg = svg;
   this.margins = margins;
+  // To appease the 
 }
 draw(){
        // get the size of the svg we are drawing on
@@ -41,7 +48,7 @@ draw(){
            height = this.svg.getBoundingClientRect().height;
        }
        //
-       this.scales={x:scaleTime().domain(this._horizontalRange).range([0,width-this.margins.left-this.margins.right]),
+       this.scales={x:this.settings.horizontalScale().domain(this._horizontalRange).range([0,width-this.margins.left-this.margins.right]),
                     width:width,
                     height:height}
 
@@ -58,9 +65,15 @@ draw(){
         this.svgSelection.select(".axes-layer")
         .append("g")
         .attr("class", "top axis")
-        .attr("id", "x-axis")
-        .call(this.settings.axisStyle(this.scales.x));
+        .attr("id", "x-axis-top")
+        .call(axisTop(this.scales.x));
 
+        this.svgSelection.select(".axes-layer")
+        .append("g")
+        .attr("transform",`translate(${this.margins.left},${(this.scales.height-this.margins.bottom-this.margins.top)})`)
+        .attr("class", "bottom axis")
+        .attr("id", "x-axis-bottom")
+        .call(axisBottom(this.scales.x));
     
 }
 update(){
@@ -77,16 +90,27 @@ update(){
                height = this.svg.getBoundingClientRect().height;
            }
            //
-           this.scales={x:scaleTime().domain(this._horizontalRange).range([0,width-this.margins.left-this.margins.right]),
+        this.scales={x:this.settings.horizontalScale()
+                        .domain(this._horizontalRange)
+                        .range([0,width-this.margins.left-this.margins.right]),
                         width:width,
                         height:height}
-        this.svgSelection.select("#x-axis")
-                        .call(this.settings.axisStyle(this.scales.x))
+        this.svgSelection.select("#x-axis-top")
+                        .call(axisTop(this.scales.x))
                         .transition()
                         .duration(this.settings.transitionDuration)
                         .ease(easeLinear);
 
+    this.svgSelection.select("#x-axis-bottom")
+                        .attr("class", "bottom axis")
+                        .attr("id", "x-axis-bottom")
+                        .call(axisBottom(this.scales.x))
+                        .transition()
+                        .duration(this.settings.transitionDuration)
+                        this.updateAxisBars();
 }
+
+
 get horizontalRange(){
     return this._horizontalRange;
 }

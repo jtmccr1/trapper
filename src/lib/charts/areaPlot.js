@@ -62,7 +62,7 @@ export class areaPlot extends d3Plot{
 
       updateAreas.call(this);
       this.updateAxis();
-      this.updateAxisBars();
+      // this.updateAxisBars();
 
     }
 /**

@@ -68,7 +68,7 @@ export class stackedHistogramChart extends d3Plot{
 
       updateRects.call(this);
       this.updateAxis();
-      this.updateAxisBars();
+      // this.updateAxisBars();
 
     }
 /**
