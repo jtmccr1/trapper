@@ -102,8 +102,7 @@ update(){
                         .ease(easeLinear);
 
     this.svgSelection.select("#x-axis-bottom")
-                        .attr("class", "bottom axis")
-                        .attr("id", "x-axis-bottom")
+                        .attr("transform",`translate(0,${(this.scales.height-this.margins.bottom-this.margins.top)})`)
                         .call(axisBottom(this.scales.x))
                         .transition()
                         .duration(this.settings.transitionDuration)

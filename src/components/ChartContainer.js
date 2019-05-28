@@ -256,16 +256,22 @@ function ChartContainer(props){
       }else{
       return(
         <div className ="fillHorizontalSpace" background={"none"}>
-        <div className = "axisContainer">
+        {/*<div className = "axisContainer">
           <div className ="mockChartContainer">
         <TimeAxis dateRange = {dateRange} 
         margins = {margins}
           chartGeom = {chartGeom} 
           domRect = {domRect}/>
         </div>
-        </div>
+      </div>*/}
 
        <div className = "timelineContainer" ref={measuredRef} >
+       <div className = "mockChartContainer">
+       <TimeAxis dateRange ={dateRange} 
+        margins = {margins}
+          chartGeom = {chartGeom} 
+          domRect = {domRect}/>
+          </div>  
         <div className = "chartContainer">
           <StackedHistogram  data={ogLineList} 
           margins = {margins}

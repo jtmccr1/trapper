@@ -336,9 +336,12 @@ div.sidebar {
 
   .mockChartContainer{
     z-index: -1000;
-    margin: 0px 10px 10px 10px;
-    position: relative;
+    margin: 0px 10px 0px 10px;
+    position: fixed;
     padding: 0px 5px 0px 24px;
+    /* -webkit-transform: translateY(-10px);
+    -ms-transform: translateY(-10px); */
+    transform: translateY(-35px);
   }
   
   /* --------------------- D3 --------------------- */
