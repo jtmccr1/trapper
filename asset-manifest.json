@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/trapper/static/css/main.6121c100.chunk.css",
-    "main.js": "/trapper/static/js/main.bb39f785.chunk.js",
-    "main.js.map": "/trapper/static/js/main.bb39f785.chunk.js.map",
+    "main.css": "/trapper/static/css/main.81028156.chunk.css",
+    "main.js": "/trapper/static/js/main.62899c19.chunk.js",
+    "main.js.map": "/trapper/static/js/main.62899c19.chunk.js.map",
     "runtime~main.js": "/trapper/static/js/runtime~main.f338064b.js",
     "runtime~main.js.map": "/trapper/static/js/runtime~main.f338064b.js.map",
-    "static/js/2.abeca37a.chunk.js": "/trapper/static/js/2.abeca37a.chunk.js",
-    "static/js/2.abeca37a.chunk.js.map": "/trapper/static/js/2.abeca37a.chunk.js.map",
+    "static/js/2.cac669b4.chunk.js": "/trapper/static/js/2.cac669b4.chunk.js",
+    "static/js/2.cac669b4.chunk.js.map": "/trapper/static/js/2.cac669b4.chunk.js.map",
     "index.html": "/trapper/index.html",
-    "precache-manifest.72a2457bbb3573b1ae30b11616c97311.js": "/trapper/precache-manifest.72a2457bbb3573b1ae30b11616c97311.js",
+    "precache-manifest.1a451f69c169d5db8548e9be236b5584.js": "/trapper/precache-manifest.1a451f69c169d5db8548e9be236b5584.js",
     "service-worker.js": "/trapper/service-worker.js",
-    "static/css/main.6121c100.chunk.css.map": "/trapper/static/css/main.6121c100.chunk.css.map",
+    "static/css/main.81028156.chunk.css.map": "/trapper/static/css/main.81028156.chunk.css.map",
     "static/media/trapper.css": "/trapper/static/media/LatoLatin-Light.4725b48f.woff",
     "static/media/logo.png": "/trapper/static/media/logo.e67d1199.png"
   }
