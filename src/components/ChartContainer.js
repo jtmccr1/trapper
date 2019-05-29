@@ -57,7 +57,7 @@ function ChartContainer(props){
 
     //Get lineList
     useEffect(()=>{
-        csv(`${prefix}/examples/simulated/lineList.csv`,
+        csv(`${prefix}/lineList.csv`,
         d=>{
             const dataPoint = {
                    id:d.id,
@@ -73,34 +73,17 @@ function ChartContainer(props){
     },[]);// [] only run on first render otherwise we get an infinite loop.
        //Get links TODO get all links
        useEffect(()=>{
-        Promise.all([csv(`${prefix}/examples/simulated/transphyloLinks.csv`,
-                        d=>{
-                            const dataPoint = {
-                                  target:d.target,
-                                  source:d.source,
-                                  dataSource:d.dataSource
-                                }
-                            return new Link(dataPoint);
-                              }),
-                              csv(`${prefix}/examples/simulated/epiContacts.csv`,
-                              d=>{
-                                  const dataPoint = {
-                                        target:d.target,
-                                        source:d.source,
-                                        dataSource:d.dataSource
-                                      }
-                                  return new Link(dataPoint);
-                                    })
-                                  ]).then(([data1,data2])=>setOgLinks([...data1,...data2]));
+        csv(`${prefix}/links.csv`,
+                        d=>new Link(d)).then((data1)=>setOgLinks(data1));
                         },[]);
 
       useEffect(()=>{
-        fetch(`${prefix}/examples/simulated/simulated.trees`)
+        fetch(`${prefix}/tree.nwk`)
         .then(response=>response.text()
                 .then(text=>{
                   setPhylogeny(Tree.parseNewick(text));
                 }));
-        fetch(`${prefix}/examples/simulated/simulated.json`)
+        fetch(`${prefix}/treeAnnotations.json`)
                 .then(response=>response.json()
                         .then(json=>{
                           setPhyloAttributes(json)
@@ -194,7 +177,7 @@ function ChartContainer(props){
     //Update chart sizes
     useEffect(()=>{
         if(domRect!==null){
-        const parentBaseDim={"height":max([domRect.height*0.25,50]),"width":max([domRect.width*0.9,50])};
+        const parentBaseDim={"height":300,"width":max([domRect.width*0.9,800])};
         setChartGeom(parentBaseDim)
         }
     },[domRect]);
@@ -269,15 +252,6 @@ function ChartContainer(props){
       }else{
       return(
         <div className ="fillHorizontalSpace" background={"none"}>
-        {/*<div className = "axisContainer">
-          <div className ="mockChartContainer">
-        <TimeAxis dateRange = {dateRange} 
-        margins = {margins}
-          chartGeom = {chartGeom} 
-          domRect = {domRect}/>
-        </div>
-      </div>*/}
-
        <div className = "timelineContainer" ref={measuredRef} >
        <div className = "mockChartContainer">
        <TimeAxis dateRange ={dateRange} 
@@ -319,10 +293,10 @@ function ChartContainer(props){
           dateRange ={dateRange}
           treeDateRange={treeDateRange}
           phylogeny={phylogeny} 
-          layout = {TransmissionLayout}
+          layout = {RectangularLayout}
           attributes = {phyloAttributes}
           scales = {scales} 
-          chartGeom={chartGeom}/>
+          chartGeom={{...chartGeom,...{"height":600}}}/>
     </div>  
     </div>
 </div>
