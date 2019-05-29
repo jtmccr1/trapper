@@ -15,6 +15,8 @@ function TimeAxis(props){
                     const margins = {...props.margins,...{top:30,bottom:25}};
                 const fig = new XTimeAxis(node,layoutSettings, margins,layoutSettings);
                 fig.draw();
+                const theyDetect =(d,i,n)=>{alert(`clicked ${d}`)}
+                fig.onClick(theyDetect,".axis-box")
                 Setaxis(fig);
             }else{
                 axis.update();

@@ -12,7 +12,7 @@ function Header() {
 				<div className="title">
 					<h2 style={{marginTop: "0px", marginBottom: "8px"}}>
 				  		<span style={{fontSize: "1.8em"}}>TRAPPER</span>
-						<span> Transmission Reconstuction And Phylogenetics Promoting Early Response</span>
+						<span> Transmission Reconstruction And Phylogenetics Promoting Early Response</span>
 					</h2>
 				</div>
 				</div>

@@ -27,7 +27,7 @@ export class Epidemic{
    const edge = CaseEdge.edge;
    const parent =   edge.source;
    const parentOutbreak = this.outbreakMap.get(parent);
-
+    // Removes possiblity of circular traversal and certain death
     if(this.outbreakMap.has(Case)){
       return
     }
@@ -35,12 +35,14 @@ export class Epidemic{
   if(Case.location === parent.location){
     // add case to parent outbreak
     parentOutbreak.addCase(Case);
+    Case.outbreakId=parentOutbreak.id;
     this.outbreakMap.set(Case,parentOutbreak);
 
     currentOutbreak = parentOutbreak;
     
   }else{
     const startAnotherOutbreak = new Outbreak(`${Case.location}-${Case.id}`,Case.location,[Case]);
+    Case.outbreakId=startAnotherOutbreak.id;
     parentOutbreak.addChild(startAnotherOutbreak);
     this.outbreakMap.set(Case,startAnotherOutbreak);
     this.outbreaks.push(startAnotherOutbreak);

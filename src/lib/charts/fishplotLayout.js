@@ -105,7 +105,7 @@ export class fishLayout extends d3PlotLayout{
                          y0:parentTop-spaceFilled.get(time)-timePoint.percent,
                          data:childOutbreak,
                          total:totalCourse.get(time).totalDescendents}
-          this.addAnnotations({id:childOutbreak.id,location:childOutbreak.location})
+          this.addAnnotations({outbreakId:childOutbreak.id,location:childOutbreak.location})
           points.push(point) 
           spaceFilled.set(time,spaceFilled.get(time)+timePoint.percent+gapMap.get(time)[i+1]);
         }

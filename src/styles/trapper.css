@@ -192,77 +192,7 @@ div.sidebar {
     cursor: pointer;
     transform: scale(1.3);
   }
-  /*--------------------- Fig Tree --------------------*/
 
-  .branch {
-    fill: none;
-    stroke: #b9b0a0;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.branch .branch-path.hovered {
-    stroke-width: 4;
-}
-
-.node-background {
-    fill: #b9b0a0;
-}
-
-.node-background {
-  fill: #b9b0a0;
-}
-
-.external-node .node-shape.hovered {
-    fill: #e9c964;
-}
-.external-node .node-shape {
-    fill: #d26a54;
-}
-.internal-node .node-shape {
-    fill: #a8d8c9;
-}
-
-/* #root .node-shape {
-    fill: #e31e58;
-    stroke: rgb(255, 255, 255);
-    stroke-width: 1;
-} */
-
-.node-label {
-    font-family: "light"; 
-    font-size: 8pt;
-    font-weight: 300;
-    fill: var(--dark-foreground); /* not color as it's SVG */
-}
-
-.trend-line {
-    stroke: rgb(0,0,0);
-    stroke-width: 2;
-    stroke-linecap: round;
-}
-
-.axis text {
-  font-family: "hairline"; 
-  font-size: 8pt;
-  font-weight: 300;
-}
-
-.axis-label text {
-  font-family: "hairline"; 
-  font-size: 8pt;
-  font-weight: bold;
-}
-
-.node-label.support {
-    font-size: 10pt;
-}
-
-.branch-label.length {
-    display: none;
-    font-size: 8pt;
-}
   /*---------------------Other charts line container ----------*/
 /* .rect{
   fill: #d26a54;
@@ -283,19 +213,118 @@ div.sidebar {
   /* ------- Hard coded areas ------------------------------*/  
 .location-Location-A{
     fill:#433446;
-    stroke-width: 1px;
-    stroke: var(--dark-foreground);
+
   }
 .location-Location-B{
     fill:#a8d8c9;
-    stroke-width: 1px;
-    stroke: var(--dark-foreground);
+    /* stroke-width: 1px;
+    stroke: var(--dark-foreground); */
 
   }
 .location-Location-C{
     fill:#d26a54;
-    stroke-width: 1px;
-    stroke: var(--dark-foreground);
+    /* stroke-width: 1px; */
+    /* stroke: var(--dark-foreground); */
+  }
+.fishArea{
+  stroke-width: 1px;
+  stroke: var(--dark-foreground);
+}
+.rect{
+  stroke-width: 1px;
+  stroke: var(--dark-foreground);
+}
+    /*--------------------- Fig Tree --------------------*/
+
+    .branch {
+      fill: none;
+      stroke: #b9b0a0;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+  }
+
+  .branch.location-Location-A{
+    stroke:#433446;
+    /* stroke-width: 1px; */
+    /* stroke: var(--dark-foreground); */
+  }
+  .branch.location-Location-B{
+    stroke:#a8d8c9;
+    /* stroke-width: 1px; */
+    /* stroke: var(--dark-foreground); */
+
+  }
+  .branch.location-Location-C{
+    stroke:#d26a54;
+    /* stroke-width: 1px; */
+    /* stroke: var(--dark-foreground); */
+  }
+  
+  .branch .branch-path.hovered {
+      stroke-width: 4;
+  }
+  
+  .node-background {
+      fill: #b9b0a0;
+  }
+  
+  .node-background {
+    fill: #b9b0a0;
+  }
+  
+  .node-shape.hovered {
+      fill: #e9c964;
+  }
+
+  .node-shape{
+    stroke: 'none';
+  }
+  /* .external-node .node-shape {
+      fill: #d26a54;
+  }
+  .internal-node .node-shape {
+      fill: #a8d8c9;
+  } */
+  
+  /* #root .node-shape {
+      fill: #e31e58;
+      stroke: rgb(255, 255, 255);
+      stroke-width: 1;
+  } */
+  
+  .node-label {
+      font-family: "light"; 
+      font-size: 8pt;
+      font-weight: 300;
+      fill: var(--dark-foreground); /* not color as it's SVG */
+  }
+  
+  .trend-line {
+      stroke: rgb(0,0,0);
+      stroke-width: 2;
+      stroke-linecap: round;
+  }
+  
+  .axis text {
+    font-family: "hairline"; 
+    font-size: 8pt;
+    font-weight: 300;
+  }
+  
+  .axis-label text {
+    font-family: "hairline"; 
+    font-size: 8pt;
+    font-weight: bold;
+  }
+  
+  .node-label.support {
+      font-size: 10pt;
+  }
+  
+  .branch-label.length {
+      display: none;
+      font-size: 8pt;
   }
   /*---------------------Time line container ----------*/
   .timelineContainer{
