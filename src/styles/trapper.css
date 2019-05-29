@@ -1,6 +1,6 @@
 
 :root {
-    --dark-background: #213539; /*#273336*/
+    --dark-background: #213539;
     --dark-foreground: #fffcf2;
     --artic-red: #cf7155;
     --artic-green: #819d8b;
@@ -93,7 +93,8 @@ div.header {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    height:165px;
+    height:55px;
+    /* height:165px; */
     margin-bottom: 10px;
   }
   div.header .logo {
@@ -312,7 +313,7 @@ div.sidebar {
     position: relative;
     border-style: solid;
     border-color: var(--artic-green);
-    border-width: 0px 5px 0px 24px;
+    border-width: 0px 0px 1px 24px;
     border-radius: 5pt;
     background: none/* var(--dark-background);*/
   }
