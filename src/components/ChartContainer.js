@@ -2,7 +2,7 @@ import React, {useState,useCallback,useEffect} from 'react';
 import {csv} from "d3-fetch";
 import Case from "../lib/outbreak/Case";
 import Link from "../lib/outbreak/Link";
-import {dateParse} from "../utils/commonFunctions"
+import {dateParse,mode} from "../utils/commonFunctions"
 import {scaleTime,scaleLinear} from 'd3-scale';
 import {timeWeek,timeDay} from "d3-time";
 import {max,min,extent} from "d3-array";
@@ -204,8 +204,14 @@ function ChartContainer(props){
     useEffect(()=>{
       if(outbreakGraph!==null){
         const indexCase = outbreakGraph.nodes.find(n=>outbreakGraph.getOutgoingEdges(n).length>0&&outbreakGraph.getIncomingEdges(n).length===0);
-        indexCase.location = "Location A";
-        indexCase.symptomOnset=null;
+        if(indexCase.location==="Unknown"){
+          // Sets index location to most common location of children
+          indexCase.symptomOnset=null;
+          const childLocations = outbreakGraph.getOutgoingEdges(indexCase)
+          .filter(e=>mostProbableTransphyloEdgeCondition(outbreakGraph)(e))
+          .map(e=>e.target.location)
+          indexCase.location = mode(childLocations);
+        }
 
         const outbreakEpidemic = new Epidemic(indexCase,outbreakGraph,mostProbableTransphyloEdgeCondition);
         setEpidemic(outbreakEpidemic);

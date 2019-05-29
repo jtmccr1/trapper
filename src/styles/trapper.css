@@ -259,9 +259,9 @@ div.sidebar {
     font-size: 8pt;
 }
   /*---------------------Other charts line container ----------*/
-.rect{
+/* .rect{
   fill: #d26a54;
-}
+} */
 .rect.hovered{
   fill: #e9c964;
 }
@@ -276,18 +276,18 @@ div.sidebar {
 }
 
   /* ------- Hard coded areas ------------------------------*/  
-  .area-layer .location-Location_A{
+.location-Location-A{
     fill:#433446;
     stroke-width: 1px;
     stroke: var(--dark-foreground);
   }
-  .area-layer .location-Location_B{
+.location-Location-B{
     fill:#a8d8c9;
     stroke-width: 1px;
     stroke: var(--dark-foreground);
 
   }
-  .area-layer .location-Location_C{
+.location-Location-C{
     fill:#d26a54;
     stroke-width: 1px;
     stroke: var(--dark-foreground);
