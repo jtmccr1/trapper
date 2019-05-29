@@ -79,13 +79,17 @@ export class fishLayout extends d3PlotLayout{
       }
       
     }
-    
+    /** Sets the points the child outbreak of the provided outbreak. This is called 
+     * recursively.
+    */
+
     setPoints(outbreak = this.backgroundOutbreak){
       // Get all the time points of the data
       const totalCourse = this.backgroundOutbreak.timeCourse;
-      // Get the gapMap of the background outbreak - should be of the outbreak.
+      // Get the gapMap of the of the outbreak. 
       const gapMap = this.gapMap.get(outbreak);
-      // will be updated overtime to account for the space that has been taken up.
+      // will be updated overtime to account for the space from the top outbreak
+      // that has been taken up at each point.
       let i=0;
       const spaceFilled= new Map(outbreak.timePoints.map(t=>[t,gapMap.get(t)[i]])); // starts as just the top gaps.
       // fillPoints 
@@ -94,9 +98,9 @@ export class fishLayout extends d3PlotLayout{
          const timeCourse = childOutbreak.timeCourse;
         for(const time of childOutbreak.timePoints){
           const timePoint = timeCourse.get(time);
-          
+          //Each time point has the total descendents of that outbreak at this time and the cases in this particular outbreak.
           timePoint.percent = totalCourse.get(time)["totalDescendents"]>0?timePoint.totalDescendents/totalCourse.get(time)["totalDescendents"]: 0;
-          const parentTop =1 - getStartingDistance.call(this,childOutbreak,time);
+          const parentTop =getStartingDistance.call(this,childOutbreak,time);
           const point = {time:time,y1:parentTop-spaceFilled.get(time),
                          y0:parentTop-spaceFilled.get(time)-timePoint.percent,
                          data:childOutbreak,
@@ -185,14 +189,13 @@ export class fishLayout extends d3PlotLayout{
 
   
   function getStartingDistance(outbreak,t){
-    let currentOutbreak= outbreak;
-    let thereAreGrandparents = currentOutbreak.parent.parent?true:false;
-    let gap = 0;
- currentOutbreak=currentOutbreak.parent;
-   while(thereAreGrandparents){
-      currentOutbreak= currentOutbreak.parent;
-     gap += this.gapMap.get(currentOutbreak).get(t)[0];
-     thereAreGrandparents = currentOutbreak.parent?true:false
-  }
-    return gap;
+    // points is an array of arrays each inner array is an oubreak we want the one with the parent.
+    
+    const parentPoints = this.points.find(d=>d[0].data===outbreak.parent);
+    if(typeof parentPoints==='undefined'){
+      // The parent outbreak is the background outbreak
+      return 1;
+    }
+    const atThisTime = parentPoints.find(p=>p.time===t)
+    return(atThisTime.y1);
   }
