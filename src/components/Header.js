@@ -5,7 +5,8 @@ function Header() {
 			<div className="header">
 				<div className="logo">
 					<a href="http://artic.network" target="_blank" rel="noopener noreferrer">
-						<img src={logo} alt={'logo'} width="132" />
+						{/* <img src={logo} alt={'logo'} width="132" /> */}
+						<img src={logo} alt={'logo'} width="40" />
 					</a>
 				</div>
 				<div className="title">

@@ -1,6 +1,6 @@
 
 :root {
-    --dark-background: #213539; /*#273336*/
+    --dark-background: #213539;
     --dark-foreground: #fffcf2;
     --artic-red: #cf7155;
     --artic-green: #819d8b;
@@ -9,21 +9,25 @@
   }
   
   /* ------------ FONTS --------------------- */
-@font-face {
-    font-family: 'Lato';
-    src: local('LatoLatin-Light'), url(./LatoLatin-Light.woff) format('woff');
-    font-weight: bold;
+  @font-face {
+    font-family: 'regular';
+    src: local('LatoLatin-Regular'), url(./LatoLatin-Regular.woff) format('woff');
   }
   
   @font-face {
-    font-family: 'Lato';
-    src: local('LatoLatin-Hairline'), url(./LatoLatin-Hairline.woff) format('woff');
-    font-weight: normal;
+    font-family: 'light';
+    src: local('LatoLatin-Light'), url(./LatoLatin-Light.woff) format('woff');
   }
+  
+  @font-face {
+    font-family: 'hairline';
+    src: local('LatoLatin-Hairline'), url(./LatoLatin-Hairline.woff) format('woff');
+  }
+
   /* ----------- GLOBALS (BODY) --------------*/
 body {
     height: 95vh;
-    font-family: "Lato";
+    font-family: "light";
     background: var(--dark-background);
     color: var(--dark-foreground);
     overflow: hidden;
@@ -93,7 +97,8 @@ div.header {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    height:165px;
+    height:55px;
+    /* height:165px; */
     margin-bottom: 10px;
   }
   div.header .logo {
@@ -226,10 +231,10 @@ div.sidebar {
 } */
 
 .node-label {
-    font-family: "helvetica-neue",  "helvetica",  "sans-serif";
+    font-family: "light"; 
     font-size: 8pt;
     font-weight: 300;
-      fill: var(--dark-foreground); /* not color as it's SVG */
+    fill: var(--dark-foreground); /* not color as it's SVG */
 }
 
 .trend-line {
@@ -239,15 +244,15 @@ div.sidebar {
 }
 
 .axis text {
-    font-family: "helvetica-neue",  "helvetica",  "sans-serif";
-    font-size: 8pt;
-    font-weight: 300;
+  font-family: "hairline"; 
+  font-size: 8pt;
+  font-weight: 300;
 }
 
 .axis-label text {
-    font-family: "helvetica-neue",  "helvetica",  "sans-serif";
-    font-size: 8pt;
-    font-weight: bold;
+  font-family: "hairline"; 
+  font-size: 8pt;
+  font-weight: bold;
 }
 
 .node-label.support {
@@ -312,7 +317,7 @@ div.sidebar {
     position: relative;
     border-style: solid;
     border-color: var(--artic-green);
-    border-width: 0px 5px 0px 24px;
+    border-width: 0px 0px 1px 24px;
     border-radius: 5pt;
     background: none/* var(--dark-background);*/
   }
@@ -345,7 +350,7 @@ div.sidebar {
   /* --------------------- D3 --------------------- */
   .axis text,
   text.axis {
-    font-family: "helvetica-neue",  "helvetica",  "sans-serif";
+    font-family: "light"; 
     font-size: 14px;
     fill: var(--dark-foreground); /* not color as it's SVG */
   }
