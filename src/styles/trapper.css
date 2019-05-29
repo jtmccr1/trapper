@@ -211,18 +211,19 @@ div.sidebar {
 }
 
   /* ------- Hard coded areas ------------------------------*/  
-.location-Location-A{
-    fill:#433446;
+  
+  .location-Location-A{
+    fill:#086375;
 
   }
 .location-Location-B{
-    fill:#a8d8c9;
-    /* stroke-width: 1px;
+  fill:#DB504A;
+  /* stroke-width: 1px;
     stroke: var(--dark-foreground); */
 
   }
 .location-Location-C{
-    fill:#d26a54;
+    fill:#E3B505;
     /* stroke-width: 1px; */
     /* stroke: var(--dark-foreground); */
   }
@@ -245,18 +246,18 @@ div.sidebar {
   }
 
   .branch.location-Location-A{
-    stroke:#433446;
+    stroke:#086375;
     /* stroke-width: 1px; */
     /* stroke: var(--dark-foreground); */
   }
   .branch.location-Location-B{
-    stroke:#a8d8c9;
+    stroke:#DB504A;
     /* stroke-width: 1px; */
     /* stroke: var(--dark-foreground); */
 
   }
   .branch.location-Location-C{
-    stroke:#d26a54;
+    stroke:#E3B505;
     /* stroke-width: 1px; */
     /* stroke: var(--dark-foreground); */
   }
