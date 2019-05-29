@@ -9,21 +9,25 @@
   }
   
   /* ------------ FONTS --------------------- */
-@font-face {
-    font-family: 'Lato';
-    src: local('LatoLatin-Light'), url(./LatoLatin-Light.woff) format('woff');
-    font-weight: bold;
+  @font-face {
+    font-family: 'regular';
+    src: local('LatoLatin-Regular'), url(./LatoLatin-Regular.woff) format('woff');
   }
   
   @font-face {
-    font-family: 'Lato';
-    src: local('LatoLatin-Hairline'), url(./LatoLatin-Hairline.woff) format('woff');
-    font-weight: normal;
+    font-family: 'light';
+    src: local('LatoLatin-Light'), url(./LatoLatin-Light.woff) format('woff');
   }
+  
+  @font-face {
+    font-family: 'hairline';
+    src: local('LatoLatin-Hairline'), url(./LatoLatin-Hairline.woff) format('woff');
+  }
+
   /* ----------- GLOBALS (BODY) --------------*/
 body {
     height: 95vh;
-    font-family: "Lato";
+    font-family: "light";
     background: var(--dark-background);
     color: var(--dark-foreground);
     overflow: hidden;
@@ -227,10 +231,10 @@ div.sidebar {
 } */
 
 .node-label {
-    font-family: "helvetica-neue",  "helvetica",  "sans-serif";
+    font-family: "light"; 
     font-size: 8pt;
     font-weight: 300;
-      fill: var(--dark-foreground); /* not color as it's SVG */
+    fill: var(--dark-foreground); /* not color as it's SVG */
 }
 
 .trend-line {
@@ -240,15 +244,15 @@ div.sidebar {
 }
 
 .axis text {
-    font-family: "helvetica-neue",  "helvetica",  "sans-serif";
-    font-size: 8pt;
-    font-weight: 300;
+  font-family: "hairline"; 
+  font-size: 8pt;
+  font-weight: 300;
 }
 
 .axis-label text {
-    font-family: "helvetica-neue",  "helvetica",  "sans-serif";
-    font-size: 8pt;
-    font-weight: bold;
+  font-family: "hairline"; 
+  font-size: 8pt;
+  font-weight: bold;
 }
 
 .node-label.support {
@@ -346,7 +350,7 @@ div.sidebar {
   /* --------------------- D3 --------------------- */
   .axis text,
   text.axis {
-    font-family: "helvetica-neue",  "helvetica",  "sans-serif";
+    font-family: "light"; 
     font-size: 14px;
     fill: var(--dark-foreground); /* not color as it's SVG */
   }
