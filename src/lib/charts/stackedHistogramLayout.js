@@ -4,11 +4,13 @@ import {nest} from "d3-collection";
 import {timeWeek} from "d3-time"
 import {scaleLinear} from 'd3-scale';
 import {transition} from "d3-transition"
+import {Type} from "figtree";
+import {d3PlotLayout} from "./d3PlotLayout";
 /** 
  * StackedHisogram layout
  * settings 
  */
-export class stackedHistogramLayout{
+export class stackedHistogramLayout extends d3PlotLayout{
       static DEFAULT_SETTINGS() {
         return {
             groupingFunction:d=>1,
@@ -17,6 +19,7 @@ export class stackedHistogramLayout{
             horizontalRange:null,
             horizontalTicks:null,
             horizontalScale:scaleLinear,
+            annotations:null
         }
     }
     /**
@@ -29,6 +32,7 @@ export class stackedHistogramLayout{
                                           x1: timeWeek.offset(new Date(d.key),1)
      */
   constructor(data,settings = { }){
+    super();
     this.settings = {...stackedHistogramLayout.DEFAULT_SETTINGS(), ...settings};
     this.data = data;
     // default ranges - these should be set in layout()
@@ -65,6 +69,9 @@ export class stackedHistogramLayout{
         if(kEntry.length>0){
         for(const data of kEntry){
           const caseEntry = {...entry,...{"data":data}};
+            // If there is annotations in the data add them here as classes
+            // this.annotateData(data)
+            this.addAnnotations(data)
           caseEntry.y0=currentCount;
           caseEntry.y1=currentCount+1;
           currentCount+=1;
@@ -102,6 +109,8 @@ export class stackedHistogramLayout{
   get horizontalAxisTicks(){
       return this._horizontalTicks;
   }
+
+  
           
   }
 

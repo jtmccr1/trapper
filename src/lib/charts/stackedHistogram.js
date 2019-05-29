@@ -108,7 +108,7 @@ function updateRects(){
     const newRects = rects.enter()
       .append("rect")
       .attr("id", (v) => v.id)
-      .attr("class", (v) => ["rect"].join(" ")) // add attribute classes here
+      .attr("class", (v) => ["rect",...this.getAnnotations(v.data)].join(" ")) // add attribute classes here
       .attr("x", d => this.scales.x(d.x0) + 1)
       .attr("width", d => Math.max(0, this.scales.x(d.x1) - this.scales.x(d.x0) - 1))
       .attr("y", d => this.scales.y(d.y1))
@@ -138,7 +138,7 @@ function updateRectBackgrounds(){
     const newRects = rects.enter()
     .append("rect")
     .attr("id", (v) => v.id)
-    .attr("class", (v) => ["rect-background"].join(" ")) // add attribute classes 
+    .attr("class", (v) => ["rect-background",...this.getAnnotations(v.data)].join(" ")) // add attribute classes 
     .attr("x", d => this.scales.x(d.x0) + 1)
     .attr("width", d => Math.max(0, this.scales.x(d.x1) - this.scales.x(d.x0) - 1))
     .attr("y", d => this.scales.y(d.y1))

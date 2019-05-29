@@ -317,8 +317,8 @@ function ChartContainer(props){
           attributes = {phyloAttributes}
           scales = {scales} 
           chartGeom={chartGeom}/>
-      </div>  
-</div>
+    </div>  
+    </div>
 </div>
 )}
     // <Chart  />

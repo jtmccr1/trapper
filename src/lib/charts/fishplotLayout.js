@@ -2,6 +2,7 @@ import {Outbreak} from "../outbreak/Outbreak.js";
 import {max, sum,min,extent} from 'd3-array';
 import {timeWeek} from 'd3-time';
 import {scaleLinear} from 'd3-scale';
+import { d3PlotLayout } from "./d3PlotLayout.js";
 
 /**
  * The Fishplot layout
@@ -10,7 +11,7 @@ import {scaleLinear} from 'd3-scale';
  */
 
 
-export class fishLayout {  
+export class fishLayout extends d3PlotLayout{  
   static DEFAULT_SETTINGS() {
     return {
         horizontalRange:null,
@@ -24,6 +25,7 @@ export class fishLayout {
    * @param {*} settings 
    */
     constructor (Epidemic,settings){
+      super();
       this.settings = {...fishLayout.DEFAULT_SETTINGS(), ...settings};
       this.backgroundOutbreak=new Outbreak("background",null,[]);
       this.backgroundOutbreak.addChild(Epidemic.rootOutbreak)
@@ -97,8 +99,9 @@ export class fishLayout {
           const parentTop =1 - getStartingDistance.call(this,childOutbreak,time);
           const point = {time:time,y1:parentTop-spaceFilled.get(time),
                          y0:parentTop-spaceFilled.get(time)-timePoint.percent,
-                         outbreak:childOutbreak,
+                         data:childOutbreak,
                          total:totalCourse.get(time).totalDescendents}
+          this.addAnnotations({id:childOutbreak.id,location:childOutbreak.location})
           points.push(point) 
           spaceFilled.set(time,spaceFilled.get(time)+timePoint.percent+gapMap.get(time)[i+1]);
         }
@@ -114,7 +117,7 @@ export class fishLayout {
         const smoothingPoint = {time : first0.time, 
                                 y1:(lastT.y1+lastT.y0)/2, 
                                 y0:(lastT.y1+lastT.y0)/2,
-                                outbreak:lastT.outbreak,
+                                data:lastT.data,
                                 total:first0.total};
                                 
         points.push(smoothingPoint);
@@ -131,7 +134,7 @@ export class fishLayout {
         const easyStart =  {time : newFirstTP, 
                                 y1:(firstT.y1+firstT.y0)/2, 
                                 y0:(firstT.y1+firstT.y0)/2,
-                                outbreak:firstT.outbreak,
+                                data:firstT.data,
                                 total:totalAtTheTime};
         
         

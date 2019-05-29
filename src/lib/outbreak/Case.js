@@ -35,12 +35,14 @@ class Case{
       this.id=data[dataMap.get('id')]?data[dataMap.get('id')]:"Unknown";
       this.location = data[dataMap.get('location')]?data[dataMap.get('location')]:"Unknown";
       this.caseId =  Symbol();
-      
+      // If there are entries we missed add them here.
+      if(Object.keys(data).filter(k=>[...dataMap.values()].indexOf(k)===-1).length>1){
       this.metadata={};
       for(const key of Object.keys(data).filter(k=>[...dataMap.values()].indexOf(k)===-1)){ 
           
           this.metadata[key]=data[key];
        }
+      }
     }
     
     /**

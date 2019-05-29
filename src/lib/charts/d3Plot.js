@@ -2,6 +2,7 @@ import {select} from 'd3-selection';
 import {scaleLinear} from 'd3-scale';
 import {axisBottom,axisLeft} from 'd3-axis';
 import {easeLinear} from 'd3-ease';
+import {Type} from 'figtree';
 /**
  * A master class for each plot that requires each plot implement a draw
  * update, onclick and onhover method.
@@ -99,7 +100,7 @@ export class d3Plot{
       /**
      * Add a hover callback
      * @param {*} action  - object which has 2 functions enter and exit each takes 3 arguments d,i,n d is data n[i] is `this`
-     * @param {*} selection  - what to select defaults to .rect class
+     * @param {*} selection  - what to select defaults to
      */
     onHover(action,selection=null){
         const selected = this.svgSelection.selectAll(`${selection}`);
@@ -183,6 +184,20 @@ export class d3Plot{
 
 
         axisBoxes.exit().remove();
+    }
+
+    getAnnotations(datum){
+       const annotationClasses=[ ...Object.entries(datum)
+                            .filter(([key]) => {
+                                if(!this.layout.annotations[key]){
+                                    return false;
+                                }
+                                return this.layout.annotations[key].type === Type.DISCRETE ||
+                                    this.layout.annotations[key].type === Type.BOOLEAN ||
+                                    this.layout.annotations[key].type === Type.INTEGER;
+                            })
+                            .map(([key, value]) => `${key}-${value}`)];
+        return annotationClasses
     }
     
     

@@ -97,12 +97,12 @@ function updateAreas(){
     // Join new data with old elements, if any.
     const areas = this.svgSelection.select(".area-layer")
         .selectAll("path")
-        .data(this.points,d=>d[0].outbreak.id);
+        .data(this.points,d=>d[0].data.id);
     // ENTER
     // Create new elements as needed.
        const newAreas=areas.enter()
         .append("path")
-        .attr("class",d=>`location-${d[0].outbreak.location.replace(" ","_")}`)
+        .attr("class", (d) => ["fishArea",...this.getAnnotations(d[0].data)].join(" ")) // add attribute classes here
         .attr("stroke-width",4)
         .attr("stroke",d=>"black")
         .attr("d", d => areaMaker(d))
