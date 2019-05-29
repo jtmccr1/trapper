@@ -236,7 +236,14 @@ function ChartContainer(props){
         if (node !== null) {
             setDomRect({"height":node.getBoundingClientRect().height,"width":node.getBoundingClientRect().width})
             const handleResize = () =>  {
-                setDomRect({"height":node.getBoundingClientRect().height,"width":node.getBoundingClientRect().width});
+              let resizeTimer;
+              clearTimeout(resizeTimer);
+              resizeTimer = setTimeout(function() {
+
+              // Run code here, resizing has "stopped"
+              setDomRect({"height":node.getBoundingClientRect().height,"width":node.getBoundingClientRect().width});
+
+              }, 250);
             }
             window.addEventListener('resize', handleResize);
             return () => {
