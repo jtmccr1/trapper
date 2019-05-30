@@ -34,7 +34,7 @@ function mostProbableTransphyloEdgeCondition(graph){
 
 
 
-function ChartContainer(props){
+const ChartContainer = React.forwardRef((props, ref)=>{
   
     const prefix = process.env.NODE_ENV === 'development' ? 'http://localhost:4001' : 'https://raw.githubusercontent.com/jtmccr1/trapper/master/src';
     
@@ -45,8 +45,7 @@ function ChartContainer(props){
       const [ogLineList,setOgLineList]=useState(null);
       const [ogLinks,setOgLinks] = useState(null)
       const [scales,setScales]=useState(null);
-      const [chartGeom,setChartGeom]=useState(null);
-      const [domRect,setDomRect]=useState(null);
+      const [chartGeom,setChartGeom]=useState({height:300,width:1200});
       const [outbreakGraph,setOutbreakGraph] = useState(null);
       const [phylogeny,setPhylogeny] = useState(null);
       const [phyloAttributes,setPhyloAttributes]=useState(null);
@@ -176,11 +175,11 @@ function ChartContainer(props){
 
     //Update chart sizes
     useEffect(()=>{
-        if(domRect!==null){
-        const parentBaseDim={"height":300,"width":max([domRect.width*0.9,800])};
+        if(props.timelineSize!==null){
+        const parentBaseDim={"height":300,"width":props.timelineSize.width*0.9};
         setChartGeom(parentBaseDim)
         }
-    },[domRect]);
+    },[props.timelineSize]);
 
     // Set the epidemic data
 
@@ -222,45 +221,25 @@ function ChartContainer(props){
       }
     },[ogLineList,outbreakGraph,phylogeny,phyloAttributes])
 
-    //Getting the size of the container to pass to children
-    const measuredRef = useCallback(node => {
-        if (node !== null) {
-            setDomRect({"height":node.getBoundingClientRect().height,"width":node.getBoundingClientRect().width})
-            const handleResize = () =>  {
-              let resizeTimer;
-              clearTimeout(resizeTimer);
-              resizeTimer = setTimeout(function() {
-
-              // Run code here, resizing has "stopped"
-              setDomRect({"height":node.getBoundingClientRect().height,"width":node.getBoundingClientRect().width});
-
-              }, 250);
-            }
-            window.addEventListener('resize', handleResize);
-            return () => {
-              window.removeEventListener('resize', handleResize);
-            };
-        }
-      },[]);
 
       //Ensure we don't render before we have scales ect.
-      const isFull = Object.values([ogLineList,ogLinks,scales,chartGeom,outbreakGraph,phylogeny,phyloAttributes,dateRange,epidemic,treeDateRange])
+      const isFull = Object.values([ogLineList,ogLinks,scales,chartGeom,outbreakGraph,phylogeny,phyloAttributes,dateRange,epidemic,treeDateRange,props.timelineSize])
       .every(x => (x !== null & x !== ''));
+
       if(!isFull){
         return(
-          <div className = "timelineContainer" ref={measuredRef}>
+          <div className = "timelineContainer" ref={ref}>
           </div>
           )
       }else{
       return(
-        <div className ="fillHorizontalSpace" background={"none"}>
-       <div className = "timelineContainer" ref={measuredRef} >
+       <div className = "timelineContainer" ref={ref} >
        <div className = "mockChartContainer">
-       <TimeAxis dateRange ={dateRange} 
+      <TimeAxis dateRange ={dateRange} 
         margins = {margins}
           chartGeom = {chartGeom} 
-          domRect = {domRect}/>
-          </div>  
+          domRect = {props.timelineSize}/>
+        </div>  
         <div className = "chartContainer">
           <StackedHistogram  data={ogLineList} 
           margins = {margins}
@@ -301,9 +280,8 @@ function ChartContainer(props){
           chartGeom={{...chartGeom,...{"height":600}}}/>
     </div>  
     </div>
-</div>
 )}
     // <Chart  />
-}
+});
 
 export default  ChartContainer;

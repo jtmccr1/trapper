@@ -1,31 +1,68 @@
-import React, {useState} from 'react';
+import React, {useState,useCallback,useRef} from 'react';
 import Header from './Header';
 import ChartContainer from './ChartContainer';
 import "../styles/trapper.css"
+import { get } from 'https';
 
 function App() {
 
 	const [optionsOpen,setOptionsOpen] = useState(false);
 	const [sideBarOpen,setSideBarOpen] = useState(false);
+	const [timelineSize,getTimelineSize] = useState(null)
+	//Getting the size of the container to pass to children
+	// const [handleResize,setHandelResize] = useState(null);
+	// const otherRef = useRef(null);
+	const measuredRef = useCallback(node => {
+        if (node !== null) {
+			getTimelineSize({"height":node.getBoundingClientRect().height,"width":node.getBoundingClientRect().width})
+			const handleResize = () =>  {
+              let resizeTimer;
+              clearTimeout(resizeTimer);
+              resizeTimer = setTimeout(function() {
 
+              // Run code here, resizing has "stopped"
+              getTimelineSize({"height":node.getBoundingClientRect().height,"width":node.getBoundingClientRect().width});
+              }, 250);
+			}
+			
+
+            window.addEventListener('resize', handleResize);
+            return () => {
+              window.removeEventListener('resize', handleResize);
+            };
+        }
+	  },[]);
+
+	const getSizeAgain=()=>{
+		let resizeTimer;
+		clearTimeout(resizeTimer);
+		resizeTimer = setTimeout(function() {
+		window.dispatchEvent(new Event('resize'))
+		},405); // resize takes 0.4s
+	};
+	
+	  
+	  
 		return(
 			<div className="fillHorizontalSpace">
 			<Header />
 				<div className="mainScreen">
 					<div className={`sidebar left ${optionsOpen? "open":''}`}>
-					<div className="sidebarButton" id="options" onClick={()=> {setOptionsOpen(!optionsOpen)}}>
-							<h2>Options</h2>
 					</div>
+					<div className="sidebarButton" id="options" onClick={()=> {
+																					setOptionsOpen(!optionsOpen);
+																					getSizeAgain();
+																				}}>
+						<h2>Options</h2>
 					</div>
-				<ChartContainer className="fillHorizontalSpace" />
-				<div className={`sidebar right ${sideBarOpen? "open":''}`}>
-					<div className="sidebarButton" id="map" onClick={()=> {setSideBarOpen(!sideBarOpen)}}>
+					<ChartContainer  ref = {measuredRef} timelineSize = {timelineSize}/>
+					<div className="sidebarButton" id="lineList" onClick={()=> {setSideBarOpen(!sideBarOpen);getSizeAgain();}}>
+						<h2> Line List</h2>
+					</div>
+					<div className="sidebarButton" id="map" onClick={()=> {setSideBarOpen(!sideBarOpen);getSizeAgain();}}>
 						<h2 >Map</h2>
 					</div>
-					<div className="sidebarButton" id="lineList" onClick={()=> {setSideBarOpen(!sideBarOpen)}}>
-					<h2> Line List</h2>
-
-					</div>
+					<div className={`sidebar right ${sideBarOpen? "open":''}`}>
 					</div>
 				</div>
 			</div>

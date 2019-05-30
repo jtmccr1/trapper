@@ -94,40 +94,40 @@ div.header {
   width: 100%;
   padding:0;
   margin:0;
-  flex-grow:1;
+  flex-grow:1 0;
   display: flex;
   flex-direction: row;
+
 }
 
   /* --------------- SIDEBARS --------------- */
   .sidebar{
-    height: 100%;
-  position: relative;
+  height: 100%;
   border-width: 1px;
   border-radius: 5px;
   border-color: var(--light-text);
   transition: margin .4s; 
-  display:flex;
-  flex-direction: column;
   background-color:var(--dark-foreground);
+  flex: 1 1 auto;
 
   }
   .sidebar.left{
     position: relative;
-    margin-left:-200px;
-    flex: 0 0 200px
+    margin-left:-500px;
+    flex: 0 0 500px
     /* margin-right:0; */
 
   }
   .sidebar.left.open{
-    margin:30px;
+    margin:0px;
   }
   .sidebar.right.open{
-    margin-right:0;
+    margin-right:0px;
   }
   .sidebar.right{
+    position: relative;
     flex:0 0 500px;
-    margin-right:-480px;
+    margin-right:-500px;
     /* margin-right:0; */
   }
   .sidebarButton{
@@ -141,14 +141,14 @@ div.header {
     z-index: 1;
     cursor: pointer;
   }
-  .sidebarButton#options{
+ /* .sidebarButton#options{
     transform: translate(110px,0) rotate(-90deg) ;
     transform-origin: right, bottom;
     -ms-transform: translate(110px,0) rotate(-90deg) ;
     -ms-transform-origin:right, bottom;
     -webkit-transform: translate(110px,0) rotate(-90deg) ;
     -webkit-transform-origin:right, bottom;
-  }
+  } 
   .sidebarButton#lineList{
     position: relative;
     transform: translate(-100px,65px) rotate(-90deg) ;
@@ -170,10 +170,8 @@ div.header {
     -webkit-transform-origin:left, bottom;
     width:50px;
     height: 60px;
-  }
-  .sidebarButton#map h2{
-    margin:0;
-  }
+  } */
+
 
   
 
@@ -182,7 +180,7 @@ div.header {
   /*---------------------Time line container ----------*/
   .timelineContainer{
     height: 95%;
-    width: 95%;
+    width: 90%;
     z-index: 1;
     margin: 50px auto 50px auto;
     border-style: solid;
@@ -190,41 +188,26 @@ div.header {
     border-width: 0px 1px 0px 1px;
     /* border-radius: 5px; */
     padding:0px 10px 10px 10px;
-    flex-grow:1;
+    flex-grow:1,1,auto;
     overflow-y: scroll;
+    flex-direction: column;
     /* box-sizing: border-box; */
   }
   .chartContainer {
-    margin: 10px 10px 10px 10px;
-    position: relative;
+    margin: auto; /*10px 10px 10px 10px; */
+    /* position: relative; */
     border-style: solid;
     border-color: var(--artic-green);
     border-width: 0px 0px 1px 24px;
     border-radius: 5pt;
     background: none/* var(--dark-background);*/
   }
-  /* .chartContainer#child {
-    margin: auto;
-    margin-bottom: 0
-  } */
-  .axisContainer{
-    z-index: -1000;
-    height: 95%;
-    width: 95%;
-    margin: 20px 60px 50px 60px;
-    padding:10px 11px 10px 11px;
-    /* add 1 for timeine border and then what is needed for chartContainer border
-     so we have the same total distance as in the timelinecontainer above*/
-    position: absolute;
-    /* flex-grow:1; */
-    /* overflow-y: scroll; */
-    /* box-sizing: border-box; */
-  }
+
 
   .mockChartContainer{
-    z-index: -1000;
+    z-index: -1;
     margin: 0px 10px 0px 10px;
-    position: fixed;
+    position: absolute;
     padding: 0px 5px 0px 24px;
     transform: translateY(-35px);
   }
