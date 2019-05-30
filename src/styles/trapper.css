@@ -179,7 +179,7 @@ div.header {
 
   /*---------------------Time line container ----------*/
   .timelineContainer{
-    height: 95%;
+    height: 90%;
     width: 90%;
     z-index: 1;
     margin: 50px auto 50px auto;
@@ -207,7 +207,7 @@ div.header {
   .mockChartContainer{
     z-index: -1;
     margin: 0px 10px 0px 10px;
-    position: absolute;
+    position: fixed;
     padding: 0px 5px 0px 24px;
     transform: translateY(-35px);
   }
