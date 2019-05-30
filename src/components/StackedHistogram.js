@@ -5,6 +5,7 @@ import {select} from "d3-selection";
 import {scaleTime} from "d3-scale";
 import {timeWeek} from "d3-time";
 import {extent} from 'd3-array';
+import {event} from 'd3';
 
 function StackedHistogram(props){
     const [histogram,setHistogram]=useState(null);
@@ -20,13 +21,27 @@ function StackedHistogram(props){
                 const settings = { hoverBorder: 4, backgroundBorder:0,transitionDuration:300};
                 const fig = new stackedHistogramChart(node,layout,props.margins,settings);
                 fig.draw();
-                const mouseEnter = (d, i, n)=>{select(n[i]).classed("hovered", true);};
-                const mouseExit = (d,i,n) => {select(n[i]).classed("hovered", false);};
+                const mouseEnter = (d, i, n)=>{
+                    select(n[i]).classed("hovered", true);
+                    let tooltip = document.getElementById("tooltip");
+                    // put text to display here!
+                    tooltip.innerHTML = "Whoop!";
+              
+                    tooltip.style.display = "block";
+                    tooltip.style.left =event.pageX + 10 + "px";
+                    tooltip.style.top = event.pageY + 10 + "px";
+                    tooltip.style.visibility ="visible";
+                };
+                const mouseExit = (d,i,n) => {
+                        select(n[i]).classed("hovered", false);
+                        const tooltip = document.getElementById("tooltip");
+                        tooltip.style.visibility = "hidden";
+                    };
 
                 const callback = {enter:mouseEnter,exit:mouseExit};
                 fig.onHover(callback)
                 fig.onClick((d,i,n)=>alert(`clicked ${d.data.id}`))
-                fig.addToolTip('.rect-layer .rect',(d,i,n)=>"Whoop here it is!")
+                // fig.addToolTip('.rect-layer .rect',(d,i,n)=>"Whoop here it is!")
 
                 select(node).select(".axes-layer").select("#x-axis").remove();
                 setHistogram(fig);

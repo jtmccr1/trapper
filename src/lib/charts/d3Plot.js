@@ -128,7 +128,7 @@ export class d3Plot{
     addToolTip(selection, renderText) {
         this.svgSelection.selectAll(selection).on("mouseover",
             function (d,i,n) {
-                let tooltip = document.getElementById("tooltip");
+                const tooltip = document.getElementById("tooltip");
                     tooltip.innerHTML = renderText(d,i,n);
               
                 tooltip.style.display = "block";
@@ -138,7 +138,7 @@ export class d3Plot{
             }
         );
         this.svgSelection.selectAll(selection).on("mouseout", function () {
-            let tooltip = document.getElementById("tooltip");
+            const tooltip = document.getElementById("tooltip");
             tooltip.style.visibility = "hidden";
         });
     }
