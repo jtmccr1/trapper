@@ -4,6 +4,8 @@ suppressPackageStartupMessages(library('TransPhylo'))
 suppressPackageStartupMessages(library('tidyverse'))
 suppressPackageStartupMessages(library('optparse'))
 suppressPackageStartupMessages(library('jsonlite'))
+suppressPackageStartupMessages(library('lubridate'))
+
 
 ####################################################
 
@@ -96,7 +98,7 @@ getPhyloToCtreeMap<-function(tree,ctree){
     
     phyloParent<-getPhyloParent(currentPhyloNode,tree)
     # check if we are at root or a sibling of a visited node
-    if(length(phyloParent)==0 | phyloParent %in% results$phylo){
+    if(is.na(phyloParent)| phyloParent %in% results$phylo){
       toVisit<-toVisit[-1]
       visited<-c(visited,currentPhyloNode)
       next
@@ -171,7 +173,8 @@ annotateBeastTree<-function(beastTree,ctree){
   if(nrow(tree_data)==0){
     tree_data<-as_tibble(list('node'=c(1:(ntips+beastTree@phylo$Nnode))))
   }
-
+  # node is an integer stored as a character yuck!
+  tree_data$node<-as.numeric(tree_data$node)
   # phylo objects order nodes 1-tips then internal nodes in preoder, transphylo orders internal nodes in post order
   # with the children visited in right left order
   # this corrects so the node number in phylo is coverted to the row of the ptree matrix borrow code from transphylo
@@ -251,21 +254,24 @@ make_option(c("--beastTree"), action = "store_true",default="FALSE",
 )
 opt <- parse_args(OptionParser(option_list=option_list))
 
-# opt<-tibble::tibble(tree="../simulated/data/sampledTree.tree",dateLastSample=2019.03,shape = 8.7,scale=0.0046,MCMC=100000,thinning=100,file="test",samples=500,beastTree=F)
+# opt<-tibble::tibble(tree="../data/147_phylogeog.CA_MCC.tree",dateLastSample=2019.03,shape = 8.7,scale=0.0046,MCMC=10,thinning=1,file="test",samples=5,beastTree=F)
 
 tree<-read.beast(opt$tree)
 ptree<-ptreeFromPhylo(tree@phylo,dateLastSample=opt$dateLastSample)
 
 cat("Inferring transmission tree\n",stdout())
 record<-inferTTree(ptree = ptree,fileRoot=opt$file,mcmcIterations=opt$MCMC,thinning=opt$thinning,w.shape=opt$shape,w.scale=opt$scale,dateT=opt$dateLastSample,updateOff.p=TRUE)
-# 
+
+save.image(paste0(opt$file,"_tempLog",".RData"))
 # # samples for export;
 totalRecords<-length(record)
 firstSample<-totalRecords-(opt$samples-1)
 sampledRecords<-record[firstSample:totalRecords]
 taxa<-length(tree@phylo$tip.label)
 # set up the link csv
-links<-as_tibble(list("target"=rep("NA",taxa*length(sampledRecords)),"source"=rep("NA",taxa*length(sampledRecords)),"unknownIntermediates"=rep("NA",taxa*length(sampledRecords))))
+links<-as_tibble(list("target"=rep(NA,taxa*length(sampledRecords)),"source"=rep(NA,taxa*length(sampledRecords)),"unknownIntermediates"=rep("NA",taxa*length(sampledRecords))))
+infectionTimes<-as_tibble(list("id"=rep(NA,taxa*length(sampledRecords)),"rawSymptomOnset"=rep(NA,taxa*length(sampledRecords))))
+
 k=1
 treeFile<-paste0(opt$file,".trees")
 if(opt$beastTree){
@@ -279,8 +285,10 @@ sample_int=1
 for(sample in sampledRecords){
   # get links;
   ctree<-sample$ctree
+  ttree = extractTTree(ctree)
   for(i in 1:length(ctree$nam)){
     links[k,]<-getLink(i,ctree)
+    infectionTimes[k,]<-c(ttree$nam[i],date_decimal(ttree$ttree[i,1]))#as.character(date(date_decimal(ttree$ttree[i,1])))) # to avoid storing milliseconds 
     k=k+1
   }
   annotatedBeastTree<-annotateBeastTree(tree,ctree)
@@ -294,7 +302,31 @@ for(sample in sampledRecords){
   sample_int=sample_int+1
 }
 
-write_csv(links,paste0(opt$file,".csv"))
+# R mailing list 
+#summarize symptom onset 
+hpd<-function(x){
+  #generate an hpd set of level 0.95, based
+  #on a sample x from the posterior
+  dx<-density(x)
+  md<-dx$x[dx$y==max(dx$y)]
+  px<-dx$y/sum(dx$y)
+  pxs<--sort(-px)
+  ct<-min(pxs[cumsum(pxs)< 0.95])
+  list(hpdr=range(dx$x[px>=ct]),mode=md)
+}
+
+summarizedInfectionTimesList <- infectionTimes%>% split(.$id)%>%
+  map(function(x) hpd(as.numeric(x$rawSymptomOnset))) %>% 
+  map(function(x) list(mode = date(as.POSIXct(x$mode,origin=origin)), hpdr = date(as.POSIXct(x$hpdr,origin=origin))))#, symptomOnset_hpd = paste(hpd(as.numeric(rawSymptomOnset)),concat=","))
+summarizedInfectionTimes<-tibble(id=names(summarizedInfectionTimesList),mode = map(summarizedInfectionTimesList,"mode"),hpd = map(summarizedInfectionTimesList,"hpdr"))
+# as json
+summarizedInfectionTimesJson<-toJSON(summarizedInfectionTimes)
+cat(summarizedInfectionTimesJson,file=paste0(opt$file,"_lineLine",".json"))
+# as csv
+summarizedInfectionTimes<-summarizedInfectionTimes%>%rowwise()%>% mutate(mode = paste(mode,collapse = "_"), hpd = paste(hpd,collapse = "_"))
+
+write_csv(links,paste0(opt$file,"_links",".csv"))
+write_csv(summarizedInfectionTimes,paste0(opt$file,"_lineList",".csv"))
 if(!opt$beastTree){
   annotationsJson<-toJSON(annotations)
   cat(annotationsJson,file=paste0(opt$file,".json"))

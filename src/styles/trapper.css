@@ -100,32 +100,46 @@ div.header {
 }
 
   /* --------------- SIDEBARS --------------- */
-  .div.sidebar{
+  .sidebar{
     height: 100%;
   position: relative;
   border-width: 1px;
   border-radius: 5px;
   border-color: var(--light-text);
   transition: margin .4s; 
+  display:flex;
+  flex-direction: column;
+  background-color:var(--dark-foreground);
 
   }
-  div.sidebar.left{
+  .sidebar.left{
     position: relative;
     margin-left:-200px;
     flex: 0 0 200px
     /* margin-right:0; */
 
   }
-  div.sidebar.left.open{
+  .sidebar.left.open{
     margin:30px;
   }
-  div.sidebar.right.open{
+  .sidebar.right.open{
     margin-right:0;
   }
-  div.sidebar.right{
+  .sidebar.right{
     flex:0 0 500px;
     margin-right:-480px;
     /* margin-right:0; */
+  }
+  .sidebarButton{
+    background-color:var(--dark-foreground);
+    vertical-align: top;
+    color:black;
+    margin:0;
+    padding:0;
+    border:5px;
+    border-radius:5px;
+    z-index: 1;
+    cursor: pointer;
   }
   .sidebarButton#options{
     transform: translate(110px,0) rotate(-90deg) ;
@@ -135,24 +149,34 @@ div.header {
     -webkit-transform: translate(110px,0) rotate(-90deg) ;
     -webkit-transform-origin:right, bottom;
   }
-  .sidebarButton#map{
-    position: relative;
-    transform: translate(-250px,-190px) rotate(-90deg) ;
-    transform-origin: left, bottom;
-    -ms-transform: translate(-250px,-190px) rotate(-90deg) ;
-    -ms-transform-origin:left, bottom;
-    -webkit-transform: translate(-250px,-190px) rotate(-90deg) ;
-    -webkit-transform-origin:left, bottom;
-  }
   .sidebarButton#lineList{
     position: relative;
-    transform: translate(-250px,-130px) rotate(-90deg) ;
+    transform: translate(-100px,65px) rotate(-90deg) ;
     transform-origin: left, bottom;
-    transform: translate(-250px,-130px) rotate(-90deg) ;
+    transform: translate(-100px,65px) rotate(-90deg) ;
     -ms-transform-origin:left, bottom;
-    transform: translate(-250px,-130px) rotate(-90deg) ;
+    transform: translate(-100px,65px) rotate(-90deg) ;
     -webkit-transform-origin:left, bottom;
+    width:50px;
+
   }  
+  .sidebarButton#map{
+    position: relative;
+    transform: translate(-40px,-10px) rotate(-90deg) ;
+    transform-origin: left, bottom;
+    -ms-transform: translate(-40px,-10px) rotate(-90deg) ;
+    -ms-transform-origin:left, bottom;
+    -webkit-transform: translate(-40px,-10px) rotate(-90deg) ;
+    -webkit-transform-origin:left, bottom;
+    width:50px;
+    height: 60px;
+  }
+  .sidebarButton#map h2{
+    margin:0;
+  }
+
+  
+
 
 
   /*---------------------Time line container ----------*/
@@ -265,7 +289,7 @@ div.header {
       stroke-linejoin: round;
   }
 
-  
+
   .branch .branch-path.hovered {
       stroke-width: 4;
   }
@@ -318,14 +342,7 @@ div.header {
   .legend > text {
     fill: var(--dark-foreground); /* not color as it's SVG */
   }
-  rect.amplicon,
-  rect.gene {
-    stroke: none;
-    fill: var(--dark-foreground);
-  }
-  rect.gene + text {
-    fill: var(--dark-background);
-  }
+
   .axis path,
   .axis line {
     fill: none;
