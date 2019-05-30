@@ -26,6 +26,7 @@ function StackedHistogram(props){
                 const callback = {enter:mouseEnter,exit:mouseExit};
                 fig.onHover(callback)
                 fig.onClick((d,i,n)=>alert(`clicked ${d.data.id}`))
+                fig.addToolTip('.rect-layer .rect',(d,i,n)=>"Whoop here it is!")
 
                 select(node).select(".axes-layer").select("#x-axis").remove();
                 setHistogram(fig);

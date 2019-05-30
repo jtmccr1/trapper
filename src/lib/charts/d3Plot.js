@@ -3,6 +3,7 @@ import {scaleLinear} from 'd3-scale';
 import {axisBottom,axisLeft} from 'd3-axis';
 import {easeLinear} from 'd3-ease';
 import {Type} from '../figtree.js/index.js';
+import {event} from 'd3';
 /**
  * A master class for each plot that requires each plot implement a draw
  * update, onclick and onhover method.
@@ -116,6 +117,30 @@ export class d3Plot{
     selected.on("click", (d,i,n) => {
         action(d,i,n);
     });
+    }
+
+     /**
+     * Registers some text to appear in a popup box when the mouse hovers over the selection.
+     *
+     * @param selection
+     * @param text
+     */
+    addToolTip(selection, renderText) {
+        this.svgSelection.selectAll(selection).on("mouseover",
+            function (d,i,n) {
+                let tooltip = document.getElementById("tooltip");
+                    tooltip.innerHTML = renderText(d,i,n);
+              
+                tooltip.style.display = "block";
+                tooltip.style.left =event.pageX + 10 + "px";
+                tooltip.style.top = event.pageY + 10 + "px";
+                tooltip.style.visibility ="visible";
+            }
+        );
+        this.svgSelection.selectAll(selection).on("mouseout", function () {
+            let tooltip = document.getElementById("tooltip");
+            tooltip.style.visibility = "hidden";
+        });
     }
 
     addAxis(){
