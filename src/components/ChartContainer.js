@@ -204,7 +204,7 @@ function ChartContainer(props){
     // Set the date scale
 
     useEffect(()=>{
-      if(phylogeny!==null&&outbreakGraph!==null){
+      if(phylogeny!==null&&outbreakGraph!==null, phyloAttributes!==null){
         //get date range of case
         const casesRange = extent(outbreakGraph.nodes,d=>d.symptomOnset);
         const treeMaxTipLength = max(phylogeny.nodes,n=>phylogeny.rootToTipLength(n));
@@ -217,8 +217,10 @@ function ChartContainer(props){
         const weekEnd = timeWeek.offset(timeWeek.ceil(totalExtent[1]),2);
         setDateRange(timeWeek.range(week0,weekEnd));
         setTreeDateRange([treeRootDate,treeMaxDate]);
+
+        // 
       }
-    },[ogLineList,outbreakGraph])
+    },[ogLineList,outbreakGraph,phylogeny,phyloAttributes])
 
     //Getting the size of the container to pass to children
     const measuredRef = useCallback(node => {
