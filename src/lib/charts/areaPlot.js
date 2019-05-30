@@ -70,21 +70,21 @@ export class areaPlot extends d3Plot{
  * @param {*} action  - object which has 2 functions enter and exit each takes 3 arguments d,i,n d is data n[i] is `this`
  * @param {*} selection  - what to select defaults to .rect class
  */
-  onHover(action,selection=null){
-      const selected = this.svgSelection.selectAll(`${selection ? selection : "path"}`);
-      selected.on("mouseover", (d,i,n) => {
-          action.enter(d,i,n);
-      });
-      selected.on("mouseout", (d,i,n) => {
-          action.exit(d,i,n);
-      });
-  }
-  onClick(action,selection=null){
-    const selected = this.svgSelection.selectAll(`${selection ? selection : "path"}`);
-    selected.on("click", (d,i,n) => {
-        action(d,i,n);
-    });
-  }
+  // onHover(action,selection=null){
+  //     const selected = this.svgSelection.selectAll(`${selection ? selection : "path"}`);
+  //     selected.on("mouseover", (d,i,n) => {
+  //         action.enter(d,i,n);
+  //     });
+  //     selected.on("mouseout", (d,i,n) => {
+  //         action.exit(d,i,n);
+  //     });
+  // }
+//   onClick(action,selection=null){
+//     const selected = this.svgSelection.selectAll(`${selection ? selection : "path"}`);
+//     selected.on("click", (d,i,n) => {
+//         action(d,i,n);
+//     });
+//   }
 }
 
 function updateAreas(){

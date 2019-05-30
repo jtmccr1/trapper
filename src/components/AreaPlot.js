@@ -1,10 +1,38 @@
 import React, {useCallback,useState} from 'react';
-import {select} from 'd3-selection';
+import {select,selectAll} from 'd3-selection';
 import {fishLayout} from "../lib/charts/fishplotLayout"
 import {areaPlot} from "../lib/charts/areaPlot";
 import {timeWeek} from "d3-time";
 import {scaleTime} from "d3-scale";
 import {extent} from 'd3-array';
+import {event} from 'd3';
+
+const mouseEnter = (d, i, n)=>{
+    const allAreas = selectAll(n);
+
+    allAreas.filter((d2,i2,n2)=>n2[i2]!==n[i]).classed("not-hovered", true);
+    select(n[i]).classed("hovered", true);
+
+
+    let tooltip = document.getElementById("tooltip");
+    // put text to display here!
+    tooltip.innerHTML = "Whoop!";
+
+    tooltip.style.display = "block";
+    tooltip.style.left =event.pageX + 10 + "px";
+    tooltip.style.top = event.pageY + 10 + "px";
+    tooltip.style.visibility ="visible";
+};
+const mouseExit = (d,i,n) => {
+        selectAll(n).classed("not-hovered", false);
+        select(n[i]).classed("hovered", false);
+
+        const tooltip = document.getElementById("tooltip");
+        tooltip.style.visibility = "hidden";
+    };
+
+const callback = {enter:mouseEnter,exit:mouseExit};
+
 
 function AreaPlot(props){
     const [plot,setPlot]=useState(null);
@@ -19,6 +47,10 @@ function AreaPlot(props){
             const layout = new fishLayout(props.epidemic,layoutSettings);
             const fig = new areaPlot(node,layout,props.margins, { hoverBorder: 4, backgroundBorder:2,transitionDuration:300});
             fig.draw();
+            
+            fig.onHover(callback,".fishArea")
+
+
             // select(node).select(".axes-layer").remove();
             setPlot(fig);
         }else{

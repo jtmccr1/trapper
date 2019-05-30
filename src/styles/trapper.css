@@ -278,10 +278,19 @@ div.header {
   stroke-width: 1px;
   stroke: var(--dark-foreground);
 }
+
+.fishArea.not-hovered{
+  opacity: 0.5;
+}
+.fishArea.hovered{
+  stroke-width: 4px;
+}
 .rect{
   stroke-width: 1px;
   stroke: var(--dark-foreground);
 }
+
+
     /*--------------------- Fig Tree --------------------*/
 
     .branch {
