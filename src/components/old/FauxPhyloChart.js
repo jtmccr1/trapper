@@ -1,12 +1,12 @@
 import React, {useEffect,useState} from 'react';
 import ObjectChart from "../ObjectChart";
-import {TransmissionLayout, RectangularLayout, Tree} from 'figtree';
-import { FigTree, CircleBauble } from 'figtree';
+import {TransmissionLayout, RectangularLayout, Tree} from '../lib/figtree.js/index.js';
+import { ../lib/charts/figree.js/index.js, CircleBauble } from '../lib/figtree.js/index.js';
 import {select} from 'd3-selection';
 import ReactFauxDom from "react-faux-dom";
 
 function FauxPhyloChart(props){
-    const [figtree,setFigtree] = useState(null);
+    const [../lib/charts/figree.js/index.js,set../lib/charts/figree.js/index.js] = useState(null);
 
 useEffect(()=>{
     const  svg = new ReactFauxDom.Element("svg")
@@ -16,7 +16,7 @@ useEffect(()=>{
         const layout = new TransmissionLayout(props.phylogeny);
             
         const margins = {"top":props.chartGeom.spaceTop,"bottom":10,"left":10,"right":50};
-        const fig = new FigTree(svg,layout,margins, { hoverBorder: 4, backgroundBorder:2,
+        const fig = new ../lib/charts/figree.js/index.js(svg,layout,margins, { hoverBorder: 4, backgroundBorder:2,
             baubles: [
                 new CircleBauble(),
             ],
@@ -30,20 +30,20 @@ useEffect(()=>{
         fig.hilightBranches();
         // fig.onHoverBranch({enter:d=>console.log(d),exit:d=>console.log("left")});
         select(svg).select(".axes-layer").remove();
-        setFigtree(fig);
+        set../lib/charts/figree.js/index.js(fig);
 },[]);
         useEffect(()=>{
-            if(figtree!==null){
-            figtree.update();
-            setFigtree(figtree);
+            if(../lib/charts/figree.js/index.js!==null){
+            ../lib/charts/figree.js/index.js.update();
+            set../lib/charts/figree.js/index.js(../lib/charts/figree.js/index.js);
             }
         },[props.chartGeom,props.phylogeny])
 
         
-        if(figtree===null){
+        if(../lib/charts/figree.js/index.js===null){
             return null;
         }else{
-            return(figtree.svg.toReact());
+            return(../lib/charts/figree.js/index.js.svg.toReact());
         }
     
 };

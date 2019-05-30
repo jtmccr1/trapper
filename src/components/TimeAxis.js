@@ -11,7 +11,8 @@ function TimeAxis(props){
             if(node.children.length===0){ // make it the first time
                 const layoutSettings = {horizontalRange:extent(props.dateRange),
                     horizontalAxisTicks:props.dateRange,
-                    horizontalScale:scaleTime};
+                    horizontalScale:scaleTime,
+                transitionDuration:300};
                     const margins = {...props.margins,...{top:30,bottom:25}};
                 const fig = new XTimeAxis(node,layoutSettings, margins,layoutSettings);
                 fig.draw();

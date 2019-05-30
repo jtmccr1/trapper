@@ -8,12 +8,11 @@ import {timeWeek,timeDay} from "d3-time";
 import {max,min,extent} from "d3-array";
 import {nest} from "d3-collection";
 import {axisTop,axisBottom} from "d3-axis"
-import { Graph, RectangularLayout, TransmissionLayout } from 'figtree';
+import { Graph, RectangularLayout, TransmissionLayout ,Tree} from '../lib/figtree.js/index.js';
 import StackedHistogram from './StackedHistogram';
 // import ArcTransmission from "./ArcTransmission";
 import PhyloChart from './PhyloChart';
 import AreaPlot from './AreaPlot';
-import {Tree} from "figtree";
 import ArcTransmission from './ArcTransmission';
 import {Epidemic} from "../lib/outbreak/Epidemic";
 import TimeAxis from './TimeAxis';
@@ -234,6 +233,7 @@ const ChartContainer = React.forwardRef((props, ref)=>{
       }else{
       return(
        <div className = "timelineContainer" ref={ref} >
+         <div className="hoverInfo" id="tooltip"></div>
        <div className = "mockChartContainer">
       <TimeAxis dateRange ={dateRange} 
         margins = {margins}

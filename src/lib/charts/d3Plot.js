@@ -2,7 +2,7 @@ import {select} from 'd3-selection';
 import {scaleLinear} from 'd3-scale';
 import {axisBottom,axisLeft} from 'd3-axis';
 import {easeLinear} from 'd3-ease';
-import {Type} from 'figtree';
+import {Type} from '../figtree.js/index.js';
 /**
  * A master class for each plot that requires each plot implement a draw
  * update, onclick and onhover method.

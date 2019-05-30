@@ -1,6 +1,6 @@
 import React, {useCallback,useState} from 'react';
-import {TransmissionLayout, RectangularLayout, Tree} from 'figtree';
-import { FigTree, CircleBauble } from 'figtree';
+import {TransmissionLayout, RectangularLayout, Tree} from '../lib/figtree.js/index.js';
+import { FigTree, CircleBauble } from '../lib/figtree.js/index.js';
 import {select} from 'd3-selection';
 import {scaleTime,scaleLinear} from "d3-scale";
 import {extent} from "d3-array";

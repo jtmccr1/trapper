@@ -38,7 +38,7 @@ function App() {
 		clearTimeout(resizeTimer);
 		resizeTimer = setTimeout(function() {
 		window.dispatchEvent(new Event('resize'))
-		},405); // resize takes 0.4s
+		},0); // resize takes 0.4s
 	};
 	
 	  
@@ -56,8 +56,6 @@ function App() {
 							</div>
 						</div>
 					</div>
-
-
 					<ChartContainer  ref = {measuredRef} timelineSize = {timelineSize}/>
 					<div className="sidebarButtonColumn">
 						<div className="sidebarButtons right">

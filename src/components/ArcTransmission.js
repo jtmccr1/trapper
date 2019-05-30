@@ -1,7 +1,7 @@
 import React, {useState,useCallback} from 'react';
 import ObjectChart from "./ObjectChart";
-import {ArcLayout,CircleBauble} from 'figtree';
-import { FigTree } from 'figtree';
+import {ArcLayout,CircleBauble}  from '../lib/figtree.js/index.js';
+import { FigTree }  from '../lib/figtree.js/index.js';
 import {scaleTime,scaleLinear} from "d3-scale";
 import {select,selectAll} from 'd3-selection';
 import {extent} from 'd3-array';

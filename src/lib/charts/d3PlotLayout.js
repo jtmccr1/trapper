@@ -1,5 +1,5 @@
 import {scaleLinear} from 'd3-scale';
-import {Type} from 'figtree';
+import {Type} from '../figtree.js/index.js';
 import { nextTick } from 'q';
 /**
  * The Layout class

@@ -4,7 +4,7 @@ import {nest} from "d3-collection";
 import {timeWeek} from "d3-time"
 import {scaleLinear} from 'd3-scale';
 import {transition} from "d3-transition"
-import {Type} from "figtree";
+import {Type} from "../figtree.js/index.js";
 import {d3PlotLayout} from "./d3PlotLayout";
 /** 
  * StackedHisogram layout

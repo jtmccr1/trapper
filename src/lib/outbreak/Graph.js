@@ -1,6 +1,6 @@
 /** @module Graph */
 
-// import {Type} from 'figtree';
+// import {Type}  from '../lib/figtree.js/index.js';
 /**
  * The graph class
  *
