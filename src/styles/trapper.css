@@ -194,7 +194,7 @@ div.header {
     /* box-sizing: border-box; */
   }
   .chartContainer {
-    margin: auto; /*10px 10px 10px 10px; */
+    margin:10px 10px 10px 10px; 
     /* position: relative; */
     border-style: solid;
     border-color: var(--artic-green);
