@@ -49,18 +49,25 @@ function App() {
 				<div className="mainScreen">
 					<div className={`sidebar left ${optionsOpen? "open":''}`}>
 					</div>
-					<div className="sidebarButton" id="options" onClick={()=> {
-																					setOptionsOpen(!optionsOpen);
-																					getSizeAgain();
-																				}}>
-						<h2>Options</h2>
+					<div className="sidebarButtonColumn">
+						<div className="sidebarButtons left">
+							<div className="button" onClick={()=> {setOptionsOpen(!optionsOpen);getSizeAgain();}}>
+								 <h3>Options</h3>
+							</div>
+						</div>
 					</div>
+
+
 					<ChartContainer  ref = {measuredRef} timelineSize = {timelineSize}/>
-					<div className="sidebarButton" id="lineList" onClick={()=> {setSideBarOpen(!sideBarOpen);getSizeAgain();}}>
-						<h2> Line List</h2>
-					</div>
-					<div className="sidebarButton" id="map" onClick={()=> {setSideBarOpen(!sideBarOpen);getSizeAgain();}}>
-						<h2 >Map</h2>
+					<div className="sidebarButtonColumn">
+						<div className="sidebarButtons right">
+							<div className="button" onClick={()=> {setSideBarOpen(!sideBarOpen);getSizeAgain();}}>
+								 <h3>Map</h3>
+							</div>
+							<div className="button" onClick={()=> {setSideBarOpen(!sideBarOpen);getSizeAgain();}}>
+								 <h3>Line List</h3>
+							</div>
+						</div>
 					</div>
 					<div className={`sidebar right ${sideBarOpen? "open":''}`}>
 					</div>

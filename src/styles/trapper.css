@@ -113,8 +113,8 @@ div.header {
   }
   .sidebar.left{
     position: relative;
-    margin-left:-500px;
-    flex: 0 0 500px
+    margin-left:-200px;
+    flex: 0 0 200px
     /* margin-right:0; */
 
   }
@@ -128,19 +128,45 @@ div.header {
     position: relative;
     flex:0 0 500px;
     margin-right:-500px;
+    margin-left:0px;
     /* margin-right:0; */
   }
-  .sidebarButton{
+  .sidebarButtonColumn{
+    display:flex;
+    flex-flow: column nowrap;
+    margin-right:-1px;
+  }
+  .sidebarButtons{
+    display: inline-block;
+  }
+  .sidebarButtons .button{
+    cursor: pointer;
     background-color:var(--dark-foreground);
-    vertical-align: top;
     color:black;
-    margin:0;
-    padding:0;
     border:5px;
     border-radius:5px;
     z-index: 1;
-    cursor: pointer;
+    white-space: nowrap;
+    margin:10px 0px 0px 10px;
+    padding:10px
   }
+  .sidebarButtons.right .button{
+        transform: rotate(-90deg);
+
+  }
+  .sidebarButtons.left .button{
+    transform: rotate(90deg);
+
+}
+  /* .sidebarButtons .button h3{
+
+  } */
+
+   /* .sidebarButton.right{
+    transform: rotate(-180deg);
+    writing-mode: tb-lr;          
+    writing-mode: vertical-lr;
+} */
  /* .sidebarButton#options{
     transform: translate(110px,0) rotate(-90deg) ;
     transform-origin: right, bottom;
@@ -149,17 +175,10 @@ div.header {
     -webkit-transform: translate(110px,0) rotate(-90deg) ;
     -webkit-transform-origin:right, bottom;
   } 
-  .sidebarButton#lineList{
-    position: relative;
-    transform: translate(-100px,65px) rotate(-90deg) ;
-    transform-origin: left, bottom;
-    transform: translate(-100px,65px) rotate(-90deg) ;
-    -ms-transform-origin:left, bottom;
-    transform: translate(-100px,65px) rotate(-90deg) ;
-    -webkit-transform-origin:left, bottom;
-    width:50px;
+  .sidebar.right .sidebarButton{
+        transform: rotate(-180deg);
+  }
 
-  }  
   .sidebarButton#map{
     position: relative;
     transform: translate(-40px,-10px) rotate(-90deg) ;
