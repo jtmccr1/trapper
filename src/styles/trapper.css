@@ -6,49 +6,49 @@
     --artic-green: #819d8b;
     --header: #345358;
     --light-text: #dfd9ad;
-  }
-  
-  /* ------------ FONTS --------------------- */
-  @font-face {
+}
+
+/* ------------ FONTS --------------------- */
+@font-face {
     font-family: 'regular';
     src: local('LatoLatin-Regular'), url(./LatoLatin-Regular.woff) format('woff');
-  }
-  
-  @font-face {
+}
+
+@font-face {
     font-family: 'light';
     src: local('LatoLatin-Light'), url(./LatoLatin-Light.woff) format('woff');
-  }
-  
-  @font-face {
+}
+
+@font-face {
     font-family: 'hairline';
     src: local('LatoLatin-Hairline'), url(./LatoLatin-Hairline.woff) format('woff');
-  }
+}
 
-  /* ----------- GLOBALS (BODY) --------------*/
+/* ----------- GLOBALS (BODY) --------------*/
 body {
     height: 95vh;
     font-family: "light";
     background: var(--dark-background);
     color: var(--dark-foreground);
     overflow: hidden;
-  }
+}
 
 
-  #root{
+#root{
     height: 100%;
     width: 100%;
     padding:0;
     margin:0;
     display: flex;
     flex-direction: column;
-  }
-   /* box sizing on all elements so padding and broders are included in width and height */
-  * {
+}
+/* box sizing on all elements so padding and broders are included in width and height */
+* {
     box-sizing: border-box;
-  }
+}
 
 
-  /* -------------------- HEADER --------------------- */
+/* -------------------- HEADER --------------------- */
 div.header {
     width: 100%;
     margin:auto;
@@ -61,145 +61,150 @@ div.header {
     height:55px;
     /* height:165px; */
     margin-bottom: 10px;
-  }
-  div.header .logo {
+}
+div.header .logo {
     float: left;
     margin: 5px;
-  }
-  div.header .title {
+}
+div.header .title {
     float: left;
     margin-left: 20px;
     padding:0px;
     font-size: "1.8em"
-  }
-  div.header .buttons {
+}
+div.header .buttons {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     margin-left: auto;
-  padding: 20px 10px 20px 0;
-  }
+    padding: 20px 10px 20px 0;
+}
 /*-----------------Main screen --------------------------*/
 .fillHorizontalSpace{
-  height: 100%;
-  width: 100%;
-  padding:0;
-  margin:0;
-  flex-grow:1;
-  display: flex;
-  flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding:0;
+    margin:0;
+    flex-grow:1;
+    display: flex;
+    flex-direction: column;
 }
 .mainScreen{
-  height: 100%;
-  width: 100%;
-  padding:0;
-  margin:0;
-  flex-grow:1 0;
-  display: flex;
-  flex-direction: row;
+    height: 100%;
+    width: 100%;
+    padding:0;
+    margin:0;
+    flex-grow:1 0;
+    display: flex;
+    flex-direction: row;
 
 }
 
-  /* --------------- SIDEBARS --------------- */
-  .sidebar{
-  height: 100%;
-  border-width: 1px;
-  border-radius: 5px;
-  border-color: var(--light-text);
-  transition: margin .4s; 
-  background-color:var(--dark-foreground);
-  flex: 1 1 auto;
-  color:var(--dark-background)
+/* --------------- SIDEBARS --------------- */
+.sidebar{
+    height: 100%;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: var(--light-text);
+    transition: margin .4s;
+    background-color:var(--dark-foreground);
+    flex: 1 1 auto;
+    color:var(--dark-background)
 
-  }
-  .sidebar.left{
+}
+.sidebar.left{
     position: relative;
     margin-left:-210px;
     flex: 0 0 200px
     /* margin-right:0; */
 
-  }
-  .sidebar.left.open{
+}
+.sidebar.left.open{
     margin:0px;
-  }
-  .sidebar.right.open{
+}
+.sidebar.right.open{
     margin-right:0px;
-  }
-  .sidebar.right{
+}
+.sidebar.right{
     position: relative;
     flex:0 0 500px;
     margin-right:-510px;
     margin-left:0px;
     /* margin-right:0; */
-  }
-  .sidebarButtonColumn{
+}
+.sidebarButtonColumn{
     display:flex;
     flex-flow: column nowrap;
     margin-right:-1px;
-  }
-  .sidebarButtons{
+}
+.sidebarButtons{
     display: inline-block;
-  }
-  .sidebarButtons .button{
+}
+.sidebarButtons .button{
     cursor: pointer;
-    background-color:var(--dark-foreground);
-    color:black;
-    border:5px;
+    background-color:var(--header);
+    color:var(--light-text);
+    border: 1px solid var(--light-text);
     border-radius:5px;
     z-index: 1;
     white-space: nowrap;
     margin:10px 0px 0px 10px;
-    padding:10px;
-    flex-grow: 0,0,50px;
-  }
-  .sidebarButtons.right .button{
-        transform: translate(20px) rotate(-90deg);
+    padding:10px 10px 10px 10px;
+    flex-grow: 0 , 0, 50px;
+}
 
-  }
-  .sidebarButtons.left .button{
+.sidebarButtons .button .selected {
+    background-color:var(--artic-green);
+}
+
+.sidebarButtons.right .button{
+    transform: translate(30px) rotate(-90deg);
+
+}
+.sidebarButtons.left .button{
     transform: translate(-30px) rotate(90deg);
 
 }
-  /* .sidebarButtons .button h3{
+/* .sidebarButtons .button h3{
 
-  } */
-
-   /* .sidebarButton.right{
-    transform: rotate(-180deg);
-    writing-mode: tb-lr;          
-    writing-mode: vertical-lr;
 } */
- /* .sidebarButton#options{
-    transform: translate(110px,0) rotate(-90deg) ;
-    transform-origin: right, bottom;
-    -ms-transform: translate(110px,0) rotate(-90deg) ;
-    -ms-transform-origin:right, bottom;
-    -webkit-transform: translate(110px,0) rotate(-90deg) ;
-    -webkit-transform-origin:right, bottom;
-  } 
-  .sidebar.right .sidebarButton{
-        transform: rotate(-180deg);
-  }
 
-  .sidebarButton#map{
-    position: relative;
-    transform: translate(-40px,-10px) rotate(-90deg) ;
-    transform-origin: left, bottom;
-    -ms-transform: translate(-40px,-10px) rotate(-90deg) ;
-    -ms-transform-origin:left, bottom;
-    -webkit-transform: translate(-40px,-10px) rotate(-90deg) ;
-    -webkit-transform-origin:left, bottom;
-    width:50px;
-    height: 60px;
-  } */
+/* .sidebarButton.right{
+ transform: rotate(-180deg);
+ writing-mode: tb-lr;
+ writing-mode: vertical-lr;
+} */
+/* .sidebarButton#options{
+   transform: translate(110px,0) rotate(-90deg) ;
+   transform-origin: right, bottom;
+   -ms-transform: translate(110px,0) rotate(-90deg) ;
+   -ms-transform-origin:right, bottom;
+   -webkit-transform: translate(110px,0) rotate(-90deg) ;
+   -webkit-transform-origin:right, bottom;
+ }
+ .sidebar.right .sidebarButton{
+       transform: rotate(-180deg);
+ }
+
+ .sidebarButton#map{
+   position: relative;
+   transform: translate(-40px,-10px) rotate(-90deg) ;
+   transform-origin: left, bottom;
+   -ms-transform: translate(-40px,-10px) rotate(-90deg) ;
+   -ms-transform-origin:left, bottom;
+   -webkit-transform: translate(-40px,-10px) rotate(-90deg) ;
+   -webkit-transform-origin:left, bottom;
+   width:50px;
+   height: 60px;
+ } */
 
 
-  
 
 
 
-  /*---------------------Time line container ----------*/
-  .timelineContainer{
+
+/*---------------------Time line container ----------*/
+.timelineContainer{
     height: 90%;
     width: 90%;
     z-index: 1;
@@ -213,34 +218,34 @@ div.header {
     overflow-y: scroll;
     flex-direction: column;
     /* box-sizing: border-box; */
-  }
-  .chartContainer {
-    margin:10px 10px 10px 10px; 
+}
+.chartContainer {
+    margin:10px 10px 10px 10px;
     /* position: relative; */
     border-style: solid;
     border-color: var(--artic-green);
     border-width: 0px 0px 1px 24px;
     border-radius: 5pt;
     background: none/* var(--dark-background);*/
-  }
+}
 
 
-  .mockChartContainer{
+.mockChartContainer{
     z-index: -1;
     margin: 0px 10px 0px 10px;
     position: fixed;
     padding: 0px 5px 0px 24px;
     transform: translateY(-35px);
-  }
-  /* ---------------  C H A R T S ----------------- */
-  .chartTitle {
+}
+/* ---------------  C H A R T S ----------------- */
+.chartTitle {
     text-align: center;
     font-weight: 600;
     font-size: 1.2em;
     color: var(--light-text);
     padding-right: 25px; /* to stop icon overlap */
-  }
-  .hoverInfo {
+}
+.hoverInfo {
     z-index: 20;
     position: absolute;
     border-radius: 5px;
@@ -254,115 +259,122 @@ div.header {
     font-size: 14px;
     font-weight: 700;
     overflow-wrap: break-word;
-  }
-  .chartExpandContractIcon {
+}
+.chartExpandContractIcon {
     position: absolute;
     top: 5px;
     right: 5px;
     cursor: pointer;
     transform: scale(1.3);
-  }
-
-
- /*------------------ axis boxes ------------------------*/
- .axis-box.even{
-   fill: var(--dark-foreground);
-   opacity: 0.04
- }
-
- .axis-box.odd{
-  fill:none
 }
 
- 
+/* ---------------  G E O G R A P H Y ----------------- */
+.geographyContainer {
+    padding: 10px;
+}
+.map-background {
+    fill: var(--artic-green);
+}
+
+/*------------------ axis boxes ------------------------*/
+.axis-box.even{
+    fill: var(--dark-foreground);
+    opacity: 0.04
+}
+
+.axis-box.odd{
+    fill:none
+}
+
+
 
 .fishArea{
-  stroke-width: 1px;
-  stroke: var(--dark-foreground);
+    stroke-width: 1px;
+    stroke: var(--dark-foreground);
 }
 
 .fishArea.not-hovered{
-  opacity: 0.5;
+    opacity: 0.5;
 }
 .fishArea.hovered{
-  stroke-width: 2px;
+    stroke-width: 2px;
 }
 .rect{
-  stroke-width: 1px;
-  stroke: var(--dark-foreground);
+    stroke-width: 1px;
+    stroke: var(--dark-foreground);
 }
 
 
-    /*--------------------- Fig Tree --------------------*/
+/*--------------------- Fig Tree --------------------*/
 
-    .branch {
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-  }
+.branch {
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
 
 
-  .branch .branch-path.hovered {
-      stroke-width: 4;
-  }
-  
-  .node-shape{
+.branch .branch-path.hovered {
+    stroke-width: 4;
+}
+
+.node-shape{
     stroke: 'none';
-  }
-  
-  .node-label {
-      font-family: "light"; 
-      font-size: 8pt;
-      font-weight: 300;
-      fill: var(--dark-foreground); /* not color as it's SVG */
-  }
-  
-  .trend-line {
-      stroke: rgb(0,0,0);
-      stroke-width: 2;
-      stroke-linecap: round;
-  }
-  
-  .axis text {
-    font-family: "hairline"; 
+}
+
+.node-label {
+    font-family: "light";
     font-size: 8pt;
     font-weight: 300;
-  }
-  
-  .axis-label text {
-    font-family: "hairline"; 
+    fill: var(--dark-foreground); /* not color as it's SVG */
+}
+
+.trend-line {
+    stroke: rgb(0,0,0);
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+.axis text {
+    font-family: "hairline";
+    font-size: 8pt;
+    font-weight: 300;
+}
+
+.axis-label text {
+    font-family: "hairline";
     font-size: 8pt;
     font-weight: bold;
-  }
-  
-  .node-label.support {
-      font-size: 10pt;
-  }
-  
-  .branch-label.length {
-      display: none;
-      font-size: 8pt;
-  }
+}
 
-  
-  
-  /* --------------------- D3 --------------------- */
-  .axis text,
-  text.axis {
-    font-family: "light"; 
+.node-label.support {
+    font-size: 10pt;
+}
+
+.branch-label.length {
+    display: none;
+    font-size: 8pt;
+}
+
+
+
+/* --------------------- D3 --------------------- */
+.axis text,
+text.axis {
+    font-family: "light";
     font-size: 14px;
     fill: var(--dark-foreground); /* not color as it's SVG */
-  }
-  .legend > text {
+}
+.legend > text {
     fill: var(--dark-foreground); /* not color as it's SVG */
-  }
+}
 
-  .axis path,
-  .axis line {
+.axis path,
+.axis line {
     fill: none;
     stroke: var(--dark-foreground);
     stroke-width: 1;
     shape-rendering: auto;
-  }
+}
   
