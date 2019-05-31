@@ -85,7 +85,11 @@ function App() {
 						</div>
 					</div>
 					<div className={`sidebar right ${sideBarOpen? "open":''}`}>
-					{sideBarFocus==="Geography"?<Geography/>:<LineList/>}
+					{sideBarFocus==="Geography"?
+                        <div className = "geographyContainer">
+                            <Geography data={mapTopoJSON} margins={margins} size={{height: "500px", width: "500px"}} />
+                        </div>
+						:<LineList/>}
 					</div>
 				</div>
 			</div>
