@@ -24,7 +24,7 @@ get timeCourse(){
       
      for(const child of childrenTimeCourse){
         for(const k of child.keys()){
-          if(timePoints.indexOf(k)==-1){
+          if(timePoints.indexOf(k) === -1){
             timePoints.push(k);
             tc.set(k,{time:new Date(k),cases:0})
           }

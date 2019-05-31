@@ -40,6 +40,7 @@
     "topojson": "^3.0.2"
   },
   "scripts": {
+    "debug": "npm $NODE_DEBUG_OPTION start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "predeploy": "npm run build",
