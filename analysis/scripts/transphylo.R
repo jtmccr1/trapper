@@ -254,7 +254,7 @@ make_option(c("--beastTree"), action = "store_true",default="FALSE",
 )
 opt <- parse_args(OptionParser(option_list=option_list))
 
-# opt<-tibble::tibble(tree="../data/147_phylogeog.CA_MCC.tree",dateLastSample=2019.03,shape = 8.7,scale=0.0046,MCMC=10,thinning=1,file="test",samples=5,beastTree=F)
+# opt<-tibble::tibble(tree="../EBOV2018/data/147_phylogeog.CA_MCC.tree",dateLastSample=2019.03,shape = 8.7,scale=0.0046,MCMC=10,thinning=1,file="test",samples=5,beastTree=F)
 
 tree<-read.beast(opt$tree)
 ptree<-ptreeFromPhylo(tree@phylo,dateLastSample=opt$dateLastSample)
