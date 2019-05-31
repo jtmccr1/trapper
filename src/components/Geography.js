@@ -1,6 +1,6 @@
 import React, {props, useRef, useState} from 'react';
 import {select, selectAll} from "d3";
-import {geoNaturalEarth1, geoPath} from "d3-geo";
+import {geoAzimuthalEqualArea, geoPath} from "d3-geo";
 import {feature} from "topojson";
 
 function Geography(props){
@@ -11,7 +11,7 @@ function Geography(props){
     const mapData = props.data;
 
     // center on UK
-    const projection = geoNaturalEarth1()
+    const projection = geoAzimuthalEqualArea()
         .center([-4, 54.5])
         .scale(3000)
         .translate([width / 2, height / 2]);
@@ -28,7 +28,7 @@ function Geography(props){
     const adm0 = feature(mapData, mapData.objects.adm0);
     const adm1 = feature(mapData, mapData.objects.adm1);
 
-    console.log("ADM1: " + JSON.stringify(path(adm1.features[24])));
+    // console.log("ADM1: " + JSON.stringify(path(adm1.features[24])));
 
     const el = useRef();
 

@@ -84,15 +84,19 @@ export class ArcLayout extends Layout {
             });
         }
 
+        const locations = [ "Location-A", "Location-B", "Location-C" ];
+        const locationSpacing = 10;         
+
         // update the node locations (vertices)
         //
         nodes
             .forEach((n,i) => {
                 const v = this.nodeMap.get(n);
-
+                
                 v.x = this.settings.xFunction(n,i);
-                v.y=0;
-                v.degree = this.graph.getEdges(v.node).length ; // the number of edges 
+                v.y = locations.indexOf(v.node.location) * locationSpacing - (locations.length * locationSpacing / 2);
+
+                v.degree = this.graph.getEdges(v.node).length ; // the number of edges
                 // console.log(v.x)
                 v.classes = [
                     (!this.graph.getOutgoingEdges(v.node).length>0? "external-node" : "internal-node"),

@@ -505,7 +505,7 @@ function updateBranches() {
 
     newBranches.append("path")
         .attr("class", "branch-path")
-        .attr("d", (e,i) => {console.log(e); branchPath(e,i)});
+        .attr("d", (e,i) => { branchPath(e,i)});
 
     newBranches.append("text")
         .attr("class", "branch-label length")
