@@ -46,3 +46,7 @@
     fill:#E3B505;
     stroke:#FFF;
 }
+
+.branch.dataSource-transphylo{
+    stroke-dasharray: 2;
+}

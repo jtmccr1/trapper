@@ -21,6 +21,7 @@ export class ArcLayout extends Layout {
             xFunction:(n,i,t)=>i/t.length,
             branchCurve:curveLinear,
             curve:'arc',
+            opacity:d=>1
             
         };
     }
@@ -69,6 +70,7 @@ export class ArcLayout extends Layout {
         const nodes = [...this.graph.nodes];
         nodes.forEach(n=>this.addAnnotations(n));
 
+
         if (vertices.length === 0) {
             this.nodeMap = new Map();
 
@@ -84,7 +86,12 @@ export class ArcLayout extends Layout {
             });
         }
 
-        const locations = [ "Location-A", "Location-B", "Location-C" ];
+        const locations = nodes.reduce((acc,curr)=>{
+                                                    if(acc.indexOf(curr.location)===-1){
+                                                        acc.push(curr.location)
+                                                    }
+                                                    return(acc)
+                                                    },[])
         const locationSpacing = 10;         
 
         // update the node locations (vertices)
@@ -116,6 +123,7 @@ export class ArcLayout extends Layout {
 
             // create the edges (only done if the array is empty)
             const dataEdges = this.graph.edges;
+            dataEdges.forEach(e=>this.addAnnotations(e.metaData))
             dataEdges
                 .forEach((e, i) => {
                     const edge = {
@@ -147,7 +155,7 @@ export class ArcLayout extends Layout {
                         ...this.getAnnotations(e.v1.node)]
                     e.classes = [
                         ...e.classes,
-                        ...this.getAnnotations(e.data)]
+                        ...this.getAnnotations(e.data.metaData)]
 
                 // }
                 const length = e.v1.x - e.v0.x;
