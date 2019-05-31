@@ -69,11 +69,12 @@ function App() {
 		const [dateRange,setDateRange] = useState(null)
 		const [epidemic,setEpidemic] = useState(null);
 		const [treeDateRange,setTreeDateRange] = useState(null);
-		const [mapTopoJSON,setMapTopoJSON] =useState(null)
+		const [mapTopoJSON,setMapTopoJSON] =useState(null);
 
 	//Load the data at the start
 	
 useEffect(()=>{
+	console.log("reading in the data")
 	// read in lineList, links,tree,treeAnnotations
 	Promise.all([csv(`${prefix}/lineList.csv`),csv(`${prefix}/links.csv`),fetch(`${prefix}/tree.nwk`),fetch(`${prefix}/treeAnnotations.json`)])
 		.then(([lineList,links,treeStringPromise,treeAnnotationsPromise])=>{
