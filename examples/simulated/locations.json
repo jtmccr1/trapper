@@ -5,7 +5,7 @@
       "name": "Edinburgh",
       "color": "#086375",
       "polygons": [ "Edinburgh", "West-Lothian", "East-Lothian", "Midlothian", "Scottish-Border" ],
-      "description": "The city is affectionately nicknamed Auld Reekie, Scots for Old Smoky, for the views from the country of the smoke-covered Old Town. Allan Ramsay said, 'Auld Reeky. A name the country people give Edinburgh from the cloud of smoke or reek that is always impending over it.'"
+      "description": "The city is affectionately nicknamed Auld Reekie, Scots for Old Smoky, for the views from the country of the smoke-covered Old Town. Allan Ramsay said, 'Auld Reeky. A name the country people give Edinburgh from the cloud of smoke or reek that is always impending over it.'",
       "population": "1,339,380"
     },
     {
@@ -21,7 +21,7 @@
       "name": "Birmingham",
       "color": "#E3B505",
       "polygons": [ "West-Midlands", "Staffordshire", "Worcestershire", "Warwickshire" ],
-      "description": "People from Birmingham are called Brummies, a term derived from the city's nickname of 'Brum', which originates from the city's old name, Brummagem, which in turn is thought to have derived from 'Bromwich-ham'. The Brummie accent and dialect are particularly distinctive."
+      "description": "People from Birmingham are called Brummies, a term derived from the city's nickname of 'Brum', which originates from the city's old name, Brummagem, which in turn is thought to have derived from 'Bromwich-ham'. The Brummie accent and dialect are particularly distinctive.",
       "population": "2,897,303"
     }
   ]

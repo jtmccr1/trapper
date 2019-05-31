@@ -48,5 +48,5 @@
 }
 
 .branch.dataSource-transphylo{
-    stroke-dasharray: 2;
+    stroke-dasharray: 1 3;
 }
