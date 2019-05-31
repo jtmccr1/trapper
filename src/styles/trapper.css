@@ -113,7 +113,7 @@ div.header {
   }
   .sidebar.left{
     position: relative;
-    margin-left:-200px;
+    margin-left:-210px;
     flex: 0 0 200px
     /* margin-right:0; */
 
@@ -127,7 +127,7 @@ div.header {
   .sidebar.right{
     position: relative;
     flex:0 0 500px;
-    margin-right:-500px;
+    margin-right:-510px;
     margin-left:0px;
     /* margin-right:0; */
   }
@@ -148,14 +148,15 @@ div.header {
     z-index: 1;
     white-space: nowrap;
     margin:10px 0px 0px 10px;
-    padding:10px
+    padding:10px;
+    flex-grow: 0,0,50px;
   }
   .sidebarButtons.right .button{
-        transform: rotate(-90deg);
+        transform: translate(20px) rotate(-90deg);
 
   }
   .sidebarButtons.left .button{
-    transform: rotate(90deg);
+    transform: translate(-30px) rotate(90deg);
 
 }
   /* .sidebarButtons .button h3{

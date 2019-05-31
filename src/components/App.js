@@ -1,14 +1,16 @@
 import React, {useState,useCallback,useRef} from 'react';
 import Header from './Header';
 import ChartContainer from './ChartContainer';
+import LineList from "./LineList";
+import Geography from "./Geography"
 import "../styles/trapper.css"
-import { get } from 'https';
 
 function App() {
 
 	const [optionsOpen,setOptionsOpen] = useState(false);
 	const [sideBarOpen,setSideBarOpen] = useState(false);
-	const [timelineSize,getTimelineSize] = useState(null)
+	const [timelineSize,getTimelineSize] = useState(null);
+	const [sideBarFocus,setSideBarFocus] = useState("Geography");
 	//Getting the size of the container to pass to children
 	// const [handleResize,setHandelResize] = useState(null);
 	// const otherRef = useRef(null);
@@ -59,15 +61,31 @@ function App() {
 					<ChartContainer  ref = {measuredRef} timelineSize = {timelineSize}/>
 					<div className="sidebarButtonColumn">
 						<div className="sidebarButtons right">
-							<div className="button" onClick={()=> {setSideBarOpen(!sideBarOpen);getSizeAgain();}}>
+							<div className="button" onClick={()=> {
+																											if(sideBarOpen&&sideBarFocus!=="Geography"){
+																												setSideBarFocus("Geography")
+																											}else{
+																												setSideBarOpen(!sideBarOpen)
+																												setSideBarFocus("Geography")
+																											}
+																											getSizeAgain();
+																											}}>
 								 <h3>Map</h3>
 							</div>
-							<div className="button" onClick={()=> {setSideBarOpen(!sideBarOpen);getSizeAgain();}}>
+							<div className="button" onClick={()=> 	{
+																											if(sideBarOpen&&sideBarFocus!=="LineList"){
+																												setSideBarFocus("LineList")
+																											}else{
+																												setSideBarOpen(!sideBarOpen)
+																												setSideBarFocus("LineList")
+																											}
+																											getSizeAgain();}}>
 								 <h3>Line List</h3>
 							</div>
 						</div>
 					</div>
 					<div className={`sidebar right ${sideBarOpen? "open":''}`}>
+					{sideBarFocus==="Geography"?<Geography/>:<LineList/>}
 					</div>
 				</div>
 			</div>
