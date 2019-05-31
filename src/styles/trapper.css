@@ -116,9 +116,8 @@ div.header .buttons {
 .sidebar.left{
     position: relative;
     margin-left:-210px;
-    flex: 0 0 200px
-    /* margin-right:0; */
-
+    flex: 0 0 200px;
+    border-right: 10px solid var(--artic-green);
 }
 .sidebar.left.open{
     margin:0px;
@@ -131,7 +130,7 @@ div.header .buttons {
     flex:0 0 500px;
     margin-right:-510px;
     margin-left:0px;
-    /* margin-right:0; */
+    border-left: 10px solid var(--artic-green);
 }
 .sidebarButtonColumn{
     display:flex;
@@ -144,16 +143,16 @@ div.header .buttons {
     display: inline-block;
     padding:10px 0 0 0 
 }
-.sidebarButtons .button{
+.sidebarButtons .button {
     cursor: pointer;
     background-color:var(--header);
     color:var(--light-text);
     border: 1px solid var(--light-text);
     border-radius:5px;
     white-space: nowrap;
-    margin:10px 0px 0px 10px;
-    padding:10px 10px 10px 10px;
-    z-index: 0;
+    margin: 50px 0px 0px 10px;
+    padding:5px 10px 10px 10px;
+    z-index: -10;
     /* flex-grow: 0 , 0, 50px; */
 }
 
@@ -167,7 +166,7 @@ div.header .buttons {
 
 }
 .sidebarButtons.left .button{
-    transform: translate(-30px) rotate(90deg);
+    transform: translate(-40px) rotate(90deg);
 
 }
 
