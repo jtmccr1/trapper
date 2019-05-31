@@ -1,6 +1,6 @@
 import React, {useState,useCallback,useRef} from 'react';
 import ReactTable from 'react-table';
-import {timeFormat} from "d3-time-format"
+import {timeFormat} from "d3"
 const formatTime = timeFormat("%B %d, %Y");
 
 function LineList(props){

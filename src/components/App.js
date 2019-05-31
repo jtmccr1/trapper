@@ -166,7 +166,7 @@ function mostProbableTransphyloEdgeCondition(graph){
   return actualFilterFunction
 }
 	const mapMargins = {"top":5,"bottom":5,"left":5,"right":5};
-	const mapSize = {"height": "500px", "width": "500px"};
+	const mapSize = {"height": 500, width: 500};
 
 	/*---------------------- Rendering -------------------------*/
 	  

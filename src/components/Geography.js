@@ -1,6 +1,6 @@
 import React, {props, useRef, useState} from 'react';
 import {select, selectAll} from "d3";
-import {geoMercator, geoPath} from "d3-geo";
+import {geoOrthographic, geoPath} from "d3-geo";
 import {feature} from "topojson";
 
 function Geography(props){
@@ -11,7 +11,7 @@ function Geography(props){
     const mapData = props.data;
 
     // center on UK
-    const projection = geoMercator()
+    const projection = geoOrthographic()
         .center([3.4360, 55.3781])
         .scale(1000)
         .translate([width / 2, height / 2]);
@@ -28,7 +28,7 @@ function Geography(props){
     const adm0 = feature(mapData, mapData.objects.adm0);
     const adm1 = feature(mapData, mapData.objects.adm1);
 
-    console.log("ADM1: " + JSON.stringify(adm1.features[24]));
+    console.log("ADM1: " + JSON.stringify(path(adm1.features[24])));
     
     const el = useRef();
 
@@ -42,7 +42,7 @@ function Geography(props){
             // .call(zoom);
 
             g.append("rect")
-                .attr("class", "background")
+                .attr("class", "map-background")
                 .attr("width", width)
                 .attr("height", height);
 
