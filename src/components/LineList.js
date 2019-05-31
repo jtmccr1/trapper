@@ -10,7 +10,7 @@ function LineList(props){
         const columns = [{
           id:"id",
           Header: 'Case Id',
-          accessor: d=>d.id 
+          accessor: d=>d.id ,
         },{
           id:"location",
           Header:'Location',
@@ -18,11 +18,15 @@ function LineList(props){
       },{
         id:"symptomOnset",
         Header:'Symptom Onset',
-        accessor: d=>formatTime(d.symptomOnset)
+        accessor: d=>d.symptomOnset,
+        Cell:props => props.value===null? <span>Unknown</span>:<span>{formatTime(props.value)}</span>,
+        filterable: false  //This makes the column not filterable
+
       }]
        
         return (<ReactTable
           data={props.data}
+          filterable
           columns={columns}
         />)
 }
