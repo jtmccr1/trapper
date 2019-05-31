@@ -160,8 +160,8 @@ function mostProbableTransphyloEdgeCondition(graph){
     const target = edge.target;
     // get incoming edges
     const incomingEdges = graph.getIncomingEdges(target);
-    const maxTransphyloProb = max(incomingEdges, e =>e.metaData.transphylo.support);
-    return (edge === incomingEdges.find(e=> e.metaData.transphylo.support===maxTransphyloProb))
+    const maxTransphyloProb = max(incomingEdges.filter(e=>e.metaData.dataSource==="transphylo"), e =>e.metaData.support);
+    return (edge === incomingEdges.find(e=> e.metaData.dataSource==="transphylo" && e.metaData.support===maxTransphyloProb))
   }
   return actualFilterFunction
 }
@@ -190,7 +190,7 @@ function mostProbableTransphyloEdgeCondition(graph){
 						phylogeny={phylogeny}/> 
 					<div className="sidebarButtonColumn">
 						<div className="sidebarButtons right">
-								 <h3 className={`button ${sideBarFocus=="Geography"?"selected":""}`} onClick={()=> {
+								 <h3 className={`button ${sideBarFocus==="Geography"?"selected":""}`} onClick={()=> {
 									if(sideBarOpen&&sideBarFocus!=="Geography"){
 										setSideBarFocus("Geography")
 									}else{
@@ -200,7 +200,7 @@ function mostProbableTransphyloEdgeCondition(graph){
 									getSizeAgain();
 									}}>Map</h3>
 
-								 <h3 className={`button ${sideBarFocus=="LineList"?"selected":""}`} onClick={()=> {
+								 <h3 className={`button ${sideBarFocus==="LineList"?"selected":""}`} onClick={()=> {
 									if(sideBarOpen&&sideBarFocus!=="LineList"){
 										setSideBarFocus("LineList")
 									}else{

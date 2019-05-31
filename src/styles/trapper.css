@@ -172,7 +172,9 @@ div.header .buttons {
 
 
 
-
+.ReactTable .rt-thead {
+    overflow-y: scroll;
+  }
 
 
 

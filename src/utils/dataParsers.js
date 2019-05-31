@@ -62,7 +62,7 @@ export const summarizeLinks=(links)=>{
     links.forEach(l => {
         dataSources.indexOf(l.dataSource)===-1 && dataSources.push(l.dataSource);
     });
-
+// nested links is [ {key: target, values:[{key:source,values:[{key:dataSource, values: [links]}] }]}]
     const summarizeLinks =[];
     for(const l of nestLinks){
         const target = l.key;
@@ -75,17 +75,21 @@ export const summarizeLinks=(links)=>{
                                                     .reduce((acc,curr)=>acc+curr.values.length,0); // sum number of data points 
                                                                     // .reduce((acc,curr)=>acc+curr.values.length,0)));
         }
+        // totalObservations is { datasource: #obervations that have this source }
+            // for each source
             for(const s of l.values){
                 const source = s.key;
-                const metaData=dataSources.reduce((acc,curr)=>{
-                                acc[curr]={support:null,data:[]};
-                                return(acc)
-                            },{})
-                for(const ds of s.values){
-                    metaData[ds.key].data=ds.values;
-                    metaData[ds.key].support=totalObservations[ds.key]!==0? ds.values.length/totalObservations[ds.key]: null;
-                }
+
+                for(const ds of s.values){ // s.values is an array of {key:datasource, values: links }
+                //    const data=ds.values;
+                const metaData ={};
+                metaData["dataSource"] = ds.key;
+                metaData["support"] = ds.values.length/totalObservations[ds.key]
                 summarizeLinks.push({"target":target,"source":source,"metaData":metaData})
+                }
+
+
+                
             }
 
         }

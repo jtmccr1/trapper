@@ -23,8 +23,11 @@ function LineList(props){
         filterable: false  //This makes the column not filterable
 
       }]
+      const rows =props.data.length;
        
         return (<ReactTable
+          showPagination={false}
+          defaultPageSize={rows}
           data={props.data}
           filterable
           columns={columns}
