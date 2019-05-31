@@ -222,7 +222,7 @@ function mostProbableTransphyloEdgeCondition(graph){
 						<Geography data={mapTopoJSON} margins={mapMargins} size={mapSize} />
 						:<h3>Loading Map</h3>}
 					</div>
-					:<LineList/>}
+					:<LineList data= {epidemic.Cases}/>}
 					</div>
 				</div>
 			</div>

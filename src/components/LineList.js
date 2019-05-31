@@ -1,45 +1,28 @@
 import React, {useState,useCallback,useRef} from 'react';
 import ReactTable from 'react-table';
+import {timeFormat} from "d3-time-format"
+const formatTime = timeFormat("%B %d, %Y");
+
+function LineList(props){
 
 
-function LineList(){
-
-        const data = [{
-          name: 'Tanner Linsley',
-          age: 26,
-          friend: {
-            name: 'Jason Maurer',
-            age: 23,
-          }
-        },
-        {
-            name: 'Tanner Linsley',
-            age: 26,
-            friend: {
-              name: 'Jason Maurer',
-              age: 23,
-            }
-          }
-    ];
        
         const columns = [{
-          Header: 'Name',
-          accessor: 'name' // String-based value accessors!
-        }, {
-          Header: 'Age',
-          accessor: 'age',
-          Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
-        }, {
-          id: 'friendName', // Required because our accessor is not a string
-          Header: 'Friend Name',
-          accessor: d => d.friend.name // Custom value accessors!
-        }, {
-          Header: props => <span>Friend Age</span>, // Custom header components!
-          accessor: 'friend.age'
-        }]
+          id:"id",
+          Header: 'Case Id',
+          accessor: d=>d.id 
+        },{
+          id:"location",
+          Header:'Location',
+          accessor: d=>d.location
+      },{
+        id:"symptomOnset",
+        Header:'Symptom Onset',
+        accessor: d=>formatTime(d.symptomOnset)
+      }]
        
         return (<ReactTable
-          data={data}
+          data={props.data}
           columns={columns}
         />)
 }

@@ -109,7 +109,8 @@ div.header {
   transition: margin .4s; 
   background-color:var(--dark-foreground);
   flex: 1 1 auto;
-  color:var(--dark-background)
+  color:var(--dark-background);
+  overflow-y:scroll;
 
   }
   .sidebar.left{

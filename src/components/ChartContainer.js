@@ -14,7 +14,7 @@ const ChartContainer = React.forwardRef((props, ref)=>{
 
       const [chartGeom,setChartGeom]=useState({height:300,width:1200});
       const margins = {"top":10,"bottom":10,"left":50,"right":50};
-
+    
       //Update chart sizes
     useEffect(()=>{
       if(props.timelineSize!==null){
