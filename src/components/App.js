@@ -19,8 +19,6 @@ import {summarizeLinks} from '../utils/dataParsers.js'
 
 import 'react-table/react-table.css';
 import "../styles/trapper.css"
-import { promised } from 'q';
-import { tsPropertySignature } from '@babel/types';
 
 function App() {
 /*----------- Managing option bars and sizes 	------------------*/
@@ -71,6 +69,7 @@ function App() {
 		const [dateRange,setDateRange] = useState(null)
 		const [epidemic,setEpidemic] = useState(null);
 		const [treeDateRange,setTreeDateRange] = useState(null);
+		const [mapTopoJSON,setMapTopoJSON] =useState(null)
 
 	//Load the data at the start
 	
@@ -149,6 +148,9 @@ useEffect(()=>{
 				setTreeDateRange([treeRootDate,treeMaxDate]);
 			})
 	})
+	// get map
+	fetch(`${prefix}/map.json`).then(mapResponse=>mapResponse.json()).then(mapJSON=>setMapTopoJSON(mapJSON))
+
 },[])
 
 
@@ -163,7 +165,8 @@ function mostProbableTransphyloEdgeCondition(graph){
   }
   return actualFilterFunction
 }
-
+	const mapMargins = {"top":5,"bottom":5,"left":5,"right":5};
+	const mapSize = {"height": "500px", "width": "500px"};
 
 	/*---------------------- Rendering -------------------------*/
 	  
@@ -213,7 +216,13 @@ function mostProbableTransphyloEdgeCondition(graph){
 						</div>
 					</div>
 					<div className={`sidebar right ${sideBarOpen? "open":''}`}>
-					{sideBarFocus==="Geography"?<Geography/>:<LineList/>}
+					{sideBarFocus==="Geography"?
+					<div className = "geographyContainer">
+					{mapTopoJSON?
+						<Geography data={mapTopoJSON} margins={mapMargins} size={mapSize} />
+						:<h3>Loading Map</h3>}
+					</div>
+					:<LineList/>}
 					</div>
 				</div>
 			</div>

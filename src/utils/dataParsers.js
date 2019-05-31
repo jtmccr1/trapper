@@ -68,7 +68,7 @@ export const summarizeLinks=(links)=>{
         const target = l.key;
         const totalObservations ={};
         for(const ds of dataSources){
-            totalObservations[ds] = l.values.map(s=>s.values.filter(d=>d.key==ds)) // array of array of {key:soures, value:data} with an entry for each source
+            totalObservations[ds] = l.values.map(s=>s.values.filter(d=>d.key===ds)) // array of array of {key:soures, value:data} with an entry for each source
                                                     .reduce((acc,curr)=>{  // flatten array above
                                                         return acc.concat(curr)
                                                     },[])

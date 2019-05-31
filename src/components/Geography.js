@@ -3,7 +3,7 @@ import {select} from "d3";
 import {geoEqualEarth, geoPath} from "d3-geo";
 import {feature} from "topojson";
 
-function Geography(){
+function Geography(props){
     const [map, setMap] = useState(null);
 
     const width = props.size.width;
@@ -30,9 +30,8 @@ function Geography(){
 
     const el = useRef();
 
-    if (el.current !== null) {
+    // if (el.current !== null) {
 
-        if (el.current.children.length === 0) { // make it the first time
 
             //to selecting every time
             const svg = select(el.current);
@@ -65,8 +64,8 @@ function Geography(){
 
             // }else{
             //     update?
-        }
-    }
+        
+    
 
     return(
         <svg className="chart" id={"map"}

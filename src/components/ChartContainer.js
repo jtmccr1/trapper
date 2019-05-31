@@ -26,7 +26,6 @@ const ChartContainer = React.forwardRef((props, ref)=>{
       //Ensure we don't render before we have scales ect.
       const isFull = Object.values(props)
       .every(x => (x !== null & x !== ''));
-      console.log(props)
 
     if(!isFull){
         return(
