@@ -93,7 +93,7 @@ const ChartContainer = React.forwardRef((props, ref)=>{
     // [graph,setGraph] = useState(null)
     
     useEffect(()=>{
-      if(ogLinks!=null){
+      if(ogLinks!==null){
             // link is an object keyed by target each 
             // the output should be 
             // {target, source, dataSource:, metadata:{source1:{ support: %
