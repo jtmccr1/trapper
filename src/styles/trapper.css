@@ -113,7 +113,7 @@ div.header {
   }
   .sidebar.left{
     position: relative;
-    margin-left:-200px;
+    margin-left:-210px;
     flex: 0 0 200px
     /* margin-right:0; */
 
@@ -156,7 +156,7 @@ div.header {
 
   }
   .sidebarButtons.left .button{
-    transform: rotate(90deg);
+    transform: translate(-30px) rotate(90deg);
 
 }
   /* .sidebarButtons .button h3{
