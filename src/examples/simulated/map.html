@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+    .background {
+        fill: lightblue;
+        pointer-events: all;
+    }
+
+    .adm0 {
+        fill: none;
+        stroke: #FFF;
+        stroke-width: 2px;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        pointer-events: none;
+    }
+
+    .adm2 {
+        fill: steelblue;
+        stroke: #EEE;
+        stroke-width: 1.0px;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        pointer-events: none;
+    }
+
+
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script>
+
+    var width = 960,
+        height = 500;
+
+    // center on UK
+    var projection = d3.geo.mercator()
+        .center([3.4360, 55.3781])  
+        .scale(1000)
+        .translate([width / 2, height / 2]);
+
+    var path = d3.geo.path()
+        .projection(projection);
+
+    var zoom = d3.behavior.zoom()
+        .translate(projection.translate())
+        .scale(projection.scale())
+        .scaleExtent([height, 8 * height])
+        .on("zoom", zoomed);
+
+    var svg = d3.select("body").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    var g = svg.append("g")
+        .call(zoom);
+
+    g.append("rect")
+        .attr("class", "background")
+        .attr("width", width)
+        .attr("height", height);
+
+    d3.json("map.json", function(error, map) {
+        if (error) throw error;
+
+        let adm0 = topojson.feature(map, map.objects.adm0);
+        let adm1 = topojson.feature(map, map.objects.adm1);
+
+         g.append("g")
+            .attr("id", "adm1")
+            .selectAll("path")
+            .data(adm1.features)
+            .enter().append("path")
+            .attr("class", "adm1")
+            .attr("id", (d) => d.properties.name )
+            .attr("d", path);
+
+        g.append("g")
+            .attr("id", "adm0")
+            .selectAll("path")
+            .data(adm0.features)
+            .enter().append("path")
+            .attr("class", "adm0")
+            .attr("id", (d) => d.properties.name )
+            .attr("d", path);
+
+    });
+
+    function clicked(d) {
+        var centroid = path.centroid(d),
+            translate = projection.translate();
+
+        projection.translate([
+            translate[0] - centroid[0] + width / 2,
+            translate[1] - centroid[1] + height / 2
+        ]);
+
+        zoom.translate(projection.translate());
+
+        g.selectAll("path").transition()
+            .duration(700)
+            .attr("d", path);
+    }
+
+    function zoomed() {
+        projection.translate(d3.event.translate).scale(d3.event.scale);
+        g.selectAll("path").attr("d", path);
+    }
+
+</script>
