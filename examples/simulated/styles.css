@@ -1,35 +1,48 @@
-  /*---------------------Other charts line container ----------*/
+/*---------------------Other charts line container ----------*/
 /* .rect{
   fill: #d26a54;
 } */
 .branch{
-  stroke: #b9b0a0;
+    stroke: #b9b0a0;
 }
 .rect.hovered{
-  fill: #e9c964;
+    fill: #e9c964;
 }
 #phylogeny .internal-node{
-  display: none;
+    display: none;
 }
- /* ------- Hard coded locations ------------------------------*/  
-  
- .location-Location-A{
-  fill:#086375;
-  stroke:#086375;
+/* ------- Hard coded locations ------------------------------*/
+
+.location-Location-A{
+    fill:#086375;
+    stroke:#086375;
 }
 .location-Location-B{
-  fill:#DB504A;
-  stroke:#DB504A;
+    fill:#DB504A;
+    stroke:#DB504A;
 }
 .location-Location-C{
-  fill:#E3B505;
-  stroke:#E3B505;
+    fill:#E3B505;
+    stroke:#E3B505;
 }
 
 .node-background {
-  fill: #b9b0a0;
+    fill: #b9b0a0;
 }
 
 .node-shape.hovered {
-  fill: #e9c964;
+    fill: #e9c964;
+}
+
+#Edinburgh, #West-Lothian, #East-Lothian, #Midlothian, #Scottish-Borders {
+    fill:#086375;
+    stroke:#FFF;
+}
+#Cambridgeshire, #Norfolk, #Suffolk {
+    fill:#DB504A;
+    stroke:#FFF;
+}
+#West-Midlands, #Staffordshire, #Worcestershire, #Warwickshire {
+    fill:#E3B505;
+    stroke:#FFF;
 }

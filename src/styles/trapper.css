@@ -247,9 +247,18 @@ div.header .buttons {
 /* ---------------  G E O G R A P H Y ----------------- */
 .geographyContainer {
     padding: 10px;
+    overflow: hidden;
 }
 .map-background {
+    fill: var(--dark-foreground);
+}
+.adm0 {
     fill: var(--artic-green);
+    stroke: var(--dark-foreground);
+}
+.adm1 {
+    fill: var(--artic-green);
+    stroke: var(--dark-foreground);
 }
 
 /*------------------ axis boxes ------------------------*/

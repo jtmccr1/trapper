@@ -1,6 +1,6 @@
 import React, {props, useRef, useState} from 'react';
 import {select, selectAll} from "d3";
-import {geoOrthographic, geoPath} from "d3-geo";
+import {geoNaturalEarth1, geoPath} from "d3-geo";
 import {feature} from "topojson";
 
 function Geography(props){
@@ -11,9 +11,9 @@ function Geography(props){
     const mapData = props.data;
 
     // center on UK
-    const projection = geoOrthographic()
-        .center([3.4360, 55.3781])
-        .scale(1000)
+    const projection = geoNaturalEarth1()
+        .center([-4, 54.5])
+        .scale(3000)
         .translate([width / 2, height / 2]);
 
     const path = geoPath()
@@ -29,45 +29,45 @@ function Geography(props){
     const adm1 = feature(mapData, mapData.objects.adm1);
 
     console.log("ADM1: " + JSON.stringify(path(adm1.features[24])));
-    
+
     const el = useRef();
 
     // if (el.current !== null) {
 
 
-            //to selecting every time
-            const svg = select(el.current);
+    //to selecting every time
+    const svg = select(el.current);
 
-            const g = svg.append("g");
-            // .call(zoom);
+    const g = svg.append("g");
+    // .call(zoom);
 
-            g.append("rect")
-                .attr("class", "map-background")
-                .attr("width", width)
-                .attr("height", height);
+    g.append("rect")
+        .attr("class", "map-background")
+        .attr("width", width)
+        .attr("height", height);
 
-            g.append("g")
-                .attr("id", "adm1")
-                .selectAll("path")
-                .data(adm1.features)
-                .enter().append("path")
-                .attr("class", "adm1")
-                .attr("id", (d) => d.properties.code)
-                .attr("d", path);
+    g.append("g")
+        .attr("id", "adm0")
+        .selectAll("path")
+        .data(adm0.features)
+        .enter().append("path")
+        .attr("class", "adm0")
+        .attr("id", (d) => d.properties.name.replace(" ", "-"))
+        .attr("d", path);
 
-            g.append("g")
-                .attr("id", "adm0")
-                .selectAll("path")
-                .data(adm0.features)
-                .enter().append("path")
-                .attr("class", "adm0")
-                .attr("id", (d) => d.properties.code)
-                .attr("d", path);
+    g.append("g")
+        .attr("id", "adm1")
+        .selectAll("path")
+        .data(adm1.features)
+        .enter().append("path")
+        .attr("class", "adm1")
+        .attr("id", (d) => d.properties.name.replace(" ", "-"))
+        .attr("d", path);
 
-            // }else{
-            //     update?
-        
-    
+    // }else{
+    //     update?
+
+
 
     return(
         <svg className="chart" id={"map"}
