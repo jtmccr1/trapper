@@ -25,28 +25,29 @@ import { tsPropertySignature } from '@babel/types';
 function App() {
 /*----------- Managing option bars and sizes 	------------------*/
 
-	const [optionsOpen,setOptionsOpen] = useState(false);
-	const [sideBarOpen,setSideBarOpen] = useState(false);
-	const [timelineSize,getTimelineSize] = useState(null);
-	const [sideBarFocus,setSideBarFocus] = useState("Geography");
-	//Getting the size of the container to pass to children
-	// const [handleResize,setHandelResize] = useState(null);
-	// const otherRef = useRef(null);
-	const measuredRef = useCallback(node => {
+    const [optionsOpen,setOptionsOpen] = useState(false);
+    const [sideBarOpen,setSideBarOpen] = useState(false);
+    const [timelineSize,getTimelineSize] = useState(null);
+    const [sideBarFocus,setSideBarFocus] = useState("Geography");
+    //Getting the size of the container to pass to children
+    // const [handleResize,setHandelResize] = useState(null);
+    // const otherRef = useRef(null);
+    const measuredRef = useCallback(node => {
         if (node !== null) {
-			getTimelineSize({"height":node.getBoundingClientRect().height,"width":node.getBoundingClientRect().width})
-			const handleResize = () =>  {
-              let resizeTimer;
-              clearTimeout(resizeTimer);
-              resizeTimer = setTimeout(function() {
+            getTimelineSize({"height":node.getBoundingClientRect().height,"width":node.getBoundingClientRect().width})
+            const handleResize = () =>  {
+                let resizeTimer;
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
 
-              // Run code here, resizing has "stopped"
-              getTimelineSize({"height":node.getBoundingClientRect().height,"width":node.getBoundingClientRect().width});
-              }, 250);
-			}
+                    // Run code here, resizing has "stopped"
+                    getTimelineSize({"height":node.getBoundingClientRect().height,"width":node.getBoundingClientRect().width});
+                }, 250);
+            }
+
             window.addEventListener('resize', handleResize);
             return () => {
-              window.removeEventListener('resize', handleResize);
+                window.removeEventListener('resize', handleResize);
             };
         }
 	  },[]);

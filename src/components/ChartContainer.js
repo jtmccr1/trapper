@@ -28,12 +28,12 @@ const ChartContainer = React.forwardRef((props, ref)=>{
       .every(x => (x !== null & x !== ''));
       console.log(props)
 
-      if(!isFull){
+    if(!isFull){
         return(
-          <div className = "timelineContainer" ref={ref}>
-          </div>
-          )
-      }else{
+            <div className = "timelineContainer" ref={ref}>
+            </div>
+        )
+    }else{
       return(
        <div className = "timelineContainer" ref={ref} >
          <div className="hoverInfo" id="tooltip"></div>
