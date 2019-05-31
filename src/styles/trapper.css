@@ -137,9 +137,12 @@ div.header .buttons {
     display:flex;
     flex-flow: column nowrap;
     margin-right:-1px;
+    text-align:center;
+
 }
 .sidebarButtons{
     display: inline-block;
+    padding:10px 0 0 0 
 }
 .sidebarButtons .button{
     cursor: pointer;
@@ -147,15 +150,16 @@ div.header .buttons {
     color:var(--light-text);
     border: 1px solid var(--light-text);
     border-radius:5px;
-    z-index: 1;
     white-space: nowrap;
     margin:10px 0px 0px 10px;
     padding:10px 10px 10px 10px;
-    flex-grow: 0 , 0, 50px;
+    z-index: 0;
+    /* flex-grow: 0 , 0, 50px; */
 }
 
-.sidebarButtons .button .selected {
+.sidebarButtons .button.selected {
     background-color:var(--artic-green);
+    z-index: 10;
 }
 
 .sidebarButtons.right .button{
@@ -166,38 +170,9 @@ div.header .buttons {
     transform: translate(-30px) rotate(90deg);
 
 }
-/* .sidebarButtons .button h3{
 
-} */
 
-/* .sidebarButton.right{
- transform: rotate(-180deg);
- writing-mode: tb-lr;
- writing-mode: vertical-lr;
-} */
-/* .sidebarButton#options{
-   transform: translate(110px,0) rotate(-90deg) ;
-   transform-origin: right, bottom;
-   -ms-transform: translate(110px,0) rotate(-90deg) ;
-   -ms-transform-origin:right, bottom;
-   -webkit-transform: translate(110px,0) rotate(-90deg) ;
-   -webkit-transform-origin:right, bottom;
- }
- .sidebar.right .sidebarButton{
-       transform: rotate(-180deg);
- }
 
- .sidebarButton#map{
-   position: relative;
-   transform: translate(-40px,-10px) rotate(-90deg) ;
-   transform-origin: left, bottom;
-   -ms-transform: translate(-40px,-10px) rotate(-90deg) ;
-   -ms-transform-origin:left, bottom;
-   -webkit-transform: translate(-40px,-10px) rotate(-90deg) ;
-   -webkit-transform-origin:left, bottom;
-   width:50px;
-   height: 60px;
- } */
 
 
 

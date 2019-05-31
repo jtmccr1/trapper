@@ -178,9 +178,7 @@ function mostProbableTransphyloEdgeCondition(graph){
 					</div>
 					<div className="sidebarButtonColumn">
 						<div className="sidebarButtons left">
-							<div className="button" onClick={()=> {setOptionsOpen(!optionsOpen);getSizeAgain();}}>
-								 <h3>Options</h3>
-							</div>
+								 <h3 className="button" onClick={()=> {setOptionsOpen(!optionsOpen);getSizeAgain();}}>Options</h3>
 						</div>
 					</div>
 					<ChartContainer  
@@ -192,7 +190,7 @@ function mostProbableTransphyloEdgeCondition(graph){
 						phylogeny={phylogeny}/> 
 					<div className="sidebarButtonColumn">
 						<div className="sidebarButtons right">
-							<div className="button" onClick={()=> {
+								 <h3 className={`button ${sideBarFocus=="Geography"?"selected":""}`} onClick={()=> {
 									if(sideBarOpen&&sideBarFocus!=="Geography"){
 										setSideBarFocus("Geography")
 									}else{
@@ -200,19 +198,17 @@ function mostProbableTransphyloEdgeCondition(graph){
 										setSideBarFocus("Geography")
 									}
 									getSizeAgain();
-									}}>
-								 <h3>Map</h3>
-							</div>
-							<div className="button" onClick={()=> 	{
-						if(sideBarOpen&&sideBarFocus!=="LineList"){
-							setSideBarFocus("LineList")
-						}else{
-							setSideBarOpen(!sideBarOpen)
-							setSideBarFocus("LineList")
-						}
-						getSizeAgain();}}>
-								 <h3>Line List</h3>
-							</div>
+									}}>Map</h3>
+
+								 <h3 className={`button ${sideBarFocus=="LineList"?"selected":""}`} onClick={()=> {
+									if(sideBarOpen&&sideBarFocus!=="LineList"){
+										setSideBarFocus("LineList")
+									}else{
+										setSideBarOpen(!sideBarOpen)
+										setSideBarFocus("LineList")
+									}
+									getSizeAgain();
+									}}>Line List</h3>
 						</div>
 					</div>
 					<div className={`sidebar right ${sideBarOpen? "open":''}`}>
