@@ -1,6 +1,6 @@
 import React, {props, useRef, useState} from 'react';
-import {select} from "d3";
-import {geoEqualEarth, geoPath} from "d3-geo";
+import {select, selectAll} from "d3";
+import {geoMercator, geoPath} from "d3-geo";
 import {feature} from "topojson";
 
 function Geography(props){
@@ -11,7 +11,7 @@ function Geography(props){
     const mapData = props.data;
 
     // center on UK
-    const projection = geoEqualEarth()
+    const projection = geoMercator()
         .center([3.4360, 55.3781])
         .scale(1000)
         .translate([width / 2, height / 2]);
@@ -28,6 +28,8 @@ function Geography(props){
     const adm0 = feature(mapData, mapData.objects.adm0);
     const adm1 = feature(mapData, mapData.objects.adm1);
 
+    console.log("ADM1: " + JSON.stringify(adm1.features[24]));
+    
     const el = useRef();
 
     // if (el.current !== null) {
@@ -50,7 +52,7 @@ function Geography(props){
                 .data(adm1.features)
                 .enter().append("path")
                 .attr("class", "adm1")
-                .attr("id", (d) => d.properties.name)
+                .attr("id", (d) => d.properties.code)
                 .attr("d", path);
 
             g.append("g")
@@ -59,7 +61,7 @@ function Geography(props){
                 .data(adm0.features)
                 .enter().append("path")
                 .attr("class", "adm0")
-                .attr("id", (d) => d.properties.name)
+                .attr("id", (d) => d.properties.code)
                 .attr("d", path);
 
             // }else{
