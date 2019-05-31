@@ -3,7 +3,7 @@ import {select} from "d3";
 import {geoEqualEarth, geoPath} from "d3-geo";
 import {feature} from "topojson";
 
-function Geography(){
+function Geography(props){
     const [map, setMap] = useState(null);
 
     const width = props.size.width;
@@ -25,15 +25,13 @@ function Geography(){
     //     .scaleExtent([height, 8 * height])
     //     .on("zoom", zoomed);
 
-    const adm0 = feature(mapData, mapData.objects.adm0);
-    const adm1 = feature(mapData, mapData.objects.adm1);
+    // const adm0 = feature(mapData, mapData.objects.adm0);
+    // const adm1 = feature(mapData, mapData.objects.adm1);
 
     const el = useRef();
 
     if (el.current !== null) {
-
-        if (el.current.children.length === 0) { // make it the first time
-
+        
             //to selecting every time
             const svg = select(el.current);
 
@@ -45,27 +43,26 @@ function Geography(){
                 .attr("width", width)
                 .attr("height", height);
 
-            g.append("g")
-                .attr("id", "adm1")
-                .selectAll("path")
-                .data(adm1.features)
-                .enter().append("path")
-                .attr("class", "adm1")
-                .attr("id", (d) => d.properties.name)
-                .attr("d", path);
-
-            g.append("g")
-                .attr("id", "adm0")
-                .selectAll("path")
-                .data(adm0.features)
-                .enter().append("path")
-                .attr("class", "adm0")
-                .attr("id", (d) => d.properties.name)
-                .attr("d", path);
+            // g.append("g")
+            //     .attr("id", "adm1")
+            //     .selectAll("path")
+            //     .data(adm1.features)
+            //     .enter().append("path")
+            //     .attr("class", "adm1")
+            //     .attr("id", (d) => d.properties.name)
+            //     .attr("d", path);
+            //
+            // g.append("g")
+            //     .attr("id", "adm0")
+            //     .selectAll("path")
+            //     .data(adm0.features)
+            //     .enter().append("path")
+            //     .attr("class", "adm0")
+            //     .attr("id", (d) => d.properties.name)
+            //     .attr("d", path);
 
             // }else{
             //     update?
-        }
     }
 
     return(
