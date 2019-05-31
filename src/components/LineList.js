@@ -1,6 +1,5 @@
 import React, {useState,useCallback,useRef} from 'react';
 import ReactTable from 'react-table';
-import 'react-table/react-table.css';
 
 
 function LineList(){
@@ -12,7 +11,16 @@ function LineList(){
             name: 'Jason Maurer',
             age: 23,
           }
-        }];
+        },
+        {
+            name: 'Tanner Linsley',
+            age: 26,
+            friend: {
+              name: 'Jason Maurer',
+              age: 23,
+            }
+          }
+    ];
        
         const columns = [{
           Header: 'Name',
