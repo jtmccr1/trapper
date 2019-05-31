@@ -5,8 +5,34 @@ import { FigTree }  from '../lib/figtree.js/index.js';
 import {scaleTime,scaleLinear} from "d3-scale";
 import {select,selectAll} from 'd3-selection';
 import {extent} from 'd3-array';
+import {event} from 'd3';
+
+const mouseEnter = (d, i, n)=>{
+    const allAreas = selectAll(n);
+
+    allAreas.filter((d2,i2,n2)=>n2[i2]!==n[i]).classed("not-hovered", true);
+    select(n[i]).classed("hovered", true);
 
 
+    let tooltip = document.getElementById("tooltip");
+    // put text to display here!
+    tooltip.innerHTML = "Whoop!";
+
+    tooltip.style.display = "block";
+    tooltip.style.left =event.pageX + 10 + "px";
+    tooltip.style.top = event.pageY + 10 + "px";
+    tooltip.style.visibility ="visible";
+};
+const mouseExit = (d,i,n) => {
+        selectAll(n).classed("not-hovered", false);
+        select(n[i]).classed("hovered", false);
+
+        const tooltip = document.getElementById("tooltip");
+        tooltip.style.visibility = "hidden";
+    };
+
+
+const callback = {enter:mouseEnter,exit:mouseExit};
 function ArcTransmission(props){
     const [figtree,setFigtree]=useState(null);
     const xScale = scaleTime().domain(extent(props.dateRange)).range([0,1]); // pass in date domain
@@ -25,8 +51,8 @@ function ArcTransmission(props){
                 };
                 const fig = new FigTree(node,layout,props.margins,settings);
             fig.draw();
-            fig.hilightInternalNodes();
-            fig.hilightExternalNodes();
+            
+            fig.onClickNode();
             fig.hilightBranches();
             select(node).select(".axes-layer").remove();
             setFigtree(fig);

@@ -283,7 +283,7 @@ div.header {
   opacity: 0.5;
 }
 .fishArea.hovered{
-  stroke-width: 4px;
+  stroke-width: 2px;
 }
 .rect{
   stroke-width: 1px;
@@ -342,6 +342,8 @@ div.header {
       display: none;
       font-size: 8pt;
   }
+
+  
   
   /* --------------------- D3 --------------------- */
   .axis text,

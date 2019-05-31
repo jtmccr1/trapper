@@ -118,7 +118,8 @@ export class ArcLayout extends Layout {
                         // The source and targets here are nodes in the graph;
                         v0: this.nodeMap.get(e.source),
                         v1: this.nodeMap.get(e.target),
-                        key: e.id
+                        key: e.id,
+                        data:e,
                         // key: Symbol(n.id).toString()
                     };
                     edges.push(edge);
@@ -140,6 +141,9 @@ export class ArcLayout extends Layout {
                     e.classes = [
                         ...e.classes,
                         ...this.getAnnotations(e.v1.node)]
+                    e.classes = [
+                        ...e.classes,
+                        ...this.getAnnotations(e.data)]
 
                 // }
                 const length = e.v1.x - e.v0.x;

@@ -8,6 +8,9 @@
 .rect.hovered{
   fill: #e9c964;
 }
+#phylogeny .internal-node{
+  display: none;
+}
  /* ------- Hard coded locations ------------------------------*/  
   
  .location-Location-A{

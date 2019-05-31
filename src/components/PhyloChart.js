@@ -44,7 +44,7 @@ function PhyloChart(props){
         // },[props.chartGeom,props.phylogeny])
 
          return(
-                <svg className="chart" id={rand_id}
+                <svg className="chart" id={"phylogeny"}
                 ref={el}
                 height={props.chartGeom.height}
                 width={props.chartGeom.width}

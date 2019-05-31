@@ -39,7 +39,7 @@ export class FigTree {
         // merge the default settings with the supplied settings
         this.settings = {...FigTree.DEFAULT_SETTINGS(), ...settings};
         this.svg=svg;
-
+        this.updateStyles=[];
     }
     draw(){
         
@@ -141,7 +141,12 @@ export class FigTree {
 
         updateNodes.call(this);
 
+        for(const updateStyle of this.updateStyles){
+            updateStyle();
+        }
+
     }
+
 
     /**
      * set mouseover highlighting of branches
@@ -443,7 +448,7 @@ function updateNodeBackgrounds() {
     this.settings.baubles.forEach((bauble) => {
         const d = bauble
             .createShapes(newNodes.filter(bauble.vertexFilter))
-            .attr("class", "node-background")
+            .attr("class", v=>["node-background", ...v.classes].join(" "))
             .attr("transform", (v) => {
                 return `translate(${this.scales.x(v.x)}, ${this.scales.y(v.y)})`;
             });
@@ -500,7 +505,7 @@ function updateBranches() {
 
     newBranches.append("path")
         .attr("class", "branch-path")
-        .attr("d", (e,i) => branchPath(e,i));
+        .attr("d", (e,i) => {console.log(e); branchPath(e,i)});
 
     newBranches.append("text")
         .attr("class", "branch-label length")
