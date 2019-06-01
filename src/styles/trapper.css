@@ -240,12 +240,17 @@ div.header .buttons {
 }
 /* ---------------  C H A R T S ----------------- */
 .chartTitle {
-    text-align: center;
-    font-weight: 600;
+    font-family: light;
+    text-align: left;
     font-size: 1.2em;
+    margin-bottom: -25px;
     color: var(--light-text);
-    padding-right: 25px; /* to stop icon overlap */
+    transform-origin: top left;
+    transform: translate(-25px) rotate(-90deg);
+    padding: 0px 0px 0px 14px;
+    /*border: 1px solid #a90000;*/
 }
+
 .hoverInfo {
     z-index: 20;
     position: absolute;

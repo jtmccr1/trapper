@@ -78,6 +78,7 @@ const ChartContainer = React.forwardRef((props, ref)=>{
                                        chartGeom={chartGeom}
                                        dateRange ={props.dateRange}
                                        callbacks={{groups:d=>d.location}}/>
+                    <div className="chartTitle">Case plot</div>
                 </div>
                 <div className = "chartContainer">
                     <AreaPlot
@@ -85,6 +86,7 @@ const ChartContainer = React.forwardRef((props, ref)=>{
                         epidemic={props.epidemic}
                         dateRange ={props.dateRange}
                         chartGeom={chartGeom}/>
+                    <div className="chartTitle">Outbreaks</div>
                 </div>
                 <div className = "chartContainer">
                     <ArcTransmission
@@ -97,6 +99,7 @@ const ChartContainer = React.forwardRef((props, ref)=>{
                         chartGeom={chartGeom}
                         setSelectedCases={props.setSelectedCases}
                         selectedCases={props.selectedCases}/>
+                    <div className="chartTitle">Case connections</div>
                 </div>
                 <div className = "chartContainer">
                     <PhyloChart
@@ -107,6 +110,7 @@ const ChartContainer = React.forwardRef((props, ref)=>{
                         layout = {RectangularLayout}
                         // attributes = {phyloAttributes}
                         chartGeom={{...chartGeom,...{"height":600}}}/>
+                    <div className="chartTitle">Transmission tree</div>
                 </div>
             </div>
         )}
