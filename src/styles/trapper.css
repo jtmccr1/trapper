@@ -229,13 +229,13 @@ div.header .buttons {
 }
 
 .chartContainer {
-    /*margin:5px 5px 5px 5px;*/
+    margin:5px 5px 5px 5px;
     border-style: solid;
     border-color: var(--artic-green);
     border-width: 0px 0px 1px 24px;
     border-radius: 5pt;
     background: none;/* var(--dark-background);*/
-    border: 1px solid #cf7155;
+    /*border: 1px solid #cf7155;*/
 }
 
 .mockChartContainer {
