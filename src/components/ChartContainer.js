@@ -10,6 +10,23 @@ import { RectangularLayout, TransmissionLayout } from '../lib/figtree.js/index.j
 
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import PerfectScrollbar from 'react-perfect-scrollbar'
+import {event, select} from "d3-selection";
+
+const mouseEnter = (event, i, n)=>{
+    // console.log(event)
+    let timeline = document.getElementById("timeline");
+    if (event.altKey) {
+        timeline.style.left = event.pageX + "px";
+        timeline.style.visibility ="visible";
+    } else {
+        timeline.style.visibility = "hidden";
+    }
+};
+
+const mouseExit = (d,i,n) => {
+    const timeline = document.getElementById("timeline");
+    timeline.style.visibility = "hidden";
+};
 
 const ChartContainer = React.forwardRef((props, ref)=>{
 
@@ -23,6 +40,7 @@ const ChartContainer = React.forwardRef((props, ref)=>{
             const parentBaseDim={"height":300,"width":props.timelineSize.width*0.9};
             setChartGeom(parentBaseDim)
         }
+
     },[props.timelineSize]);
 
     //Ensure we don't render before we have scales ect.
@@ -36,7 +54,8 @@ const ChartContainer = React.forwardRef((props, ref)=>{
         )
     }else{
         return(
-            <div className = "timelineContainer" ref={ref} >
+            <div className = "timelineContainer" ref={ref} onMouseMove={mouseEnter} onMouseLeave={mouseExit}>
+                <div id="timeline"></div>
                 <div className="hoverInfo" id="tooltip"></div>
                 <div className = "mockChartContainer">
                     <TimeAxis dateRange ={props.dateRange}

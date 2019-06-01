@@ -28,23 +28,23 @@ const mouseEnter = (d, i, n)=>{
     tooltip.style.visibility ="visible";
 };
 const mouseExit = (d,i,n) => {
-        select(n[i]).classed("hovered", false);
-        const tooltip = document.getElementById("tooltip");
-        tooltip.style.visibility = "hidden";
-    };
+    select(n[i]).classed("hovered", false);
+    const tooltip = document.getElementById("tooltip");
+    tooltip.style.visibility = "hidden";
+};
 
 const callback = {enter:mouseEnter,exit:mouseExit};
 function StackedHistogram(props){
     const [histogram,setHistogram]=useState(null);
-    
+
     const el = useCallback(node => {
-        
+
         if (node !== null) {
             if(node.children.length===0){ // make it the first time
                 const layoutSettings = {horizontalRange:extent(props.dateRange),
-                                        horizontalTicks:props.dateRange,
-                                        horizontalScale:scaleTime,
-                                        groupingFunction:d=>d.location};
+                    horizontalTicks:props.dateRange,
+                    horizontalScale:scaleTime,
+                    groupingFunction:d=>d.location};
                 const layout = new stackedHistogramLayout(props.data,layoutSettings);
                 const settings = { hoverBorder: 4, backgroundBorder:0,transitionDuration:300};
                 const fig = new stackedHistogramChart(node,layout,props.margins,settings);
@@ -61,14 +61,14 @@ function StackedHistogram(props){
             }
         }
     });
-const rand_id = `b${Math.random().toString(36).substring(4)}`
 
+    const rand_id = `b${Math.random().toString(36).substring(4)}`
 
-        return(
-            <svg className="chart" id= {rand_id}
-            ref={el}
-            height={props.chartGeom.height}
-            width={props.chartGeom.width}
+    return(
+        <svg className="chart" id= {rand_id}
+             ref={el}
+             height={props.chartGeom.height}
+             width={props.chartGeom.width}
         />);
 
 };
