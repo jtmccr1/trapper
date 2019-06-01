@@ -115,38 +115,42 @@ const nodeMouseExit = (d,i,n,fig) => {
 const nodeCallback = {enter:nodeMouseEnter,exit:nodeMouseExit};
 
 
-const nodeClick = (d,i,n,fig) =>{
-    // is it already selected?
-
-    const shouldSelect = !select(n[i]).attr("class").includes("selected");
-    select(n[i]).classed("selected", shouldSelect);
-    selectAll(`.id-${d.node.id}`).classed("selected", shouldSelect);
-    // potential sources
-    // maybe select all to grab branches in the tree.
-    fig.svgSelection.selectAll(`.branch.target-${d.node.id}`).select(".branch-path")
-        .classed("selected",shouldSelect)
-    
-    const sourceNodes = fig.layout.graph.getIncomingEdges(d.node).map(e=>e.source);
-
-    // sourceNodes.classed("attr",'hovered')
-    // mimics highlight nodes in figtree
-    for(const source of sourceNodes){
-        const node =  fig.svgSelection.select(`.node.id-${source.id}`).select(".node-shape");
-        fig.settings.baubles.forEach((bauble) => {
-            if (bauble.vertexFilter(node)) {
-                bauble.updateShapes(node, (shouldSelect?fig.settings.hoverBorder:0)); // if we're selecting use the hover border
-            }
-        });
-        node.classed("selected by-proxy", shouldSelect);
-        // on all other plots
-        selectAll(`.id-${source.id}`).classed("selected by-proxy", shouldSelect);
-
-    }
-}
-
-
-
 function ArcTransmission(props){
+    // Selection call back
+    const nodeClick = (d,i,n,fig) =>{
+        // is it already selected?
+        const shouldSelect = !select(n[i]).attr("class").includes("selected");
+        if(shouldSelect){
+            props.setSelected([...props.selected,d.node])
+        }else{
+            props.setSelected(props.selected.filter(d=>d!==d.node))
+        }
+    
+        select(n[i]).classed("selected", shouldSelect);
+        selectAll(`.id-${d.node.id}`).classed("selected", shouldSelect);
+        // potential sources
+        // maybe select all to grab branches in the tree.
+        fig.svgSelection.selectAll(`.branch.target-${d.node.id}`).select(".branch-path")
+            .classed("selected",shouldSelect)
+        
+        const sourceNodes = fig.layout.graph.getIncomingEdges(d.node).map(e=>e.source);
+    
+        // sourceNodes.classed("attr",'hovered')
+        // mimics highlight nodes in figtree
+        for(const source of sourceNodes){
+            const node =  fig.svgSelection.select(`.node.id-${source.id}`).select(".node-shape");
+            fig.settings.baubles.forEach((bauble) => {
+                if (bauble.vertexFilter(node)) {
+                    bauble.updateShapes(node, (shouldSelect?fig.settings.hoverBorder:0)); // if we're selecting use the hover border
+                }
+            });
+            node.classed("selected by-proxy", shouldSelect);
+            // on all other plots
+            selectAll(`.id-${source.id}`).classed("selected by-proxy", shouldSelect);
+    
+        }
+    }
+
     const [figtree,setFigtree]=useState(null);
     const xScale = scaleTime().domain(extent(props.dateRange)).range([0,1]); // pass in date domain
     const xfunc=(n,i)=>n.id==="UnsampledrootCase"? xScale(props.treeDateRange[0]):xScale(n.symptomOnset) // for setting the x postion;

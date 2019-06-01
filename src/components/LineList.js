@@ -46,11 +46,12 @@ function LineList(props){
 
 
       const rows =props.epidemic.Cases.length;
-       
-        return (<ReactTable
+       const selectedData = props.selected.length>0?props.epidemic.Cases.filter(n=>props.selected.map(s=>s.id).indexOf(n.id)>-1):props.epidemic.Cases;
+        return (
+        <ReactTable
           showPagination={false}
           defaultPageSize={rows}
-          data={props.epidemic.Cases}
+          data={selectedData}
           columns={columns}
           filterable
           className="-striped -highlight" // add styles

@@ -70,6 +70,7 @@ function App() {
 		const [epidemic,setEpidemic] = useState(null);
 		const [treeDateRange,setTreeDateRange] = useState(null);
 		const [mapTopoJSON,setMapTopoJSON] =useState(null);
+		const [selected,setSelected] = useState([]);
 
 	//Load the data at the start
 	
@@ -188,7 +189,9 @@ function mostProbableTransphyloEdgeCondition(graph){
 						dateRange={dateRange}
 						treeDateRange={treeDateRange}
 						epidemic={epidemic}
-						phylogeny={phylogeny}/> 
+						phylogeny={phylogeny}
+						setSelected={setSelected}
+						selected={selected}/> 
 					<div className="sidebarButtonColumn">
 						<div className="sidebarButtons right">
 								 <h3 className={`button ${sideBarFocus==="Geography"?"selected":""}`} onClick={()=> {
@@ -219,7 +222,7 @@ function mostProbableTransphyloEdgeCondition(graph){
 						<Geography data={mapTopoJSON} margins={mapMargins} size={mapSize} />
 						:<h3>Loading Map</h3>}
 					</div>
-					:<LineList epidemic= {epidemic} />}
+					:<LineList epidemic= {epidemic} selected={selected}/>}
 					</div>
 				</div>
 			</div>
