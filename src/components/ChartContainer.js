@@ -46,7 +46,7 @@ const ChartContainer = React.forwardRef((props, ref)=>{
     //Update chart sizes
     useEffect(()=>{
         if(props.timelineSize!==null){
-            const parentBaseDim={"height":300,"width":props.timelineSize.width*0.9};
+            const parentBaseDim={"height":300,"width":props.timelineSize.width*0.95};
             setChartGeom(parentBaseDim)
         }
 
