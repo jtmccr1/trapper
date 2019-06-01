@@ -119,6 +119,7 @@ useEffect(()=>{
 				.map(e=>e.target.location)
 			indexCase.location = mode(childLocations);
 		}
+		console.log(outbreakGraph);
 		const outbreakEpidemic = new Epidemic(indexCase,outbreakGraph,mostProbableTransphyloEdgeCondition);
 		setEpidemic(outbreakEpidemic);
 
@@ -134,6 +135,7 @@ useEffect(()=>{
 				.object(treeAnnotationsInitial)
 				//Todo annotate Tree.
 				const tree = Tree.parseNewick(treeString);
+				// tree.annotateNodesFromLabel(parsedTreeAnnotationsInitial)
 				setPhylogeny(tree);
 				// get initial time range
 				const casesRange = extent(outbreakGraph.nodes,d=>d.symptomOnset);
@@ -143,7 +145,7 @@ useEffect(()=>{
 				const treeMaxDate = max(outbreakGraph.getNode(treeMaxTip.name).sampleDate); // names must match case id's in line list; sampleDate is an array.
 				
 				const treeRootDate = timeDay.offset(treeMaxDate,(-1*treeMaxTipLength*365)); // not exact
-				const totalExtent = extent([treeRootDate,...casesRange]);
+				const totalExtent = extent([treeRootDate,...casesRange,treeMaxDate]);
 				const week0 = timeWeek.offset(timeWeek.floor(totalExtent[0]),-1);
 				// add an extra one for the range function [,)
 				const weekEnd = timeWeek.offset(timeWeek.ceil(totalExtent[1]),2);
