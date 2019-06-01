@@ -19,8 +19,12 @@ const mouseEnter = (d, i, n)=>{
                         Symptom onset: ${formatTime(d.data.symptomOnset)} `;
 
     tooltip.style.display = "block";
-    tooltip.style.left =event.pageX + 10 + "px";
+
+    // this should be dynamically set (i.e., the tooltip box should always be aligned to
+    // be visible in the view port).
+    tooltip.style.left = event.pageX + (event.pageX > 800? -300 : + 10) + "px";
     tooltip.style.top = event.pageY + 10 + "px";
+
     tooltip.style.visibility ="visible";
 };
 const mouseExit = (d,i,n) => {
