@@ -27,7 +27,7 @@
 /* ----------- GLOBALS (BODY) --------------*/
 body {
     height: 95vh;
-    font-family: "light";
+    font-family: "hairline";
     background: var(--dark-background);
     color: var(--dark-foreground);
     overflow: hidden;
@@ -137,21 +137,20 @@ div.header .buttons {
     flex-flow: column nowrap;
     margin-right:-1px;
     text-align:center;
-
 }
 .sidebarButtons{
     display: inline-block;
-    padding:10px 0 0 0 
+    padding: 28px 0 0 0
 }
 .sidebarButtons .button {
+    width: 40px;
+    height: 120px;
     cursor: pointer;
     background-color:var(--header);
     color:var(--light-text);
     border: 1px solid var(--light-text);
     border-radius:5px;
     white-space: nowrap;
-    margin: 50px 0px 0px 10px;
-    padding:5px 10px 10px 10px;
     z-index: -10;
     /* flex-grow: 0 , 0, 50px; */
 }
@@ -162,15 +161,40 @@ div.header .buttons {
 }
 
 .sidebarButtons.right .button{
-    transform: translate(30px) rotate(-90deg);
+    margin: 1px -10px 0px 10px;
+    padding-right: 10px;
+    /*transform: translate(30px) rotate(-90deg);*/
 
 }
 .sidebarButtons.left .button{
-    transform: translate(-40px) rotate(90deg);
+    margin: 0px 10px 0px -10px;
+    padding-left: 10px;
+    /*transform: translate(-40px) rotate(90deg);*/
 
 }
 
+.button-icon {
+    /*border: 1px solid #a90000;*/
+    margin: 10px 0px 0px 0px;
+}
 
+.button-text {
+    /*border: 1px solid #a90000;*/
+    margin: 0px 0px 0px 0px;
+}
+
+.rotate-minus-ninety {
+    transform: translate(0px,40px) rotate(-90deg);
+}
+
+.rotate-plus-ninety {
+    transform: translate(0px,10px) rotate(90deg);
+}
+
+.ReactTable .rt-table {
+    font-family: light;
+    font-size: 10pt;
+}
 
 .ReactTable .rt-thead {
     overflow-y: scroll;
@@ -186,18 +210,18 @@ div.header .buttons {
     width: 100%;
     z-index: 1;
     margin: 30px auto 30px auto;
-    border-style: solid;
-    border-color: var(--light-text);
-    border-width: 0px 1px 0px 1px;
+    /*border-style: solid;*/
+    /*border-color: var(--light-text);*/
+    /*border-width: 0px 1px 0px 1px;*/
     /* border-radius: 5px; */
-    padding:0px 10px 10px 10px;
+    /*padding:0px 10px 10px 10px;*/
     flex-grow:1;
     overflow-y: scroll;
     flex-direction: column;
     /* box-sizing: border-box; */
 }
 .chartContainer {
-    margin:10px 10px 10px 10px;
+    margin:5px 5px 5px 5px;
     /* position: relative; */
     border-style: solid;
     border-color: var(--artic-green);
