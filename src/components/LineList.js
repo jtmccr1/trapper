@@ -46,7 +46,7 @@ function LineList(props){
 
 
       const rows =props.epidemic.Cases.length;
-       const selectedData = props.selected.length>0?props.epidemic.Cases.filter(n=>props.selected.map(s=>s.id).indexOf(n.id)>-1):props.epidemic.Cases;
+       const selectedData = props.selectedCases.length>0?props.epidemic.Cases.filter(n=>props.selectedCases.map(s=>s.id).indexOf(n.id)>-1):props.epidemic.Cases;
         return (
         <ReactTable
           showPagination={false}

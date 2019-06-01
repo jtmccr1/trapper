@@ -46,7 +46,6 @@ const branchMouseExit = (d,i,n,fig) => {
             // mimics highlight nodes in figtree
         for(const terminal of [d.data.source,d.data.target]){
             const node =  fig.svgSelection.select(`.node.id-${terminal.id}`).select(".node-shape");
-            console.log(node)
             fig.settings.baubles.forEach((bauble) => {
                 if (bauble.vertexFilter(node)) {
                     bauble.updateShapes(node, 0);
@@ -81,14 +80,14 @@ const nodeMouseEnter = (d, i, n,fig)=>{
 
     // sourceNodes.classed("attr",'hovered')
     // mimics highlight nodes in figtree
-    for(const source of sourceNodes){
+    for(const source of [...sourceNodes]){
         const node =  fig.svgSelection.select(`.node.id-${source.id}`).select(".node-shape");
         fig.settings.baubles.forEach((bauble) => {
             if (bauble.vertexFilter(node)) {
                 bauble.updateShapes(node, fig.settings.hoverBorder);
             }
         });
-        node.classed("hovered", true);
+        node.classed("hovered proxy", true);
     }
 };
 const nodeMouseExit = (d,i,n,fig) => {
@@ -113,19 +112,26 @@ const nodeMouseExit = (d,i,n,fig) => {
     }
     };
 const nodeCallback = {enter:nodeMouseEnter,exit:nodeMouseExit};
+    
 
 
 function ArcTransmission(props){
     // Selection call back
     const nodeClick = (d,i,n,fig) =>{
+        // remove all selections
         // is it already selected?
         const shouldSelect = !select(n[i]).attr("class").includes("selected");
         if(shouldSelect){
-            props.setSelected([...props.selected,d.node])
+            // props.selectedCases is defined on first render as an empty array. This is why this append doesn't work
+            // insead it replaces. 
+            props.setSelectedCases([...props.selectedCases,d.node])
         }else{
-            props.setSelected(props.selected.filter(d=>d!==d.node))
+            props.setSelectedCases(props.selectedCases.filter(d=>d!==d.node))
         }
-    
+        selectAll(".selected").classed("selected",false)
+
+        
+
         select(n[i]).classed("selected", shouldSelect);
         selectAll(`.id-${d.node.id}`).classed("selected", shouldSelect);
         // potential sources
@@ -139,11 +145,11 @@ function ArcTransmission(props){
         // mimics highlight nodes in figtree
         for(const source of sourceNodes){
             const node =  fig.svgSelection.select(`.node.id-${source.id}`).select(".node-shape");
-            fig.settings.baubles.forEach((bauble) => {
-                if (bauble.vertexFilter(node)) {
-                    bauble.updateShapes(node, (shouldSelect?fig.settings.hoverBorder:0)); // if we're selecting use the hover border
-                }
-            });
+        //     fig.settings.baubles.forEach((bauble) => {
+        //         if (bauble.vertexFilter(node)) {
+        //             bauble.updateShapes(node, (shouldSelect?fig.settings.hoverBorder:0)); // if we're selecting use the hover border
+        //         }
+        //     });
             node.classed("selected by-proxy", shouldSelect);
             // on all other plots
             selectAll(`.id-${source.id}`).classed("selected by-proxy", shouldSelect);

@@ -65,8 +65,8 @@ const ChartContainer = React.forwardRef((props, ref)=>{
           dateRange ={props.dateRange}
           curve ={"bezier"}
           chartGeom={chartGeom}
-          setSelected={props.setSelected}
-          selected={props.selected}/>
+          setSelectedCases={props.setSelectedCases}
+          selectedCases={props.selectedCases}/>
         </div>  
       <div className = "chartContainer">
           <PhyloChart  

@@ -77,8 +77,6 @@ draw(){
         .attr("id", "x-axis-bottom")
         .call(axisBottom(this.scales.x).tickValues(this.layout.horizontalAxisTicks));
 
-        console.log(this.scales.x.domain())
-    
 }
 update(){
            // get the size of the svg we are drawing on
