@@ -182,10 +182,10 @@ div.header .buttons {
 
 /*---------------------Time line container ----------*/
 .timelineContainer{
-    height: 90%;
-    width: 90%;
+    height: 100%;
+    width: 100%;
     z-index: 1;
-    margin: 50px auto 50px auto;
+    margin: 30px auto 30px auto;
     border-style: solid;
     border-color: var(--light-text);
     border-width: 0px 1px 0px 1px;

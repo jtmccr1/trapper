@@ -11,6 +11,10 @@ import Header from './Header';
 import ChartContainer from './ChartContainer';
 import LineList from "./LineList";
 
+// icons
+import { IoIosSettings } from "react-icons/io";
+import { IoIosMap } from "react-icons/io";
+import { IoIosListBox } from "react-icons/io";
 
 import Geography from "./Geography"
 import {Epidemic} from "../lib/outbreak/Epidemic";
@@ -183,7 +187,7 @@ function mostProbableTransphyloEdgeCondition(graph){
 					</div>
 					<div className="sidebarButtonColumn">
 						<div className="sidebarButtons left">
-								 <h3 className="button" onClick={()=> {setOptionsOpen(!optionsOpen);getSizeAgain();}}>Options</h3>
+								 <h3 className="button" onClick={()=> {setOptionsOpen(!optionsOpen);getSizeAgain();}}><IoIosSettings /> Options</h3>
 						</div>
 					</div>
 					<ChartContainer  
@@ -205,7 +209,7 @@ function mostProbableTransphyloEdgeCondition(graph){
 										setSideBarFocus("Geography")
 									}
 									getSizeAgain();
-									}}>Map</h3>
+									}}><IoIosMap/>Map</h3>
 
 								 <h3 className={`button ${sideBarFocus==="LineList"?"selected":""}`} onClick={()=> {
 									if(sideBarOpen&&sideBarFocus!=="LineList"){
@@ -215,7 +219,7 @@ function mostProbableTransphyloEdgeCondition(graph){
 										setSideBarFocus("LineList")
 									}
 									getSizeAgain();
-									}}>Line List</h3>
+									}}><IoIosListBox/>Line List</h3>
 						</div>
 					</div>
 					<div className={`sidebar right ${sideBarOpen? "open":''}`}>
