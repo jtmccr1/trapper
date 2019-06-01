@@ -12,13 +12,22 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import {event, select} from "d3-selection";
 
+// callbacks for the vertical timeline bar
 const mouseEnter = (event, i, n)=>{
     // console.log(event)
     let timeline = document.getElementById("timeline");
     if (event.altKey) {
         timeline.style.left = event.pageX + "px";
+        timeline.style.transition = "none";
+        timeline.style.opacity = "1";
         timeline.style.visibility ="visible";
     } else {
+        // -webkit-transition: 0.5s;
+        // -moz-transition: 0.5s;
+        // -o-transition: 0.5s;
+        // transition: 0.5s;
+        timeline.style.transition = "0.5s";
+        timeline.style.opacity = "0";
         timeline.style.visibility = "hidden";
     }
 };
