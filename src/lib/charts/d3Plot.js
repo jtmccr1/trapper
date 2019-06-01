@@ -2,14 +2,14 @@ import {select} from 'd3-selection';
 import {scaleLinear} from 'd3-scale';
 import {axisBottom,axisLeft} from 'd3-axis';
 import {easeLinear} from 'd3-ease';
-import {Type} from '../figtree.js/index.js';
+import {Type} from '../figtree.js/tree.js';
 import {event} from 'd3';
 /**
  * A master class for each plot that requires each plot implement a draw
  * update, onclick and onhover method.
  */
 
-export class d3Plot{
+export class  d3Plot{
     static DEFAULT_SETTINGS() {
         return {
       transitionDuration:300,

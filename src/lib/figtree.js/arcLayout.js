@@ -123,7 +123,7 @@ export class ArcLayout extends Layout {
 
             // create the edges (only done if the array is empty)
             const dataEdges = this.graph.edges;
-            dataEdges.forEach(e=>this.addAnnotations(e.metaData))
+            dataEdges.forEach(e=>{ this.addAnnotations(e.metaData);this.addAnnotations({source:e.source.id,target:e.target.id})})
             dataEdges
                 .forEach((e, i) => {
                     const edge = {
@@ -132,7 +132,6 @@ export class ArcLayout extends Layout {
                         v1: this.nodeMap.get(e.target),
                         key: e.id,
                         data:e,
-                        // key: Symbol(n.id).toString()
                     };
                     edges.push(edge);
                     this.edgeMap.set(edge, edge.v1);
@@ -152,10 +151,11 @@ export class ArcLayout extends Layout {
                 // if (e.v1.node.annotations) {
                     e.classes = [
                         ...e.classes,
-                        ...this.getAnnotations(e.v1.node)]
-                    e.classes = [
-                        ...e.classes,
-                        ...this.getAnnotations(e.data.metaData)]
+                        ...this.getAnnotations(e.v1.node),
+                        ...this.getAnnotations(e.data.metaData),
+                        ...this.getAnnotations({source:e.data.source.id,target:e.data.target.id})
+                    ]
+
 
                 // }
                 const length = e.v1.x - e.v0.x;

@@ -23,14 +23,63 @@ function LineList(props){
         filterable: false  //This makes the column not filterable
 
       }]
-      const rows =props.data.length;
-       
-        return (<ReactTable
+
+      const linkColumns = [{
+        id:"source",
+        Header: 'Source',
+        accessor: d=>d.source.id 
+      },{
+        id:"target",
+        Header: 'Target',
+        accessor: d=>d.target.id
+      },
+      {
+        id:"dataSource",
+        Header: 'Data Source',
+        accessor: d=>d.metaData.dataSource
+      },
+      {
+        id:"support",
+        Header: 'Support',
+        accessor: d=>d.metaData.support
+      }]
+
+
+      const rows =props.epidemic.Cases.length;
+       const selectedData = props.selectedCases.length>0?props.epidemic.Cases.filter(n=>props.selectedCases.map(s=>s.id).indexOf(n.id)>-1):props.epidemic.Cases;
+        return (
+        <ReactTable
           showPagination={false}
           defaultPageSize={rows}
-          data={props.data}
-          filterable
+          data={selectedData}
           columns={columns}
+          filterable
+          className="-striped -highlight" // add styles
+          SubComponent={row => {
+            const inlinks = props.epidemic.graph.getIncomingEdges(row.original)
+            const outlinks = props.epidemic.graph.getOutgoingEdges(row.original)
+
+            return(
+            <div>
+              <h4>Potential sources of infection </h4>
+              <ReactTable
+            showPagination={false}
+            defaultPageSize={inlinks.length}
+            data={inlinks}
+            filterable
+            className="-striped -highlight" // add styles
+            columns={linkColumns}/>
+            <h4>Transmissions</h4>
+            <ReactTable
+            showPagination={false}
+            defaultPageSize={outlinks.length}
+            data={outlinks}
+            filterable
+            className="-striped -highlight" // add styles
+            columns={linkColumns}/>
+            </div>)
+          }}
+
         />)
 }
 

@@ -35,53 +35,53 @@ const ChartContainer = React.forwardRef((props, ref)=>{
             </div>
         )
     }else{
-        return(
-                <div className = "timelineContainer" ref={ref} >
-                    <PerfectScrollbar>
-                    <div className="hoverInfo" id="tooltip"></div>
-                    <div className = "mockChartContainer">
-                        <TimeAxis dateRange ={props.dateRange}
-                                  margins = {margins}
-                                  chartGeom = {chartGeom}
-                                  domRect = {props.timelineSize}/>
-                    </div>
-                    <div className = "chartContainer">
-                        <StackedHistogram  data={props.epidemic.Cases}
-                                           margins = {margins}
-                                           chartGeom={chartGeom}
-                                           dateRange ={props.dateRange}
-                                           callbacks={{groups:d=>d.location}}/>
-                    </div>
-                    <div className = "chartContainer">
-                        <AreaPlot
-                            margins = {margins}
-                            epidemic={props.epidemic}
-                            dateRange ={props.dateRange}
-                            chartGeom={chartGeom}/>
-                    </div>
-                    <div className = "chartContainer">
-                        <ArcTransmission
-                            margins = {margins}
-                            treeDateRange={props.treeDateRange}
-                            phylogeny={props.phylogeny}
-                            graph={props.epidemic.graph}
-                            dateRange ={props.dateRange}
-                            curve ={"bezier"}
-                            chartGeom={chartGeom}/>
-                    </div>
-                    <div className = "chartContainer">
-                        <PhyloChart
-                            margins = {margins}
-                            dateRange ={props.dateRange}
-                            treeDateRange={props.treeDateRange}
-                            phylogeny={props.phylogeny}
-                            layout = {RectangularLayout}
-                            // attributes = {phyloAttributes}
-                            chartGeom={{...chartGeom,...{"height":600}}}/>
-                    </div>
-                    </PerfectScrollbar>
-                </div>
-        )}
+      return(
+       <div className = "timelineContainer" ref={ref} >
+         <div className="hoverInfo" id="tooltip"></div>
+       <div className = "mockChartContainer">
+      <TimeAxis dateRange ={props.dateRange} 
+        margins = {margins}
+          chartGeom = {chartGeom} 
+          domRect = {props.timelineSize}/>
+        </div>  
+        <div className = "chartContainer">
+          <StackedHistogram  data={props.epidemic.Cases} 
+          margins = {margins}
+            chartGeom={chartGeom}
+            dateRange ={props.dateRange}
+            callbacks={{groups:d=>d.location}}/>
+          </div>  
+          <div className = "chartContainer">
+          <AreaPlot  
+          margins = {margins}
+          epidemic={props.epidemic} 
+          dateRange ={props.dateRange}
+          chartGeom={chartGeom}/>
+        </div>  
+          <div className = "chartContainer">
+          <ArcTransmission  
+          margins = {margins}
+          treeDateRange={props.treeDateRange}
+          phylogeny={props.phylogeny} 
+          graph={props.epidemic.graph} 
+          dateRange ={props.dateRange}
+          curve ={"bezier"}
+          chartGeom={chartGeom}
+          setSelectedCases={props.setSelectedCases}
+          selectedCases={props.selectedCases}/>
+        </div>  
+      <div className = "chartContainer">
+          <PhyloChart  
+          margins = {margins}
+          dateRange ={props.dateRange}
+          treeDateRange={props.treeDateRange}
+          phylogeny={props.phylogeny} 
+          layout = {RectangularLayout}
+          // attributes = {phyloAttributes}
+          chartGeom={{...chartGeom,...{"height":600}}}/>
+    </div>  
+    </div>
+)}
     // <Chart  />
 });
 

@@ -5,13 +5,18 @@ import {select} from "d3-selection";
 import {scaleTime} from "d3-scale";
 import {timeWeek} from "d3-time";
 import {extent} from 'd3-array';
-import {event} from 'd3';
+import {event,timeFormat} from 'd3';
+const formatTime = timeFormat("%B %d, %Y");
 const mouseEnter = (d, i, n)=>{
     select(n[i]).classed("hovered", true);
     // console.log(d)
     let tooltip = document.getElementById("tooltip");
     // put text to display here!
-    tooltip.innerHTML = "Whoop!";
+    tooltip.innerHTML =`Case Id: ${d.data.id}
+                        <br/>
+                        Location: ${d.data.location}
+                        <br/>
+                        Symptom onset: ${formatTime(d.data.symptomOnset)} `;
 
     tooltip.style.display = "block";
     tooltip.style.left =event.pageX + 10 + "px";
@@ -34,7 +39,8 @@ function StackedHistogram(props){
             if(node.children.length===0){ // make it the first time
                 const layoutSettings = {horizontalRange:extent(props.dateRange),
                                         horizontalTicks:props.dateRange,
-                                        horizontalScale:scaleTime};
+                                        horizontalScale:scaleTime,
+                                        groupingFunction:d=>d.location};
                 const layout = new stackedHistogramLayout(props.data,layoutSettings);
                 const settings = { hoverBorder: 4, backgroundBorder:0,transitionDuration:300};
                 const fig = new stackedHistogramChart(node,layout,props.margins,settings);

@@ -1,6 +1,6 @@
 "use strict";
 import {select,selectAll,scaleLinear,axisBottom,mouse,event} from "d3";
-
+import {d3Plot} from "../charts/d3Plot";
 /** @module figtree */
 // const d3 = require("d3");
 
@@ -11,7 +11,7 @@ import {select,selectAll,scaleLinear,axisBottom,mouse,event} from "d3";
  * for adding interactivity to the tree (e.g., mouse-over labels, rotating nodes and rerooting on branches).
  * The tree is updated with animated transitions.
  */
-export class FigTree {
+export class FigTree extends d3Plot{
 
     static DEFAULT_SETTINGS() {
         return {
@@ -22,6 +22,7 @@ export class FigTree {
             backgroundBorder: 0,
             baubles: [],
             transitionDuration:500,
+            opacityFunc:e=>1,
         };
     }
 
@@ -33,6 +34,7 @@ export class FigTree {
      * @param settings
      */
     constructor(svg, layout, margins, settings = {}) {
+        super();
         this.layout = layout;
         this.margins = margins;
 
@@ -154,9 +156,11 @@ export class FigTree {
     hilightBranches() {
         // need to use 'function' here so that 'this' refers to the SVG
         // element being hovered over.
+        const self=this;
         const selected = this.svgSelection.selectAll(".branch").select(".branch-path");
-        selected.on("mouseover", function (d, i) {
+        selected.on("mouseover", function (d, n,i) {
             select(this).classed("hovered", true);
+            console.log(self)
 
         });
         selected.on("mouseout", function (d, i) {
@@ -267,8 +271,9 @@ export class FigTree {
      */
     onClickNode(action, selection = null) {
         const selected = this.svgSelection.selectAll(`${selection ? selection : ".node"}`).select(".node-shape");        
-        selected.on("click", (vertex) => {
-            action(vertex);
+        const self=this;
+        selected.on("click", (d,i,n) => {
+            action(d,i,n,self);
         })
     }
     /**
@@ -278,12 +283,13 @@ export class FigTree {
      */
 
     onHoverNode(action,selection=null){
+        const self = this;
         const selected = this.svgSelection.selectAll(`${selection ? selection : ".node"}`).select(".node-shape");        
-        selected.on("mouseover", (vertex) => {
-            action.enter(vertex);
+        selected.on("mouseover", (d,i,n) => {
+            action.enter(d,i,n,self);
         });
-        selected.on("mouseout", (vertex) => {
-            action.exit(vertex);
+        selected.on("mouseout", (d,i,n) => {
+            action.exit(d,i,n,self);
         });
     }
 
@@ -292,18 +298,17 @@ export class FigTree {
      * @param {*} action and object with an enter and exit function
      * @param {*} selection defualts to .branch
      */
-    onHoverBranch(action,selection=null){ 
+    onHoverBranch(action){ 
         // need to use 'function' here so that 'this' refers to the SVG
         // element being hovered over.
-        const selected = this.svgSelection.selectAll(`${selection ? selection : ".branch"}`).select("branch-path");
-
-        selected.on("mouseover", function (d, i) {
-            action.enter(this);
+        const self=this;
+        const selected = this.svgSelection.selectAll(".branch").select(".branch-path");
+        selected.on("mouseover", function (d, i,n) {
+            action.enter(d,i,n,self);
 
         });
-        selected.on("mouseout", function (d, i) {
-            action.exit(this);
-
+        selected.on("mouseout", function (d, i, n) {
+            action.exit(d,i,n,self);
         });
     }
     /**
@@ -498,6 +503,7 @@ function updateBranches() {
     // Create new elements as needed.
     const newBranches = branches.enter().append("g")
         .attr("id", (e) => e.id)
+        .attr("opacity",e=>this.settings.opacityFunc(e))
         .attr("class", (e) => ["branch", ...e.classes].join(" "))
         .attr("transform", (e) => {
             return `translate(${this.scales.x(e.v0.x)}, ${this.scales.y(e.v1.y)})`;
@@ -506,6 +512,8 @@ function updateBranches() {
     newBranches.append("path")
         .attr("class", "branch-path")
         .attr("d", (e,i) => { branchPath(e,i)});
+
+    
 
     newBranches.append("text")
         .attr("class", "branch-label length")
@@ -523,16 +531,15 @@ function updateBranches() {
         .attr("transform", (e) => {
             return `translate(${this.scales.x(e.v0.x)}, ${this.scales.y(e.v1.y)})`;
         })
-
         .select("path")
         .attr("d", (e,i) => branchPath(e,i))
-
         .select("text .branch-label .length")
         .attr("class", "branch-label length")
         .attr("dx", (e) => ((this.scales.x(e.v1.x) - this.scales.x(e.v0.x)) / 2))
         .attr("dy", (e) => (e.labelBelow ? +6 : -6))
         .attr("alignment-baseline", (e) => (e.labelBelow ? "hanging" : "bottom"))
         .attr("text-anchor", "middle")
+        .attr("opacity",e=>this.settings.opacityFunc(e))
         .text((e) => e.label);
 
     // EXIT

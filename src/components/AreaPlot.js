@@ -5,7 +5,10 @@ import {areaPlot} from "../lib/charts/areaPlot";
 import {timeWeek} from "d3-time";
 import {scaleTime} from "d3-scale";
 import {extent} from 'd3-array';
-import {event} from 'd3';
+import {event,timeFormat} from 'd3';
+
+const formatTime = timeFormat("%B %d, %Y");
+
 
 const mouseEnter = (d, i, n)=>{
     const allAreas = selectAll(n);
@@ -15,8 +18,23 @@ const mouseEnter = (d, i, n)=>{
 
 
     let tooltip = document.getElementById("tooltip");
+    const exportEvents = d[0].data.children
+                    .map(c=>`${c.location} - ${formatTime(c.cases[0].symptomOnset)}`)
+                    .join("<br/>");
+
     // put text to display here!
-    tooltip.innerHTML = "Whoop!";
+    tooltip.innerHTML = `Local circulation
+                        <br/>
+                        Location: ${d[0].data.location}
+                        <br/>
+                        Cases: ${d[0].data.cases.length}
+                        ${(d[0].data.parent.location!==null?
+                             `<br/>
+                             Source: ${d[0].data.parent.location}`:"")}
+                        ${d[0].data.children.length>0?`<br/>Export Events<br/>${exportEvents}`:""}
+                        `
+
+                        ;
 
     tooltip.style.display = "block";
     tooltip.style.left =event.pageX + 10 + "px";
