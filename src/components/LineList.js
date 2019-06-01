@@ -23,14 +23,62 @@ function LineList(props){
         filterable: false  //This makes the column not filterable
 
       }]
-      const rows =props.data.length;
+
+      const linkColumns = [{
+        id:"source",
+        Header: 'Source',
+        accessor: d=>d.source.id 
+      },{
+        id:"target",
+        Header: 'Target',
+        accessor: d=>d.target.id
+      },
+      {
+        id:"dataSource",
+        Header: 'Data Source',
+        accessor: d=>d.metaData.dataSource
+      },
+      {
+        id:"support",
+        Header: 'Support',
+        accessor: d=>d.metaData.support
+      }]
+
+
+      const rows =props.epidemic.Cases.length;
        
         return (<ReactTable
           showPagination={false}
           defaultPageSize={rows}
-          data={props.data}
-          filterable
+          data={props.epidemic.Cases}
           columns={columns}
+          filterable
+          className="-striped -highlight" // add styles
+          SubComponent={row => {
+            const inlinks = props.epidemic.graph.getIncomingEdges(row.original)
+            const outlinks = props.epidemic.graph.getOutgoingEdges(row.original)
+
+            return(
+            <div>
+              <h4>Potential sources of infection </h4>
+              <ReactTable
+            showPagination={false}
+            defaultPageSize={inlinks.length}
+            data={inlinks}
+            filterable
+            className="-striped -highlight" // add styles
+            columns={linkColumns}/>
+            <h4>Transmissions</h4>
+            <ReactTable
+            showPagination={false}
+            defaultPageSize={outlinks.length}
+            data={outlinks}
+            filterable
+            className="-striped -highlight" // add styles
+            columns={linkColumns}/>
+            </div>)
+          }}
+
         />)
 }
 
