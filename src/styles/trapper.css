@@ -70,7 +70,7 @@ div.header .title {
     float: left;
     margin-left: 20px;
     padding:0px;
-    font-size: "1.8em"
+    font-size: 12px;
 }
 div.header .buttons {
     display: flex;
@@ -94,7 +94,7 @@ div.header .buttons {
     width: 100%;
     padding:0;
     margin:0;
-    flex-grow:1 0;
+    flex-grow:1;
     display: flex;
     flex-direction: row;
 
@@ -191,7 +191,7 @@ div.header .buttons {
     border-width: 0px 1px 0px 1px;
     /* border-radius: 5px; */
     padding:0px 10px 10px 10px;
-    flex-grow:1,1,auto;
+    flex-grow:1;
     overflow-y: scroll;
     flex-direction: column;
     /* box-sizing: border-box; */
@@ -317,7 +317,7 @@ div.header .buttons {
 }
 
 .node-shape{
-    stroke: 'none';
+    stroke: none;
 }
 
 .node-label {
