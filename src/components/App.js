@@ -193,15 +193,17 @@ function App() {
                         </h3>
                     </div>
                 </div>
-                <ChartContainer
-                    ref = {measuredRef}
-                    timelineSize = {timelineSize}
-                    dateRange={dateRange}
-                    treeDateRange={treeDateRange}
-                    epidemic={epidemic}
-                    phylogeny={phylogeny}
-                    setSelectedCases={setSelectedCases}
-                    selectedCases={selectedCases}/>
+                <div className="center-panel">
+                    <ChartContainer
+                        ref = {measuredRef}
+                        timelineSize = {timelineSize}
+                        dateRange={dateRange}
+                        treeDateRange={treeDateRange}
+                        epidemic={epidemic}
+                        phylogeny={phylogeny}
+                        setSelectedCases={setSelectedCases}
+                        selectedCases={selectedCases}/>
+                </div>
                 <div className="sidebarButtonColumn">
                     <div className="sidebarButtons right">
                         <h3 className={`button ${sideBarOpen && sideBarFocus === "Geography" ? "selected" : ""}`} onClick={()=> {

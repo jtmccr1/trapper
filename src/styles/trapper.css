@@ -26,11 +26,11 @@
 
 /* ----------- GLOBALS (BODY) --------------*/
 body {
-    height: 95vh;
-    font-family: "hairline";
+    height: 98vh; /* why 98%? */
+    font-family: light, sans-serif;
     background: var(--dark-background);
     color: var(--dark-foreground);
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 
@@ -42,7 +42,8 @@ body {
     display: flex;
     flex-direction: column;
 }
-/* box sizing on all elements so padding and broders are included in width and height */
+
+/* box sizing on all elements so padding and borders are included in width and height */
 * {
     box-sizing: border-box;
 }
@@ -60,7 +61,7 @@ div.header {
     justify-content: flex-start;
     height:55px;
     /* height:165px; */
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 }
 div.header .logo {
     float: left;
@@ -89,15 +90,16 @@ div.header .buttons {
     display: flex;
     flex-direction: column;
 }
+
 .mainScreen{
     height: 100%;
     width: 100%;
-    padding:0;
-    margin:0;
-    flex-grow:1;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
     display: flex;
     flex-direction: row;
-
+    /*border: 1px solid #FFFFFF;*/
 }
 
 /* --------------- SIDEBARS --------------- */
@@ -200,44 +202,55 @@ div.header .buttons {
     overflow-y: scroll;
   }
 
-
-
+.center-panel {
+    height: 100%;
+    width: 100%;
+    /*margin: 5px 0 5px 0 ;*/
+    position: relative;
+    padding: 35px 0 35px 0px;
+    /*border: 1px solid #E3B505;*/
+}
 
 
 /*---------------------Time line container ----------*/
 .timelineContainer{
     height: 100%;
     width: 100%;
+    flex-grow:1;
     z-index: 1;
-    margin: 30px auto 30px auto;
+    overflow-y: scroll;
+    flex-direction: column;
     /*border-style: solid;*/
     /*border-color: var(--light-text);*/
     /*border-width: 0px 1px 0px 1px;*/
     /* border-radius: 5px; */
-    /*padding:0px 10px 10px 10px;*/
-    flex-grow:1;
-    overflow-y: scroll;
-    flex-direction: column;
     /* box-sizing: border-box; */
+    /*border: 1px solid #a90000;*/
 }
+
 .chartContainer {
-    margin:5px 5px 5px 5px;
-    /* position: relative; */
+    /*margin:5px 5px 5px 5px;*/
     border-style: solid;
     border-color: var(--artic-green);
     border-width: 0px 0px 1px 24px;
     border-radius: 5pt;
-    background: none/* var(--dark-background);*/
+    background: none;/* var(--dark-background);*/
+    border: 1px solid #cf7155;
 }
 
-
-.mockChartContainer{
+.mockChartContainer {
     z-index: -1;
-    margin: 0px 10px 0px 10px;
-    position: fixed;
-    padding: 0px 5px 0px 24px;
-    transform: translateY(-35px);
+    margin: -30px 0px -30px 0px;
+    position: absolute;
+    top: 30px;
+    left: 0;
+    bottom: 30px;
+    right: 0;
+    /*padding: 0px 5px 0px 24px;*/
+    /*transform: translateY(-35px);*/
+    /*border: 1px solid #FFFFFF;*/
 }
+
 /* ---------------  C H A R T S ----------------- */
 .chartTitle {
     font-family: light;
