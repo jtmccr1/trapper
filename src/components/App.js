@@ -204,7 +204,7 @@ function App() {
                     selectedCases={selectedCases}/>
                 <div className="sidebarButtonColumn">
                     <div className="sidebarButtons right">
-                        <h3 className={`button ${sideBarFocus==="Geography"?"selected":""}`} onClick={()=> {
+                        <h3 className={`button ${sideBarOpen && sideBarFocus === "Geography" ? "selected" : ""}`} onClick={()=> {
                             if(sideBarOpen&&sideBarFocus!=="Geography"){
                                 setSideBarFocus("Geography")
                             }else{
@@ -217,8 +217,8 @@ function App() {
                             <div class="button-text rotate-minus-ninety">Map</div>
                         </h3>
 
-                        <h3 className={`button ${sideBarFocus==="LineList"?"selected":""}`} onClick={()=> {
-                            if(sideBarOpen&&sideBarFocus!=="LineList"){
+                        <h3 className={`button ${sideBarOpen && sideBarFocus === "LineList" ? "selected" : ""}`} onClick={()=> {
+                            if(sideBarOpen && sideBarFocus !== "LineList"){
                                 setSideBarFocus("LineList")
                             }else{
                                 setSideBarOpen(!sideBarOpen)
