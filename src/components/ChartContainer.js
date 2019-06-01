@@ -10,6 +10,32 @@ import { RectangularLayout, TransmissionLayout } from '../lib/figtree.js/index.j
 
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import PerfectScrollbar from 'react-perfect-scrollbar'
+import {event, select} from "d3-selection";
+
+// callbacks for the vertical timeline bar
+const mouseEnter = (event, i, n)=>{
+    // console.log(event)
+    let timeline = document.getElementById("timeline");
+    if (event.altKey) {
+        timeline.style.left = event.pageX + "px";
+        timeline.style.transition = "none";
+        timeline.style.opacity = "1";
+        timeline.style.visibility ="visible";
+    } else {
+        // -webkit-transition: 0.5s;
+        // -moz-transition: 0.5s;
+        // -o-transition: 0.5s;
+        // transition: 0.5s;
+        timeline.style.transition = "0.5s";
+        timeline.style.opacity = "0";
+        timeline.style.visibility = "hidden";
+    }
+};
+
+const mouseExit = (d,i,n) => {
+    const timeline = document.getElementById("timeline");
+    timeline.style.visibility = "hidden";
+};
 
 const ChartContainer = React.forwardRef((props, ref)=>{
 
@@ -23,6 +49,7 @@ const ChartContainer = React.forwardRef((props, ref)=>{
             const parentBaseDim={"height":300,"width":props.timelineSize.width*0.9};
             setChartGeom(parentBaseDim)
         }
+
     },[props.timelineSize]);
 
     //Ensure we don't render before we have scales ect.
@@ -35,53 +62,54 @@ const ChartContainer = React.forwardRef((props, ref)=>{
             </div>
         )
     }else{
-      return(
-       <div className = "timelineContainer" ref={ref} >
-         <div className="hoverInfo" id="tooltip"></div>
-       <div className = "mockChartContainer">
-      <TimeAxis dateRange ={props.dateRange} 
-        margins = {margins}
-          chartGeom = {chartGeom} 
-          domRect = {props.timelineSize}/>
-        </div>  
-        <div className = "chartContainer">
-          <StackedHistogram  data={props.epidemic.Cases} 
-          margins = {margins}
-            chartGeom={chartGeom}
-            dateRange ={props.dateRange}
-            callbacks={{groups:d=>d.location}}/>
-          </div>  
-          <div className = "chartContainer">
-          <AreaPlot  
-          margins = {margins}
-          epidemic={props.epidemic} 
-          dateRange ={props.dateRange}
-          chartGeom={chartGeom}/>
-        </div>  
-          <div className = "chartContainer">
-          <ArcTransmission  
-          margins = {margins}
-          treeDateRange={props.treeDateRange}
-          phylogeny={props.phylogeny} 
-          graph={props.epidemic.graph} 
-          dateRange ={props.dateRange}
-          curve ={"bezier"}
-          chartGeom={chartGeom}
-          setSelectedCases={props.setSelectedCases}
-          selectedCases={props.selectedCases}/>
-        </div>  
-      <div className = "chartContainer">
-          <PhyloChart  
-          margins = {margins}
-          dateRange ={props.dateRange}
-          treeDateRange={props.treeDateRange}
-          phylogeny={props.phylogeny} 
-          layout = {RectangularLayout}
-          // attributes = {phyloAttributes}
-          chartGeom={{...chartGeom,...{"height":600}}}/>
-    </div>  
-    </div>
-)}
+        return(
+            <div className = "timelineContainer" ref={ref} onMouseMove={mouseEnter} onMouseLeave={mouseExit}>
+                <div id="timeline"></div>
+                <div className="hoverInfo" id="tooltip"></div>
+                <div className = "mockChartContainer">
+                    <TimeAxis dateRange ={props.dateRange}
+                              margins = {margins}
+                              chartGeom = {chartGeom}
+                              domRect = {props.timelineSize}/>
+                </div>
+                <div className = "chartContainer">
+                    <StackedHistogram  data={props.epidemic.Cases}
+                                       margins = {margins}
+                                       chartGeom={chartGeom}
+                                       dateRange ={props.dateRange}
+                                       callbacks={{groups:d=>d.location}}/>
+                </div>
+                <div className = "chartContainer">
+                    <AreaPlot
+                        margins = {margins}
+                        epidemic={props.epidemic}
+                        dateRange ={props.dateRange}
+                        chartGeom={chartGeom}/>
+                </div>
+                <div className = "chartContainer">
+                    <ArcTransmission
+                        margins = {margins}
+                        treeDateRange={props.treeDateRange}
+                        phylogeny={props.phylogeny}
+                        graph={props.epidemic.graph}
+                        dateRange ={props.dateRange}
+                        curve ={"bezier"}
+                        chartGeom={chartGeom}
+                        setSelectedCases={props.setSelectedCases}
+                        selectedCases={props.selectedCases}/>
+                </div>
+                <div className = "chartContainer">
+                    <PhyloChart
+                        margins = {margins}
+                        dateRange ={props.dateRange}
+                        treeDateRange={props.treeDateRange}
+                        phylogeny={props.phylogeny}
+                        layout = {RectangularLayout}
+                        // attributes = {phyloAttributes}
+                        chartGeom={{...chartGeom,...{"height":600}}}/>
+                </div>
+            </div>
+        )}
     // <Chart  />
 });
 
