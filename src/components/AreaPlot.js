@@ -31,7 +31,6 @@ const mouseEnter = (d, i, n)=>{
                         ${(d[0].data.parent.location!==null?
                              `<br/>
                              Source: ${d[0].data.parent.location}`:"")}
-                        
                         ${d[0].data.children.length>0?`<br/>Export Events<br/>${exportEvents}`:""}
                         `
 

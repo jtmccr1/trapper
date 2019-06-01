@@ -8,6 +8,9 @@
 .rect.hovered{
     fill: #e9c964;
 }
+.rect.selected{
+    fill: #e9c964;
+}
 #phylogeny .internal-node{
     display: none;
 }
@@ -32,6 +35,20 @@
 
 .node-shape.hovered {
     fill: #e9c964;
+}
+
+.node-shape.selected{
+    fill: #e9c964;
+}
+
+.node-shape.selected.by-proxy{
+    fill: #e9c964;
+}
+.branch .branch-path.selected {
+    stroke-width:4
+}
+.branch .branch-path.hovered.selected {
+    stroke-width:5
 }
 
 #Edinburgh, #West-Lothian, #East-Lothian, #Midlothian, #Scottish-Borders {
