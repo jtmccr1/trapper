@@ -130,16 +130,19 @@ function App() {
                 // Handle the Tree
                 Promise.all([treeStringPromise.text(),treeAnnotationsPromise.json()])
                     .then(([treeString,treeAnnotations])=>{
-                        const treeAnnotationsInitial= treeAnnotations[(treeAnnotations.length-1)];
-                        const parsedTreeAnnotationsInitial= nest()
-                            .key(d=>d.id)
-                            .rollup(d=>{
-                                return({...d[0],...{transmissions:d[0].transmissions.length}})
-                            })
-                            .object(treeAnnotationsInitial)
                         //Todo annotate Tree.
                         const tree = Tree.parseNewick(treeString);
-                        // tree.annotateNodesFromLabel(parsedTreeAnnotationsInitial)
+                        //locations from tips
+                        
+                        tree.annotateNodesFromLabel(treeAnnotations);
+                        
+                        // if there are no locations in the annotations we do one from the tips.
+                        if(!tree.annotations.hasOwnProperty("location")){
+                        const tipLocations={};
+                        parsedLineList.forEach(t=>{tipLocations[t.id]={location:t.location}})
+                        tree.annotateTips(tipLocations)
+                        tree.annotateNodesFromTips("location")
+                        }
                         setPhylogeny(tree);
                         // get initial time range
                         const casesRange = extent(outbreakGraph.nodes,d=>d.symptomOnset);

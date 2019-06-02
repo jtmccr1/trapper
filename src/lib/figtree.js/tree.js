@@ -413,7 +413,6 @@ export class Tree {
             if (!tip) {
                 throw new Error(`tip with label ${key} not found in tree`);
             }
-
             this.annotateNode(tip, values);
         }
     }
@@ -561,7 +560,7 @@ export class Tree {
                     }
 
                     sum += value;
-                    if (sum > 1.0) {
+                    if (sum > 1.01) {
                         throw Error(`the values of annotation, ${key}, should be probabilities of states and add to 1.0`);
                     }
                 } else if (typeof value === typeof true) {
@@ -573,7 +572,7 @@ export class Tree {
                 } else {
                     throw Error(`the values of annotation, ${key}, should be all boolean or all floats`);
                 }
-                keys.append(key);
+                keys.push(key);
             }
 
             if (annotation.type && annotation.type !== type) {
@@ -581,13 +580,13 @@ export class Tree {
             }
 
             annotation.type = type;
-            annotation.values = annotation.values? [...annotation.values, ...addValues]:[...addValues]
+            annotation.values = annotation.values? [...annotation.values, addValues]:[addValues]
         } else {
             let type = Type.DISCRETE;
 
-            if (typeof addValues === typeof true) {
+        if (typeof addValues === typeof true) {
                 type = Type.BOOLEAN;
-            } else if (Number(addValues)) {
+            } else if (!isNaN(addValues)){
                 type = (addValues % 1 === 0 ? Type.INTEGER : Type.FLOAT);
             }
 
