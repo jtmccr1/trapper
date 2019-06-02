@@ -191,6 +191,7 @@ div.header .buttons {
     transform: translate(0px,10px) rotate(90deg);
 }
 
+/* --------------- TABLES --------------- */
 .ReactTable .rt-table {
     font-family: light;
     font-size: 10pt;
@@ -198,7 +199,7 @@ div.header .buttons {
 
 .ReactTable .rt-thead {
     overflow-y: scroll;
-    }
+}
 
 /*---------------------Time line container ----------*/
 .timelineContainer{
@@ -216,6 +217,7 @@ div.header .buttons {
     /*border-width: 0px 1px 0px 1px;*/
     /* border-radius: 5px; */
 }
+
 .chartContainer {
     margin:5px 5px 5px 5px;
     border-style: solid;
@@ -225,7 +227,6 @@ div.header .buttons {
     background: none/* var(--dark-background);*/
 }
 
-
 .mockChartContainer{
     z-index: -1;
     margin: 0px 5px 0px 5px;
@@ -233,6 +234,7 @@ div.header .buttons {
     padding: 0px 5px 0px 24px;
     transform: translateY(-35px);
 }
+
 /* ---------------  C H A R T S ----------------- */
 .chartTitle {
     font-family: light;
@@ -261,6 +263,7 @@ div.header .buttons {
     font-weight: 700;
     overflow-wrap: break-word;
 }
+
 .chartExpandContractIcon {
     position: absolute;
     top: 5px;
@@ -279,6 +282,7 @@ div.header .buttons {
     opacity: 0;
     visibility: hidden;
 }
+
 /* ---------------  G E O G R A P H Y ----------------- */
 .geographyContainer {
     padding: 10px;
@@ -320,7 +324,7 @@ div.header .buttons {
     stroke-width: 2px;
 }
 .rect{
-    stroke-width: 1px;
+    stroke-width: 2px;
     stroke: var(--dark-foreground);
 }
 

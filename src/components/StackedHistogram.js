@@ -6,7 +6,9 @@ import {scaleTime} from "d3-scale";
 import {timeWeek} from "d3-time";
 import {extent} from 'd3-array';
 import {event,timeFormat} from 'd3';
+
 const formatTime = timeFormat("%B %d, %Y");
+
 const mouseEnter = (d, i, n)=>{
     select(n[i]).classed("hovered", true);
     // console.log(d)
@@ -27,6 +29,7 @@ const mouseEnter = (d, i, n)=>{
 
     tooltip.style.visibility ="visible";
 };
+
 const mouseExit = (d,i,n) => {
     select(n[i]).classed("hovered", false);
     const tooltip = document.getElementById("tooltip");
@@ -34,6 +37,7 @@ const mouseExit = (d,i,n) => {
 };
 
 const callback = {enter:mouseEnter,exit:mouseExit};
+
 function StackedHistogram(props){
     const [histogram,setHistogram]=useState(null);
 
@@ -41,13 +45,16 @@ function StackedHistogram(props){
 
         if (node !== null) {
             if(node.children.length===0){ // make it the first time
-                const layoutSettings = {horizontalRange:extent(props.dateRange),
+                const layoutSettings = {
+                    horizontalRange:extent(props.dateRange),
                     horizontalTicks:props.dateRange,
                     horizontalScale:scaleTime,
                     groupingFunction:d=>d.location};
+
                 const layout = new stackedHistogramLayout(props.data,layoutSettings);
                 const settings = { hoverBorder: 4, backgroundBorder:0,transitionDuration:300};
                 const fig = new stackedHistogramChart(node,layout,props.margins,settings);
+
                 fig.draw();
 
                 fig.onHover(callback,".rect")
@@ -56,7 +63,7 @@ function StackedHistogram(props){
 
                 select(node).select(".axes-layer").select("#x-axis").remove();
                 setHistogram(fig);
-            }else{
+            } else {
                 histogram.update();
             }
         }
