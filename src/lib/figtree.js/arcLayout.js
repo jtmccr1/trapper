@@ -149,9 +149,10 @@ export class ArcLayout extends Layout {
 
 
                 // if (e.v1.node.annotations) {
+                    let {id,...noId} = e.v1.node;
                     e.classes = [
                         ...e.classes,
-                        ...this.getAnnotations(e.v1.node),
+                        ...this.getAnnotations(noId), // no id in this 
                         ...this.getAnnotations(e.data.metaData),
                         ...this.getAnnotations({source:e.data.source.id,target:e.data.target.id})
                     ]

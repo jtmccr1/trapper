@@ -192,7 +192,7 @@ function ArcTransmission(props){
             node.classed("selected source", shouldSelect);
             // on all other plots
             selectAll(`.id-${source.id}`).classed("selected source", shouldSelect);
-            selectAll(`.id-${source.id}`).select(".node-shape").classed("selected source", shouldSelect);
+            selectAll(`.id-${source.id} `).select(".node-shape").classed("selected source", shouldSelect);
             selectAll(`.id-${source.id}`).select(".branch-path").classed("selected transmission", shouldSelect);
 
         }
