@@ -41,8 +41,11 @@
     fill: #e9c964;
 }
 
-.node-shape.selected.by-proxy{
-    fill: #e9c964;
+.node-shape.proxy{
+    fill:#cf7155
+}
+.node-shape.by-proxy{
+    fill:#cf7155
 }
 .branch .branch-path.selected {
     stroke-width:4

@@ -95,7 +95,7 @@ const nodeMouseEnter = (d, i, n,fig)=>{
                 bauble.updateShapes(nodeShape, fig.settings.hoverBorder);
             }
         });
-        nodeShape.classed("hovered proxy", true);
+        nodeShape.classed("proxy", true);
     }
 
     const thisNode = select(n[i]).classed("hovered",true);
@@ -172,6 +172,7 @@ function ArcTransmission(props){
         //             bauble.updateShapes(node, (shouldSelect?fig.settings.hoverBorder:0)); // if we're selecting use the hover border
         //         }
         //     });
+        // can't be just proxy since that get's removed when we mouse out
             node.classed("selected by-proxy", shouldSelect);
             // on all other plots
             selectAll(`.id-${source.id}`).classed("selected by-proxy", shouldSelect);
