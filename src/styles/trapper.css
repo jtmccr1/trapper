@@ -27,7 +27,7 @@
 /* ----------- GLOBALS (BODY) --------------*/
 body {
     height: 95vh;
-    font-family: "hairline";
+    font-family: hairline, sans-serif;
     background: var(--dark-background);
     color: var(--dark-foreground);
     overflow: hidden;
@@ -193,7 +193,7 @@ div.header .buttons {
 
 /* --------------- TABLES --------------- */
 .ReactTable .rt-table {
-    font-family: light;
+    font-family: light, sans-serif;
     font-size: 10pt;
 }
 
@@ -324,7 +324,7 @@ div.header .buttons {
     stroke-width: 2px;
 }
 .rect{
-    stroke-width: 2px;
+    stroke-width: 1px;
     stroke: var(--dark-foreground);
 }
 
@@ -349,7 +349,7 @@ div.header .buttons {
 }
 
 .node-label {
-    font-family: "light";
+    font-family: light, sans-serif;
     font-size: 8pt;
     font-weight: 300;
     fill: var(--dark-foreground); /* not color as it's SVG */
@@ -362,13 +362,13 @@ div.header .buttons {
 }
 
 .axis text {
-    font-family: "hairline";
+    font-family: hairline, sans-serif;
     font-size: 8pt;
     font-weight: 300;
 }
 
 .axis-label text {
-    font-family: "hairline";
+    font-family: hairline, sans-serif;
     font-size: 8pt;
     font-weight: bold;
 }
