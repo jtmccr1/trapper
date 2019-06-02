@@ -57,6 +57,13 @@ function LineList(props){
       }]
 
 
+      const subtableHeader = {
+        display:'inline-block',
+        marginRight:'10px',
+        marginLeft:'10px'
+
+
+      }
 
 
 
@@ -76,7 +83,8 @@ function LineList(props){
 
             return(
             <div>
-              <h4>Potential sources of infection </h4>
+              <div style={subtableHeader}className={"legendSquare source"}></div>
+              <div style={subtableHeader}><h4> Putative sources of infection </h4> </div>
               <ReactTable
             showPagination={false}
             defaultPageSize={inlinks.length}
@@ -84,8 +92,8 @@ function LineList(props){
             // filterable
             className="-striped -highlight" // add styles
             columns={potentialSourcesColumns}/>
-            <h4>Transmissions</h4>
-            <ReactTable
+              <div style={subtableHeader}className={"legendSquare  transmission"}></div>
+              <div style={subtableHeader}><h4> Putative Transmissions </h4> </div>            <ReactTable
             showPagination={false}
             defaultPageSize={outlinks.length}
             data={outlinks}
