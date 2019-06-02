@@ -195,10 +195,28 @@ div.header .buttons {
 .ReactTable .rt-table {
     font-family: light, sans-serif;
     font-size: 10pt;
+    padding: 4px;
 }
 
 .ReactTable .rt-thead {
     overflow-y: scroll;
+}
+
+.ReactTable .rt-th {
+    font-family: light, sans-serif;
+    font-size: 9pt;
+    padding: 4px;
+}
+
+.ReactTable .rt-td {
+    font-family: light, sans-serif;
+    font-size: 9pt;
+    padding: 4px;
+}
+
+
+.ReactTable H4 {
+    margin-block-end: 0;
 }
 
 /*---------------------Time line container ----------*/

@@ -66,7 +66,7 @@ function LineList(props){
             showPagination={false}
             defaultPageSize={inlinks.length}
             data={inlinks}
-            filterable
+            // filterable
             className="-striped -highlight" // add styles
             columns={linkColumns}/>
             <h4>Transmissions</h4>
@@ -74,7 +74,7 @@ function LineList(props){
             showPagination={false}
             defaultPageSize={outlinks.length}
             data={outlinks}
-            filterable
+            // filterable
             className="-striped -highlight" // add styles
             columns={linkColumns}/>
             </div>)
