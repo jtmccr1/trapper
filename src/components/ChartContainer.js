@@ -72,14 +72,15 @@ const ChartContainer = React.forwardRef((props, ref)=>{
                               chartGeom = {chartGeom}
                               domRect = {props.timelineSize}/>
                 </div>
-                <div className = "chartContainer">
-                    <StackedHistogram  data={props.epidemic.Cases}
-                                       margins = {margins}
-                                       chartGeom={chartGeom}
-                                       dateRange ={props.dateRange}
-                                       callbacks={{groups:d=>d.location}}/>
-                    <div className="chartTitle">Case plot</div>
-                </div>
+                {/* @todo Add a new panel to show cases per week -
+                <div className = "chartContainer">*/}
+                    {/*<AreaPlot*/}
+                        {/*margins = {margins}*/}
+                        {/*epidemic={props.epidemic}*/}
+                        {/*dateRange ={props.dateRange}*/}
+                        {/*chartGeom={chartGeom}/>*/}
+                    {/*<div className="chartTitle">Case counts</div>*/}
+                {/*</div>*/}
                 <div className = "chartContainer">
                     <AreaPlot
                         margins = {margins}
@@ -87,6 +88,14 @@ const ChartContainer = React.forwardRef((props, ref)=>{
                         dateRange ={props.dateRange}
                         chartGeom={chartGeom}/>
                     <div className="chartTitle">Outbreaks</div>
+                </div>
+                <div className = "chartContainer">
+                    <StackedHistogram  data={props.epidemic.Cases}
+                                       margins = {margins}
+                                       chartGeom={chartGeom}
+                                       dateRange ={props.dateRange}
+                                       callbacks={{groups:d=>d.location}}/>
+                    <div className="chartTitle">Case plot</div>
                 </div>
                 <div className = "chartContainer">
                     <ArcTransmission
