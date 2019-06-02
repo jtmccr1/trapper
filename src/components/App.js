@@ -123,7 +123,6 @@ function App() {
                         .map(e=>e.target.location)
                     indexCase.location = mode(childLocations);
                 }
-                console.log(outbreakGraph);
                 const outbreakEpidemic = new Epidemic(indexCase,outbreakGraph,mostProbableTransphyloEdgeCondition);
                 setEpidemic(outbreakEpidemic);
 

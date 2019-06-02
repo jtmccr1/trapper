@@ -168,11 +168,16 @@ function ArcTransmission(props){
         }else{
             props.setSelectedCases(props.selectedCases.filter(d=>d!==d.node))
         }
-        selectAll(".selected").classed("selected",false)
-
+        // remove all other selections
+        selectAll(".selected").classed("selected source transmission",false)
+        
 
         select(n[i]).classed("selected", shouldSelect);
         selectAll(`.id-${d.node.id}`).classed("selected", shouldSelect);
+        //to get other trees
+        selectAll(`.id-${d.node.id}`).select(".node-shape").classed("selected", shouldSelect);
+        selectAll(`.id-${d.node.id}`).select(".branch-path").classed("selected", shouldSelect);
+
         // potential sources
         // maybe select all to grab branches in the tree.
         fig.svgSelection.selectAll(`.branch.target-${d.node.id}`).select(".branch-path")
@@ -187,6 +192,9 @@ function ArcTransmission(props){
             node.classed("selected source", shouldSelect);
             // on all other plots
             selectAll(`.id-${source.id}`).classed("selected source", shouldSelect);
+            selectAll(`.id-${source.id}`).select(".node-shape").classed("selected source", shouldSelect);
+            selectAll(`.id-${source.id}`).select(".branch-path").classed("selected transmission", shouldSelect);
+
         }
         const targetNodes = fig.layout.graph.getOutgoingEdges(d.node).map(e=>e.target);
         for(const target of targetNodes){
@@ -194,6 +202,9 @@ function ArcTransmission(props){
             node.classed("selected transmission", shouldSelect);
             // on all other plots
             selectAll(`.id-${target.id}`).classed("selected transmission", shouldSelect);
+            selectAll(`.id-${target.id}`).select(".node-shape").classed("selected transmission", shouldSelect);
+            selectAll(`.id-${target.id}`).select(".branch-path").classed("selected transmission", shouldSelect);
+
         }
     }
 

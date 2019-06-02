@@ -381,7 +381,12 @@ div.header .buttons {
     display: none;
     font-size: 8pt;
 }
-
+.branch .branch-path.selected {
+    stroke-width:6
+}
+.branch .branch-path.hovered.selected {
+    stroke-width:7
+}
 
 
 /* --------------------- D3 --------------------- */
