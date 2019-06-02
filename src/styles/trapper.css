@@ -420,4 +420,8 @@ text.axis {
     stroke-width: 1;
     shape-rendering: auto;
 }
-  
+  /*--------- legend ---------*/
+  .legendSquare {
+    height: 10px;
+    width: 10px;
+  }

@@ -5,8 +5,7 @@ import { FigTree }  from '../lib/figtree.js/index.js';
 import {scaleTime,scaleLinear} from "d3-scale";
 import {select,selectAll} from 'd3-selection';
 import {extent} from 'd3-array';
-import {event,timeFormat} from 'd3';
-import { tsConstructSignatureDeclaration } from '@babel/types';
+import {event,timeFormat,raise} from 'd3';
 const formatTime = timeFormat("%B %d, %Y");
 
 const branchMouseEnter = (d, i, n,fig)=>{
@@ -27,15 +26,17 @@ const branchMouseEnter = (d, i, n,fig)=>{
     tooltip.style.top = event.pageY + 10 + "px";
     tooltip.style.visibility ="visible";
     // mimics highlight nodes in figtree
-    for(const terminal of [d.data.source,d.data.target]){
-        const node = fig.svgSelection.select(`.node.id-${terminal.id}`).select(".node-shape");
-        fig.settings.baubles.forEach((bauble) => {
-            if (bauble.vertexFilter(node)) {
-                bauble.updateShapes(node, fig.settings.hoverBorder);
-            }
-        });
-        node.classed("hovered", true);
-    }
+        for(const dataNode of [d.data.source,d.data.target]){
+            const nodeGroup =  fig.svgSelection.select(`.node.id-${dataNode.id}`)
+            const nodeShape = nodeGroup.select(".node-shape");
+            nodeGroup.raise(); //da roof - bring to the top of the g groups.
+            fig.settings.baubles.forEach((bauble) => {
+                if (bauble.vertexFilter(nodeShape)) {
+                    bauble.updateShapes(nodeShape, fig.settings.hoverBorder);
+                }
+            });
+            nodeShape.classed("hovered", true);
+        }
 };
 const branchMouseExit = (d,i,n,fig) => {
         select(n[i]).classed("hovered", false);
@@ -57,7 +58,9 @@ const branchMouseExit = (d,i,n,fig) => {
 const branchCallback = {enter:branchMouseEnter,exit:branchMouseExit};
 
 const nodeMouseEnter = (d, i, n,fig)=>{
-    select(n[i]).classed("hovered", true);
+
+    // n[i] is this - the circle that is the node-shape.
+
 
     let tooltip = document.getElementById("tooltip");
     // put text to display here!
@@ -73,43 +76,80 @@ const nodeMouseEnter = (d, i, n,fig)=>{
     tooltip.style.visibility ="visible";
 
     // potential sources
-    fig.svgSelection.selectAll(`.branch.target-${d.node.id}`).select(".branch-path")
+    //Branches 
+    const incomingBranches =  fig.svgSelection.selectAll(`.branch.target-${d.node.id}`)
+    incomingBranches.raise();
+    incomingBranches.select(".branch-path")
         .classed("hovered",true)
     
-    const sourceNodes = fig.layout.graph.getIncomingEdges(d.node).map(e=>e.source);
+    const outGoingBranches =  fig.svgSelection.selectAll(`.branch.source-${d.node.id}`)
+    outGoingBranches.raise();
+    outGoingBranches.select(".branch-path")
+        .classed("hovered",true)
+        
+        
+    
 
-    // sourceNodes.classed("attr",'hovered')
-    // mimics highlight nodes in figtree
-    for(const source of [...sourceNodes]){
-        const node =  fig.svgSelection.select(`.node.id-${source.id}`).select(".node-shape");
-        fig.settings.baubles.forEach((bauble) => {
-            if (bauble.vertexFilter(node)) {
-                bauble.updateShapes(node, fig.settings.hoverBorder);
-            }
-        });
-        node.classed("hovered proxy", true);
+    const sourceNodes = fig.layout.graph.getIncomingEdges(d.node).map(e=>e.source);
+    for(const dataNode of [...sourceNodes]){
+       fig.highlightNode(dataNode.id,"source")
     }
+
+    // Targets
+    const targetNodes = fig.layout.graph.getOutgoingEdges(d.node).map(e=>e.target);
+    for(const dataNode of [...targetNodes]){
+        fig.highlightNode(dataNode.id,"transmission")
+     }
+
+    const thisNode = select(n[i]).classed("hovered",true);
+    fig.settings.baubles.forEach((bauble) => {
+        if (bauble.vertexFilter(thisNode)) {
+            bauble.updateShapes(thisNode, fig.settings.hoverBorder);
+        }
+    });
+    select(n[i].parentNode).raise();
+    //raise the g group the node is in.
 };
 const nodeMouseExit = (d,i,n,fig) => {
-    select(n[i]).classed("hovered", false);
-        const tooltip = document.getElementById("tooltip");
-        tooltip.style.visibility = "hidden";
-        fig.svgSelection.selectAll(`.branch.target-${d.node.id}`).select(".branch-path")
-        .classed("hovered",false)
+    const thisNode = select(n[i]).classed("hovered",false);
+    fig.settings.baubles.forEach((bauble) => {
+        if (bauble.vertexFilter(thisNode)) {
+            bauble.updateShapes(thisNode, 0);
+        }
+    });
+    const tooltip = document.getElementById("tooltip");
+    tooltip.style.visibility = "hidden";
 
-      const sourceNodes = fig.layout.graph.getIncomingEdges(d.node).map(e=>e.source);
+    fig.svgSelection.selectAll(`.branch.target-${d.node.id}`).select(".branch-path")
+       .classed("hovered",false)
+    fig.svgSelection.selectAll(`.branch.source-${d.node.id}`).select(".branch-path")
+       .classed("hovered",false)
 
+    const sourceNodes = fig.layout.graph.getIncomingEdges(d.node).map(e=>e.source);
     // sourceNodes.classed("attr",'hovered')
     // mimics highlight nodes in figtree
     for(const source of sourceNodes){
         const node =  fig.svgSelection.select(`.node.id-${source.id}`).select(".node-shape");
-        fig.settings.baubles.forEach((bauble) => {
-            if (bauble.vertexFilter(node)) {
-                bauble.updateShapes(node, 0);
-            }
-        });
-        node.classed("hovered", false);
+        if(node.attr("class").includes("selected")){
+           fig.unHighlightNode(source.id,"")  // leave source for selection
+
+        }else{
+            fig.unHighlightNode(source.id,"source")  // leave source for selection
+        }        
     }
+
+        // Targets
+        const targetNodes = fig.layout.graph.getOutgoingEdges(d.node).map(e=>e.target);
+        for(const dataNode of [...targetNodes]){
+            const node =  fig.svgSelection.select(`.node.id-${dataNode.id}`).select(".node-shape");
+            if(node.attr("class").includes("selected")){
+                fig.unHighlightNode(dataNode.id,"")  // leave transmission for selection
+     
+             }else{
+                 fig.unHighlightNode(dataNode.id,"transmission")  // leave source for selection
+             }        
+         }
+
     };
 const nodeCallback = {enter:nodeMouseEnter,exit:nodeMouseExit};
     
@@ -130,7 +170,6 @@ function ArcTransmission(props){
         }
         selectAll(".selected").classed("selected",false)
 
-        
 
         select(n[i]).classed("selected", shouldSelect);
         selectAll(`.id-${d.node.id}`).classed("selected", shouldSelect);
@@ -139,21 +178,22 @@ function ArcTransmission(props){
         fig.svgSelection.selectAll(`.branch.target-${d.node.id}`).select(".branch-path")
             .classed("selected",shouldSelect)
         
+        fig.svgSelection.selectAll(`.branch.source-${d.node.id}`).select(".branch-path")
+            .classed("selected",shouldSelect)
+
         const sourceNodes = fig.layout.graph.getIncomingEdges(d.node).map(e=>e.source);
-    
-        // sourceNodes.classed("attr",'hovered')
-        // mimics highlight nodes in figtree
         for(const source of sourceNodes){
             const node =  fig.svgSelection.select(`.node.id-${source.id}`).select(".node-shape");
-        //     fig.settings.baubles.forEach((bauble) => {
-        //         if (bauble.vertexFilter(node)) {
-        //             bauble.updateShapes(node, (shouldSelect?fig.settings.hoverBorder:0)); // if we're selecting use the hover border
-        //         }
-        //     });
-            node.classed("selected by-proxy", shouldSelect);
+            node.classed("selected source", shouldSelect);
             // on all other plots
-            selectAll(`.id-${source.id}`).classed("selected by-proxy", shouldSelect);
-    
+            selectAll(`.id-${source.id}`).classed("selected source", shouldSelect);
+        }
+        const targetNodes = fig.layout.graph.getOutgoingEdges(d.node).map(e=>e.target);
+        for(const target of targetNodes){
+            const node =  fig.svgSelection.select(`.node.id-${target.id}`).select(".node-shape");
+            node.classed("selected transmission", shouldSelect);
+            // on all other plots
+            selectAll(`.id-${target.id}`).classed("selected transmission", shouldSelect);
         }
     }
 

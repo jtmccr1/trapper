@@ -24,14 +24,10 @@ function LineList(props){
 
       }]
 
-      const linkColumns = [{
+      const potentialSourcesColumns = [{
         id:"source",
         Header: 'Source',
         accessor: d=>d.source.id 
-      },{
-        id:"target",
-        Header: 'Target',
-        accessor: d=>d.target.id
       },
       {
         id:"dataSource",
@@ -43,6 +39,32 @@ function LineList(props){
         Header: 'Support',
         accessor: d=>d.metaData.support
       }]
+
+      const potentialTransmissionsColumns = [{
+        id:"target",
+        Header: 'Target',
+        accessor: d=>d.target.id 
+      },
+      {
+        id:"dataSource",
+        Header: 'Data Source',
+        accessor: d=>d.metaData.dataSource
+      },
+      {
+        id:"support",
+        Header: 'Support',
+        accessor: d=>d.metaData.support
+      }]
+
+
+      const subtableHeader = {
+        display:'inline-block',
+        marginRight:'10px',
+        marginLeft:'10px'
+
+
+      }
+
 
 
       const rows =props.epidemic.Cases.length;
@@ -61,22 +83,23 @@ function LineList(props){
 
             return(
             <div>
-              <h4>Potential sources of infection </h4>
+              <div style={subtableHeader}className={"legendSquare source"}></div>
+              <div style={subtableHeader}><h4> Putative sources of infection </h4> </div>
               <ReactTable
             showPagination={false}
             defaultPageSize={inlinks.length}
             data={inlinks}
             // filterable
             className="-striped -highlight" // add styles
-            columns={linkColumns}/>
-            <h4>Transmissions</h4>
-            <ReactTable
+            columns={potentialSourcesColumns}/>
+              <div style={subtableHeader}className={"legendSquare  transmission"}></div>
+              <div style={subtableHeader}><h4> Putative Transmissions </h4> </div>            <ReactTable
             showPagination={false}
             defaultPageSize={outlinks.length}
             data={outlinks}
             // filterable
             className="-striped -highlight" // add styles
-            columns={linkColumns}/>
+            columns={potentialTransmissionsColumns}/>
             </div>)
           }}
 

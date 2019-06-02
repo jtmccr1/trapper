@@ -11,8 +11,20 @@
 .rect.selected{
     fill: #e9c964;
 }
+.rect.selected.source{
+    fill: #cf7155;
+}
+.rect.selected.transmission{
+    fill: #819d8b;
+}
 #phylogeny .internal-node{
     display: none;
+}
+.legendSquare.source{
+    background-color: #cf7155
+}
+.legendSquare.transmission{
+    background-color: #819d8b
 }
 /* ------- Hard coded locations ------------------------------*/
 
@@ -41,9 +53,14 @@
     fill: #e9c964;
 }
 
-.node-shape.selected.by-proxy{
-    fill: #e9c964;
+.node-shape.source{
+    fill:#cf7155
 }
+
+.node-shape.transmission{
+    fill:#819d8b
+}
+
 .branch .branch-path.selected {
     stroke-width:4
 }
@@ -59,10 +76,10 @@
     fill:#DB504A;
     stroke:#FFF;
 }
-/* #West-Midlands, #Staffordshire, #Worcestershire, #Warwickshire {
+#West-Midlands, #Staffordshire, #Worcestershire, #Warwickshire {
     fill:#E3B505;
     stroke:#FFF;
-} */
+}
 
 .branch.dataSource-transphylo{
     stroke-dasharray: 1 3;

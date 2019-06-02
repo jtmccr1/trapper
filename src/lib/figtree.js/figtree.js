@@ -341,6 +341,31 @@ export class FigTree extends d3Plot{
         this.layout = layout;
         this.update();
     }
+
+    // Highlight a node in the graph given the node id
+    highlightNode(nodeId, classString){
+        const nodeGroup =  this.svgSelection.select(`.node.id-${nodeId}`)
+        const nodeShape = nodeGroup.select(".node-shape");
+        nodeGroup.raise(); //da roof - bring to the top of the g groups.
+        this.settings.baubles.forEach((bauble) => {
+            if (bauble.vertexFilter(nodeShape)) {
+                bauble.updateShapes(nodeShape, this.settings.hoverBorder);
+            }
+        });
+        nodeShape.classed(classString, true);
+    }
+    unHighlightNode(nodeId,classString){
+        const nodeGroup =  this.svgSelection.select(`.node.id-${nodeId}`)
+        const nodeShape = nodeGroup.select(".node-shape");
+        nodeGroup.raise(); //da roof - bring to the top of the g groups.
+        this.settings.baubles.forEach((bauble) => {
+            if (bauble.vertexFilter(nodeShape)) {
+                bauble.updateShapes(nodeShape, 0);
+            }
+        });
+        nodeShape.classed(classString, false);
+    }
+    
 }
 
 /*
