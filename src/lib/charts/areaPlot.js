@@ -9,34 +9,36 @@ import {transition} from "d3-transition"
 import { d3Plot } from "./d3Plot";
 
 export class areaPlot extends d3Plot{
-  static DEFAULT_SETTINGS() {
+    static DEFAULT_SETTINGS() {
         return {
-      hoverBorder: 2,
-      transitionDuration:300,
-      curve:curveBasis,
+            hoverBorder: 2,
+            transitionDuration:300,
+            curve:curveBasis,
         }
-      }
-      /**
-       * The constructor
-       * @param {*} svg 
-       * @param {*} layout 
-       * @param {*} margins top,bottom,left,right
-       * @param {*} settings 
-       */
+    }
+
+    /**
+     * The constructor
+     * @param {*} svg
+     * @param {*} layout
+     * @param {*} margins top,bottom,left,right
+     * @param {*} settings
+     */
     constructor(svg, layout, margins, settings = {}){
         super()
-      this.layout = layout;
-      this.margins = margins;
+        this.layout = layout;
+        this.margins = margins;
 
-      // merge the default settings with the supplied settings
-      this.settings = {...d3Plot.DEFAULT_SETTINGS(),...areaPlot.DEFAULT_SETTINGS(), ...settings};
-      this.svg=svg;
-      }
-    
-        addDataLayers(){
-            this.svgSelection.append("g").attr("class", "area-layer");
-        }
-        update(){
+        // merge the default settings with the supplied settings
+        this.settings = {...d3Plot.DEFAULT_SETTINGS(),...areaPlot.DEFAULT_SETTINGS(), ...settings};
+        this.svg=svg;
+    }
+
+    addDataLayers(){
+        this.svgSelection.append("g").attr("class", "area-layer");
+    }
+
+    update(){
         // get new positions
         this.points = []; // rest to so will be filled
         this.layout.layout(this.points);
@@ -60,25 +62,26 @@ export class areaPlot extends d3Plot{
 
         // updateAxis.call(this);
 
-      updateAreas.call(this);
-      this.updateAxis();
-      // this.updateAxisBars();
+        updateAreas.call(this);
+        this.updateAxis();
+        // this.updateAxisBars();
 
     }
-/**
- * Add a hover callback
- * @param {*} action  - object which has 2 functions enter and exit each takes 3 arguments d,i,n d is data n[i] is `this`
- * @param {*} selection  - what to select defaults to .rect class
- */
-  // onHover(action,selection=null){
-  //     const selected = this.svgSelection.selectAll(`${selection ? selection : "path"}`);
-  //     selected.on("mouseover", (d,i,n) => {
-  //         action.enter(d,i,n);
-  //     });
-  //     selected.on("mouseout", (d,i,n) => {
-  //         action.exit(d,i,n);
-  //     });
-  // }
+
+    /**
+     * Add a hover callback
+     * @param {*} action  - object which has 2 functions enter and exit each takes 3 arguments d,i,n d is data n[i] is `this`
+     * @param {*} selection  - what to select defaults to .rect class
+     */
+    // onHover(action,selection=null){
+    //     const selected = this.svgSelection.selectAll(`${selection ? selection : "path"}`);
+    //     selected.on("mouseover", (d,i,n) => {
+    //         action.enter(d,i,n);
+    //     });
+    //     selected.on("mouseout", (d,i,n) => {
+    //         action.exit(d,i,n);
+    //     });
+    // }
 //   onClick(action,selection=null){
 //     const selected = this.svgSelection.selectAll(`${selection ? selection : "path"}`);
 //     selected.on("click", (d,i,n) => {
@@ -89,41 +92,41 @@ export class areaPlot extends d3Plot{
 
 function updateAreas(){
     const areaMaker = area()
-    .x(d => this.scales.x(new Date(d.time)))
-    .y0(d=> this.scales.y(d.y0*d.total))
-    .y1(d => this.scales.y(d.y1*d.total))
-    .curve(curveBasis)
-  // DATA JOIN
+        .x(d => this.scales.x(new Date(d.time)))
+        .y0(d=> this.scales.y(d.y0*d.total))
+        .y1(d => this.scales.y(d.y1*d.total))
+        .curve(curveBasis)
+    // DATA JOIN
     // Join new data with old elements, if any.
     const areas = this.svgSelection.select(".area-layer")
         .selectAll("path")
         .data(this.points,d=>d[0].data.id);
     // ENTER
     // Create new elements as needed.
-       const newAreas=areas.enter()
+    const newAreas=areas.enter()
         .append("path")
         .attr("class", (d) => ["fishArea",...this.getAnnotations(d[0].data)].join(" ")) // add attribute classes here
         .attr("stroke-width",4)
         .attr("stroke",d=>"black")
         .attr("d", d => areaMaker(d))
-       // update the existing elements
+    // update the existing elements
     areas
-    .transition()
-    .duration(this.settings.transitionDuration)
-    .attr("d", d => areaMaker(d));
-     // EXIT
+        .transition()
+        .duration(this.settings.transitionDuration)
+        .attr("d", d => areaMaker(d));
+    // EXIT
     // Remove old elements as needed.
     areas.exit().remove();
-};
+}
 
 function updateAxis(){
-        // update axis
-    
+    // update axis
+
     this.svgSelection.select("#y-axis")
-    .attr("transform", `translate(${this.margins.left.height },0)`)
-    .call(axisLeft(this.scales.y).ticks(5))
-      .transition()
-      .duration(this.settings.transitionDuration)
-      .ease(easeLinear)
-  }
+        .attr("transform", `translate(${this.margins.left.height },0)`)
+        .call(axisLeft(this.scales.y).ticks(5))
+        .transition()
+        .duration(this.settings.transitionDuration)
+        .ease(easeLinear)
+}
   

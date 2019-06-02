@@ -1,6 +1,7 @@
 import {scaleLinear} from 'd3-scale';
 import {Type} from '../figtree.js/index.js';
 import { nextTick } from 'q';
+
 /**
  * The Layout class
  *
@@ -13,6 +14,7 @@ export class d3PlotLayout {
             horizontalScale:scaleLinear,
         }
     }
+
     /**
      * The constructor.
      */
@@ -23,7 +25,7 @@ export class d3PlotLayout {
         this._horizontalRange = [0.0, 1.0];
         this._verticalRange = [0, 1.0];
         this._horizontalTicks= this.settings.horizontalScale()
-        .domain(this._horizontalRange).ticks(5)
+            .domain(this._horizontalRange).ticks(5)
         // create an empty callback function
         this.updateCallback = () => { };
         this.annotations = {};
@@ -44,6 +46,7 @@ export class d3PlotLayout {
     get verticalRange() {
         return this._verticalRange;
     }
+
     get horizontalAxisTicks(){
         return this._horizontalTicks;
     }
@@ -104,107 +107,107 @@ export class d3PlotLayout {
     // }
 
     /**
-    * This methods also checks the values are correct and conform to previous annotations
-    * in type.
-    *
-    * @param annotations
-    */
-   addAnnotations(datum) {
-       for (let [key, addValues] of Object.entries(datum)) {
-           if(addValues instanceof Date||  typeof addValues === 'symbol'){
-               continue; // don't handel dates yet
-           }
+     * This methods also checks the values are correct and conform to previous annotations
+     * in type.
+     *
+     * @param annotations
+     */
+    addAnnotations(datum) {
+        for (let [key, addValues] of Object.entries(datum)) {
+            if(addValues instanceof Date||  typeof addValues === 'symbol'){
+                continue; // don't handel dates yet
+            }
             let annotation = this.annotations[key];
-           if (!annotation) {
-               annotation = {};
-               this.annotations[key] = annotation;
-           }
+            if (!annotation) {
+                annotation = {};
+                this.annotations[key] = annotation;
+            }
 
-           if(typeof addValues === 'string' || addValues instanceof String){
-               // fake it as an array
-               addValues = [addValues];
-           }
-           if (Array.isArray(addValues)) {
-               // is a set of discrete values or 
-               const type = Type.DISCRETE;
+            if(typeof addValues === 'string' || addValues instanceof String){
+                // fake it as an array
+                addValues = [addValues];
+            }
+            if (Array.isArray(addValues)) {
+                // is a set of discrete values or
+                const type = Type.DISCRETE;
 
-               if (annotation.type && annotation.type !== type) {
-                   throw Error(`existing values of the annotation, ${key}, in the tree is not of the same type`);
-               }
-               annotation.type = type;
-               annotation.values = annotation.values? [...annotation.values, ...addValues]:[...addValues]
-           } else if (Object.isExtensible(addValues)) {
-               // is a set of properties with values               
-               let type = null;
+                if (annotation.type && annotation.type !== type) {
+                    throw Error(`existing values of the annotation, ${key}, in the tree is not of the same type`);
+                }
+                annotation.type = type;
+                annotation.values = annotation.values? [...annotation.values, ...addValues]:[...addValues]
+            } else if (Object.isExtensible(addValues)) {
+                // is a set of properties with values
+                let type = null;
 
-               let sum = 0.0;
-               let keys = [];
-               for (let [key, value] of Object.entries(addValues)) {
-                   if (keys.includes(key)) {
-                       throw Error(`the states of annotation, ${key}, should be unique`);
-                   }
-                   if (typeof value === typeof 1.0) {
-                       // This is a vector of probabilities of different states
-                       type = (type === undefined) ? Type.PROBABILITIES : type;
+                let sum = 0.0;
+                let keys = [];
+                for (let [key, value] of Object.entries(addValues)) {
+                    if (keys.includes(key)) {
+                        throw Error(`the states of annotation, ${key}, should be unique`);
+                    }
+                    if (typeof value === typeof 1.0) {
+                        // This is a vector of probabilities of different states
+                        type = (type === undefined) ? Type.PROBABILITIES : type;
 
-                       if (type === Type.DISCRETE) {
-                           throw Error(`the values of annotation, ${key}, should be all boolean or all floats`);
-                       }
+                        if (type === Type.DISCRETE) {
+                            throw Error(`the values of annotation, ${key}, should be all boolean or all floats`);
+                        }
 
-                       sum += value;
-                       if (sum > 1.0) {
-                           throw Error(`the values of annotation, ${key}, should be probabilities of states and add to 1.0`);
-                       }
-                   } else if (typeof value === typeof true) {
-                       type = (type === undefined) ? Type.DISCRETE : type;
+                        sum += value;
+                        if (sum > 1.0) {
+                            throw Error(`the values of annotation, ${key}, should be probabilities of states and add to 1.0`);
+                        }
+                    } else if (typeof value === typeof true) {
+                        type = (type === undefined) ? Type.DISCRETE : type;
 
-                       if (type === Type.PROBABILITIES) {
-                           throw Error(`the values of annotation, ${key}, should be all boolean or all floats`);
-                       }
-                   } else {
-                       throw Error(`the values of annotation, ${key}, should be all boolean or all floats`);
-                   }
-                   keys.append(key);
-               }
+                        if (type === Type.PROBABILITIES) {
+                            throw Error(`the values of annotation, ${key}, should be all boolean or all floats`);
+                        }
+                    } else {
+                        throw Error(`the values of annotation, ${key}, should be all boolean or all floats`);
+                    }
+                    keys.append(key);
+                }
 
-               if (annotation.type && annotation.type !== type) {
-                   throw Error(`existing values of the annotation, ${key}, in the tree is not of the same type`);
-               }
+                if (annotation.type && annotation.type !== type) {
+                    throw Error(`existing values of the annotation, ${key}, in the tree is not of the same type`);
+                }
 
-               annotation.type = type;
-               annotation.values = annotation.values? [...annotation.values, ...addValues]:[...addValues]
-           } else {
-               let type = Type.DISCRETE;
+                annotation.type = type;
+                annotation.values = annotation.values? [...annotation.values, ...addValues]:[...addValues]
+            } else {
+                let type = Type.DISCRETE;
 
-               if (typeof addValues === typeof true) {
-                   type = Type.BOOLEAN;
-               } else if (Number(addValues)) {
-                   type = (addValues % 1 === 0 ? Type.INTEGER : Type.FLOAT);
-               }
+                if (typeof addValues === typeof true) {
+                    type = Type.BOOLEAN;
+                } else if (Number(addValues)) {
+                    type = (addValues % 1 === 0 ? Type.INTEGER : Type.FLOAT);
+                }
 
-               if (annotation.type && annotation.type !== type) {
-                   if ((type === Type.INTEGER && annotation.type === Type.FLOAT) ||
-                       (type === Type.FLOAT && annotation.type === Type.INTEGER)) {
-                       // upgrade to float
-                       type = Type.FLOAT;
-                   } else {
-                       throw Error(`existing values of the annotation, ${key}, in the tree is not of the same type`);
-                   }
-               }
+                if (annotation.type && annotation.type !== type) {
+                    if ((type === Type.INTEGER && annotation.type === Type.FLOAT) ||
+                        (type === Type.FLOAT && annotation.type === Type.INTEGER)) {
+                        // upgrade to float
+                        type = Type.FLOAT;
+                    } else {
+                        throw Error(`existing values of the annotation, ${key}, in the tree is not of the same type`);
+                    }
+                }
 
-               if (type === Type.DISCRETE) {
-                   if (!annotation.values) {
-                       annotation.values = new Set();
-                   }
+                if (type === Type.DISCRETE) {
+                    if (!annotation.values) {
+                        annotation.values = new Set();
+                    }
                     annotation.values.add(addValues);
-                
-               }
 
-               annotation.type = type;
-           }
+                }
 
-           // overwrite the existing annotation property
-           this.annotations[key] = annotation;
-       }
-   }
+                annotation.type = type;
+            }
+
+            // overwrite the existing annotation property
+            this.annotations[key] = annotation;
+        }
+    }
 }
