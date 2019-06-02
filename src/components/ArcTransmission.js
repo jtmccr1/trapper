@@ -130,7 +130,12 @@ const nodeMouseExit = (d,i,n,fig) => {
                 bauble.updateShapes(node, 0);
             }
         });
-        node.classed("hovered proxy", false);
+        if(node.attr("class").includes("selected")){
+            node.classed("hovered", false); // leave proxy for selection
+
+        }else{
+            node.classed("hovered proxy", false);
+        }
     }
     };
 const nodeCallback = {enter:nodeMouseEnter,exit:nodeMouseExit};
@@ -172,10 +177,9 @@ function ArcTransmission(props){
         //             bauble.updateShapes(node, (shouldSelect?fig.settings.hoverBorder:0)); // if we're selecting use the hover border
         //         }
         //     });
-        // can't be just proxy since that get's removed when we mouse out
-            node.classed("selected by-proxy", shouldSelect);
+            node.classed("selected proxy", shouldSelect);
             // on all other plots
-            selectAll(`.id-${source.id}`).classed("selected by-proxy", shouldSelect);
+            selectAll(`.id-${source.id}`).classed("selected proxy", shouldSelect);
     
         }
     }

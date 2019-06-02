@@ -11,6 +11,9 @@
 .rect.selected{
     fill: #e9c964;
 }
+.rect.selected.proxy{
+    fill: #cf7155;
+}
 #phylogeny .internal-node{
     display: none;
 }
