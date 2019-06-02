@@ -24,14 +24,10 @@ function LineList(props){
 
       }]
 
-      const linkColumns = [{
+      const potentialSourcesColumns = [{
         id:"source",
         Header: 'Source',
         accessor: d=>d.source.id 
-      },{
-        id:"target",
-        Header: 'Target',
-        accessor: d=>d.target.id
       },
       {
         id:"dataSource",
@@ -43,6 +39,25 @@ function LineList(props){
         Header: 'Support',
         accessor: d=>d.metaData.support
       }]
+
+      const potentialTransmissionsColumns = [{
+        id:"target",
+        Header: 'Target',
+        accessor: d=>d.target.id 
+      },
+      {
+        id:"dataSource",
+        Header: 'Data Source',
+        accessor: d=>d.metaData.dataSource
+      },
+      {
+        id:"support",
+        Header: 'Support',
+        accessor: d=>d.metaData.support
+      }]
+
+
+
 
 
       const rows =props.epidemic.Cases.length;
@@ -66,17 +81,17 @@ function LineList(props){
             showPagination={false}
             defaultPageSize={inlinks.length}
             data={inlinks}
-            filterable
+            // filterable
             className="-striped -highlight" // add styles
-            columns={linkColumns}/>
+            columns={potentialSourcesColumns}/>
             <h4>Transmissions</h4>
             <ReactTable
             showPagination={false}
             defaultPageSize={outlinks.length}
             data={outlinks}
-            filterable
+            // filterable
             className="-striped -highlight" // add styles
-            columns={linkColumns}/>
+            columns={potentialTransmissionsColumns}/>
             </div>)
           }}
 
