@@ -14,9 +14,11 @@ export class Epidemic{
     const firstOutbreak = new Outbreak(`${indexCase.location}-${indexCase.id}`,indexCase.location,[indexCase]);
     
     this.rootOutbreak = firstOutbreak;
+    firstOutbreak.indexCase=indexCase;
     this.outbreakMap.set(indexCase,firstOutbreak);
     this.outbreaks.push(firstOutbreak);
-    const children = this.graph.getOutgoingEdges(indexCase).filter(this.edgeCondition).map(e =>      ({edge:e,Case:e.target}))
+    const children = this.graph.getOutgoingEdges(indexCase).filter(this.edgeCondition)
+    .map(e => ({edge:e,Case:e.target}))
     
     for(const child of children){
       this.outbreakTraversal(child)
@@ -43,6 +45,7 @@ export class Epidemic{
   }else{
     const startAnotherOutbreak = new Outbreak(`${Case.location}-${Case.id}`,Case.location,[Case]);
     Case.outbreakId=startAnotherOutbreak.id;
+    startAnotherOutbreak.indexCase=Case;
     parentOutbreak.addChild(startAnotherOutbreak);
     this.outbreakMap.set(Case,startAnotherOutbreak);
     this.outbreaks.push(startAnotherOutbreak);
@@ -57,7 +60,7 @@ export class Epidemic{
   }
 }
 get Cases(){
-  return this.graph.nodes;
+  return this.outbreaks.reduce((acc,curr)=>[...acc,...curr.cases],[]);
 }
 
 
