@@ -149,9 +149,10 @@ export class ArcLayout extends Layout {
 
 
                 // if (e.v1.node.annotations) {
+                    let {id,...noId} = e.v1.node;
                     e.classes = [
                         ...e.classes,
-                        ...this.getAnnotations(e.v1.node),
+                        ...this.getAnnotations(noId), // no id in this 
                         ...this.getAnnotations(e.data.metaData),
                         ...this.getAnnotations({source:e.data.source.id,target:e.data.target.id})
                     ]
@@ -224,7 +225,7 @@ export class ArcLayout extends Layout {
     */
    addAnnotations(datum) {
        for (let [key, addValues] of Object.entries(datum)) {
-           if(addValues instanceof Date||  typeof addValues === 'symbol'){
+           if(addValues instanceof Date||  typeof addValues === 'symbol'||addValues===null){
                continue; // don't handel dates yet
            }
             let annotation = this.annotations[key];
