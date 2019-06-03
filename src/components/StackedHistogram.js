@@ -51,6 +51,7 @@ function StackedHistogram(props){
 
                 // const layout = new stackedHistogramLayout(props.data,layoutSettings);
                 const settings = { hoverBorder: 4, backgroundBorder:0,tranitionDuration:0};
+                select(el.current).select('g').remove();
                 const fig = new stackedHistogramChart(el.current,props.layout,props.margins,settings);
 
                 fig.draw();
@@ -62,7 +63,7 @@ function StackedHistogram(props){
                 select(el.current).select(".axes-layer").select("#x-axis").remove();
                 setHistogram(fig);
             
-        },[]);
+        },[props.data]);
 
     const rand_id = `b${Math.random().toString(36).substring(4)}`
     useEffect(()=>{

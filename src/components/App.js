@@ -84,8 +84,8 @@ function App() {
     const [areaLayout,setAreaLayout] = useState(null);
     const [transmissionLayout,setTransmissionLayout] = useState(null)
     const[stackedLayout,setStackedLayout] = useState(null);
+    const [setArea,setAreaFunc] = useFunctionAsState(()=>console.log("test"))
     //Load the data at the start
-
     useEffect(()=>{
         console.log("reading in the data")
         // read in lineList, links,tree,treeAnnotations
@@ -186,14 +186,30 @@ function App() {
                             horizontalTicks:timeWeek.range(week0,weekEnd),
                             horizontalScale:scaleTime,
                             groupingFunction:d=>d.location};
+                            // setLayoutSettings(layoutSettings)
                             setStackedLayout( new stackedHistogramLayout(outbreakEpidemic.Cases,layoutSettings));
                         
                             setAreaLayout(new fishLayout(outbreakEpidemic,layoutSettings))
                             const xScale = scaleTime().domain(layoutSettings.horizontalRange).range([0,1]); // pass in date domain
                             const xfunc=(n,i)=>n.id==="UnsampledrootCase"? xScale(treeRootDate[0]):xScale(n.symptomOnset) // for setting the x postion;
                         
+                    
+                            // const selectAreaFact=()=>{
+                                const selectArea=(epidemic)=>{
+                                setEpidemic(epidemic);
+                                setStackedLayout( new stackedHistogramLayout(outbreakEpidemic.Cases,layoutSettings));
+                                setAreaLayout(new fishLayout(outbreakEpidemic,layoutSettings))
+                                const xScale = scaleTime().domain(layoutSettings.horizontalRange).range([0,1]); // pass in date domain
+                                const xfunc=(n,i)=>n.id==="UnsampledrootCase"? xScale(treeRootDate[0]):xScale(n.symptomOnset) // for setting the x postion;
+                            
+                                setTransmissionLayout( new ArcLayout(outbreakEpidemic.graph,{xFunction:xfunc,curve:'bezier'}));
+                                }
+
+                            // }
+                            setAreaFunc(selectArea)
                             setTransmissionLayout( new ArcLayout(outbreakEpidemic.graph,{xFunction:xfunc,curve:'bezier'}));
-                    })
+
+                        })
 
 
             })
@@ -250,7 +266,8 @@ function App() {
                     areaLayout={areaLayout}
                     transmissionLayout = {transmissionLayout}
                     setSelectedCases={setSelectedCases}
-                    selectedCases={selectedCases}/>
+                    selectedCases={selectedCases}
+                    selectArea={setArea}/>
                 <div className="sidebarButtonColumn">
                     <div className="sidebarButtons right">
                         <h3 className={`button ${sideBarOpen && sideBarFocus === "Geography" ? "selected" : ""}`} onClick={()=> {
@@ -293,5 +310,17 @@ function App() {
         </div>
     )
 }
+//https://github.com/facebook/react/issues/14087
+function useFunctionAsState(fn) {
+
+    const [val, setVal] = useState(() => fn);
+  
+    function setFunc(fn) {
+      setVal(() => fn);
+    }
+  
+    return [val, setFunc];
+    
+  }
 
 export default App;

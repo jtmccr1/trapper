@@ -242,18 +242,9 @@ export class Graph{
      * @returns {*} A graph object including the provided nodes and edges linking the node. If there is no path between all nodes the 
      * object will be empty 
      */
-    getSubGraph(nodes,options={filterEdges:(e)=>true}){
-        // check there is a path between all nodes
-        // const preorder= [...this.preorder(nodes[0])];
-        // if(nodes.some(n=>preorder.indexOf(n)===-1)){ 
-        //     // If there is at least 1 node not hit in the traversal
-        //     return new Graph();
-        // }
-        // const edges = nodes.map(n=>[...this.getOutgoingEdges(n).filter(e=>options.filterEdges(e)).filter(e=>nodes.indexOf(e.target)>-1),
-        //                             ...this.getIncomingEdges(n).filter(e=>options.filterEdges(e)).filter(e=>nodes.indexOf(e.source)>-1)]);
-        // const uniqueEdges = [...new Set(edges)];
-        // const subGraph = new Graph();
-        
+    getSubGraph(index,options={filterEdges:(e)=>true}){
+
+                
         
         // return new Graph();
 
