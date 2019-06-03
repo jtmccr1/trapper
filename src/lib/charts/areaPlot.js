@@ -12,7 +12,7 @@ export class areaPlot extends d3Plot{
   static DEFAULT_SETTINGS() {
         return {
       hoverBorder: 2,
-      transitionDuration:300,
+      tranitionDuration:0,
       curve:curveBasis,
         }
       }
@@ -36,10 +36,60 @@ export class areaPlot extends d3Plot{
         addDataLayers(){
             this.svgSelection.append("g").attr("class", "area-layer");
         }
+
+        draw(){
+          let width,height;
+        if(Object.keys(this.settings).indexOf("width")>-1){
+            width =this.settings.width;
+        }else{
+            width = this.svg.getBoundingClientRect().width;
+        }
+        if(Object.keys(this.settings).indexOf("height")>-1){
+            height =this.settings.height;
+        }else{
+            height = this.svg.getBoundingClientRect().height;
+        }
+ 
+        //remove the tree if it is there already
+        select(this.svg).select("g").remove();
+ 
+        // add a group which will contain the new plot
+        select(this.svg).append("g")
+            .attr("transform",`translate(${this.margins.left},${this.margins.top})`);
+ 
+         //to selecting every time
+         this.svgSelection = select(this.svg).select("g");
+
+         this.svgSelection.append("g").attr("class", "axes-layer");
+
+         this.addDataLayers();
+         
+         // create the scales
+         const xScale = this.settings.xScaleType()
+         .domain(this.layout.horizontalRange)
+         .range([this.margins.left, width - this.margins.right-this.margins.left]);
+         
+         //height is total 
+         const yScale = this.settings.yScaleType()
+             .domain(this.layout.verticalRange)
+             .range([height -this.margins.bottom-this.margins.top,this.margins.top]);
+ 
+         this.scales = {x:xScale, y:yScale, width, height};
+         this.addAxis();
+ 
+         // Called whenever the layout changes...
+           this.layout.updateCallback = () => {
+                 this.update();
+             }
+
+             this.points = []; // rest to so will be filled
+             this.layout.layout(this.points);
+     
+             this.update();
+        }
         update(){
         // get new positions
-        this.points = []; // rest to so will be filled
-        this.layout.layout(this.points);
+
         // svg may have changed sizes
         let width,height;
         if(Object.keys(this.settings).indexOf("width")>-1){

@@ -60,8 +60,8 @@ function AreaPlot(props){
                 const layoutSettings = {horizontalRange:extent(props.dateRange),
                                     horizontalTicks:props.dateRange,
                                     horizontalScale:scaleTime};
-            const layout = new fishLayout(props.epidemic,layoutSettings);
-            const fig = new areaPlot(el.current,layout,props.margins, { hoverBorder: 4, backgroundBorder:2,transitionDuration:300});
+            // const layout = new fishLayout(props.epidemic,layoutSettings);
+            const fig = new areaPlot(el.current,props.layout,props.margins, { hoverBorder: 4, backgroundBorder:2,tranitionDuration:0});
             fig.draw();
             
             fig.onHover(callback,".fishArea")

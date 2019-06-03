@@ -12,7 +12,7 @@ import {event} from 'd3';
 export class  d3Plot{
     static DEFAULT_SETTINGS() {
         return {
-      transitionDuration:300,
+      tranitionDuration:0,
       xScaleType:scaleLinear,
       yScaleType:scaleLinear,
       yAxisType:axisLeft,

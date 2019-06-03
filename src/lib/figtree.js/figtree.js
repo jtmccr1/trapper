@@ -399,21 +399,21 @@ function updateNodes() {
         bauble.updateShapes(d);
     });
 
-    newNodes.append("text")
-        .attr("class", "node-label name")
-        .attr("text-anchor", "start")
-        .attr("alignment-baseline", "middle")
-        .attr("dx", "12")
-        .attr("dy", "0")
-        .text((d) => d.rightLabel);
+    // newNodes.append("text")
+    //     .attr("class", "node-label name")
+    //     .attr("text-anchor", "start")
+    //     .attr("alignment-baseline", "middle")
+    //     .attr("dx", "12")
+    //     .attr("dy", "0")
+    //     .text((d) => d.rightLabel);
 
-    newNodes.append("text")
-        .attr("class", "node-label support")
-        .attr("text-anchor", "end")
-        .attr("dx", "-6")
-        .attr("dy", d => (d.labelBelow ? -8 : +8))
-        .attr("alignment-baseline", d => (d.labelBelow ? "bottom": "hanging" ))
-        .text((d) => d.leftLabel);
+    // newNodes.append("text")
+    //     .attr("class", "node-label support")
+    //     .attr("text-anchor", "end")
+    //     .attr("dx", "-6")
+    //     .attr("dy", d => (d.labelBelow ? -8 : +8))
+    //     .attr("alignment-baseline", d => (d.labelBelow ? "bottom": "hanging" ))
+    //     .text((d) => d.leftLabel);
 
     // update the existing elements
     nodes
@@ -433,25 +433,25 @@ function updateNodes() {
         bauble.updateShapes(d)
     });
 
-    nodes.select("text .node-label .name")
-        .transition()
-        .duration(this.settings.transitionDuration)
-        .attr("class", "node-label name")
-        .attr("text-anchor", "start")
-        .attr("alignment-baseline", "middle")
-        .attr("dx", "12")
-        .attr("dy", "0")
-        .text((d) => d.rightLabel);
+    // nodes.select("text .node-label .name")
+    //     .transition()
+    //     .duration(this.settings.transitionDuration)
+    //     .attr("class", "node-label name")
+    //     .attr("text-anchor", "start")
+    //     .attr("alignment-baseline", "middle")
+    //     .attr("dx", "12")
+    //     .attr("dy", "0")
+    //     .text((d) => d.rightLabel);
 
-    nodes.select("text .node-label .support")
-        .transition()
-        .duration(this.settings.transitionDuration)
-        .attr("alignment-baseline", d => (d.labelBelow ? "bottom": "hanging" ))
-        .attr("class", "node-label support")
-        .attr("text-anchor", "end")
-        .attr("dx", "-6")
-        .attr("dy", d => (d.labelBelow ? -8 : +8))
-        .text((d) => d.leftLabel);
+    // nodes.select("text .node-label .support")
+    //     .transition()
+    //     .duration(this.settings.transitionDuration)
+    //     .attr("alignment-baseline", d => (d.labelBelow ? "bottom": "hanging" ))
+    //     .attr("class", "node-label support")
+    //     .attr("text-anchor", "end")
+    //     .attr("dx", "-6")
+    //     .attr("dy", d => (d.labelBelow ? -8 : +8))
+    //     .text((d) => d.leftLabel);
 
     // EXIT
     // Remove old elements as needed.

@@ -210,8 +210,6 @@ function ArcTransmission(props){
     }
 
     const [figtree,setFigtree]=useState(null);
-    const xScale = scaleTime().domain(extent(props.dateRange)).range([0,1]); // pass in date domain
-    const xfunc=(n,i)=>n.id==="UnsampledrootCase"? xScale(props.treeDateRange[0]):xScale(n.symptomOnset) // for setting the x postion;
 
     // const el = useCallback(node => {
         
@@ -219,13 +217,13 @@ function ArcTransmission(props){
             // if(node.children.length===0){ // make it the first time
             const el = useRef();
             useEffect(()=>{   
-            const layout = new ArcLayout(props.graph,{xFunction:xfunc,curve:props.curve});
+            // const layout = new ArcLayout(props.graph,{xFunction:xfunc,curve:props.curve});
                 const settings = { hoverBorder: 4, backgroundBorder:2,
                     baubles: [new CircleBauble()],
-                    transitionDuration:300,
+                    tranitionDuration:0,
                     opacityFunc:e=>e.data.metaData.support,
                 };
-                const fig = new FigTree(el.current,layout,props.margins,settings);
+                const fig = new FigTree(el.current,props.layout,props.margins,settings);
             fig.draw();
             // fig.onHover(callback,".node")
             fig.onHoverNode(nodeCallback);

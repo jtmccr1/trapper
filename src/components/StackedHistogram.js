@@ -43,15 +43,15 @@ function StackedHistogram(props){
 
     const el = useRef();
         useEffect(()=>{// make it the first time
-                const layoutSettings = {
-                    horizontalRange:extent(props.dateRange),
-                    horizontalTicks:props.dateRange,
-                    horizontalScale:scaleTime,
-                    groupingFunction:d=>d.location};
+                // const layoutSettings = {
+                //     horizontalRange:extent(props.dateRange),
+                //     horizontalTicks:props.dateRange,
+                //     horizontalScale:scaleTime,
+                //     groupingFunction:d=>d.location};
 
-                const layout = new stackedHistogramLayout(props.data,layoutSettings);
-                const settings = { hoverBorder: 4, backgroundBorder:0,transitionDuration:300};
-                const fig = new stackedHistogramChart(el.current,layout,props.margins,settings);
+                // const layout = new stackedHistogramLayout(props.data,layoutSettings);
+                const settings = { hoverBorder: 4, backgroundBorder:0,tranitionDuration:0};
+                const fig = new stackedHistogramChart(el.current,props.layout,props.margins,settings);
 
                 fig.draw();
 

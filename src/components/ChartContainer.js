@@ -62,6 +62,8 @@ const ChartContainer = React.forwardRef((props, ref)=>{
             </div>
         )
     }else{
+        console.log("reRender")
+
         return(
             <div className = "timelineContainer" ref={ref} onMouseMove={mouseEnter} onMouseLeave={mouseExit}>
                 <div id="timeline"></div>
@@ -75,6 +77,7 @@ const ChartContainer = React.forwardRef((props, ref)=>{
                 <div className = "chartContainer">
                     <StackedHistogram  data={props.epidemic.Cases}
                                        margins = {margins}
+                                       layout = {props.stackedLayout}
                                        chartGeom={chartGeom}
                                        dateRange ={props.dateRange}
                                        callbacks={{groups:d=>d.location}}/>
@@ -82,6 +85,7 @@ const ChartContainer = React.forwardRef((props, ref)=>{
                 </div>
                 <div className = "chartContainer">
                     <AreaPlot
+                        layout ={props.areaLayout}
                         margins = {margins}
                         epidemic={props.epidemic}
                         dateRange ={props.dateRange}
@@ -96,22 +100,24 @@ const ChartContainer = React.forwardRef((props, ref)=>{
                         graph={props.epidemic.graph}
                         dateRange ={props.dateRange}
                         curve ={"bezier"}
+                        layout ={props.transmissionLayout}
                         chartGeom={chartGeom}
                         setSelectedCases={props.setSelectedCases}
                         selectedCases={props.selectedCases}/>
                     <div className="chartTitle">Case connections</div>
                 </div>
-                {/*<div className = "chartContainer">
+                <div className = "chartContainer">
                     <PhyloChart
                         margins = {margins}
                         dateRange ={props.dateRange}
                         treeDateRange={props.treeDateRange}
                         phylogeny={props.phylogeny}
                         layout = {RectangularLayout}
+
                         // attributes = {phyloAttributes}
                         chartGeom={{...chartGeom,...{"height":600}}}/>
                     <div className="chartTitle">Transmission tree</div>
-        </div>*/}
+        </div>
             </div>
         )}
     // <Chart  />

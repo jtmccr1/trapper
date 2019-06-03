@@ -19,7 +19,7 @@ function PhyloChart(props){
                     baubles: [
                         new CircleBauble(),
                     ],
-                    transitionDuration:300
+                    tranitionDuration:0
                 });
                 fig.draw();
                 fig.hilightInternalNodes();

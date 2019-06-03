@@ -21,6 +21,11 @@ import {Epidemic} from "../lib/outbreak/Epidemic";
 import { Graph,Tree} from '../lib/figtree.js/index.js';
 import {summarizeLinks} from '../utils/dataParsers.js'
 
+
+import{stackedHistogramLayout} from "../lib/charts/stackedHistogramLayout"
+import{fishLayout} from "../lib/charts/fishplotLayout"
+import{ArcLayout} from "../lib/figtree.js/arcLayout"
+
 import 'react-table/react-table.css';
 import "../styles/trapper.css"
 
@@ -76,7 +81,9 @@ function App() {
     const [treeDateRange,setTreeDateRange] = useState(null);
     const [mapTopoJSON,setMapTopoJSON] =useState(null);
     const [selectedCases,setSelectedCases] = useState([]);
-
+    const [areaLayout,setAreaLayout] = useState(null);
+    const [transmissionLayout,setTransmissionLayout] = useState(null)
+    const[stackedLayout,setStackedLayout] = useState(null);
     //Load the data at the start
 
     useEffect(()=>{
@@ -127,7 +134,7 @@ function App() {
                     }
                 }
             }   // filtering the links that have low support
-                const filtedLinks=summarizedLinks.filter(l=>l.metaData.support>0.01);
+                const filtedLinks=summarizedLinks.filter(l=>l.metaData.support>0.02);
                 //The graph!
                 const outbreakGraph = new Graph(cases,filtedLinks);
                 const indexCase = outbreakGraph.nodes.find(n=>outbreakGraph.getOutgoingEdges(n).length>0&&outbreakGraph.getIncomingEdges(n).length===0);
@@ -173,7 +180,22 @@ function App() {
                         const weekEnd = timeWeek.offset(timeWeek.ceil(totalExtent[1]),2);
                         setDateRange(timeWeek.range(week0,weekEnd));
                         setTreeDateRange([treeRootDate,treeMaxDate]);
+                    // layouts
+                        const layoutSettings = {
+                            horizontalRange:extent(timeWeek.range(week0,weekEnd)),
+                            horizontalTicks:timeWeek.range(week0,weekEnd),
+                            horizontalScale:scaleTime,
+                            groupingFunction:d=>d.location};
+                            setStackedLayout( new stackedHistogramLayout(outbreakEpidemic.Cases,layoutSettings));
+                        
+                            setAreaLayout(new fishLayout(outbreakEpidemic,layoutSettings))
+                            const xScale = scaleTime().domain(layoutSettings.horizontalRange).range([0,1]); // pass in date domain
+                            const xfunc=(n,i)=>n.id==="UnsampledrootCase"? xScale(treeRootDate[0]):xScale(n.symptomOnset) // for setting the x postion;
+                        
+                            setTransmissionLayout( new ArcLayout(outbreakEpidemic.graph,{xFunction:xfunc,curve:'bezier'}));
                     })
+
+
             })
         // get map
         fetch(`${prefix}/map.json`).then(mapResponse=>mapResponse.json()).then(mapJSON=>setMapTopoJSON(mapJSON))
@@ -194,6 +216,11 @@ function App() {
     }
     const mapMargins = {"top":5,"bottom":5,"left":5,"right":5};
     const mapSize = {"height": 500, width: 500};
+
+
+
+    //    layouts
+
 
     /*---------------------- Rendering -------------------------*/
 
@@ -219,6 +246,9 @@ function App() {
                     treeDateRange={treeDateRange}
                     epidemic={epidemic}
                     phylogeny={phylogeny}
+                    stackedLayout={stackedLayout}
+                    areaLayout={areaLayout}
+                    transmissionLayout = {transmissionLayout}
                     setSelectedCases={setSelectedCases}
                     selectedCases={selectedCases}/>
                 <div className="sidebarButtonColumn">
