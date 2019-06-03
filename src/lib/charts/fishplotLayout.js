@@ -150,6 +150,8 @@ export class fishLayout extends d3PlotLayout{
         
         
         points.unshift(easyStart);
+        }else{
+          console.log(`no time points found for outbreak ${childOutbreak.id} The samples may be missing data`)
         }
         points.sort((a,b)=>a.time-b.time);
         this.points.push(points);
@@ -198,7 +200,6 @@ export class fishLayout extends d3PlotLayout{
   
   function getStartingDistance(outbreak,t){
     // points is an array of arrays each inner array is an oubreak we want the one with the parent.
-    console.log(this.points)
     const parentPoints = this.points.find(d=>d[0].data===outbreak.parent);
     if(typeof parentPoints==='undefined'){
       // The parent outbreak is the background outbreak
