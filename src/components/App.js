@@ -126,9 +126,10 @@ function App() {
                         summarizedLinks= summarizedLinks.filter(l=>l.target!==source);
                     }
                 }
-            }
+            }   // filtering the links that have low support
+                const filtedLinks=summarizedLinks.filter(l=>l.metaData.support>0.01);
                 //The graph!
-                const outbreakGraph = new Graph(cases,summarizedLinks);
+                const outbreakGraph = new Graph(cases,filtedLinks);
                 const indexCase = outbreakGraph.nodes.find(n=>outbreakGraph.getOutgoingEdges(n).length>0&&outbreakGraph.getIncomingEdges(n).length===0);
                 if(indexCase.location==="Unknown"){
                     // Sets index location to most common location of children
