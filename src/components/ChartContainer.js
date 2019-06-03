@@ -62,6 +62,8 @@ const ChartContainer = React.forwardRef((props, ref)=>{
             </div>
         )
     }else{
+        console.log("reRender")
+
         return(
             <div className = "timelineContainer" ref={ref} onMouseMove={mouseEnter} onMouseLeave={mouseExit}>
                 <div id="timeline"></div>
@@ -72,30 +74,23 @@ const ChartContainer = React.forwardRef((props, ref)=>{
                               chartGeom = {chartGeom}
                               domRect = {props.timelineSize}/>
                 </div>
-                {/* @todo Add a new panel to show cases per week -
-                <div className = "chartContainer">*/}
-                    {/*<AreaPlot*/}
-                        {/*margins = {margins}*/}
-                        {/*epidemic={props.epidemic}*/}
-                        {/*dateRange ={props.dateRange}*/}
-                        {/*chartGeom={chartGeom}/>*/}
-                    {/*<div className="chartTitle">Case counts</div>*/}
-                {/*</div>*/}
-                <div className = "chartContainer">
-                    <AreaPlot
-                        margins = {margins}
-                        epidemic={props.epidemic}
-                        dateRange ={props.dateRange}
-                        chartGeom={chartGeom}/>
-                    <div className="chartTitle">Outbreaks</div>
-                </div>
                 <div className = "chartContainer">
                     <StackedHistogram  data={props.epidemic.Cases}
                                        margins = {margins}
+                                       layout = {props.stackedLayout}
                                        chartGeom={chartGeom}
                                        dateRange ={props.dateRange}
                                        callbacks={{groups:d=>d.location}}/>
                     <div className="chartTitle">Case plot</div>
+                </div>
+                <div className = "chartContainer">
+                    <AreaPlot
+                        layout ={props.areaLayout}
+                        margins = {margins}
+                        epidemic={props.epidemic}
+                        dateRange ={props.dateRange}
+                        chartGeom={{...chartGeom,...{"height":400}}}/>
+                    <div className="chartTitle">Outbreaks</div>
                 </div>
                 <div className = "chartContainer">
                     <ArcTransmission
@@ -105,6 +100,7 @@ const ChartContainer = React.forwardRef((props, ref)=>{
                         graph={props.epidemic.graph}
                         dateRange ={props.dateRange}
                         curve ={"bezier"}
+                        layout ={props.transmissionLayout}
                         chartGeom={chartGeom}
                         setSelectedCases={props.setSelectedCases}
                         selectedCases={props.selectedCases}/>
@@ -117,10 +113,11 @@ const ChartContainer = React.forwardRef((props, ref)=>{
                         treeDateRange={props.treeDateRange}
                         phylogeny={props.phylogeny}
                         layout = {RectangularLayout}
+
                         // attributes = {phyloAttributes}
                         chartGeom={{...chartGeom,...{"height":600}}}/>
                     <div className="chartTitle">Transmission tree</div>
-                </div>
+        </div>
             </div>
         )}
     // <Chart  />

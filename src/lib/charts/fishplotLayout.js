@@ -17,6 +17,7 @@ export class fishLayout extends d3PlotLayout{
         horizontalRange:null,
         horizontalTicks:null,
         horizontalScale:scaleLinear,
+        percent:false
     }
 }
   /**
@@ -111,6 +112,9 @@ export class fishLayout extends d3PlotLayout{
                          y0:parentTop-spaceFilled.get(time)-timePoint.percent,
                          data:childOutbreak,
                          total:totalCourse.get(time).totalDescendents}
+          if(this.settings.percent){
+            point.total=1;
+          }
           this.addAnnotations({outbreakId:childOutbreak.id,location:childOutbreak.location})
           points.push(point) 
           spaceFilled.set(time,spaceFilled.get(time)+timePoint.percent+gapMap.get(time)[i+1]);

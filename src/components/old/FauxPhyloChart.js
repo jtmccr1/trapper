@@ -20,7 +20,7 @@ useEffect(()=>{
             baubles: [
                 new CircleBauble(),
             ],
-            transitionDuration:300,
+            tranitionDuration:0,
             width:props.chartGeom.width ,
             height:props.chartGeom.height 
         });

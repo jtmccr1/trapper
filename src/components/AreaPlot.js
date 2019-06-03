@@ -1,4 +1,4 @@
-import React, {useCallback,useState} from 'react';
+import React, {useRef,useEffect,useState} from 'react';
 import {select,selectAll} from 'd3-selection';
 import {fishLayout} from "../lib/charts/fishplotLayout"
 import {areaPlot} from "../lib/charts/areaPlot";
@@ -37,7 +37,7 @@ const mouseEnter = (d, i, n)=>{
                         ;
 
     tooltip.style.display = "block";
-    tooltip.style.left =event.pageX + 10 + "px";
+    tooltip.style.left = event.pageX + (event.pageX > 800? -300 : + 10) + "px";
     tooltip.style.top = event.pageY + 10 + "px";
     tooltip.style.visibility ="visible";
 };
@@ -54,34 +54,27 @@ const callback = {enter:mouseEnter,exit:mouseExit};
 
 function AreaPlot(props){
     const [plot,setPlot]=useState(null);
-
-    const el = useCallback(node => {
         
-        if (node !== null) {
-            if(node.children.length===0){ // make it the first time
-            const layoutSettings = {horizontalRange:extent(props.dateRange),
+        const el = useRef();
+        useEffect(()=>{
+                const layoutSettings = {horizontalRange:extent(props.dateRange),
                                     horizontalTicks:props.dateRange,
                                     horizontalScale:scaleTime};
-            const layout = new fishLayout(props.epidemic,layoutSettings);
-            const fig = new areaPlot(node,layout,props.margins, { hoverBorder: 4, backgroundBorder:2,transitionDuration:300});
+            // const layout = new fishLayout(props.epidemic,layoutSettings);
+            const fig = new areaPlot(el.current,props.layout,props.margins, { hoverBorder: 4, backgroundBorder:2,tranitionDuration:0});
             fig.draw();
             
             fig.onHover(callback,".fishArea")
-
-
-            // select(node).select(".axes-layer").remove();
             setPlot(fig);
-        }else{
-            plot.update();
-        }
-        }});
+            },[]);
+
         const rand_id = `b${Math.random().toString(36).substring(4)}`
 
-        // useEffect(()=>{
-        //     if(figtree!==null){
-        //         figtree.update()
-        //     }
-        // },[props.chartGeom,props.phylogeny])
+        useEffect(()=>{
+            if(plot!==null){
+                plot.update()
+            }
+        },[props.chartGeom,props.epidemic])
 
          return(
                 <svg className="chart" id={rand_id}

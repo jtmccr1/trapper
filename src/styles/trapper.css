@@ -328,15 +328,13 @@ div.header .buttons {
     fill:none
 }
 
-
-
 .fishArea{
     stroke-width: 1px;
     stroke: var(--dark-foreground);
 }
 
 .fishArea.not-hovered{
-    opacity: 0.5;
+    opacity: 0.1;
 }
 .fishArea.hovered{
     stroke-width: 2px;
@@ -358,8 +356,13 @@ div.header .buttons {
 }
 
 
+.branch .branch-path.hovered.selected {
+    stroke-width:5;
+    opacity:1
+}
 .branch .branch-path.hovered {
-    stroke-width: 4;
+    stroke-width:4;
+    opacity:1
 }
 
 .node-shape{

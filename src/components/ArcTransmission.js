@@ -1,4 +1,4 @@
-import React, {useState,useCallback} from 'react';
+import React, {useState,useRef,useEffect,useCallback} from 'react';
 import ObjectChart from "./ObjectChart";
 import {ArcLayout,CircleBauble}  from '../lib/figtree.js/index.js';
 import { FigTree }  from '../lib/figtree.js/index.js';
@@ -6,6 +6,7 @@ import {scaleTime,scaleLinear} from "d3-scale";
 import {select,selectAll} from 'd3-selection';
 import {extent} from 'd3-array';
 import {event,timeFormat,raise} from 'd3';
+import { userInfo } from 'os';
 const formatTime = timeFormat("%B %d, %Y");
 
 const branchMouseEnter = (d, i, n,fig)=>{
@@ -209,33 +210,38 @@ function ArcTransmission(props){
     }
 
     const [figtree,setFigtree]=useState(null);
-    const xScale = scaleTime().domain(extent(props.dateRange)).range([0,1]); // pass in date domain
-    const xfunc=(n,i)=>n.id==="UnsampledrootCase"? xScale(props.treeDateRange[0]):xScale(n.symptomOnset) // for setting the x postion;
 
-    const el = useCallback(node => {
+    // const el = useCallback(node => {
         
-        if (node !== null) {
-            if(node.children.length===0){ // make it the first time
-                const layout = new ArcLayout(props.graph,{xFunction:xfunc,curve:props.curve});
+        // if (node !== null) {
+            // if(node.children.length===0){ // make it the first time
+            const el = useRef();
+            useEffect(()=>{   
+            // const layout = new ArcLayout(props.graph,{xFunction:xfunc,curve:props.curve});
                 const settings = { hoverBorder: 4, backgroundBorder:2,
                     baubles: [new CircleBauble()],
-                    transitionDuration:300,
-                    // opacityFunc:e=>e.data.metaData.support,
+                    tranitionDuration:0,
+                    opacityFunc:e=>e.data.metaData.support,
                 };
-                const fig = new FigTree(node,layout,props.margins,settings);
+                const fig = new FigTree(el.current,props.layout,props.margins,settings);
             fig.draw();
             // fig.onHover(callback,".node")
             fig.onHoverNode(nodeCallback);
-            fig.onClickNode(nodeClick);
+            // fig.onClickNode(nodeClick);
             // fig.hilightBranches();
             fig.onHoverBranch(branchCallback);
-            select(node).select(".axes-layer").remove();
+            select(el.current).select(".axes-layer").remove();
             setFigtree(fig);
-    }else{
-        figtree.update();
+            // fig.update();
+            },[]);
 
-    }
-}});
+            useEffect(()=>{
+               if(figtree) figtree.update();
+            },[props.chartGeom.width,props.chartGeom.height])
+            // }        figtree.update();
+
+    
+
 const rand_id = `b${Math.random().toString(36).substring(4)}`
 
 

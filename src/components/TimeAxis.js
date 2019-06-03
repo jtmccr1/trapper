@@ -12,7 +12,7 @@ function TimeAxis(props){
                 const layoutSettings = {horizontalRange:extent(props.dateRange),
                     horizontalAxisTicks:props.dateRange,
                     horizontalScale:scaleTime,
-                transitionDuration:300};
+                tranitionDuration:0};
                     const margins = {...props.margins,...{top:30,bottom:25}};
                 const fig = new XTimeAxis(node,layoutSettings, margins,layoutSettings);
                 fig.draw();
