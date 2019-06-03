@@ -99,14 +99,14 @@ update(){
                         height:height}
 
         this.svgSelection.select("#x-axis-top")
-                        .call(axisTop(this.scales.x).tickValues(this.layout.horizontalAxisTicks))
+                        .call(axisTop(this.scales.x).tickValues(this.layout.horizontalAxisTicks.map((x,i)=>i%2===0?x:"")))
                         .transition()
                         .duration(this.settings.transitionDuration)
                         .ease(easeLinear);
 
     this.svgSelection.select("#x-axis-bottom")
                         .attr("transform",`translate(0,${(this.scales.height-this.margins.bottom-this.margins.top)})`)
-                        .call(axisBottom(this.scales.x).tickValues(this.layout.horizontalAxisTicks))
+                        .call(axisBottom(this.scales.x).tickValues(this.layout.horizontalAxisTicks.map((x,i)=>i%2===0?x:"")))
                         .transition()
                         .duration(this.settings.transitionDuration)
 
