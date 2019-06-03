@@ -340,8 +340,13 @@ div.header .buttons {
 }
 
 
+.branch .branch-path.hovered.selected {
+    stroke-width:5;
+    opacity:1
+}
 .branch .branch-path.hovered {
-    stroke-width: 4;
+    stroke-width:4;
+    opacity:1
 }
 
 .node-shape{
