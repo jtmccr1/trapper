@@ -1,4 +1,4 @@
-import React, {useCallback,useState} from 'react';
+import React, {useRef,useEffect,useState} from 'react';
 import {stackedHistogramChart} from '../lib/charts/stackedHistogram';
 import {stackedHistogramLayout} from "../lib/charts/stackedHistogramLayout"
 import {select} from "d3-selection";
@@ -41,10 +41,8 @@ const callback = {enter:mouseEnter,exit:mouseExit};
 function StackedHistogram(props){
     const [histogram,setHistogram]=useState(null);
 
-    const el = useCallback(node => {
-
-        if (node !== null) {
-            if(node.children.length===0){ // make it the first time
+    const el = useRef();
+        useEffect(()=>{// make it the first time
                 const layoutSettings = {
                     horizontalRange:extent(props.dateRange),
                     horizontalTicks:props.dateRange,
@@ -53,7 +51,7 @@ function StackedHistogram(props){
 
                 const layout = new stackedHistogramLayout(props.data,layoutSettings);
                 const settings = { hoverBorder: 4, backgroundBorder:0,transitionDuration:300};
-                const fig = new stackedHistogramChart(node,layout,props.margins,settings);
+                const fig = new stackedHistogramChart(el.current,layout,props.margins,settings);
 
                 fig.draw();
 
@@ -61,16 +59,17 @@ function StackedHistogram(props){
                 fig.onClick((d,i,n)=>alert(`clicked ${d.data.id}`))
                 // fig.addToolTip('.rect-layer .rect',(d,i,n)=>"Whoop here it is!")
 
-                select(node).select(".axes-layer").select("#x-axis").remove();
+                select(el.current).select(".axes-layer").select("#x-axis").remove();
                 setHistogram(fig);
-            } else {
-                histogram.update();
-            }
-        }
-    });
+            
+        },[]);
 
     const rand_id = `b${Math.random().toString(36).substring(4)}`
-
+    useEffect(()=>{
+        if(histogram!==null){
+            histogram.update()
+        }
+    },[props.chartGeom,props.data])
     return(
         <svg className="chart" id= {rand_id}
              ref={el}

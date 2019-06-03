@@ -101,7 +101,7 @@ const ChartContainer = React.forwardRef((props, ref)=>{
                         selectedCases={props.selectedCases}/>
                     <div className="chartTitle">Case connections</div>
                 </div>
-                <div className = "chartContainer">
+                {/*<div className = "chartContainer">
                     <PhyloChart
                         margins = {margins}
                         dateRange ={props.dateRange}
@@ -111,7 +111,7 @@ const ChartContainer = React.forwardRef((props, ref)=>{
                         // attributes = {phyloAttributes}
                         chartGeom={{...chartGeom,...{"height":600}}}/>
                     <div className="chartTitle">Transmission tree</div>
-                </div>
+        </div>*/}
             </div>
         )}
     // <Chart  />

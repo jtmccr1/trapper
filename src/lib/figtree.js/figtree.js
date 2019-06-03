@@ -96,6 +96,7 @@ export class FigTree extends d3Plot{
         }
 
         this.update();
+        // this.update();
     }
 
     /**
@@ -135,17 +136,14 @@ export class FigTree extends d3Plot{
 
 
         // call the private methods to create the components of the diagram
-        updateBranches.call(this);
 
         if (this.settings.backgroundBorder > 0) {
             updateNodeBackgrounds.call(this);
         }
 
         updateNodes.call(this);
-
-        for(const updateStyle of this.updateStyles){
-            updateStyle();
-        }
+        updateBranches.call(this);
+        updateBranches.call(this);
 
     }
 
@@ -509,7 +507,7 @@ function updateNodeBackgrounds() {
  * Adds or updates branch lines
  */
 function updateBranches() {
-
+    
     const branchesLayer = this.svgSelection.select(".branches-layer");
 
     // a function to create a line path
