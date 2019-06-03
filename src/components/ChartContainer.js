@@ -85,7 +85,7 @@ const ChartContainer = React.forwardRef((props, ref)=>{
                         margins = {margins}
                         epidemic={props.epidemic}
                         dateRange ={props.dateRange}
-                        chartGeom={chartGeom}/>
+                        chartGeom={{...chartGeom,...{"height":400}}}/>
                     <div className="chartTitle">Outbreaks</div>
                 </div>
                 <div className = "chartContainer">

@@ -37,7 +37,7 @@ const mouseEnter = (d, i, n)=>{
                         ;
 
     tooltip.style.display = "block";
-    tooltip.style.left =event.pageX + 10 + "px";
+    tooltip.style.left = event.pageX + (event.pageX > 800? -300 : + 10) + "px";
     tooltip.style.top = event.pageY + 10 + "px";
     tooltip.style.visibility ="visible";
 };

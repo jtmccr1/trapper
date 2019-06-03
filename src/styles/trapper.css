@@ -310,15 +310,13 @@ div.header .buttons {
     fill:none
 }
 
-
-
 .fishArea{
     stroke-width: 1px;
     stroke: var(--dark-foreground);
 }
 
 .fishArea.not-hovered{
-    opacity: 0.5;
+    opacity: 0.1;
 }
 .fishArea.hovered{
     stroke-width: 2px;
