@@ -1,7 +1,10 @@
 /*---------------------Other charts line container ----------*/
-/* .rect{
-  fill: #d26a54;
-} */
+
+:root{
+    --transmission-fill:#819d8b;
+    --source-fill:#cf7155;
+    --selected-fill: #e9c964;
+}
 .branch{
     stroke: #b9b0a0;
 }
@@ -9,10 +12,10 @@
     fill: #e9c964;
 }
 .rect.selected{
-    fill: #e9c964;
+    fill: var(--selected-fill);
 }
 .rect.selected.source{
-    fill: #cf7155;
+    fill: var(--source-fill);
 }
 .rect.selected.transmission{
     fill: #819d8b;

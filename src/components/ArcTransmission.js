@@ -220,7 +220,7 @@ function ArcTransmission(props){
                 const settings = { hoverBorder: 4, backgroundBorder:2,
                     baubles: [new CircleBauble()],
                     transitionDuration:300,
-                    // opacityFunc:e=>e.data.metaData.support,
+                    opacityFunc:e=>e.data.metaData.support,
                 };
                 const fig = new FigTree(node,layout,props.margins,settings);
             fig.draw();

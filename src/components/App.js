@@ -204,6 +204,7 @@ function App() {
                 <div className={`sidebar left ${optionsOpen? "open":''}`}>
                 </div>
                 <div className="sidebarButtonColumn">
+                    
                     <div className="sidebarButtons left">
                         <h3 className="button" onClick={()=> {setOptionsOpen(!optionsOpen);getSizeAgain();}}>
                             <div className="button-icon"><IoIosSettings/></div>
