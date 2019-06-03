@@ -1,4 +1,4 @@
-id,symptomOnset,sampleDate,Outcome,Location,dataType
+id,symptomOnset,sampleDate,Outcome,location,dataType
 PHR-3,2018-09-03,2018-09-18,Dead,Location-A,Observed
 PHR-6,2018-09-10,2018-09-27,Dead,Location-A,Observed
 PHR-9,2018-09-18,2018-09-30,Alive,Location-A,Observed

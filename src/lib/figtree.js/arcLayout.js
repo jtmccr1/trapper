@@ -225,7 +225,7 @@ export class ArcLayout extends Layout {
     */
    addAnnotations(datum) {
        for (let [key, addValues] of Object.entries(datum)) {
-           if(addValues instanceof Date||  typeof addValues === 'symbol'){
+           if(addValues instanceof Date||  typeof addValues === 'symbol'||addValues===null){
                continue; // don't handel dates yet
            }
             let annotation = this.annotations[key];

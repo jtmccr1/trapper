@@ -90,28 +90,43 @@ function App() {
                         id:d.id,
                         symptomOnset:dateParse(d.symptomOnset),
                         sampleDate:[dateParse(d.sampleDate)],
-                        location:d.Location,
+                        location:d.location,
                         resolution:d.Outcome,
                     }
                     return new Case(dataPoint);
                 })
                 const parsedLinks = links.map(d=>new Link(d));
                 //todo link for each datatype
-                const summarizedLinks = summarizeLinks(parsedLinks);
+                let summarizedLinks = summarizeLinks(parsedLinks);
                 // get and source cases that weren't in the line list ie the unsampled root;
-                const sources =  links.map(l=>l.source).reduce((acc,curr)=>{
+                const sources =  summarizedLinks.map(l=>l.source).reduce((acc,curr)=>{
+                    if(acc.indexOf(curr)===-1){
+                        return(acc.concat(curr));
+                    }
+                    return(acc);
+                },[]);
+                const targets =  summarizedLinks.map(l=>l.target).reduce((acc,curr)=>{
                     if(acc.indexOf(curr)===-1){
                         return(acc.concat(curr));
                     }
                     return(acc);
                 },[]);
                 const cases = [...parsedLineList];
-                for(const source of sources){
+                for(const source of [...sources,...targets]){
                     if(cases.filter(d=>d.id===source).length===0){
+                        console.log(`${source} present in links but not lineList all links are removed`)
+                        if(source.includes("root")){
                         const newCase = new Case({"id":source});
                         cases.push(newCase);
+                        }else{
+
+                        
+                        // remove the link if the case is not in the line list
+                        summarizedLinks= summarizedLinks.filter(l=>l.source!==source);
+                        summarizedLinks= summarizedLinks.filter(l=>l.target!==source);
                     }
                 }
+            }
                 //The graph!
                 const outbreakGraph = new Graph(cases,summarizedLinks);
                 const indexCase = outbreakGraph.nodes.find(n=>outbreakGraph.getOutgoingEdges(n).length>0&&outbreakGraph.getIncomingEdges(n).length===0);

@@ -111,7 +111,7 @@ export class d3PlotLayout {
     */
    addAnnotations(datum) {
        for (let [key, addValues] of Object.entries(datum)) {
-           if(addValues instanceof Date||  typeof addValues === 'symbol'){
+           if(addValues instanceof Date||  typeof addValues === 'symbol'||addValues===null){
                continue; // don't handel dates yet
            }
             let annotation = this.annotations[key];
@@ -196,6 +196,7 @@ export class d3PlotLayout {
                    if (!annotation.values) {
                        annotation.values = new Set();
                    }
+                   console.log(addValues)
                     annotation.values.add(addValues);
                 
                }

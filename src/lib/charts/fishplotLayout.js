@@ -70,8 +70,13 @@ export class fishLayout extends d3PlotLayout{
          // we want most of the space to be on top so the children curves aren't pulled up buy the parent
          // ~75% of gap on top. ~20% at bottom 5% between children
          // an array of 0.05/# of children
-         const kidGaps = Array(max([(activeChildren-1),0])).fill(0.05/(activeChildren-1));
-         const innerSpaceArray = [0.85,...kidGaps,(1-0.85-sum(kidGaps))].map(d=>d*innerSpace);
+        //  const kidGaps = Array(max([(activeChildren-1),0])).fill(0.05/(activeChildren-1));
+        //  the line above was causing issues I'm just doing how many children.
+        
+        //  const innerSpaceArray = [0.85,...kidGaps,(1-0.85-sum(kidGaps))].map(d=>d*innerSpace);
+         const numberOfKidGaps = outbreak.children?outbreak.children.length:0;
+         const kidGaps = Array(max([(numberOfKidGaps-1),0])).fill(0.05/(numberOfKidGaps-1));
+        const innerSpaceArray = [0.85,...kidGaps,(1-0.85-0.1)].map(d=>d*innerSpace);
          // inner space Arrary is [space on top, ... space between child 1 and child 2, space between child2& 3 ..., space between childLast and bottom]
           timeGap.set(time,innerSpaceArray);
        }
@@ -91,7 +96,8 @@ export class fishLayout extends d3PlotLayout{
       // will be updated overtime to account for the space from the top outbreak
       // that has been taken up at each point.
       let i=0;
-      const spaceFilled= new Map(outbreak.timePoints.map(t=>[t,gapMap.get(t)[i]])); // starts as just the top gaps.
+      const spaceFilled= new Map(outbreak.timePoints.map(t=>[t,gapMap.get(t)[i]]));
+       // starts as just the top gaps.
       // fillPoints 
       for(const childOutbreak of outbreak.children){
          let points = [];
@@ -110,12 +116,13 @@ export class fishLayout extends d3PlotLayout{
           spaceFilled.set(time,spaceFilled.get(time)+timePoint.percent+gapMap.get(time)[i+1]);
         }
         // clean up final point.
-  
+        //
+        if(points.length>0){ // if there is no time data for this then we can't place it.
         const first0T = max(points.filter(p=>p.y1===p.y0),d=>d.time);
         const first0 = points.filter(p=>p.time===first0T)[0];
         const lastTP= max(points.filter(p=>p.y1!==p.y0),d=>d.time);
         const lastT = points.filter(p=>p.time===lastTP)[0];
-              
+
         points = points.filter(p=>p.time<first0.time);
         
         const smoothingPoint = {time : first0.time, 
@@ -143,6 +150,7 @@ export class fishLayout extends d3PlotLayout{
         
         
         points.unshift(easyStart);
+        }
         points.sort((a,b)=>a.time-b.time);
         this.points.push(points);
         i+=1;
@@ -190,7 +198,7 @@ export class fishLayout extends d3PlotLayout{
   
   function getStartingDistance(outbreak,t){
     // points is an array of arrays each inner array is an oubreak we want the one with the parent.
-    
+    console.log(this.points)
     const parentPoints = this.points.find(d=>d[0].data===outbreak.parent);
     if(typeof parentPoints==='undefined'){
       // The parent outbreak is the background outbreak
