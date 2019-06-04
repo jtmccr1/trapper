@@ -11,9 +11,15 @@ function Geography(props){
     const mapData = props.data;
 
     // center on UK
+    // const projection = geoAzimuthalEqualArea()
+    //     .center([-4, 54.5])
+    //     .scale(3000)
+    //     .translate([width / 2, height / 2]);
+
+    // center on DRC
     const projection = geoAzimuthalEqualArea()
-        .center([-4, 54.5])
-        .scale(3000)
+        .center([29.0460, 0.7918])
+        .scale(1000)
         .translate([width / 2, height / 2]);
 
     const path = geoPath()
@@ -39,7 +45,7 @@ function Geography(props){
     const svg = select(el.current);
 
     const g = svg.append("g");
-    // .call(zoom);
+        // .call(zoom);
 
     g.append("rect")
         .attr("class", "map-background")
