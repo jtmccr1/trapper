@@ -59,8 +59,8 @@ const mouseExit = (d,i,n) => {
         select(n[i]).classed("hovered", false);
     }
 
-        // const tooltip = document.getElementById("tooltip");
-        // tooltip.style.visibility = "hidden";
+        const tooltip = document.getElementById("tooltip");
+        tooltip.style.visibility = "hidden";
         // selectAll(".rect").classed("hidden",false)
         // selectAll(".node").classed("hidden",false)
         // selectAll(".node-background").classed("hidden",false)
