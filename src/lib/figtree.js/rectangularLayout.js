@@ -158,10 +158,13 @@ export class RectangularLayout extends Layout {
                 e.v1 = this.edgeMap.get(e);
                 e.v0 = this.nodeMap.get(e.v1.node.parent);
                 e.classes = [];
+                const termini = [];
+                traverseToEnd(e.v1.node,termini);
 
                 if (e.v1.node.annotations) {
                     e.classes = [
                         ...e.classes,
+                        ...termini.map(t=>`tip-${t}`),
                         ...Object.entries(e.v1.node.annotations)
                             .filter(([key]) => {
                                 return this.tree.annotations[key] &&
@@ -201,6 +204,7 @@ export class RectangularLayout extends Layout {
         this.internalNodeLabelAnnotationName = annotationName;
         this.update();
     }
+
 
     /**
      * Sets the annotation to use as the node labels.
@@ -255,4 +259,15 @@ export class RectangularLayout extends Layout {
 /*
  * Private methods, called by the class using the <function>.call(this) function.
  */
+function traverseToEnd(node,tips){
+    
+    if(node.children){
+        for(const child of node.children){
+            traverseToEnd(child,tips);
+        }
+        }
+        else{
+            tips.push(node.name)
+    }
+}
 

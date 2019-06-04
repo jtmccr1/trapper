@@ -88,6 +88,8 @@ const clickHover=(d,i,n)=>{
     bringBack.forEach(c=>selectAll(`.id-${c.id}`).classed("hidden",!shouldSelect))
     bringBack.forEach(c=>selectAll(`.source-${c.id}`).classed("hidden",!shouldSelect))
     bringBack.forEach(c=>selectAll(`.target-${c.id}`).classed("hidden",!shouldSelect))
+    bringBack.forEach(c=>selectAll(`.tip-${c.id}`).classed("hidden",!shouldSelect))
+
     }
 }
 
