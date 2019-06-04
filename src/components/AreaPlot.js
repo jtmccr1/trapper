@@ -5,16 +5,36 @@ import {areaPlot} from "../lib/charts/areaPlot";
 import {timeWeek} from "d3-time";
 import {scaleTime} from "d3-scale";
 import {extent} from 'd3-array';
-import {event,timeFormat} from 'd3';
-
+import {event,timeFormat,max} from 'd3';
+import {epidemic, Epidemic} from "../lib/outbreak/Epidemic";
+import { Graph } from '../lib/figtree.js';
 const formatTime = timeFormat("%B %d, %Y");
-
+const getAllCases=(o,a)=>{
+    a.push(...o.cases)
+    for(const child of o.children){
+        getAllCases(child,a);
+    } 
+    ;
+}
 
 const mouseEnter = (d, i, n)=>{
+    const outbreak = d[0].data;
     const allAreas = selectAll(n);
-
+    
     allAreas.filter((d2,i2,n2)=>n2[i2]!==n[i]).classed("not-hovered", true);
     select(n[i]).classed("hovered", true);
+
+    selectAll(".rect").classed("hidden",true)
+    selectAll(".node").classed("hidden",true)
+    selectAll(".node-background").classed("hidden",true)
+    selectAll(".branch").classed("hidden",true)
+    const bringBack = [];
+    getAllCases(outbreak,bringBack)
+    console.log(bringBack)
+    // bringBack.forEach(c=>selectAll(`.node .id-${c.id}`).classed("hidden",false))
+    bringBack.forEach(c=>selectAll(`.id-${c.id}`).classed("hidden",false))
+    bringBack.forEach(c=>selectAll(`.source-${c.id}`).classed("hidden",false))
+    bringBack.forEach(c=>selectAll(`.target-${c.id}`).classed("hidden",false))
 
 
     let tooltip = document.getElementById("tooltip");
@@ -47,6 +67,10 @@ const mouseExit = (d,i,n) => {
 
         const tooltip = document.getElementById("tooltip");
         tooltip.style.visibility = "hidden";
+        selectAll(".rect").classed("hidden",false)
+        selectAll(".node").classed("hidden",false)
+        selectAll(".node-background").classed("hidden",false)
+        selectAll(".branch").classed("hidden",false)
     };
 
 const callback = {enter:mouseEnter,exit:mouseExit};
@@ -54,17 +78,31 @@ const callback = {enter:mouseEnter,exit:mouseExit};
 
 function AreaPlot(props){
     const [plot,setPlot]=useState(null);
-        
+    const areaClick=(d,i,n)=>{
+        const outbreak = d[0].data;
+        const selectedEpidemic = new Epidemic(outbreak.indexCase,props.epidemic.graph,mostProbableTransphyloEdgeCondition)
+        // select edges in graph 
+        const newCases = selectedEpidemic.Cases;
+        const goodEdges = [];
+        for(const Case of newCases){
+            // incoming
+            const incoming = selectedEpidemic.graph.getIncomingEdges(Case);
+            incoming.forEach(e=>newCases.indexOf(e.source)>-1&&goodEdges.push({source:e.source.id,target:e.target.id,metaData:e.metaData}));
+            // outgoing
+            const outgoing = selectedEpidemic.graph.getOutgoingEdges(Case);
+            outgoing.forEach(e=>newCases.indexOf(e.target)>-1&&goodEdges.push({source:e.source.id,target:e.target.id,metaData:e.metaData}));
+        }
+        selectedEpidemic.graph = new Graph(selectedEpidemic.Cases,goodEdges)
+        props.selectArea(selectedEpidemic)
+    }
         const el = useRef();
         useEffect(()=>{
-                const layoutSettings = {horizontalRange:extent(props.dateRange),
-                                    horizontalTicks:props.dateRange,
-                                    horizontalScale:scaleTime};
             // const layout = new fishLayout(props.epidemic,layoutSettings);
             const fig = new areaPlot(el.current,props.layout,props.margins, { hoverBorder: 4, backgroundBorder:2,tranitionDuration:0});
             fig.draw();
             
             fig.onHover(callback,".fishArea")
+            // fig.onClick(areaClick,".fishArea")
             setPlot(fig);
             },[]);
 
@@ -86,5 +124,15 @@ function AreaPlot(props){
 };
 
 
-
+// Set the epidemic data
+function mostProbableTransphyloEdgeCondition(graph){
+    const actualFilterFunction = (edge)=>{
+        const target = edge.target;
+        // get incoming edges
+        const incomingEdges = graph.getIncomingEdges(target);
+        const maxTransphyloProb = max(incomingEdges.filter(e=>e.metaData.dataSource==="transphylo"), e =>e.metaData.support);
+        return (edge === incomingEdges.find(e=> e.metaData.dataSource==="transphylo" && e.metaData.support===maxTransphyloProb))
+    }
+    return actualFilterFunction
+}
 export default AreaPlot;

@@ -86,6 +86,7 @@ const ChartContainer = React.forwardRef((props, ref)=>{
                 <div className = "chartContainer">
                     <AreaPlot
                         layout ={props.areaLayout}
+                        selectArea ={props.selectArea}
                         margins = {margins}
                         epidemic={props.epidemic}
                         dateRange ={props.dateRange}
