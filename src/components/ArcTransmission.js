@@ -227,7 +227,7 @@ function ArcTransmission(props){
             fig.draw();
             // fig.onHover(callback,".node")
             fig.onHoverNode(nodeCallback);
-            // fig.onClickNode(nodeClick);
+            fig.onClickNode(nodeClick);
             // fig.hilightBranches();
             fig.onHoverBranch(branchCallback);
             select(el.current).select(".axes-layer").remove();

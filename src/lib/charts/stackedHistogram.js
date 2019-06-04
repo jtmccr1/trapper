@@ -10,7 +10,7 @@ export class stackedHistogramChart extends d3Plot{
       hoverBorder: 2,
       backgroundBorder: 0,
       baubles: [],
-      transitionDuration:500,
+      transitionDuration:0,
         }
       }
       /**

@@ -9,13 +9,32 @@ import {event,timeFormat,max} from 'd3';
 import {epidemic, Epidemic} from "../lib/outbreak/Epidemic";
 import { Graph } from '../lib/figtree.js';
 const formatTime = timeFormat("%B %d, %Y");
-
+const getAllCases=(o,a)=>{
+    a.push(...o.cases)
+    for(const child of o.children){
+        getAllCases(child,a);
+    } 
+    ;
+}
 
 const mouseEnter = (d, i, n)=>{
+    const outbreak = d[0].data;
     const allAreas = selectAll(n);
-
+    
     allAreas.filter((d2,i2,n2)=>n2[i2]!==n[i]).classed("not-hovered", true);
     select(n[i]).classed("hovered", true);
+
+    selectAll(".rect").classed("hidden",true)
+    selectAll(".node").classed("hidden",true)
+    selectAll(".node-background").classed("hidden",true)
+    selectAll(".branch").classed("hidden",true)
+    const bringBack = [];
+    getAllCases(outbreak,bringBack)
+    console.log(bringBack)
+    // bringBack.forEach(c=>selectAll(`.node .id-${c.id}`).classed("hidden",false))
+    bringBack.forEach(c=>selectAll(`.id-${c.id}`).classed("hidden",false))
+    bringBack.forEach(c=>selectAll(`.source-${c.id}`).classed("hidden",false))
+    bringBack.forEach(c=>selectAll(`.target-${c.id}`).classed("hidden",false))
 
 
     let tooltip = document.getElementById("tooltip");
@@ -48,6 +67,10 @@ const mouseExit = (d,i,n) => {
 
         const tooltip = document.getElementById("tooltip");
         tooltip.style.visibility = "hidden";
+        selectAll(".rect").classed("hidden",false)
+        selectAll(".node").classed("hidden",false)
+        selectAll(".node-background").classed("hidden",false)
+        selectAll(".branch").classed("hidden",false)
     };
 
 const callback = {enter:mouseEnter,exit:mouseExit};

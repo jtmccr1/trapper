@@ -325,7 +325,9 @@ div.header .buttons {
     stroke-width: 1px;
     stroke: var(--dark-foreground);
 }
-
+.hidden{
+    opacity: 0;
+}
 
 /*--------------------- Fig Tree --------------------*/
 

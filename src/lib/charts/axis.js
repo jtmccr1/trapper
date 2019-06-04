@@ -11,7 +11,7 @@ import { d3Plot } from './d3Plot';
 export class XTimeAxis extends d3Plot{
     static DEFAULT_SETTINGS() {
       return {
-        transitionDuration:500,
+        transitionDuration:0,
         horizontalRange:[0,1],
         horizontalAxisTicks:[0,0.5,1],
         horizontalScale:scaleLinear

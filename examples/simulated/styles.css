@@ -68,6 +68,7 @@
     stroke-width:4
 }
 .branch .branch-path.hovered.selected {
+    opacity:1;
     stroke-width:5
 }
 
