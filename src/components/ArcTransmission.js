@@ -192,9 +192,9 @@ function ArcTransmission(props){
             const node =  fig.svgSelection.select(`.node.id-${source.id}`).select(".node-shape");
             node.classed("selected source", shouldSelect);
             // on all other plots
-            selectAll(`.id-${source.id}`).classed("selected source", shouldSelect);
+            selectAll(`.tip-${source.id}`).classed("selected source", shouldSelect);
             selectAll(`.id-${source.id} `).select(".node-shape").classed("selected source", shouldSelect);
-            selectAll(`.id-${source.id}`).select(".branch-path").classed("selected transmission", shouldSelect);
+            selectAll(`.tip-${source.id}`).select(".branch-path").classed("selected transmission", shouldSelect);
 
         }
         const targetNodes = fig.layout.graph.getOutgoingEdges(d.node).map(e=>e.target);
@@ -202,9 +202,9 @@ function ArcTransmission(props){
             const node =  fig.svgSelection.select(`.node.id-${target.id}`).select(".node-shape");
             node.classed("selected transmission", shouldSelect);
             // on all other plots
-            selectAll(`.id-${target.id}`).classed("selected transmission", shouldSelect);
+            selectAll(`.tip-${target.id}`).classed("selected transmission", shouldSelect);
             selectAll(`.id-${target.id}`).select(".node-shape").classed("selected transmission", shouldSelect);
-            selectAll(`.id-${target.id}`).select(".branch-path").classed("selected transmission", shouldSelect);
+            selectAll(`.tip-${target.id}`).select(".branch-path").classed("selected transmission", shouldSelect);
 
         }
     }
