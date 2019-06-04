@@ -329,6 +329,10 @@ div.header .buttons {
     fill: var(--artic-green);
     stroke: var(--dark-foreground);
 }
+.adm2 {
+    fill: var(--artic-green);
+    stroke: var(--dark-foreground);
+}
 
 /*------------------ axis boxes ------------------------*/
 .axis-box.even{

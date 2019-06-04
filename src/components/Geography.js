@@ -1,7 +1,32 @@
 import React, {props, useRef, useState} from 'react';
-import {select, selectAll} from "d3";
+import {event, select, selectAll} from "d3";
 import {geoAzimuthalEqualArea, geoPath} from "d3-geo";
 import {feature} from "topojson";
+
+const mouseEnter = (d, i, n)=>{
+    select(n[i]).classed("hovered", true);
+    // console.log(d)
+    let tooltip = document.getElementById("tooltip");
+    // put text to display here!
+    tooltip.innerHTML =`Location: ${d.data.location}
+                        <br/>
+                        Cases: 0`;
+
+    tooltip.style.display = "block";
+
+    // this should be dynamically set (i.e., the tooltip box should always be aligned to
+    // be visible in the view port).
+    tooltip.style.left = event.pageX + (event.pageX > 800? -300 : + 10) + "px";
+    tooltip.style.top = event.pageY + 10 + "px";
+
+    tooltip.style.visibility ="visible";
+};
+
+const mouseExit = (d,i,n) => {
+    select(n[i]).classed("hovered", false);
+    const tooltip = document.getElementById("tooltip");
+    tooltip.style.visibility = "hidden";
+};
 
 function Geography(props){
     const [map, setMap] = useState(null);
@@ -19,7 +44,7 @@ function Geography(props){
     // center on DRC
     const projection = geoAzimuthalEqualArea()
         .center([29.0460, 0.7918])
-        .scale(1000)
+        .scale(4000)
         .translate([width / 2, height / 2]);
 
     const path = geoPath()
@@ -33,6 +58,7 @@ function Geography(props){
 
     const adm0 = feature(mapData, mapData.objects.adm0);
     const adm1 = feature(mapData, mapData.objects.adm1);
+    const adm2 = feature(mapData, mapData.objects.adm2);
 
     // console.log("ADM1: " + JSON.stringify(path(adm1.features[24])));
 
@@ -67,6 +93,15 @@ function Geography(props){
         .data(adm1.features)
         .enter().append("path")
         .attr("class", "adm1")
+        .attr("id", (d) => d.properties.name.replace(" ", "-"))
+        .attr("d", path);
+
+    g.append("g")
+        .attr("id", "adm2")
+        .selectAll("path")
+        .data(adm2.features)
+        .enter().append("path")
+        .attr("class", "adm2")
         .attr("id", (d) => d.properties.name.replace(" ", "-"))
         .attr("d", path);
 
