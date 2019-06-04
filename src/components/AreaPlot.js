@@ -20,21 +20,12 @@ const getAllCases=(o,a)=>{
 const mouseEnter = (d, i, n)=>{
     const outbreak = d[0].data;
     const allAreas = selectAll(n);
-    
+    const notSelected = !select(n[i]).attr("class").includes("selected");
+    if(notSelected){
     allAreas.filter((d2,i2,n2)=>n2[i2]!==n[i]).classed("not-hovered", true);
     select(n[i]).classed("hovered", true);
-
-    selectAll(".rect").classed("hidden",true)
-    selectAll(".node").classed("hidden",true)
-    selectAll(".node-background").classed("hidden",true)
-    selectAll(".branch").classed("hidden",true)
-    const bringBack = [];
-    getAllCases(outbreak,bringBack)
-    console.log(bringBack)
-    // bringBack.forEach(c=>selectAll(`.node .id-${c.id}`).classed("hidden",false))
-    bringBack.forEach(c=>selectAll(`.id-${c.id}`).classed("hidden",false))
-    bringBack.forEach(c=>selectAll(`.source-${c.id}`).classed("hidden",false))
-    bringBack.forEach(c=>selectAll(`.target-${c.id}`).classed("hidden",false))
+    }
+  
 
 
     let tooltip = document.getElementById("tooltip");
@@ -62,19 +53,43 @@ const mouseEnter = (d, i, n)=>{
     tooltip.style.visibility ="visible";
 };
 const mouseExit = (d,i,n) => {
+    const notSelected = !select(n[i]).attr("class").includes("selected");
+    if(notSelected){
         selectAll(n).classed("not-hovered", false);
         select(n[i]).classed("hovered", false);
+    }
 
-        const tooltip = document.getElementById("tooltip");
-        tooltip.style.visibility = "hidden";
-        selectAll(".rect").classed("hidden",false)
-        selectAll(".node").classed("hidden",false)
-        selectAll(".node-background").classed("hidden",false)
-        selectAll(".branch").classed("hidden",false)
+        // const tooltip = document.getElementById("tooltip");
+        // tooltip.style.visibility = "hidden";
+        // selectAll(".rect").classed("hidden",false)
+        // selectAll(".node").classed("hidden",false)
+        // selectAll(".node-background").classed("hidden",false)
+        // selectAll(".branch").classed("hidden",false)
     };
 
 const callback = {enter:mouseEnter,exit:mouseExit};
 
+const clickHover=(d,i,n)=>{
+    const outbreak = d[0].data;
+    const allAreas = selectAll(n);
+    const shouldSelect = !select(n[i]).attr("class").includes("selected");
+    allAreas.filter((d2,i2,n2)=>n2[i2]!==n[i]).classed("not-selected", shouldSelect);
+    select(n[i]).classed("selected", shouldSelect);
+
+    selectAll(".rect").classed("hidden",shouldSelect)
+    selectAll(".node").classed("hidden",shouldSelect)
+    selectAll(".node-background").classed("hidden",shouldSelect)
+    selectAll(".branch").classed("hidden",shouldSelect)
+    const bringBack = [];
+    getAllCases(outbreak,bringBack)
+    // console.log(bringBack)
+    // bringBack.forEach(c=>selectAll(`.node .id-${c.id}`).classed("hidden",false))
+    if(shouldSelect){
+    bringBack.forEach(c=>selectAll(`.id-${c.id}`).classed("hidden",!shouldSelect))
+    bringBack.forEach(c=>selectAll(`.source-${c.id}`).classed("hidden",!shouldSelect))
+    bringBack.forEach(c=>selectAll(`.target-${c.id}`).classed("hidden",!shouldSelect))
+    }
+}
 
 function AreaPlot(props){
     const [plot,setPlot]=useState(null);
@@ -102,7 +117,7 @@ function AreaPlot(props){
             fig.draw();
             
             fig.onHover(callback,".fishArea")
-            // fig.onClick(areaClick,".fishArea")
+            fig.onClick(clickHover,".fishArea")
             setPlot(fig);
             },[]);
 

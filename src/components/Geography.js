@@ -42,13 +42,12 @@ function Geography(props){
     //     .translate([width / 2, height / 2]);
 
     // center on DRC
-    const projection = geoAzimuthalEqualArea()
-        .center([29.0460, 0.7918])
-        .scale(4000)
-        .translate([width / 2, height / 2]);
+    // const projection = geoAzimuthalEqualArea()
+    //     .center([29.0460, 0.7918])
+    //     .scale(4000)
+    //     .translate([width / 2, height / 2]);
 
-    const path = geoPath()
-        .projection(projection);
+  
 
     // const zoom = d3.behavior.zoom()
     //     .translate(projection.translate())
@@ -58,7 +57,24 @@ function Geography(props){
 
     const adm0 = feature(mapData, mapData.objects.adm0);
     const adm1 = feature(mapData, mapData.objects.adm1);
-    const adm2 = feature(mapData, mapData.objects.adm2);
+    let adm2 = mapData.objects.adm2? feature(mapData, mapData.objects.adm2):null;
+    let projection;
+    let path;
+    if(adm0.features.map(m=>m.id).indexOf("UGA")>-1){
+        projection= geoAzimuthalEqualArea()
+        .center([29.0460, 0.7918])
+        .scale(4000)
+        .translate([width / 2, height / 2]);
+
+    }else{
+        projection = geoAzimuthalEqualArea()
+        .center([-4, 54.5])
+        .scale(3000)
+        .translate([width / 2, height / 2]);
+
+    }
+    path = geoPath()
+    .projection(projection);
 
     // console.log("ADM1: " + JSON.stringify(path(adm1.features[24])));
 
@@ -96,6 +112,7 @@ function Geography(props){
         .attr("id", (d) => d.properties.name.replace(" ", "-"))
         .attr("d", path);
 
+        if(adm2){
     g.append("g")
         .attr("id", "adm2")
         .selectAll("path")
@@ -104,6 +121,7 @@ function Geography(props){
         .attr("class", "adm2")
         .attr("id", (d) => d.properties.name.replace(" ", "-"))
         .attr("d", path);
+        }
 
     // }else{
     //     update?
