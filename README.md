@@ -13,8 +13,16 @@ to run (in separate terminals)
 node trapper.js DATA/FILES/DIRECTORY/
 ```
 
+
+
 ```
 npm run start
+```
+
+To run the simulated examples you can (from the main directory) use
+
+```
+node trapper.js examples/simulated/
 ```
 
 ## Data Files
@@ -26,4 +34,5 @@ links.csv - columns [target,source,dataSource] are expected if they are missing 
 tree.nwk -  the tree in newick format (branchlengths are assumed to be in years)
 treeAnnotation.json - a json keyed by node ids
 styles.css - any fills or styles that should be applied to the plots. Styles in trapper.css will take priority.
+maps.json - a topoGeojson of the area of interest.
 ```
