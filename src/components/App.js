@@ -68,7 +68,7 @@ function App() {
     };
 
     /*----------------------- Data management----------------------------------*/
-    const prefix = process.env.NODE_ENV === 'development' ? 'http://localhost:4001' : 'https://raw.githubusercontent.com/jtmccr1/trapper/master/src';
+    const prefix = process.env.NODE_ENV === 'development' ? 'http://localhost:4001' : 'https://raw.githubusercontent.com/jtmccr1/trapper/master/examples/simulated';
 
     //------------ Data processing ------------------------
 
@@ -165,6 +165,7 @@ function App() {
                         tree.annotateTips(tipLocations)
                         tree.annotateNodesFromTips("location")
                         }
+                        tree.order();
                         setPhylogeny(tree);
                         // get initial time range
                         const casesRange = extent(outbreakGraph.nodes,d=>d.symptomOnset);
