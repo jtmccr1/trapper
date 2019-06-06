@@ -25,6 +25,9 @@ To run the simulated examples you can (from the main directory) use
 node trapper.js examples/simulated/
 ```
 
+or visit a live version of the prototype here https://jtmccr1.github.io/trapper/.
+
+
 ## Data Files
 
 Currently TRAPPER expects the DATA/FILES/DIRECTORY/ to have the following files:
