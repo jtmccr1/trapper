@@ -281,7 +281,7 @@ function App() {
                             getSizeAgain();
                         }}>
                             <div className="button-icon"><IoIosMap/></div>
-                            <div class="button-text rotate-minus-ninety">Map</div>
+                            <div className="button-text rotate-minus-ninety">Map</div>
                         </h3>
 
                         <h3 className={`button ${sideBarOpen && sideBarFocus === "LineList" ? "selected" : ""}`} onClick={()=> {
