@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "810dd1f8a3a6ef44ecf7ad1904065fdd",
+    "revision": "049704734273393882f85f6f84846ff7",
     "url": "/trapper/index.html"
   },
   {
@@ -8,16 +8,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/trapper/static/css/2.201efe6e.chunk.css"
   },
   {
-    "revision": "6d8c307d1e95109868b2",
-    "url": "/trapper/static/css/main.7c7b7b84.chunk.css"
+    "revision": "18ebf436bcaef60ddfc4",
+    "url": "/trapper/static/css/main.d9492a12.chunk.css"
   },
   {
     "revision": "503267f043220f8640c6",
     "url": "/trapper/static/js/2.23497f8f.chunk.js"
   },
   {
-    "revision": "6d8c307d1e95109868b2",
-    "url": "/trapper/static/js/main.01bc4111.chunk.js"
+    "revision": "18ebf436bcaef60ddfc4",
+    "url": "/trapper/static/js/main.727f183f.chunk.js"
   },
   {
     "revision": "599f4f3c79d5645fb427",
