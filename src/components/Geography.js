@@ -1,6 +1,7 @@
 import React, {props, useRef, useState} from 'react';
 import {event, select, selectAll} from "d3";
 import {geoAzimuthalEqualArea, geoPath} from "d3-geo";
+import {geoCylindricalStereographic} from "d3-geo-projection"
 import {feature} from "topojson";
 
 const mouseEnter = (d, i, n)=>{
@@ -54,10 +55,12 @@ function Geography(props){
     //     .scale(projection.scale())
     //     .scaleExtent([height, 8 * height])
     //     .on("zoom", zoomed);
-
+console.log(mapData.objects);
+console.log("geo")
     const adm0 = feature(mapData, mapData.objects.adm0);
-    const adm1 = feature(mapData, mapData.objects.adm1);
-    let adm2 = mapData.objects.adm2? feature(mapData, mapData.objects.adm2):null;
+console.log(adm0);
+    const adm1 = mapData.objects.adm1? feature(mapData, mapData.objects.adm1):null;
+    let adm2 = mapData.objects.adm2? feature(mapData,   mapData.objects.adm2):null;
     let projection;
     let path;
     if(adm0.features.map(m=>m.id).indexOf("UGA")>-1){
@@ -66,15 +69,21 @@ function Geography(props){
         .scale(4000)
         .translate([width / 2, height / 2]);
 
-    }else{
+    }else if(adm1){
         projection = geoAzimuthalEqualArea()
         .center([-4, 54.5])
         .scale(3000)
         .translate([width / 2, height / 2]);
 
     }
-    path = geoPath()
-    .projection(projection);
+
+    if(!adm1){
+        path=geoPath();
+    }else{
+        path = geoPath()
+            .projection(projection);
+    }
+
 
     // console.log("ADM1: " + JSON.stringify(path(adm1.features[24])));
 
@@ -102,7 +111,7 @@ function Geography(props){
         .attr("class", "adm0")
         .attr("id", (d) => d.properties.name.replace(" ", "-"))
         .attr("d", path);
-
+if(adm1){
     g.append("g")
         .attr("id", "adm1")
         .selectAll("path")
@@ -111,6 +120,8 @@ function Geography(props){
         .attr("class", "adm1")
         .attr("id", (d) => d.properties.name.replace(" ", "-"))
         .attr("d", path);
+}
+
 
         if(adm2){
     g.append("g")
