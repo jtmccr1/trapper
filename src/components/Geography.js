@@ -1,6 +1,6 @@
 import React, {props, useRef, useState} from 'react';
 import {event, select, selectAll} from "d3";
-import {geoAzimuthalEqualArea, geoPath} from "d3-geo";
+import {geoAzimuthalEqualArea, geoPath,geoTransform,geoAlbers} from "d3-geo";
 import {geoCylindricalStereographic} from "d3-geo-projection"
 import {feature} from "topojson";
 
@@ -56,20 +56,33 @@ function Geography(props){
     //     .scaleExtent([height, 8 * height])
     //     .on("zoom", zoomed);
 console.log(mapData.objects);
-console.log("geo")
     const adm0 = feature(mapData, mapData.objects.adm0);
-console.log(adm0);
     const adm1 = mapData.objects.adm1? feature(mapData, mapData.objects.adm1):null;
     let adm2 = mapData.objects.adm2? feature(mapData,   mapData.objects.adm2):null;
     let projection;
     let path;
+    console.log(adm1.features);
+
     if(adm0.features.map(m=>m.id).indexOf("UGA")>-1){
         projection= geoAzimuthalEqualArea()
         .center([29.0460, 0.7918])
         .scale(4000)
         .translate([width / 2, height / 2]);
 
-    }else if(adm1){
+    }else if(adm1.features.map(m=>m.properties.name).indexOf("Building_B")>-1){
+        //https://bl.ocks.org/mbostock/5663666
+        function matrix(a, b, c, d, tx, ty) {
+            return geoTransform({
+                point: function(x, y) {
+                    this.stream.point(a * x + b * y + tx, c * x + d * y + ty);
+                }
+            });
+        }
+        projection =matrix(1, 0, 0, -1, 100, height-150)
+
+
+    }
+    else{
         projection = geoAzimuthalEqualArea()
         .center([-4, 54.5])
         .scale(3000)
@@ -77,12 +90,9 @@ console.log(adm0);
 
     }
 
-    if(!adm1){
-        path=geoPath();
-    }else{
-        path = geoPath()
-            .projection(projection);
-    }
+
+   path = projection? geoPath()
+            .projection(projection): geoPath();
 
 
     // console.log("ADM1: " + JSON.stringify(path(adm1.features[24])));
@@ -94,7 +104,7 @@ console.log(adm0);
 
     //to selecting every time
     const svg = select(el.current);
-
+    svg.select("g").remove();
     const g = svg.append("g");
         // .call(zoom);
 
