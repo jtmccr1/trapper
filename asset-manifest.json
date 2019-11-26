@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/trapper/static/css/main.dd76522d.chunk.css",
-    "main.js": "/trapper/static/js/main.225a5e1e.chunk.js",
-    "main.js.map": "/trapper/static/js/main.225a5e1e.chunk.js.map",
+    "main.css": "/trapper/static/css/main.1a6d7b06.chunk.css",
+    "main.js": "/trapper/static/js/main.25b41785.chunk.js",
+    "main.js.map": "/trapper/static/js/main.25b41785.chunk.js.map",
     "runtime~main.js": "/trapper/static/js/runtime~main.f338064b.js",
     "runtime~main.js.map": "/trapper/static/js/runtime~main.f338064b.js.map",
-    "static/css/2.201efe6e.chunk.css": "/trapper/static/css/2.201efe6e.chunk.css",
-    "static/js/2.23497f8f.chunk.js": "/trapper/static/js/2.23497f8f.chunk.js",
-    "static/js/2.23497f8f.chunk.js.map": "/trapper/static/js/2.23497f8f.chunk.js.map",
+    "static/css/2.510436af.chunk.css": "/trapper/static/css/2.510436af.chunk.css",
+    "static/js/2.427d37b2.chunk.js": "/trapper/static/js/2.427d37b2.chunk.js",
+    "static/js/2.427d37b2.chunk.js.map": "/trapper/static/js/2.427d37b2.chunk.js.map",
     "index.html": "/trapper/index.html",
-    "precache-manifest.357fe0831bde3f6b7c7262191de7b455.js": "/trapper/precache-manifest.357fe0831bde3f6b7c7262191de7b455.js",
+    "precache-manifest.a884d86bf75451598d209b8901cafebc.js": "/trapper/precache-manifest.a884d86bf75451598d209b8901cafebc.js",
     "service-worker.js": "/trapper/service-worker.js",
-    "static/css/2.201efe6e.chunk.css.map": "/trapper/static/css/2.201efe6e.chunk.css.map",
-    "static/css/main.dd76522d.chunk.css.map": "/trapper/static/css/main.dd76522d.chunk.css.map",
-    "static/media/simulated.css": "/trapper/static/media/LatoLatin-Regular.586ec8dc.woff",
+    "static/css/2.510436af.chunk.css.map": "/trapper/static/css/2.510436af.chunk.css.map",
+    "static/css/main.1a6d7b06.chunk.css.map": "/trapper/static/css/main.1a6d7b06.chunk.css.map",
+    "static/media/trapper.css": "/trapper/static/media/LatoLatin-Regular.586ec8dc.woff",
     "static/media/logo.png": "/trapper/static/media/logo.a9ecf903.png"
   }
 }
